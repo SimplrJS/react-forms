@@ -76,7 +76,7 @@ export class FormsStoresHandlerClass {
     * @memberOf FormStoreHandlerBase
     */
     public Exists(formId: string) {
-        return (this.formStores.get(formId) != null);
+        return this.formStores.get(formId) != null;
     }
 }
 
