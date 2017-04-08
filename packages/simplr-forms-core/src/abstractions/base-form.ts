@@ -15,7 +15,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
 
     constructor(props: FormContracts.FormProps) {
         super();
-        this.formRegister(props);
+        this.registerForm(props);
     }
 
     getChildContext(): FormContracts.FormChildContext {
@@ -30,7 +30,12 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
-    private formRegister(props: FormContracts.FormProps) {
+    abstract render(): JSX.Element | null;
+
+    /*
+     * Local helpers
+     */
+    private registerForm(props: FormContracts.FormProps) {
         let shouldNotDestroy = !props.destroyOnUnmount;
 
         if (props.formId == null) {
@@ -56,6 +61,4 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
             }
         }
     }
-
-    abstract render(): JSX.Element | null;
 }
