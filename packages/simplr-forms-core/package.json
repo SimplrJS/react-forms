@@ -1,0 +1,36 @@
+{
+  "name": "simplr-forms-core",
+  "version": "4.0.0-alpha",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "@types/enzyme": "^2.7.7",
+    "@types/jest": "^19.2.2",
+    "@types/react": "^15.0.21",
+    "@types/react-addons-test-utils": "^0.14.17",
+    "@types/react-dom": "^0.14.23",
+    "enzyme": "^2.8.0",
+    "jest": "^19.0.2",
+    "react": "^15.5.3",
+    "react-addons-test-utils": "^15.5.0",
+    "react-dom": "^15.5.3",
+    "ts-jest": "^19.0.8",
+    "typescript": "^2.2.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
