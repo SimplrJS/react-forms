@@ -1,4 +1,4 @@
-export interface FormsState {
+export interface FormState {
 
 }
 

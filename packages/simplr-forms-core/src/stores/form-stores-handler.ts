@@ -1,7 +1,7 @@
 import * as Immutable from "immutable";
 import { FormStore } from "./form-store";
 
-export class FormsStoresHandlerClass {
+export class FormStoresHandlerClass {
     private storeCount = 0;
     private formStores = Immutable.Map<string, FormStore>();
 
@@ -80,4 +80,4 @@ export class FormsStoresHandlerClass {
     }
 }
 
-export var FormsStoresHandler = new FormsStoresHandlerClass();
+export var FormStoresHandler = new FormStoresHandlerClass();
