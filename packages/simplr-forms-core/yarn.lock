@@ -13,6 +13,17 @@
     "@types/cheerio" "*"
     "@types/react" "*"
 
+"@types/fbemitter@*":
+  version "2.0.32"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/@types/fbemitter/-/@types/fbemitter-2.0.32.tgz#8ed204da0f54e9c8eaec31b1eec91e25132d082c"
+
+"@types/flux@^3.0.1":
+  version "3.0.1"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/@types/flux/-/@types/flux-3.0.1.tgz#690a1a67a5a0549c2a2dc3c2343f4505caad5143"
+  dependencies:
+    "@types/fbemitter" "*"
+    "@types/react" "*"
+
 "@types/jest@^19.2.2":
   version "19.2.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-19.2.2.tgz#71f428be2fa6eb9f15bb0abc3cade67905f94839"
@@ -789,7 +800,13 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8.4, fbjs@^0.8.9:
+fbemitter@^2.0.0:
+  version "2.1.1"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/fbemitter/-/fbemitter-2.1.1.tgz#523e14fdaf5248805bb02f62efc33be703f51865"
+  dependencies:
+    fbjs "^0.8.4"
+
+fbjs@^0.8.0, fbjs@^0.8.4, fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -834,6 +851,13 @@ find-up@^2.1.0:
   resolved "https://registry.yarnpkg.com/find-up/-/find-up-2.1.0.tgz#45d1b7e506c717ddd482775a2b77920a3c0c57a7"
   dependencies:
     locate-path "^2.0.0"
+
+flux@^3.1.2:
+  version "3.1.2"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/flux/-/flux-3.1.2.tgz#8c170addf95b8cb2febb3ddd640aa3e24505762f"
+  dependencies:
+    fbemitter "^2.0.0"
+    fbjs "^0.8.0"
 
 for-in@^1.0.1:
   version "1.0.2"
@@ -1081,6 +1105,10 @@ http-signature@~1.1.0:
 iconv-lite@0.4.13, iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
+
+immutable@^3.8.1:
+  version "3.8.1"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
 indent-string@^2.1.0:
   version "2.1.0"
