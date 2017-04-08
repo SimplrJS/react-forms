@@ -25,7 +25,22 @@ export abstract class BaseForm<TProps extends FormProps, TState> extends React.C
 
     constructor(props: FormProps) {
         super();
+        this.formRegister(props);
+    }
 
+    getChildContext(): FormChildContext {
+        return {
+            FormId: this.FormId,
+        };
+    }
+
+    componentWillUnmount() {
+        if (this.props.destroyOnUnmount) {
+            FormStoresHandler.UnregisterForm(this.FormId);
+        }
+    }
+
+    private formRegister(props: FormProps) {
         let shouldNotDestroy = !props.destroyOnUnmount;
 
         if (props.formId == null) {
@@ -49,18 +64,6 @@ export abstract class BaseForm<TProps extends FormProps, TState> extends React.C
                 // props.formId is given AND form should be destroyed
                 this.FormId = FormStoresHandler.RegisterForm(props.formId, props.formStore);
             }
-        }
-    }
-
-    getChildContext(): FormChildContext {
-        return {
-            FormId: this.FormId,
-        };
-    }
-
-    componentWillUnmount() {
-        if (this.props.destroyOnUnmount) {
-            FormStoresHandler.UnregisterForm(this.FormId);
         }
     }
 
