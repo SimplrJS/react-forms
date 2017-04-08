@@ -14,17 +14,17 @@ export class FormsStoresHandlerClass {
     }
 
     /**
-    * Registers new form with unique formId.
-    * If form exists with the same formId error will occurs.
-    * 
-    * Custom store instance can be given.
-    * 
-    * @param {string} [formId]
-    * @param {*} [store]
-    * @returns
-    * 
-    * @memberOf FormStoreHandlerBase
-    */
+     * Registers new form with unique formId.
+     * If form exists with the same formId error will occurs.
+     * 
+     * Custom store instance can be given.
+     * 
+     * @param {string} [formId]
+     * @param {*} [store]
+     * @returns
+     * 
+     * @memberOf FormStoreHandlerBase
+     */
     public RegisterForm(customFormId?: string, store?: any) {
         let formId = customFormId || this.NextStoreId();
 
@@ -66,13 +66,13 @@ export class FormsStoresHandlerClass {
     }
 
     /**
-    * Returns `true` if store exists.
-    * 
-    * @param {string} formId
-    * @returns
-    * 
-    * @memberOf FormStoreHandlerBase
-    */
+     * Returns `true` if store exists.
+     * 
+     * @param {string} formId
+     * @returns
+     * 
+     * @memberOf FormStoreHandlerBase
+     */
     public Exists(formId: string) {
         return (this.formStores.get(formId) != null);
     }
