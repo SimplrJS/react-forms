@@ -15,7 +15,7 @@ export abstract class BaseForm<TProps extends FormProps, TState> extends React.C
     protected FormId: string;
 
     static childContextTypes = {
-        FormId: React.PropTypes.string,
+        FormId: React.PropTypes.string.isRequired
     };
 
     constructor() {
@@ -30,6 +30,4 @@ export abstract class BaseForm<TProps extends FormProps, TState> extends React.C
     }
 
     abstract render(): JSX.Element | null;
-
-
 }
