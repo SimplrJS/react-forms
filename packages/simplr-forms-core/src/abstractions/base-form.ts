@@ -1,29 +1,20 @@
 import * as React from "react";
-import { FormStore } from "../stores/form-store";
+import * as FormContracts from "../contracts/form";
 import { FormStoresHandler } from "../stores/form-stores-handler";
 
-export interface FormProps {
-    formId?: string;
-    formStore?: FormStore;
-}
-
-export interface FormChildContext {
-    FormId: string;
-}
-
-export abstract class BaseForm<TProps extends FormProps, TState> extends React.Component<TProps, TState> {
+export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> extends React.Component<TProps, TState> {
     protected FormId: string;
 
     static childContextTypes = {
         FormId: React.PropTypes.string.isRequired
     };
 
-    constructor(props: FormProps) {
+    constructor(props: FormContracts.FormProps) {
         super();
         this.FormId = FormStoresHandler.RegisterForm(props.formId, props.formStore);
     }
 
-    getChildContext(): FormChildContext {
+    getChildContext(): FormContracts.FormChildContext {
         return {
             FormId: this.FormId,
         };
