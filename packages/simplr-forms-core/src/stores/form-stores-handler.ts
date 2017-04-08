@@ -32,8 +32,10 @@ export class FormsStoresHandlerClass {
             throw new Error(`simplr-forms-core: Form '${customFormId}' already exist.`);
         }
 
+        // Create store instance
         let storeInstance: FormStore = store || new FormStore(formId);
 
+        // Add instance to formStores map by its id
         this.formStores = this.formStores.set(formId, storeInstance);
 
         return formId;
