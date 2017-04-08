@@ -9,7 +9,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         FormId: React.PropTypes.string.isRequired
     };
 
-    static defaultProps: FormProps = {
+    static defaultProps: FormContracts.FormProps = {
         destroyOnUnmount: true
     };
 
@@ -30,7 +30,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
-    private formRegister(props: FormProps) {
+    private formRegister(props: FormContracts.FormProps) {
         let shouldNotDestroy = !props.destroyOnUnmount;
 
         if (props.formId == null) {

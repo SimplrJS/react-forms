@@ -4,6 +4,7 @@ import { FormStore } from "../stores/form-store";
 export interface FormProps {
     formId?: string;
     formStore?: FormStore;
+    destroyOnUnmount?: boolean;
 }
 
 export interface FormChildContext {
