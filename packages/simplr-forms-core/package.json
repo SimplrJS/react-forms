@@ -11,6 +11,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
+    "@types/flux": "^3.0.1",
     "@types/jest": "^19.2.2",
     "@types/react": "^15.0.21",
     "@types/react-addons-test-utils": "^0.14.17",
@@ -22,6 +23,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
+    "flux": "^3.1.2",
     "react": "^15.5.3",
     "react-dom": "^15.5.3"
   },
