@@ -18,9 +18,9 @@ export abstract class BaseForm<TProps extends FormProps, TState> extends React.C
         FormId: React.PropTypes.string.isRequired
     };
 
-    constructor() {
+    constructor(props: FormProps) {
         super();
-        this.FormId = FormStoresHandler.RegisterForm(this.props.formId, this.props.formStore);
+        this.FormId = FormStoresHandler.RegisterForm(props.formId, props.formStore);
     }
 
     getChildContext(): FormChildContext {

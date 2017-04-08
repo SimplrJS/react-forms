@@ -11,19 +11,21 @@ describe("Form stores handler", () => {
         expect(a).not.toBe(b);
     });
 
-    it("should register with custom formId", () => {
-        let storesHandler = new FormStoresHandlerClass();
-        const FORM_ID = "custom-form-id";
-
-        expect(storesHandler.RegisterForm(FORM_ID)).toBe(FORM_ID);
-    });
-
     it("should register and get generated formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(generatedFormId).toBeTruthy();
         expect(typeof generatedFormId).toBe("string");
+        expect(storesHandler.Exists(generatedFormId)).toBe(true);
+    });
+
+    it("should register with custom formId", () => {
+        let storesHandler = new FormStoresHandlerClass();
+        const FORM_ID = "custom-form-id";
+
+        expect(storesHandler.RegisterForm(FORM_ID)).toBe(FORM_ID);
+        expect(storesHandler.Exists(FORM_ID)).toBe(true);
     });
 
     it("should return true if form store exists", () => {
