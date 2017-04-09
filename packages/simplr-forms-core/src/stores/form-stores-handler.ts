@@ -24,13 +24,13 @@ export class FormStoresHandlerClass {
     /**
      * Registers new form with unique formId.
      * If form exists with the same formId error will occurs.
-     * 
+     *
      * Custom store instance can be given.
-     * 
+     *
      * @param {string} [formId]
      * @param {*} [store]
      * @returns
-     * 
+     *
      * @memberOf FormStoreHandlerBase
      */
     public RegisterForm(customFormId?: string, store?: any) {
@@ -56,9 +56,9 @@ export class FormStoresHandlerClass {
 
     /**
      * Destroys store instance.
-     * 
+     *
      * @param {string} formId
-     * 
+     *
      * @memberOf FormStoreHandlerBase
      */
     public UnregisterForm(formId: string) {
@@ -70,10 +70,10 @@ export class FormStoresHandlerClass {
 
     /**
      * Gets form store instance, if it doesn't exist it will return undefined.
-     * 
+     *
      * @param {string} formId
      * @returns
-     * 
+     *
      * @memberOf FormStoreHandlerBase
      */
     public GetStore(formId: string) {
@@ -82,10 +82,10 @@ export class FormStoresHandlerClass {
 
     /**
      * Returns `true` if store exists.
-     * 
+     *
      * @param {string} formId
      * @returns
-     * 
+     *
      * @memberOf FormStoreHandlerBase
      */
     public Exists(formId: string) {
