@@ -1,15 +1,28 @@
 import { FormError } from "./error";
+import { TypedRecord } from "typed-immutable-record";
 
 // Field value can be of any type or undefined
-export type ValueType = any | undefined;
+export type FieldValueType = any | undefined;
 
-export type FieldFormatValueCallback = (value: ValueType) => ValueType;
-export type FieldParseValueCallback = (value: ValueType) => ValueType;
-export type FieldNormalizeValueCallback = (value: ValueType) => ValueType;
+export type FieldFormatValueCallback = (value: FieldValueType) => FieldValueType;
+export type FieldParseValueCallback = (value: FieldValueType) => FieldValueType;
+export type FieldNormalizeValueCallback = (value: FieldValueType) => FieldValueType;
 
-export interface FieldStoreState<TValue> {
-    InitialValue: TValue;
-    Value: TValue;
+export interface FieldProps {
+    name: string;
+    destroyOnUnmount?: boolean;
+    formatValue?: FieldFormatValueCallback;
+    parseValue?: FieldParseValueCallback;
+    normalizeValue?: FieldNormalizeValueCallback;
+    validationType?: FieldValidationType;
+    onBlur?: (event: any) => void;
+    onFocus?: (event: any) => void;
+    children?: React.ReactNode;
+}
+
+export interface FieldState {
+    InitialValue: FieldValueType;
+    Value: FieldValueType;
     Error?: FormError;
     Touched: boolean;
     Pristine: boolean;
@@ -20,19 +33,9 @@ export interface FieldStoreState<TValue> {
     };
 }
 
-export interface FieldProps {
-    name: string;
-    destroyOnUnmount?: boolean;
-    formatValue?: FieldFormatValueCallback;
-    parseValue?: FieldParseValueCallback;
-    normalizeValue?: FieldNormalizeValueCallback;
-    validationType?: ValidationType;
-    onBlur?: (event: any) => void;
-    onFocus?: (event: any) => void;
-    children?: React.ReactNode;
-}
+export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
 
-export enum ValidationType {
+export enum FieldValidationType {
     None,
     OnChange,
     OnBlur

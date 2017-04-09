@@ -1,11 +1,16 @@
 import * as React from "react";
-import * as FieldContracts from "../contracts/field";
+import {
+    FieldProps,
+    FieldState,
+    FieldValueType,
+    FieldValidationType
+} from "../contracts/field";
 import * as FormContracts from "../contracts/form";
 
 export interface BaseFieldState {
-    Field?: FieldContracts.FieldStoreState<FieldContracts.ValueType>;
-    Form?: FormContracts.FormStoreState;
-    RenderValue?: FieldContracts.ValueType;
+    Field?: FieldState;
+    Form?: FormContracts.FormState;
+    RenderValue?: FieldValueType;
 }
 
 export interface ParentContext {
@@ -15,7 +20,7 @@ export interface ParentContext {
     // FieldGroupProps: FieldGroupContracts.FieldGroupContextPropsObject;
 }
 
-export abstract class BaseField<TProps extends FieldContracts.FieldProps, TState extends BaseFieldState>
+export abstract class BaseField<TProps extends FieldProps, TState extends BaseFieldState>
     extends React.Component<TProps, TState> {
     public context: ParentContext;
 
@@ -26,10 +31,11 @@ export abstract class BaseField<TProps extends FieldContracts.FieldProps, TState
         // FieldGroupProps: React.PropTypes.object
     };
 
-    static defaultProps: FieldContracts.FieldProps = {
+    static defaultProps: FieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
-        validationType: FieldContracts.ValidationType.OnChange,
+        validationType: FieldValidationType.OnChange,
+        // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };
 
@@ -37,6 +43,10 @@ export abstract class BaseField<TProps extends FieldContracts.FieldProps, TState
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
             throw new Error("simplr-forms-core: Field name prop must be given (not undefined or empty string).");
+        }
+
+        if (this.context.FormId == null) {
+            throw new Error("simplr-forms-core: Field must be inside Form component.");
         }
     }
 
