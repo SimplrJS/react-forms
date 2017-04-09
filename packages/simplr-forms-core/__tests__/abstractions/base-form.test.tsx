@@ -4,7 +4,7 @@ import * as TestUtils from "react-addons-test-utils";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
-import { FormStoresHandler, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
+import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 interface MyProps extends FormProps { }
 
@@ -23,6 +23,10 @@ class MyForm extends BaseForm<MyProps, MyState> {
 }
 
 describe("Base form registering", () => {
+    beforeEach(() => {
+        FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
+    });
+
     it("formId is undefined and destroyOnUnmount prop is false", () => {
         expect(() => TestUtils.renderIntoDocument(
             <MyForm destroyOnUnmount={false}></MyForm>
@@ -30,6 +34,7 @@ describe("Base form registering", () => {
     });
 
     it("formId is undefiend and destroyOnUnmount prop is true", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
         let form = TestUtils.renderIntoDocument(<MyForm></MyForm>) as MyForm;
         let formNode = ReactDOM.findDOMNode(form);
         let formId = form.GetFormIdForTest();
@@ -42,6 +47,7 @@ describe("Base form registering", () => {
     });
 
     it("formId is present and destroyOnUnmount is false", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
         const FORM_ID = "custom-form-id";
 
         // Mount first form and check if it's registered .
@@ -69,6 +75,7 @@ describe("Base form registering", () => {
     });
 
     it("formId is present and destroyOnUnmount is true", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
         const FORM_ID = "custom-form-id";
         let form = TestUtils.renderIntoDocument(
             <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>

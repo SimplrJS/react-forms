@@ -7,7 +7,7 @@ import {
 } from "../contracts/field";
 import { FormState } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
-import { FormStoresHandler } from "../stores/form-stores-handler";
+import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseFieldState {
     Field?: FieldState;
@@ -42,7 +42,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     };
 
     protected get FormStore(): FormStore {
-        return FormStoresHandler.GetStore(this.context.FormId);
+        return FSHContainer.FormStoresHandler.GetStore(this.context.FormId);
     }
 
     protected get FieldId(): string {

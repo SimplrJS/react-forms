@@ -48,8 +48,9 @@ export class FormStore {
 
         this.State.Fields = this.State.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
     }
-    public HasField(fieldName: string, fieldsGroupId?: string) {
-        this.State.Fields.has(this.GetFieldId(fieldName, fieldsGroupId));
+
+    public HasField(fieldId: string): boolean {
+        return this.State.Fields.has(fieldId);
     }
 
 

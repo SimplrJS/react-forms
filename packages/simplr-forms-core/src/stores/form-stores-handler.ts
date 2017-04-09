@@ -29,7 +29,7 @@ export class FormStoresHandlerClass {
         let formId = customFormId || this.NextStoreId();
 
         if (this.formStores.get(formId) != null) {
-            throw new Error(`simplr-forms-core: Form '${customFormId}' already exist.`);
+            throw new Error(`simplr-forms-core: Form '${customFormId}' already exists.`);
         }
 
         // Create store instance
@@ -80,4 +80,22 @@ export class FormStoresHandlerClass {
     }
 }
 
-export var FormStoresHandler = new FormStoresHandlerClass();
+export class FSHContainerClass {
+    private instance: FormStoresHandlerClass;
+
+    SetFormStoresHandler(newHandler: FormStoresHandlerClass, disposeOldOne: boolean = true) {
+        if (disposeOldOne) {
+            delete this.instance;
+        }
+        this.instance = newHandler;
+    }
+
+    get FormStoresHandler() {
+        if (this.instance == null) {
+            this.instance = new FormStoresHandlerClass();
+        }
+        return this.instance;
+    }
+}
+
+export var FSHContainer = new FSHContainerClass();
