@@ -1,7 +1,7 @@
 import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 describe("Form stores handler", () => {
-    it("should get next store unique formId", () => {
+    it("returns next store unique formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         let a = storesHandler.NextStoreId();
         let b = storesHandler.NextStoreId();
@@ -11,7 +11,7 @@ describe("Form stores handler", () => {
         expect(a).not.toBe(b);
     });
 
-    it("should register and get generated formId", () => {
+    it("registers and gets generated formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         let generatedFormId = storesHandler.RegisterForm();
 
@@ -20,7 +20,7 @@ describe("Form stores handler", () => {
         expect(storesHandler.Exists(generatedFormId)).toBe(true);
     });
 
-    it("should register with custom formId", () => {
+    it("registers with custom formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         const FORM_ID = "custom-form-id";
 
@@ -28,7 +28,7 @@ describe("Form stores handler", () => {
         expect(storesHandler.Exists(FORM_ID)).toBe(true);
     });
 
-    it("should register with custom formId and cleanup after container reset", () => {
+    it("registers with custom formId and cleans up after container reset", () => {
         const storesHandler = FSHContainer.FormStoresHandler;
         const FORM_ID = "custom-form-id";
 
@@ -44,7 +44,7 @@ describe("Form stores handler", () => {
         expect(storesHandler.StoresCount).toBe(0);
     });
 
-    it("should return true if form store exists", () => {
+    it("returns true if form store exists", () => {
         let storesHandler = new FormStoresHandlerClass();
         const FORM_ID = "custom-form-id";
         const ANOTHER_FORM_ID = "another-custom-form-id";
@@ -54,7 +54,7 @@ describe("Form stores handler", () => {
         expect(storesHandler.Exists(ANOTHER_FORM_ID)).toBe(false);
     });
 
-    it("should register and unregister form", () => {
+    it("registers and unregisters form", () => {
         let storesHandler = new FormStoresHandlerClass();
         let generatedFormId = storesHandler.RegisterForm();
 
@@ -63,7 +63,7 @@ describe("Form stores handler", () => {
         expect(storesHandler.Exists(generatedFormId)).toBe(false);
     });
 
-    it("should get store", () => {
+    it("returns store", () => {
         let storesHandler = new FormStoresHandlerClass();
         let generatedFormId = storesHandler.RegisterForm();
 

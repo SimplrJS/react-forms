@@ -72,6 +72,16 @@ describe("Field Base", () => {
 
         expect(FormStoresHandler.Exists(formId)).toBe(false);
     });
+    it("throws when rendering duplicate fieldName", () => {
+        expect(() => {
+            const fieldName = "fieldName";
+
+            let form = TestUtils.renderIntoDocument(<MyForm>
+                <MyField name="fieldName"></MyField>
+                <MyField name="fieldName"></MyField>
+            </MyForm>) as MyForm;
+        }).toThrow();
+    });
     it("renders html without wrappers", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
