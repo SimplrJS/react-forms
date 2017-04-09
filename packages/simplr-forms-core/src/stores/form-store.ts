@@ -1,17 +1,34 @@
-import { FieldState, FieldValueType, FieldStateRecord } from "../contracts/field";
-import { FormState, FormStateRecord } from "../contracts/form";
-import { FormStoreState } from "../contracts/form-store";
-import { FieldGroupStateRecord } from "../contracts/field-group";
 import * as Immutable from "immutable";
 import { recordify } from "typed-immutable-record";
 
-export class FormStore {
+
+import * as Actions from "./form-store-actions";
+
+import { ActionEmitter } from "action-emitter";
+
+import { FieldState, FieldValueType, FieldStateRecord } from "../contracts/field";
+import { FormState, FormStateRecord } from "../contracts/form";
+import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
+import { FieldGroupStateRecord } from "../contracts/field-group";
+
+export class FormStore extends ActionEmitter {
     constructor(formId: string) {
+        super();
         this.FormId = formId;
+        this.state = this.GetInitialFormStoreState();
     }
 
     protected FormId: string;
-    protected State: FormStoreState = this.GetInitialFormStoreState();
+
+    private state: FormStoreStateRecord;
+    protected get State(): FormStoreStateRecord {
+        return this.state;
+    }
+    protected set State(newState: FormStoreStateRecord) {
+        this.state = newState;
+
+        this.emit(new Actions.StateUpdated());
+    }
 
     /**
      * ========================
@@ -36,7 +53,7 @@ export class FormStore {
         return fieldName;
     }
 
-    public RegisterField(formId: string, fieldId: string, initialValue: FieldValueType, fieldsGroupId?: string) {
+    public RegisterField(fieldId: string, initialValue: FieldValueType, fieldsGroupId?: string) {
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
@@ -46,7 +63,13 @@ export class FormStore {
             };
         }
 
-        this.State.Fields = this.State.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
+        });
+    }
+
+    public UnregisterField(fieldId: string) {
+        this.State.Fields = this.State.Fields.remove(fieldId);
     }
 
     public HasField(fieldId: string): boolean {
@@ -61,12 +84,12 @@ export class FormStore {
      * ========================
      */
 
-    protected GetInitialFormStoreState(): FormStoreState {
-        return {
+    protected GetInitialFormStoreState(): FormStoreStateRecord {
+        return recordify<FormStoreState, FormStoreStateRecord>({
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState())
-        };
+        });
     }
 
     protected GetInitialFormState(): FormState {

@@ -53,7 +53,7 @@ describe("Field Base", () => {
             <MyField name="fieldName"></MyField>
         )).toThrow();
     });
-    it("registers when rendered inside of form", () => {
+    it("registers when rendered inside of a form", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const fieldName = "fieldName";
@@ -67,7 +67,6 @@ describe("Field Base", () => {
         const fieldId = formStore.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
-
 
         form.componentWillUnmount();
 

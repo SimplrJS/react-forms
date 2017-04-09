@@ -12,6 +12,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
+    "@types/fbemitter": "^2.0.32",
     "@types/flux": "^3.0.1",
     "@types/jest": "^19.2.2",
     "@types/react": "^15.0.21",
@@ -25,6 +26,8 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
+    "action-emitter": "^0.0.2",
+    "fbemitter": "^2.1.1",
     "flux": "^3.1.2",
     "immutable": "^3.8.1",
     "react": "15.4.2",

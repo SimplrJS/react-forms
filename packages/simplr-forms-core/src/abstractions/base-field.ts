@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as fbemitter from "fbemitter";
 import {
     FieldProps,
     FieldState,
@@ -7,6 +8,7 @@ import {
 } from "../contracts/field";
 import { FormState } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
+import * as FormStoreActions from "../stores/form-store-actions";
 import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseFieldState {
@@ -49,6 +51,8 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         return this.FormStore.GetFieldId(this.props.name, this.context.FieldsGroupId);
     }
 
+    protected StoreEventSubscription: fbemitter.EventSubscription;
+
     componentWillMount() {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
@@ -58,6 +62,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         if (this.context.FormId == null) {
             throw new Error("simplr-forms-core: Field must be used inside a Form component.");
         }
+
+        this.StoreEventSubscription =
+            this.FormStore.addListener<FormStoreActions.StateUpdated>(FormStoreActions.StateUpdated, this.OnStoreUpdated);
 
         this.registerFieldInFormStore();
     }
@@ -69,6 +76,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
     }
 
+    protected OnStoreUpdated(action: FormStoreActions.StateUpdated) {
+
+    }
 
     /**
      * ========================
@@ -89,7 +99,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         const initialValue = this.RawInitialValue;
-        this.FormStore.RegisterField(this.context.FormId, this.FieldId, initialValue, this.context.FieldsGroupId);
+        this.FormStore.RegisterField(this.FieldId, initialValue, this.context.FieldsGroupId);
     }
 
     /**
