@@ -79,7 +79,28 @@ describe("Field Base", () => {
             let form = TestUtils.renderIntoDocument(<MyForm>
                 <MyField name="fieldName"></MyField>
                 <MyField name="fieldName"></MyField>
-            </MyForm>) as MyForm;
+            </MyForm>);
+        }).toThrow();
+    });
+    it("throws when rendering an empty fieldName", () => {
+        expect(() => {
+            let form = TestUtils.renderIntoDocument(<MyForm>
+                <MyField name=""></MyField>
+            </MyForm>);
+        }).toThrow();
+    });
+    it("throws when rendering an undefined fieldName", () => {
+        expect(() => {
+            let form = TestUtils.renderIntoDocument(<MyForm>
+                <MyField name={undefined}></MyField>
+            </MyForm>);
+        }).toThrow();
+    });
+    it("throws when rendering a null fieldName", () => {
+        expect(() => {
+            let form = TestUtils.renderIntoDocument(<MyForm>
+                <MyField name={null}></MyField>
+            </MyForm>);
         }).toThrow();
     });
     it("renders html without wrappers", () => {
