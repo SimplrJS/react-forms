@@ -13,24 +13,52 @@ export class FormStore {
     protected FormId: string;
     protected State: FormStoreState = this.GetInitialFormStoreState();
 
-    public RegisterField(formId: string, fieldName: string, initialValue: FieldValueType, fieldGroupId?: string) {
-        let newFieldState = this.GetInitialFieldState();
-        newFieldState.InitialValue = initialValue;
-        newFieldState.Value = initialValue;
-        if (fieldGroupId != null) {
-            newFieldState.FieldsGroup = {
-                Id: fieldGroupId
+    /**
+     * ========================
+     *  Public API
+     * ========================
+     */
+
+    /**
+     * Constructs field id from given fieldName and an optional fieldsGroupIdkds
+     *
+     * @param {string} fieldName
+     * @param {string} [fieldsGroupId]
+     * @returns Constructed field id
+     *
+     * @memberOf FormStore
+     */
+    public GetFieldId(fieldName: string, fieldsGroupId?: string) {
+        if (fieldsGroupId != null) {
+            return `${fieldsGroupId}___${fieldName}`;
+        }
+
+        return fieldName;
+    }
+
+    public RegisterField(formId: string, fieldId: string, initialValue: FieldValueType, fieldsGroupId?: string) {
+        let fieldState = this.GetInitialFieldState();
+        fieldState.InitialValue = initialValue;
+        fieldState.Value = initialValue;
+        if (fieldsGroupId != null) {
+            fieldState.FieldsGroup = {
+                Id: fieldsGroupId
             };
         }
 
-        const fieldId = this.GetFieldId(fieldName, fieldGroupId);
-
-        this.State.Fields = this.State.set(fieldId, recordify<FieldState, FieldStateRecord>(newFieldState));
+        this.State.Fields = this.State.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
+    }
+    public HasField(fieldName: string, fieldsGroupId?: string) {
+        this.State.Fields.has(this.GetFieldId(fieldName, fieldsGroupId));
     }
 
-    /*
-    * Local helper methods
-    */
+
+
+    /**
+     * ========================
+     *  Local helper methods
+     * ========================
+     */
 
     protected GetInitialFormStoreState(): FormStoreState {
         return {
@@ -61,13 +89,5 @@ export class FormStore {
             FieldsGroup: undefined,
             Validators: undefined
         };
-    }
-
-    protected GetFieldId(fieldName: string, fieldGroupId?: string) {
-        if (fieldGroupId != null) {
-            return `${fieldGroupId}___${fieldName}`;
-        }
-
-        return fieldName;
     }
 }

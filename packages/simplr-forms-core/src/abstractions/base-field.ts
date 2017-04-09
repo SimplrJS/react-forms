@@ -5,18 +5,20 @@ import {
     FieldValueType,
     FieldValidationType
 } from "../contracts/field";
-import * as FormContracts from "../contracts/form";
+import { FormState } from "../contracts/form";
+import { FormStore } from "../stores/form-store";
+import { FormStoresHandler } from "../stores/form-stores-handler";
 
 export interface BaseFieldState {
     Field?: FieldState;
-    Form?: FormContracts.FormState;
+    Form?: FormState;
     RenderValue?: FieldValueType;
 }
 
 export interface ParentContext {
     FormId: string;
     // FormProps: FormContracts.FormContextPropsObject;
-    // FieldGroupId: string;
+    FieldsGroupId: string;
     // FieldGroupProps: FieldGroupContracts.FieldGroupContextPropsObject;
 }
 
@@ -27,7 +29,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     static contextTypes: React.ValidationMap<ParentContext> = {
         FormId: React.PropTypes.string,
         // FormProps: React.PropTypes.object,
-        // FieldGroupId: React.PropTypes.string,
+        FieldsGroupId: React.PropTypes.string,
         // FieldGroupProps: React.PropTypes.object
     };
 
@@ -39,6 +41,14 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         destroyOnUnmount: false
     };
 
+    protected get FormStore(): FormStore {
+        return FormStoresHandler.GetStore(this.context.FormId);
+    }
+
+    protected get FieldId(): string {
+        return this.FormStore.GetFieldId(this.props.name, this.context.FieldsGroupId);
+    }
+
     componentWillMount() {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
@@ -48,7 +58,72 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         if (this.context.FormId == null) {
             throw new Error("simplr-forms-core: Field must be used inside a Form component.");
         }
+
+        this.registerFieldInFormStore();
     }
 
+    componentWillReceiveProps(nextProps: FieldProps) {
+        // Check if field name has not been changed
+        if (this.props.name !== nextProps.name) {
+            throw new Error(`simplr-forms-core: Field name must be constant`);
+        }
+    }
+
+
+    /**
+     * ========================
+     *  Local helper methods
+     * ========================
+     */
+
+    /**
+     * Registers a field in FormStore or throws if the field was already registered
+     *
+     * @private
+     *
+     * @memberOf BaseField
+     */
+    private registerFieldInFormStore() {
+        if (this.FormStore.HasField(this.FieldId)) {
+            throw new Error(`simplr-forms-core: Duplicate field id '${this.FieldId}'`);
+        }
+
+        const initialValue = this.RawInitialValue;
+        this.FormStore.RegisterField(this.context.FormId, this.FieldId, initialValue, this.context.FieldsGroupId);
+    }
+
+    /**
+     * ========================
+     *  Abstract methods
+     * ========================
+     */
+
+
+    /**
+     * React Component's render method
+     */
     abstract render(): JSX.Element | null;
+
+    /**
+     * Initial value before render.
+     * Most common usage is for getting initial value from field props.
+     *
+     * @readonly
+     * @protected
+     * @type {(FieldContracts.ValueTypes | any)}
+     * @memberOf BaseField
+     */
+    protected abstract get RawInitialValue(): FieldValueType;
+
+
+    /**
+     * Default field value.
+     *
+     * @readonly
+     * @protected
+     *
+     * @memberOf BaseField
+     */
+    protected abstract get DefaultValue(): FieldValueType;
+
 }
