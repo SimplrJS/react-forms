@@ -2,15 +2,23 @@ import * as Immutable from "immutable";
 import { FormStore } from "./form-store";
 
 export class FormStoresHandlerClass {
-    private storeCount = 0;
-    private formStores = Immutable.Map<string, FormStore>();
+    private storesCount: number;
+    private formStores: Immutable.Map<string, FormStore>;
+
+    constructor() {
+        this.resetFormStores();
+    }
 
     protected GetFormStoreId(formNumber: number) {
         return `form-store-${formNumber}`;
     }
 
     public NextStoreId() {
-        return this.GetFormStoreId(++this.storeCount);
+        return this.GetFormStoreId(++this.storesCount);
+    }
+
+    public get StoresCount() {
+        return this.storesCount;
     }
 
     /**
@@ -26,14 +34,19 @@ export class FormStoresHandlerClass {
      * @memberOf FormStoreHandlerBase
      */
     public RegisterForm(customFormId?: string, store?: any) {
-        let formId = customFormId || this.NextStoreId();
+        if (customFormId != null) {
+            // To keep store count present nomatter the customFormId was given
+            ++this.storesCount;
+        }
+
+        const formId = customFormId || this.NextStoreId();
 
         if (this.formStores.get(formId) != null) {
             throw new Error(`simplr-forms-core: Form '${customFormId}' already exists.`);
         }
 
         // Create store instance
-        let storeInstance: FormStore = store || new FormStore(formId);
+        const storeInstance: FormStore = store || new FormStore(formId);
 
         // Add instance to formStores map by its id
         this.formStores = this.formStores.set(formId, storeInstance);
@@ -49,7 +62,7 @@ export class FormStoresHandlerClass {
      * @memberOf FormStoreHandlerBase
      */
     public UnregisterForm(formId: string) {
-        let store = this.formStores.get(formId);
+        const store = this.formStores.get(formId);
         if (store != null) {
             this.formStores = this.formStores.delete(formId);
         }
@@ -78,6 +91,11 @@ export class FormStoresHandlerClass {
     public Exists(formId: string) {
         return this.formStores.get(formId) != null;
     }
+
+    private resetFormStores() {
+        this.storesCount = 0;
+        this.formStores = Immutable.Map<string, FormStore>();
+    }
 }
 
 export class FSHContainerClass {
@@ -85,7 +103,11 @@ export class FSHContainerClass {
 
     SetFormStoresHandler(newHandler: FormStoresHandlerClass, disposeOldOne: boolean = true) {
         if (disposeOldOne) {
-            delete this.instance;
+            if (this.instance != null) {
+                // Call internal method to reset stores
+                (this.instance as any).resetFormStores();
+                delete this.instance;
+            }
         }
         this.instance = newHandler;
     }

@@ -1,4 +1,4 @@
-import { FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
+import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 describe("Form stores handler", () => {
     it("should get next store unique formId", () => {
@@ -26,6 +26,22 @@ describe("Form stores handler", () => {
 
         expect(storesHandler.RegisterForm(FORM_ID)).toBe(FORM_ID);
         expect(storesHandler.Exists(FORM_ID)).toBe(true);
+    });
+
+    it("should register with custom formId and cleanup after container reset", () => {
+        const storesHandler = FSHContainer.FormStoresHandler;
+        const FORM_ID = "custom-form-id";
+
+        expect(storesHandler.StoresCount).toBe(0);
+
+        expect(storesHandler.RegisterForm(FORM_ID)).toBe(FORM_ID);
+
+        expect(storesHandler.StoresCount).toBe(1);
+        expect(storesHandler.Exists(FORM_ID)).toBe(true);
+
+        FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
+
+        expect(storesHandler.StoresCount).toBe(0);
     });
 
     it("should return true if form store exists", () => {
