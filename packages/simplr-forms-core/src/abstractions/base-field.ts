@@ -24,7 +24,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     extends React.Component<TProps, TState> {
     public context: ParentContext;
 
-    static contextTypes = {
+    static contextTypes: React.ValidationMap<ParentContext> = {
         FormId: React.PropTypes.string,
         // FormProps: React.PropTypes.object,
         // FieldGroupId: React.PropTypes.string,
@@ -42,11 +42,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     componentWillMount() {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
-            throw new Error("simplr-forms-core: Field name prop must be given (not undefined or empty string).");
+            throw new Error("simplr-forms-core: A proper field name must be given (undefined and empty string are not valid).");
         }
 
         if (this.context.FormId == null) {
-            throw new Error("simplr-forms-core: Field must be inside Form component.");
+            throw new Error("simplr-forms-core: Field must be used inside a Form component.");
         }
     }
 

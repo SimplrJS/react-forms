@@ -2,7 +2,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as TestUtils from "react-addons-test-utils";
 
-import { BaseForm, FormProps } from "../../src/abstractions/base-form";
+import { BaseForm } from "../../src/abstractions/base-form";
+import { FormProps } from "../../src/contracts/form";
 import { FormStoresHandler, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 interface MyProps extends FormProps { }
