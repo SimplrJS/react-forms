@@ -24,7 +24,6 @@ export class DispatcherClass extends flux.Dispatcher<DispatcherMessage> {
             console.error(e);
         }
     }
-
 }
 
 export var Dispatcher = new DispatcherClass();

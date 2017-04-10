@@ -54,6 +54,7 @@ export class FormStore extends ActionEmitter {
     }
 
     public RegisterField(fieldId: string, initialValue: FieldValueType, fieldsGroupId?: string) {
+        // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
@@ -63,12 +64,14 @@ export class FormStore extends ActionEmitter {
             };
         }
 
+        // Add field into form store state
         this.State = this.State.withMutations(state => {
             state.Fields = state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
         });
     }
 
     public UnregisterField(fieldId: string) {
+        // Remove field from form store state
         this.State.Fields = this.State.Fields.remove(fieldId);
     }
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as TestUtils from "react-addons-test-utils";
+import { shallow, mount, render } from "enzyme";
+import "react-dom/test-utils";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
@@ -49,7 +50,7 @@ describe("Field Base", () => {
     });
 
     it("is rendered outside of Form", () => {
-        expect(() => TestUtils.renderIntoDocument(
+        expect(() => shallow(
             <MyField name="fieldName"></MyField>
         )).toThrow();
     });
@@ -58,25 +59,39 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = TestUtils.renderIntoDocument(<MyForm formId={formId}>
+        let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
-        </MyForm>) as MyForm;
-        let formNode = ReactDOM.findDOMNode(form);
+        </MyForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
+    });
+    it("unregisters when componentWillUnmount is called", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
+        const formId = "FORM_ID";
+        const fieldName = "fieldName";
 
-        form.componentWillUnmount();
+        let form = mount(<MyForm formId={formId}>
+            <MyField name="fieldName"></MyField>
+        </MyForm>);
 
-        expect(FormStoresHandler.Exists(formId)).toBe(false);
+        const formStore = FormStoresHandler.GetStore(formId);
+        const fieldId = formStore.GetFieldId(fieldName);
+
+        form.unmount();
+
+        // const field = React.Children.only(.props.children);
+        // console.log(field.componentWillUnmount);
+
+        expect(formStore.HasField(fieldId)).toBe(false);
     });
     it("throws when rendering duplicate fieldName", () => {
         expect(() => {
             const fieldName = "fieldName";
 
-            let form = TestUtils.renderIntoDocument(<MyForm>
+            mount(<MyForm>
                 <MyField name="fieldName"></MyField>
                 <MyField name="fieldName"></MyField>
             </MyForm>);
@@ -84,21 +99,21 @@ describe("Field Base", () => {
     });
     it("throws when rendering an empty fieldName", () => {
         expect(() => {
-            let form = TestUtils.renderIntoDocument(<MyForm>
+            mount(<MyForm>
                 <MyField name=""></MyField>
             </MyForm>);
         }).toThrow();
     });
     it("throws when rendering an undefined fieldName", () => {
         expect(() => {
-            let form = TestUtils.renderIntoDocument(<MyForm>
+            mount(<MyForm>
                 <MyField name={undefined}></MyField>
             </MyForm>);
         }).toThrow();
     });
     it("throws when rendering a null fieldName", () => {
         expect(() => {
-            let form = TestUtils.renderIntoDocument(<MyForm>
+            mount(<MyForm>
                 <MyField name={null}></MyField>
             </MyForm>);
         }).toThrow();
@@ -106,10 +121,9 @@ describe("Field Base", () => {
     it("renders html without wrappers", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
-        let form = TestUtils.renderIntoDocument(<MyForm formId={formId}>
+        let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
-        </MyForm>) as MyForm;
-        const formNode = ReactDOM.findDOMNode(form);
-        expect(formNode.innerHTML).toEqual("<input type=\"text\">");
+        </MyForm>);
+        expect(form.html()).toEqual("<form><input type=\"text\"></form>");
     });
 });

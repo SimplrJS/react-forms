@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "test-watch": "jest --watchAll"
+    "test-watch": "jest --watchAll",
+    "test-coverage": "npm test -- --coverage"
   },
   "author": "",
   "license": "AGPL-3.0",
@@ -16,11 +17,9 @@
     "@types/flux": "^3.0.1",
     "@types/jest": "^19.2.2",
     "@types/react": "^15.0.21",
-    "@types/react-addons-test-utils": "^0.14.17",
     "@types/react-dom": "^0.14.23",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
-    "react-addons-test-utils": "^15.5.0",
     "ts-jest": "^19.0.8",
     "tslint": "^5.0.0",
     "typescript": "^2.2.2"
