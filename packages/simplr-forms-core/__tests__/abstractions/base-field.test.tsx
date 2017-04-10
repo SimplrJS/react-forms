@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { shallow, mount, render } from "enzyme";
+import { AnyAction } from "action-emitter";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
@@ -163,5 +164,30 @@ describe("Field Base", () => {
             <MyField name="fieldName"></MyField>
         </MyForm>);
         expect(form.html()).toEqual("<form><input type=\"text\"></form>");
+    });
+
+    fit("adds event listener to form store when mounts", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
+        const formId = "FORM_ID";
+        const form = mount(<MyForm formId={formId}>
+            <MyField name="fieldName"></MyField>
+        </MyForm>);
+
+        const formStore = FormStoresHandler.GetStore(formId);
+
+        expect(formStore.listeners(AnyAction).length).toBe(1);
+    });
+
+    it("removes event listener to form store from when unmounts", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
+        const formId = "FORM_ID";
+        const form = mount(<MyForm formId={formId} >
+            <MyField name="fieldName"></MyField>
+        </MyForm>);
+
+
+        const formStore = FormStoresHandler.GetStore(formId);
+        form.unmount();
+        expect(formStore.listeners(AnyAction).length).toBe(0);
     });
 });
