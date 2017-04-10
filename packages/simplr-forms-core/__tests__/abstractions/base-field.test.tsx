@@ -47,8 +47,6 @@ class MyField extends BaseField<MyFieldProps, MyFieldState> {
     }
 }
 
-
-
 describe("Field Base", () => {
     beforeEach(() => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
@@ -79,13 +77,35 @@ describe("Field Base", () => {
         expect(formStore.HasField(fieldId)).toBe(true);
     });
 
-    it("unregisters when componentWillUnmount is called", () => {
+    it("does not unregister itself when component is unmounted and destroyOnUnmount is false (default)", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
         let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
+        </MyForm>);
+
+        let formStore = FormStoresHandler.GetStore(formId);
+        const fieldId = formStore.GetFieldId(fieldName);
+
+        expect(formStore.HasField(fieldId)).toBe(true);
+
+        form.setProps({
+            ...form.props(),
+            renderChildren: false
+        });
+
+        expect(formStore.HasField(fieldId)).toBe(true);
+    });
+
+    it("unregisters when component is unmounted and destroyOnUnmount is true", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
+        const formId = "FORM_ID";
+        const fieldName = "fieldName";
+
+        let form = mount(<MyForm formId={formId}>
+            <MyField destroyOnUnmount={true} name="fieldName"></MyField>
         </MyForm>);
 
         let formStore = FormStoresHandler.GetStore(formId);
