@@ -1,5 +1,5 @@
-import { FormError } from "./error";
 import { TypedRecord } from "typed-immutable-record";
+import { FormError } from "./error";
 
 // Field value can be of any type or undefined
 export type FieldValueType = any | undefined;
