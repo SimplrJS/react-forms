@@ -77,7 +77,10 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     }
 
     componentWillUnmount() {
-        if (this.FormStore != null) {
+        if (this.StoreEventSubscription != null) {
+            this.StoreEventSubscription.remove();
+        }
+        if (this.FormStore != null && this.props.destroyOnUnmount) {
             this.FormStore.UnregisterField(this.FieldId);
         }
     }
