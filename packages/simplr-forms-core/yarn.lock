@@ -60,9 +60,9 @@ acorn@^4.0.4:
   version "4.0.11"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
 
-action-emitter@^0.1.0:
-  version "0.1.0"
-  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/action-emitter/-/action-emitter-0.1.0.tgz#974a7e55cd58b70d19bc6c784a6a0e47f07b0286"
+action-emitter@^0.2.0:
+  version "0.2.0"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/action-emitter/-/action-emitter-0.2.0.tgz#1f19a6e729ef52e530787cfe7a34e56a9a5413cf"
   dependencies:
     "@types/fbemitter" "^2.0.32"
     fbemitter "^2.1.1"

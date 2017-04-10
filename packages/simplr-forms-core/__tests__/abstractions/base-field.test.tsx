@@ -6,7 +6,7 @@ import { AnyAction } from "action-emitter";
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
 import { BaseField } from "../../src/abstractions/base-field";
-import { FieldProps, FieldValueType } from "../../src/contracts/field";
+import { FieldProps, FieldValue } from "../../src/contracts/field";
 import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
 
 interface MyFormProps extends FormProps {
@@ -39,11 +39,11 @@ class MyField extends BaseField<MyFieldProps, MyFieldState> {
         return <input type="text" />;
     }
 
-    protected get RawInitialValue(): FieldValueType {
+    protected get RawInitialValue(): FieldValue {
         return "";
     }
 
-    protected get DefaultValue(): FieldValueType {
+    protected get DefaultValue(): FieldValue {
         return "";
     }
 }

@@ -5,6 +5,7 @@
   "repository": "https://github.com/SimplrJS/simplr-forms",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p .",
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage"
@@ -29,7 +30,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "action-emitter": "^0.1.0",
+    "action-emitter": "^0.2.0",
     "fbemitter": "^2.1.1",
     "flux": "^3.1.2",
     "immutable": "^3.8.1",

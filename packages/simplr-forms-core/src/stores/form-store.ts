@@ -3,10 +3,10 @@ import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "./form-store-actions";
-import { FieldState, FieldValueType, FieldStateRecord } from "../contracts/field";
+import { FieldState, FieldValue, FieldStateRecord } from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
-import { FieldGroupStateRecord } from "../contracts/field-group";
+import { FieldsGroupStateRecord } from "../contracts/fields-group";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -50,7 +50,7 @@ export class FormStore extends ActionEmitter {
         return fieldName;
     }
 
-    public RegisterField(fieldId: string, initialValue: FieldValueType, fieldsGroupId?: string) {
+    public RegisterField(fieldId: string, initialValue: FieldValue, fieldsGroupId?: string) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
@@ -89,7 +89,7 @@ export class FormStore extends ActionEmitter {
     protected GetInitialFormStoreState(): FormStoreStateRecord {
         return recordify<FormStoreState, FormStoreStateRecord>({
             Fields: Immutable.Map<string, FieldStateRecord>(),
-            FieldsGroups: Immutable.Map<string, FieldGroupStateRecord>(),
+            FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState())
         });
     }

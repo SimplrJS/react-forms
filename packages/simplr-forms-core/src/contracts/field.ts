@@ -2,11 +2,11 @@ import { TypedRecord } from "typed-immutable-record";
 import { FormError } from "./error";
 
 // Field value can be of any type or undefined
-export type FieldValueType = any | undefined;
+export type FieldValue = any | undefined;
 
-export type FieldFormatValueCallback = (value: FieldValueType) => FieldValueType;
-export type FieldParseValueCallback = (value: FieldValueType) => FieldValueType;
-export type FieldNormalizeValueCallback = (value: FieldValueType) => FieldValueType;
+export type FieldFormatValueCallback = (value: FieldValue) => FieldValue;
+export type FieldParseValueCallback = (value: FieldValue) => FieldValue;
+export type FieldNormalizeValueCallback = (value: FieldValue) => FieldValue;
 
 export interface FieldProps {
     name: string;
@@ -21,8 +21,8 @@ export interface FieldProps {
 }
 
 export interface FieldState {
-    InitialValue: FieldValueType;
-    Value: FieldValueType;
+    InitialValue: FieldValue;
+    Value: FieldValue;
     Error?: FormError;
     Touched: boolean;
     Pristine: boolean;

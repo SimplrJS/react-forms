@@ -2,12 +2,12 @@ import * as Immutable from "immutable";
 import { TypedRecord } from "typed-immutable-record";
 
 import { FieldStateRecord } from "../contracts/field";
-import { FieldGroupStoreState } from "../contracts/field-group";
+import { FieldsGroupStoreState } from "../contracts/fields-group";
 import { FormStateRecord } from "../contracts/form";
 
 export interface FormStoreState {
     Fields: Immutable.Map<string, FieldStateRecord>;
-    FieldsGroups: Immutable.Map<string, FieldGroupStoreState>;
+    FieldsGroups: Immutable.Map<string, FieldsGroupStoreState>;
     Form?: FormStateRecord;
 }
 
