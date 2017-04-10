@@ -18,7 +18,7 @@ class MyForm extends BaseForm<MyProps, MyState> {
     }
 }
 
-describe("Base form: when registering form", () => {
+describe("Form base", () => {
     beforeEach(() => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
     });
@@ -39,6 +39,7 @@ describe("Base form: when registering form", () => {
         form.unmount();
 
         expect(FormStoresHandler.Exists(formId)).toBe(false);
+        expect(FormStoresHandler.GetStore(formId)).toBeUndefined();
     });
 
     it("formId is present and destroyOnUnmount is false", () => {
@@ -64,27 +65,6 @@ describe("Base form: when registering form", () => {
         // Unmount form and check if it's still registered.
         form2.unmount();
         expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-    });
-
-    it("unregisters form store when componentWillUnmount is called", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
-        const formId = "FORM_ID";
-        const fieldName = "fieldName";
-
-        let form = mount(<MyForm formId={formId}>
-
-        </MyForm>);
-
-        let formStore = FormStoresHandler.GetStore(formId);
-        const fieldId = formStore.GetFieldId(fieldName);
-
-        expect(formStore.HasField(fieldId)).toBe(true);
-
-        form.unmount();
-
-        formStore = FormStoresHandler.GetStore(formId);
-        // Form store should be undefined, because form is unmounted
-        expect(formStore).toBeUndefined();
     });
 
     it("formId is present and destroyOnUnmount is true", () => {
