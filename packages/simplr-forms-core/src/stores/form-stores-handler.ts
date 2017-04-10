@@ -13,12 +13,19 @@ export class FormStoresHandlerClass {
         return `form-store-${formNumber}`;
     }
 
+    /**
+     * Returns unique incremental store id.
+     * 
+     * @returns 
+     * 
+     * @memberOf FormStoresHandlerClass
+     */
     public NextStoreId() {
         return this.GetFormStoreId(++this.storesCount);
     }
 
     /**
-     * Returns count of currently registered stores
+     * Returns count of currently registered stores.
      * 
      * @readonly
      * 
