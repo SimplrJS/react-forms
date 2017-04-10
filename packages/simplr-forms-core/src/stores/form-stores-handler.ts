@@ -3,7 +3,13 @@ import { FormStore } from "./form-store";
 
 export class FormStoresHandlerClass {
     private storesCount: number;
-    private formStores: Immutable.Map<string, FormStore>;
+    private _formStores: Immutable.Map<string, FormStore>;
+    private set formStores(newStore) {
+        this._formStores = newStore;
+    }
+    private get formStores(): Immutable.Map<string, FormStore> {
+        return this._formStores;
+    }
 
     constructor() {
         this.resetFormStores();

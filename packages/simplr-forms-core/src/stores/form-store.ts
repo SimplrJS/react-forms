@@ -72,7 +72,9 @@ export class FormStore extends ActionEmitter {
 
     public UnregisterField(fieldId: string) {
         // Remove field from form store state
-        this.State.Fields = this.State.Fields.remove(fieldId);
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.remove(fieldId);
+        });
     }
 
     public HasField(fieldId: string): boolean {

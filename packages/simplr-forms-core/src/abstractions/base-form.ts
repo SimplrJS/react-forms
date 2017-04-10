@@ -9,6 +9,12 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         FormId: React.PropTypes.string.isRequired
     };
 
+    getChildContext(): FormContracts.FormChildContext {
+        return {
+            FormId: this.FormId,
+        };
+    }
+
     static defaultProps: FormContracts.FormProps = {
         destroyOnUnmount: true
     };
@@ -16,12 +22,6 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     constructor(props: FormContracts.FormProps) {
         super();
         this.registerForm(props);
-    }
-
-    getChildContext(): FormContracts.FormChildContext {
-        return {
-            FormId: this.FormId,
-        };
     }
 
     protected get FormStoresHandler(): FormStoresHandlerClass {

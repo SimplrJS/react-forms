@@ -18,14 +18,18 @@
     "@types/jest": "^19.2.2",
     "@types/react": "^15.0.21",
     "@types/react-dom": "^0.14.23",
+    "@types/sinon": "^2.1.2",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
+    "jest-enzyme": "^3.0.0",
+    "react-addons-test-utils": "^15.5.1",
+    "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "tslint": "^5.0.0",
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "action-emitter": "^0.0.2",
+    "action-emitter": "^0.1.0",
     "fbemitter": "^2.1.1",
     "flux": "^3.1.2",
     "immutable": "^3.8.1",
@@ -34,6 +38,7 @@
     "typed-immutable-record": "^0.0.6"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },

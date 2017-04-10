@@ -77,7 +77,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     }
 
     componentWillUnmount() {
-        this.FormStore.UnregisterField(this.FieldId);
+        if (this.FormStore != null) {
+            this.FormStore.UnregisterField(this.FieldId);
+        }
     }
 
     protected OnStoreUpdated(action: FormStoreActions.StateUpdated) {
