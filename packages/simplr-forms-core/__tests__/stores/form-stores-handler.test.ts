@@ -1,6 +1,7 @@
 import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 describe("Form stores handler", () => {
+
     it("returns next store unique formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         let a = storesHandler.NextStoreId();
@@ -9,6 +10,21 @@ describe("Form stores handler", () => {
         expect(a).toBeTruthy();
         expect(typeof a).toBe("string");
         expect(a).not.toBe(b);
+    });
+
+    it("returns count of currently registered stores", () => {
+        let storesHandler = new FormStoresHandlerClass();
+        let id = storesHandler.NextStoreId();
+        let id2 = storesHandler.NextStoreId();
+
+        storesHandler.RegisterForm(id);
+        let count = storesHandler.StoresCount;
+        expect(typeof count).toBe("number");
+        expect(count).toBeGreaterThan(0);
+
+        storesHandler.RegisterForm(id2);
+        let count2 = storesHandler.StoresCount;
+        expect(count2).toBeGreaterThan(count);
     });
 
     it("registers and gets generated formId", () => {

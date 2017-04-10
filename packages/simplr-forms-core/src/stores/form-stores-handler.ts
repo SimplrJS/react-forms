@@ -17,8 +17,15 @@ export class FormStoresHandlerClass {
         return this.GetFormStoreId(++this.storesCount);
     }
 
+    /**
+     * Returns count of currently registered stores
+     * 
+     * @readonly
+     * 
+     * @memberOf FormStoresHandlerClass
+     */
     public get StoresCount() {
-        return this.storesCount;
+        return this.formStores.count();
     }
 
     /**
