@@ -18,21 +18,21 @@ class MyForm extends BaseForm<MyProps, MyState> {
     }
 }
 
-describe("Base form registering", () => {
+describe("Base form: when registering form", () => {
     beforeEach(() => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
     });
 
-    it("formId is undefined and destroyOnUnmount prop is false", () => {
+    it("formId is undefined and destroyOnUnmount prop is false, it should throw", () => {
         expect(() => mount(
             <MyForm destroyOnUnmount={false}></MyForm>
         )).toThrow();
     });
 
-    it("formId is undefiend and destroyOnUnmount prop is true", () => {
+    it("formId is undefined and destroyOnUnmount prop is true", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         let form = mount(<MyForm></MyForm>);
-        let formId = (form.instance as any).FormId;
+        let formId = (form.instance() as any).FormId;
 
         expect(FormStoresHandler.Exists(formId)).toBe(true);
 
@@ -64,9 +64,27 @@ describe("Base form registering", () => {
         // Unmount form and check if it's still registered.
         form2.unmount();
         expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
+    });
 
-        // Unregister manually from FormStoresHandler.
-        FormStoresHandler.UnregisterForm(FORM_ID);
+    it("unregisters form store when componentWillUnmount is called", () => {
+        const FormStoresHandler = FSHContainer.FormStoresHandler;
+        const formId = "FORM_ID";
+        const fieldName = "fieldName";
+
+        let form = mount(<MyForm formId={formId}>
+
+        </MyForm>);
+
+        let formStore = FormStoresHandler.GetStore(formId);
+        const fieldId = formStore.GetFieldId(fieldName);
+
+        expect(formStore.HasField(fieldId)).toBe(true);
+
+        form.unmount();
+
+        formStore = FormStoresHandler.GetStore(formId);
+        // Form store should be undefined, because form is unmounted
+        expect(formStore).toBeUndefined();
     });
 
     it("formId is present and destroyOnUnmount is true", () => {
