@@ -23,59 +23,75 @@ describe("Form base", () => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
     });
 
-    it("formId is undefined and destroyOnUnmount prop is false, it should throw", () => {
-        expect(() => mount(
-            <MyForm destroyOnUnmount={false}></MyForm>
-        )).toThrow();
+    describe("registers when", () => {
+        it("formId is undefined and destroyOnUnmount prop is false", () => {
+            expect(() => shallow(
+                <MyForm destroyOnUnmount={false}></MyForm>
+            )).toThrow();
+        });
+
+        it("formId is undefined and destroyOnUnmount prop is true", () => {
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            let form = shallow(<MyForm></MyForm>);
+            let formId = (form.instance() as any).FormId;
+
+            expect(FormStoresHandler.Exists(formId)).toBe(true);
+        });
+
+        it("formId is present and destroyOnUnmount is true", () => {
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            const FORM_ID = "custom-form-id";
+            const form = mount(
+                <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>
+            );
+
+            expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
+        });
+
+        it("formId is present and destroyOnUnmount is true and already exists in FormStoresHandler", () => {
+            // This is to check the case, when form is rendered with destroyOnUnmount false first
+            // and destroyOnUnmount true second
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            const FORM_ID = "custom-form-id";
+
+            mount(<MyForm destroyOnUnmount={false} formId={FORM_ID}></MyForm>);
+            expect(() => mount(<MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>)).toThrow();
+        });
+
+        it("another FormBase registered with the same formId", () => {
+            // This is to check the case, when form is rendered with destroyOnUnmount false first
+            // and destroyOnUnmount true second
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            const FORM_ID = "custom-form-id";
+            const formComponent = <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>;
+
+            mount(formComponent);
+            expect(() => mount(formComponent)).toThrow();
+        });
     });
 
-    it("formId is undefined and destroyOnUnmount prop is true", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
-        let form = mount(<MyForm></MyForm>);
-        let formId = (form.instance() as any).FormId;
+    describe("unregisters when", () => {
+        it("formId is undefined and destroyOnUnmount prop is true", () => {
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            let form = shallow(<MyForm></MyForm>);
+            let formId = (form.instance() as any).FormId;
 
-        expect(FormStoresHandler.Exists(formId)).toBe(true);
+            form.unmount();
 
-        form.unmount();
+            expect(FormStoresHandler.Exists(formId)).toBe(false);
+            expect(FormStoresHandler.GetStore(formId)).toBeUndefined();
+        });
 
-        expect(FormStoresHandler.Exists(formId)).toBe(false);
-        expect(FormStoresHandler.GetStore(formId)).toBeUndefined();
-    });
+        it("formId is present and destroyOnUnmount is true", () => {
+            const FormStoresHandler = FSHContainer.FormStoresHandler;
+            const formId = "custom-form-id";
+            let form = mount(
+                <MyForm destroyOnUnmount={true} formId={formId}></MyForm>
+            );
 
-    it("formId is present and destroyOnUnmount is false", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
-        const FORM_ID = "custom-form-id";
-
-        // Mount first form and check if it's registered .
-        let form = mount(
-            <MyForm destroyOnUnmount={false} formId={FORM_ID}></MyForm>
-        );
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-
-        // Unmount first form and it should be still present in FormStoresHandler.
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-        form.unmount();
-
-        // Mount second form and check if it's registered.
-        let form2 = mount(
-            <MyForm destroyOnUnmount={false} formId={FORM_ID}></MyForm>
-        );
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-
-        // Unmount form and check if it's still registered.
-        form2.unmount();
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-    });
-
-    it("formId is present and destroyOnUnmount is true", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
-        const FORM_ID = "custom-form-id";
-        let form = mount(
-            <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>
-        );
-
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
-        form.unmount();
-        expect(FormStoresHandler.Exists(FORM_ID)).toBe(false);
+            form.unmount();
+            expect(FormStoresHandler.Exists(formId)).toBe(false);
+            expect(FormStoresHandler.GetStore(formId)).toBeUndefined();
+        });
     });
 });

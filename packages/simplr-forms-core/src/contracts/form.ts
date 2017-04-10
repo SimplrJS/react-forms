@@ -1,6 +1,7 @@
+import { TypedRecord } from "typed-immutable-record";
+
 import { FormError } from "./error";
 import { FormStore } from "../stores/form-store";
-import { TypedRecord } from "typed-immutable-record";
 
 export interface FormProps {
     formId?: string;

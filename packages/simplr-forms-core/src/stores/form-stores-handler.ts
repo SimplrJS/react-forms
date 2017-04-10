@@ -3,13 +3,7 @@ import { FormStore } from "./form-store";
 
 export class FormStoresHandlerClass {
     private storesCount: number;
-    private _formStores: Immutable.Map<string, FormStore>;
-    private set formStores(newStore) {
-        this._formStores = newStore;
-    }
-    private get formStores(): Immutable.Map<string, FormStore> {
-        return this._formStores;
-    }
+    private formStores: Immutable.Map<string, FormStore>;
 
     constructor() {
         this.resetFormStores();
@@ -19,12 +13,26 @@ export class FormStoresHandlerClass {
         return `form-store-${formNumber}`;
     }
 
+    /**
+     * Returns unique incremental store id.
+     * 
+     * @returns 
+     * 
+     * @memberOf FormStoresHandlerClass
+     */
     public NextStoreId() {
         return this.GetFormStoreId(++this.storesCount);
     }
 
+    /**
+     * Returns count of currently registered stores.
+     * 
+     * @readonly
+     * 
+     * @memberOf FormStoresHandlerClass
+     */
     public get StoresCount() {
-        return this.storesCount;
+        return this.formStores.count();
     }
 
     /**
