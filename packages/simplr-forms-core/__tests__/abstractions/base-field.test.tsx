@@ -1,6 +1,7 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 import { spy } from "sinon";
+import * as ReactDOM from "react-dom";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
