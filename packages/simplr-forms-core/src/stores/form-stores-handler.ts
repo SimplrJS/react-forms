@@ -1,11 +1,15 @@
 import * as Immutable from "immutable";
-import { FormStore } from "./form-store";
+import { ActionEmitter } from "action-emitter";
 
-export class FormStoresHandlerClass {
+import { FormStore } from "./form-store";
+import * as Actions from "../actions/form-stores-handler-actions";
+
+export class FormStoresHandlerClass extends ActionEmitter {
     private storesCount: number;
     private formStores: Immutable.Map<string, FormStore>;
 
     constructor() {
+        super();
         this.resetFormStores();
     }
 
@@ -65,6 +69,8 @@ export class FormStoresHandlerClass {
         // Add instance to formStores map by its id
         this.formStores = this.formStores.set(formId, storeInstance);
 
+        this.emit(new Actions.FormRegistered(formId));
+
         return formId;
     }
 
@@ -79,6 +85,7 @@ export class FormStoresHandlerClass {
         const store = this.formStores.get(formId);
         if (store != null) {
             this.formStores = this.formStores.delete(formId);
+            this.emit(new Actions.FormUnregistered(formId));
         }
     }
 

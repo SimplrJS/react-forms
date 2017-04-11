@@ -1,4 +1,6 @@
 import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
+import * as Actions from "../../src/actions/form-stores-handler-actions";
+import * as sinon from "Sinon";
 
 describe("Form stores handler", () => {
     it("returns next store unique formId", () => {
@@ -83,5 +85,27 @@ describe("Form stores handler", () => {
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(storesHandler.GetStore(generatedFormId)).toBeTruthy();
+    });
+
+    it("emits register action when registering a new form", () => {
+        const storesHandler = new FormStoresHandlerClass();
+        const callbackSpy = sinon.spy();
+
+        storesHandler.addListener(Actions.FormRegistered, callbackSpy);
+        storesHandler.RegisterForm("some-kind-of-id");
+
+        expect(callbackSpy.called).toBe(true);
+    });
+
+    fit("emits unregister action when unregistering a form", () => {
+        const storesHandler = new FormStoresHandlerClass();
+        const formId = "form-id";
+        const callbackSpy = sinon.spy();
+
+        storesHandler.RegisterForm(formId);
+        storesHandler.addListener(Actions.FormUnregistered, callbackSpy);
+        storesHandler.UnregisterForm(formId);
+
+        expect(callbackSpy.called).toBe(true);
     });
 });
