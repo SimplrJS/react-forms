@@ -29,8 +29,8 @@ describe("Form store", () => {
         const formStore = new FormStore(formId);
 
         formStore.RegisterField(fieldId, initialValue);
-        expect(formStore.GetField(fieldId)).not.toBeUndefined();
         expect(formStore.HasField(fieldId)).toBe(true);
+        expect(formStore.GetField(fieldId)).not.toBeUndefined();
         expect(formStore.GetField(fieldId).InitialValue).toBe(initialValue);
     });
 
