@@ -6,6 +6,10 @@
   version "0.22.1"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/@types/cheerio/-/@types/cheerio-0.22.1.tgz#740c4cd8c4d3f3074f83b9ab62e711eac2c764ce"
 
+"@types/core-js@0.9.35":
+  version "0.9.35"
+  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.35.tgz#444064e63711cdcc62ea844d27642f6efc2285f2"
+
 "@types/enzyme@^2.7.7":
   version "2.7.7"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/@types/enzyme/-/@types/enzyme-2.7.7.tgz#52688e130fe55185f14844919ec559961488f53d"
@@ -537,9 +541,9 @@ core-js@^1.0.0:
   version "1.2.7"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.4.1:
   version "2.4.1"
-  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
 core-util-is@~1.0.0:
   version "1.0.2"

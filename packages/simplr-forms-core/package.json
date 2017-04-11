@@ -20,6 +20,7 @@
     "@types/react": "^15.0.21",
     "@types/react-dom": "^0.14.23",
     "@types/sinon": "^2.1.2",
+    "@types/core-js": "0.9.35",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
@@ -31,6 +32,7 @@
   },
   "dependencies": {
     "action-emitter": "^0.2.1",
+    "core-js": "^2.4.1",
     "fbemitter": "^2.1.1",
     "flux": "^3.1.2",
     "immutable": "^3.8.1",
@@ -43,7 +45,7 @@
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "/__tests__\/.*\\.(test|spec).(ts|tsx|js)$",
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

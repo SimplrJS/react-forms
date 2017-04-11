@@ -58,8 +58,8 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
-        fieldRef: React.Component<FieldProps, any>,
         fieldsGroupId?: string,
+        fieldRef?: React.Component<FieldProps, any>,
     ) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
