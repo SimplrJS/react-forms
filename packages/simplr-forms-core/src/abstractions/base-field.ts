@@ -273,6 +273,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         const initialValue = this.RawInitialValue;
-        this.FormStore.RegisterField(this.FieldId, initialValue, this.FieldsGroupId, this);
+        this.FormStore.RegisterField(this.FieldId, initialValue, this.FieldsGroupId);
     }
 }
