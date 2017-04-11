@@ -15,9 +15,9 @@ export class FormStoresHandlerClass {
 
     /**
      * Returns unique incremental store id.
-     * 
-     * @returns 
-     * 
+     *
+     * @returns
+     *
      * @memberOf FormStoresHandlerClass
      */
     public NextStoreId() {
@@ -26,9 +26,9 @@ export class FormStoresHandlerClass {
 
     /**
      * Returns count of currently registered stores.
-     * 
+     *
      * @readonly
-     * 
+     *
      * @memberOf FormStoresHandlerClass
      */
     public get StoresCount() {

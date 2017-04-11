@@ -3,11 +3,17 @@ import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "./form-store-actions";
-import { FieldState, FieldValue, FieldStateRecord } from "../contracts/field";
+import {
+    FieldState,
+    FieldValue,
+    FieldStateRecord,
+    FormErrorRecord
+} from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
-import { ResolveError } from "../utils/form-error-helpers";
+import { ConstructFormError } from "../utils/form-error-helpers";
+import { FormError } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -55,11 +61,16 @@ export class FormStore extends ActionEmitter {
         return fieldName;
     }
 
-    public RegisterField(fieldId: string, initialValue: FieldValue, fieldsGroupId?: string) {
+    public RegisterField(
+        fieldId: string,
+        initialValue: FieldValue,
+        fieldsGroupId?: string
+    ) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
+
         if (fieldsGroupId != null) {
             fieldState.FieldsGroup = {
                 Id: fieldsGroupId
@@ -98,7 +109,7 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public Validate(fieldId: string, promise: Promise<void>) {
+    public async Validate(fieldId: string, validationPromise: Promise<void>) {
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -107,27 +118,28 @@ export class FormStore extends ActionEmitter {
             } as FieldState));
         });
 
-        promise.then(() => {
+        try {
+            await validationPromise;
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
                 } as FieldState));
             });
-        }).catch((error) => {
-            let resolvedError = ResolveError(error);
-            if (resolvedError != null) {
-                this.State = this.State.withMutations(state => {
-                    const fieldState = state.Fields.get(fieldId);
-                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                        Validating: false,
-                        Error: resolvedError
-                    } as FieldState));
-                });
-            } else {
+        } catch (error) {
+            const formError = ConstructFormError(error);
+            if (formError == null) {
                 throw Error(error);
             }
-        });
+
+            this.State = this.State.withMutations(state => {
+                const fieldState = state.Fields.get(fieldId);
+                state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                    Validating: false,
+                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                } as FieldState));
+            });
+        }
     }
 
     /**
@@ -162,8 +174,7 @@ export class FormStore extends ActionEmitter {
             Pristine: true,
             Validating: false,
             Error: undefined,
-            FieldsGroup: undefined,
-            Validators: undefined
+            FieldsGroup: undefined
         };
     }
 }

@@ -23,17 +23,17 @@ export interface FieldProps {
 export interface FieldState {
     InitialValue: FieldValue;
     Value: FieldValue;
-    Error?: FormError;
+    Error?: FormErrorRecord;
     Touched: boolean;
     Pristine: boolean;
     Validating: boolean;
-    Validators?: Array<JSX.Element | any>;
     FieldsGroup?: {
         Id: string;
     };
 }
 
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
+export interface FormErrorRecord extends TypedRecord<FormErrorRecord>, FormError { }
 
 export enum FieldValidationType {
     None,
