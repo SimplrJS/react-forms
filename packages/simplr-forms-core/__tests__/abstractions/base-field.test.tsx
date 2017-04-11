@@ -1,11 +1,9 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { shallow, mount, render } from "enzyme";
-import { AnyAction } from "action-emitter";
+import { shallow, mount } from "enzyme";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
-import { BaseField } from "../../src/abstractions/base-field";
+import { BaseField, BaseFieldState } from "../../src/abstractions/base-field";
 import { FieldProps, FieldValue } from "../../src/contracts/field";
 import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
 
@@ -33,15 +31,16 @@ interface MyFieldProps extends FieldProps {
 
 }
 
-interface MyFieldState { }
+interface MyFieldState extends BaseFieldState { }
 
 class MyField extends BaseField<MyFieldProps, MyFieldState> {
     render() {
         return <input type="text" onChange={this.onChange} value={this.state.Value} />;
     }
 
-    onChange = (event: React.FormEvent<HTMLInputElement | any>) => {
-        this.OnValueChange(event.target.value);
+    onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
+        const target = event.target as EventTarget & HTMLInputElement;
+        this.OnValueChange(target.value);
     }
 
     protected get RawInitialValue(): FieldValue {
@@ -73,7 +72,7 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<MyForm formId={formId} >
+        mount(<MyForm formId={formId} >
             <MyField name="fieldName"></MyField>
         </MyForm>);
 
@@ -132,8 +131,8 @@ describe("Field Base", () => {
             const fieldName = "fieldName";
 
             mount(<MyForm>
-                <MyField name="fieldName"></MyField>
-                <MyField name="fieldName"></MyField>
+                <MyField name={fieldName}></MyField>
+                <MyField name={fieldName}></MyField>
             </MyForm>);
         }).toThrow();
     });
@@ -149,7 +148,7 @@ describe("Field Base", () => {
     it("throws when rendering an undefined fieldName", () => {
         expect(() => {
             mount(<MyForm>
-                <MyField name={undefined}></MyField>
+                <MyField name={undefined as any}></MyField>
             </MyForm>);
         }).toThrow();
     });
@@ -157,13 +156,12 @@ describe("Field Base", () => {
     it("throws when rendering a null fieldName", () => {
         expect(() => {
             mount(<MyForm>
-                <MyField name={null}></MyField>
+                <MyField name={null as any}></MyField>
             </MyForm>);
         }).toThrow();
     });
 
     it("renders html without wrappers", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
@@ -174,7 +172,7 @@ describe("Field Base", () => {
     it("adds event listener to form store when mounts", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
-        const form = mount(<MyForm formId={formId}>
+        mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
         </MyForm>);
 
