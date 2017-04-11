@@ -1,21 +1,8 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 
-import { BaseForm } from "../../src/abstractions/base-form";
-import { FormProps } from "../../src/contracts/form";
 import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
-
-interface MyProps extends FormProps { }
-
-interface MyState { }
-
-class MyForm extends BaseForm<MyProps, MyState> {
-    render(): JSX.Element {
-        return <form>
-            {this.props.children}
-        </form>;
-    }
-}
+import { BasicForm } from "../basic-components/basic-form";
 
 describe("Form base", () => {
     beforeEach(() => {
@@ -25,13 +12,13 @@ describe("Form base", () => {
     describe("registers when", () => {
         it("formId is undefined and destroyOnUnmount prop is false", () => {
             expect(() => shallow(
-                <MyForm destroyOnUnmount={false}></MyForm>
+                <BasicForm destroyOnUnmount={false}></BasicForm>
             )).toThrow();
         });
 
         it("formId is undefined and destroyOnUnmount prop is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
-            let form = shallow(<MyForm></MyForm>);
+            let form = shallow(<BasicForm></BasicForm>);
             let formId = (form.instance() as any).FormId;
 
             expect(FormStoresHandler.Exists(formId)).toBe(true);
@@ -41,7 +28,7 @@ describe("Form base", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
             const FORM_ID = "custom-form-id";
             shallow(
-                <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>
+                <BasicForm destroyOnUnmount={true} formId={FORM_ID}></BasicForm>
             );
 
             expect(FormStoresHandler.Exists(FORM_ID)).toBe(true);
@@ -52,15 +39,15 @@ describe("Form base", () => {
             // and destroyOnUnmount true second
             const FORM_ID = "custom-form-id";
 
-            mount(<MyForm destroyOnUnmount={false} formId={FORM_ID}></MyForm>);
-            expect(() => mount(<MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>)).toThrow();
+            mount(<BasicForm destroyOnUnmount={false} formId={FORM_ID}></BasicForm>);
+            expect(() => mount(<BasicForm destroyOnUnmount={true} formId={FORM_ID}></BasicForm>)).toThrow();
         });
 
         it("another FormBase registered with the same formId", () => {
             // This is to check the case, when form is rendered with destroyOnUnmount false first
             // and destroyOnUnmount true second
             const FORM_ID = "custom-form-id";
-            const formComponent = <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>;
+            const formComponent = <BasicForm destroyOnUnmount={true} formId={FORM_ID}></BasicForm>;
 
             shallow(formComponent);
             expect(() => shallow(formComponent)).toThrow();
@@ -70,7 +57,7 @@ describe("Form base", () => {
     describe("unregisters when", () => {
         it("formId is undefined and destroyOnUnmount prop is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
-            let form = shallow(<MyForm></MyForm>);
+            let form = shallow(<BasicForm></BasicForm>);
             let formId = (form.instance() as any).FormId;
 
             form.unmount();
@@ -83,7 +70,7 @@ describe("Form base", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
             const formId = "custom-form-id";
             let form = mount(
-                <MyForm destroyOnUnmount={true} formId={formId}></MyForm>
+                <BasicForm destroyOnUnmount={true} formId={formId}></BasicForm>
             );
 
             form.unmount();

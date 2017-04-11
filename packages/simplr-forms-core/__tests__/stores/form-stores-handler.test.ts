@@ -1,7 +1,6 @@
 import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
 
 describe("Form stores handler", () => {
-
     it("returns next store unique formId", () => {
         let storesHandler = new FormStoresHandlerClass();
         let a = storesHandler.NextStoreId();
@@ -84,5 +83,9 @@ describe("Form stores handler", () => {
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(storesHandler.GetStore(generatedFormId)).toBeTruthy();
+    });
+
+    it("validates field with a promise", () => {
+        
     });
 });

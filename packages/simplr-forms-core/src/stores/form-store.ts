@@ -8,6 +8,7 @@ import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ResolveError } from "../utils/form-error-helpers";
+
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
         super();
