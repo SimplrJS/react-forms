@@ -17,6 +17,7 @@ interface MyFormState { }
 
 class MyForm extends BaseForm<MyFormProps, MyFormState> {
     static defaultProps: MyFormProps = {
+        ...BaseForm.defaultProps,
         renderChildren: true
     };
 
@@ -166,7 +167,7 @@ describe("Field Base", () => {
         expect(form.html()).toEqual("<form><input type=\"text\"></form>");
     });
 
-    fit("adds event listener to form store when mounts", () => {
+    it("adds event listener to form store when mounts", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const form = mount(<MyForm formId={formId}>
@@ -175,19 +176,34 @@ describe("Field Base", () => {
 
         const formStore = FormStoresHandler.GetStore(formId);
 
-        expect(formStore.listeners(AnyAction).length).toBe(1);
+        expect(formStore.listenersCount()).toBe(1);
     });
 
-    it("removes event listener to form store from when unmounts", () => {
+    it("removes event listener form store when destroyOnUnmount is true and it is unmounted", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const form = mount(<MyForm formId={formId} >
-            <MyField name="fieldName"></MyField>
+            <MyField name="fieldName" destroyOnUnmount={true}></MyField>
         </MyForm>);
 
-
         const formStore = FormStoresHandler.GetStore(formId);
-        form.unmount();
-        expect(formStore.listeners(AnyAction).length).toBe(0);
+        expect(formStore.listenersCount()).toBe(1);
+
+        form.setProps({
+            ...form.props(),
+            renderChildren: false
+        });
+
+        expect(formStore.listenersCount()).toBe(0);
+    });
+
+    fit("informs store on value change", () => {
+        const fieldName = "fieldName";
+        const form = mount(<MyForm>
+            <MyField name={fieldName}></MyField>
+        </MyForm>);
+
+        const input = form.find("input");
+        // input.simulate("change", { target: { value: "abc" } });
     });
 });

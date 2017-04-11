@@ -60,9 +60,9 @@ acorn@^4.0.4:
   version "4.0.11"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
 
-action-emitter@^0.2.0:
-  version "0.2.0"
-  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/action-emitter/-/action-emitter-0.2.0.tgz#1f19a6e729ef52e530787cfe7a34e56a9a5413cf"
+action-emitter@^0.2.1:
+  version "0.2.1"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/action-emitter/-/action-emitter-0.2.1.tgz#e8d455669cbb3ee3705bf63c18b5b4df3982be3c"
   dependencies:
     "@types/fbemitter" "^2.0.32"
     fbemitter "^2.1.1"
@@ -2827,9 +2827,9 @@ typed-immutable-record@^0.0.6:
   version "0.0.6"
   resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/typed-immutable-record/-/typed-immutable-record-0.0.6.tgz#03ac0636a34819144fbcbe0ae2ed9abf6c19a908"
 
-typescript@^2.2.2:
-  version "2.2.2"
-  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/typescript/-/typescript-2.2.2.tgz#606022508479b55ffa368b58fee963a03dfd7b0c"
+typescript@2.3.0:
+  version "2.3.0"
+  resolved "https://www.myget.org/F/quatrodev-insider/auth/a2ff4e2d-c219-42fd-9515-2989c9cd8417/npm/typescript/-/typescript-2.3.0.tgz#2e63e09284392bc8158a2444c33e2093795c0418"
 
 ua-parser-js@^0.7.9:
   version "0.7.12"

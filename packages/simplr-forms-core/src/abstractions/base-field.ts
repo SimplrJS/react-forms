@@ -5,18 +5,23 @@ import {
     FieldProps,
     FieldState,
     FieldValue,
-    FieldValidationType
+    FieldValidationType,
+    FieldFormatValueCallback,
+    FieldNormalizeValueCallback,
+    FieldParseValueCallback
 } from "../contracts/field";
-import { FormState, FormContextPropsObject } from "../contracts/form";
+import * as ValueHelpers from "../utils/value-helpers";
+import { FormContextPropsObject } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
+import { FormStoreStateRecord } from "../contracts/form-store";
 import * as FormStoreActions from "../stores/form-store-actions";
-import { FieldsGroupContextProps } from "../contracts/fields-group";
+// import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseFieldState {
     Field?: FieldState;
-    Form?: FormState;
-    RenderValue?: FieldValue;
+    Form?: FormStoreStateRecord;
+    Value?: FieldValue;
 }
 
 export interface ParentContext {
@@ -46,12 +51,20 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         destroyOnUnmount: false
     };
 
+    protected get FormId(): string {
+        return this.context.FormId;
+    }
+
     protected get FormStore(): FormStore {
-        return FSHContainer.FormStoresHandler.GetStore(this.context.FormId);
+        return FSHContainer.FormStoresHandler.GetStore(this.FormId);
     }
 
     protected get FieldId(): string {
-        return this.FormStore.GetFieldId(this.props.name, this.context.FieldsGroupId);
+        return this.FormStore.GetFieldId(this.props.name, this.FieldsGroupId);
+    }
+
+    protected get FieldsGroupId(): string {
+        return this.context.FieldsGroupId;
     }
 
     protected StoreEventSubscription: fbemitter.EventSubscription;
@@ -62,13 +75,13 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             throw new Error("simplr-forms-core: A proper field name must be given (undefined and empty string are not valid).");
         }
 
-        if (this.context.FormId == null) {
+        if (this.FormId == null) {
             throw new Error("simplr-forms-core: Field must be used inside a Form component.");
         }
-
         this.StoreEventSubscription =
-            this.FormStore.addListener<FormStoreActions.StateUpdated>(FormStoreActions.StateUpdated, this.OnStoreUpdated);
-
+            this.FormStore.addListener<FormStoreActions.StateUpdated>(
+                FormStoreActions.StateUpdated,
+                this.OnStoreUpdated.bind(this));
         this.registerFieldInFormStore();
 
         // TODO: Set validators
@@ -92,16 +105,23 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
     }
 
-
-    protected OnStoreUpdated(action: FormStoreActions.StateUpdated) {
-
-    }
-
     /**
      * ========================
      *  Protected methods
      * ========================
      */
+
+    /**
+     * Is field currently controlled.
+     *
+     * @readonly
+     * @protected
+     *
+     * @memberOf BaseField
+     */
+    protected get IsControlled() {
+        return false;
+    }
 
     /**
      * Current or default field value.
@@ -122,20 +142,83 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         return this.DefaultValue;
     }
 
-    protected ProcessValue(value: FieldValue) {
-
+    protected ProcessValueBeforeStore(value: FieldValue) {
+        // Parse and normalize value
+        return this.NormalizeValue(this.ParseValue(value));
     }
 
-    /**
-     * Is field currently controlled.
-     *
-     * @readonly
-     * @protected
-     *
-     * @memberOf BaseField
-     */
-    protected get IsControlled() {
-        return false;
+    protected ProcessValueFromStore(value: FieldValue) {
+        return this.FormatValue(value);
+    }
+
+    protected ParseValue(value: FieldValue): FieldValue {
+        if (this.props.parseValue != null) {
+            const parser = this.props.parseValue as FieldParseValueCallback;
+            return parser(value);
+        }
+
+        return ValueHelpers.ParseValue(
+            React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            value
+        );
+    }
+
+    protected FormatValue(value: FieldValue): FieldValue {
+        if (this.props.formatValue != null) {
+            const formatter = this.props.parseValue as FieldFormatValueCallback;
+            return formatter(value);
+        }
+
+        return ValueHelpers.FormatValue(
+            React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            value
+        );
+    }
+
+    protected NormalizeValue(value: FieldValue): FieldValue {
+        if (this.props.formatValue != null) {
+            const normalizer = this.props.parseValue as FieldNormalizeValueCallback;
+            return normalizer(value);
+        }
+
+        return ValueHelpers.NormalizeValue(
+            React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            value
+        );
+    }
+
+    protected ChildrenToRender() {
+        throw new Error("simplr-forms-core: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
+    }
+
+    protected OnStoreUpdated() {
+        const newFormState = this.FormStore.GetState();
+        const newFieldState = this.FormStore.GetField(this.FieldId);
+
+        const isStateDifferent = this.state == null ||
+            this.state.Field !== newFieldState ||
+            this.state.Form !== newFormState;
+
+        if (isStateDifferent && newFieldState != null) {
+            this.setState((state: TState) => {
+                state.Form = newFormState;
+                state.Field = newFieldState;
+                state.Value = this.ProcessValueFromStore(newFieldState.Value);
+            });
+        }
+    }
+
+    protected OnValueChange(newValue: FieldValue, processValue: boolean = true) {
+        // Noop if the component is controlled from outside
+        if (this.IsControlled) {
+            return;
+        }
+
+        if (processValue) {
+            newValue = this.ProcessValueBeforeStore(newValue);
+        }
+
+        this.FormStore.ValueChanged(this.FieldId, newValue);
     }
 
     /**
@@ -190,6 +273,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         const initialValue = this.RawInitialValue;
-        this.FormStore.RegisterField(this.FieldId, initialValue, this.context.FieldsGroupId);
+        this.FormStore.RegisterField(this.FieldId, initialValue, this.FieldsGroupId);
     }
 }

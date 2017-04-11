@@ -42,7 +42,6 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
      */
     private registerForm(props: FormContracts.FormProps) {
         let shouldNotDestroy = !props.destroyOnUnmount;
-
         if (props.formId == null) {
             if (shouldNotDestroy) {
                 throw new Error("simplr-forms-core: destroyOnUnmount cannot be truthy when formId is not set.");

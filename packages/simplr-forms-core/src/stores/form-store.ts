@@ -27,6 +27,10 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.StateUpdated());
     }
 
+    public GetState(): FormStoreStateRecord {
+        return this.State;
+    }
+
     /**
      * ========================
      *  Public API
@@ -78,7 +82,22 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.has(fieldId);
     }
 
+    public GetField(fieldId: string): FieldStateRecord {
+        return this.State.Fields.get(fieldId);
+    }
 
+    public ValueChanged(fieldId: string, newValue: FieldValue) {
+        console.warn("ValueChanged");
+        this.State = this.State.withMutations(state => {
+            const fieldState = state.Fields.get(fieldId);
+            const newFieldState = {
+                ...fieldState,
+                Value: newValue
+            };
+
+            state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(newFieldState));
+        });
+    }
 
     /**
      * ========================
