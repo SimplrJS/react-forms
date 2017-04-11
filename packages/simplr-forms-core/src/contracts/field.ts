@@ -31,6 +31,7 @@ export interface FieldState {
     FieldsGroup?: {
         Id: string;
     };
+    FieldRef?: React.Component<FieldProps, any>;
 }
 
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }

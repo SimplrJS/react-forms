@@ -3,7 +3,7 @@ import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "./form-store-actions";
-import { FieldState, FieldValue, FieldStateRecord } from "../contracts/field";
+import { FieldState, FieldValue, FieldStateRecord, FieldProps } from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
@@ -55,11 +55,18 @@ export class FormStore extends ActionEmitter {
         return fieldName;
     }
 
-    public RegisterField(fieldId: string, initialValue: FieldValue, fieldsGroupId?: string) {
+    public RegisterField(
+        fieldId: string,
+        initialValue: FieldValue,
+        fieldRef: React.Component<FieldProps, any>,
+        fieldsGroupId?: string,
+    ) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
+        fieldState.FieldRef = fieldRef;
+
         if (fieldsGroupId != null) {
             fieldState.FieldsGroup = {
                 Id: fieldsGroupId
@@ -163,7 +170,8 @@ export class FormStore extends ActionEmitter {
             Validating: false,
             Error: undefined,
             FieldsGroup: undefined,
-            Validators: undefined
+            Validators: undefined,
+            FieldRef: undefined
         };
     }
 }

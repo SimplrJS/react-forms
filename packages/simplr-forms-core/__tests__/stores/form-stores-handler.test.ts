@@ -84,8 +84,4 @@ describe("Form stores handler", () => {
 
         expect(storesHandler.GetStore(generatedFormId)).toBeTruthy();
     });
-
-    it("validates field with a promise", () => {
-        
-    });
 });
