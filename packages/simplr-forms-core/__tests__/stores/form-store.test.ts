@@ -139,6 +139,7 @@ describe("Form store", () => {
                 expect(error).not.toBeUndefined();
                 expect(error).not.toBeNull();
                 expect(error!.Message).toBe(formError.Message);
+
                 done();
             } catch (error) {
                 done.fail(error);

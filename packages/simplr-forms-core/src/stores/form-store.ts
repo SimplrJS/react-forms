@@ -7,7 +7,7 @@ import { FieldState, FieldValue, FieldStateRecord, FieldProps, FormErrorRecord }
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
-import { ResolveError } from "../utils/form-error-helpers";
+import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
@@ -106,7 +106,7 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public Validate(fieldId: string, promise: Promise<void>) {
+    public async Validate(fieldId: string, validationPromise: Promise<void>) {
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -115,27 +115,28 @@ export class FormStore extends ActionEmitter {
             } as FieldState));
         });
 
-        promise.then(() => {
+        try {
+            await validationPromise;
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
                 } as FieldState));
             });
-        }).catch(error => {
-            let resolvedError = ResolveError(error);
-            if (resolvedError != null) {
-                this.State = this.State.withMutations(state => {
-                    const fieldState = state.Fields.get(fieldId);
-                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                        Validating: false,
-                        Error: recordify<FormError, FormErrorRecord>(resolvedError!)
-                    } as FieldState));
-                });
-            } else {
+        } catch (error) {
+            const formError = ConstructFormError(error);
+            if (formError == null) {
                 throw Error(error);
             }
-        });
+
+            this.State = this.State.withMutations(state => {
+                const fieldState = state.Fields.get(fieldId);
+                state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                    Validating: false,
+                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                } as FieldState));
+            });
+        }
     }
 
     /**
