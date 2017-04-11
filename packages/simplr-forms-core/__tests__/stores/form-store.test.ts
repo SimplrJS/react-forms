@@ -101,14 +101,13 @@ describe("Form store", () => {
             done.fail(error);
         }
 
-        setTimeout(() => {
-            try {
-                expect(formStore.GetField(fieldId).Validating).toBe(false);
-                done();
-            } catch (error) {
-                done.fail(error);
-            }
-        }, 60);
+        try {
+            await validationPromise;
+            expect(formStore.GetField(fieldId).Validating).toBe(false);
+            done();
+        } catch (error) {
+            done.fail(error);
+        }
     });
 
     it("validate field with error", async (done) => {
@@ -132,18 +131,23 @@ describe("Form store", () => {
             done.fail(error);
         }
 
-        setTimeout(() => {
-            try {
-                const error = formStore.GetField(fieldId).Error;
-                expect(formStore.GetField(fieldId).Validating).toBe(false);
-                expect(error).not.toBeUndefined();
-                expect(error).not.toBeNull();
-                expect(error!.Message).toBe(formError.Message);
+        try {
+            await validationPromise;
+        } catch (err) {
+            // Validation promise was rejected
+            // Expects in the subsequent try block
+        }
 
-                done();
-            } catch (error) {
-                done.fail(error);
-            }
-        }, 60);
+        try {
+            const error = formStore.GetField(fieldId).Error;
+            expect(formStore.GetField(fieldId).Validating).toBe(false);
+            expect(error).not.toBeUndefined();
+            expect(error).not.toBeNull();
+            expect(error!.Message).toBe(formError.Message);
+
+            done();
+        } catch (error) {
+            done.fail(error);
+        }
     });
 });
