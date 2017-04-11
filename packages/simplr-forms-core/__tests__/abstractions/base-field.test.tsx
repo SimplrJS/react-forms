@@ -1,13 +1,13 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { shallow, mount, render } from "enzyme";
-import { AnyAction } from "action-emitter";
+import { shallow, mount } from "enzyme";
+import { spy } from "sinon";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
-import { BaseField } from "../../src/abstractions/base-field";
+import { BaseField, BaseFieldState } from "../../src/abstractions/base-field";
 import { FieldProps, FieldValue } from "../../src/contracts/field";
 import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
+import { FormStore } from "../../src/stores/form-store";
 
 interface MyFormProps extends FormProps {
     renderChildren?: boolean;
@@ -33,15 +33,16 @@ interface MyFieldProps extends FieldProps {
 
 }
 
-interface MyFieldState { }
+interface MyFieldState extends BaseFieldState { }
 
 class MyField extends BaseField<MyFieldProps, MyFieldState> {
     render() {
         return <input type="text" onChange={this.onChange} value={this.state.Value} />;
     }
 
-    onChange = (event: React.FormEvent<HTMLInputElement | any>) => {
-        this.OnValueChange(event.target.value);
+    onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
+        const target = event.target as EventTarget & HTMLInputElement;
+        this.OnValueChange(target.value);
     }
 
     protected get RawInitialValue(): FieldValue {
@@ -73,7 +74,7 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<MyForm formId={formId} >
+        mount(<MyForm formId={formId} >
             <MyField name="fieldName"></MyField>
         </MyForm>);
 
@@ -132,8 +133,8 @@ describe("Field Base", () => {
             const fieldName = "fieldName";
 
             mount(<MyForm>
-                <MyField name="fieldName"></MyField>
-                <MyField name="fieldName"></MyField>
+                <MyField name={fieldName}></MyField>
+                <MyField name={fieldName}></MyField>
             </MyForm>);
         }).toThrow();
     });
@@ -149,7 +150,7 @@ describe("Field Base", () => {
     it("throws when rendering an undefined fieldName", () => {
         expect(() => {
             mount(<MyForm>
-                <MyField name={undefined}></MyField>
+                <MyField name={undefined as any}></MyField>
             </MyForm>);
         }).toThrow();
     });
@@ -157,13 +158,12 @@ describe("Field Base", () => {
     it("throws when rendering a null fieldName", () => {
         expect(() => {
             mount(<MyForm>
-                <MyField name={null}></MyField>
+                <MyField name={null as any}></MyField>
             </MyForm>);
         }).toThrow();
     });
 
     it("renders html without wrappers", () => {
-        const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
@@ -178,7 +178,7 @@ describe("Field Base", () => {
     it("adds event listener to form store when mounts", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
-        const form = mount(<MyForm formId={formId}>
+        mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
         </MyForm>);
 
@@ -206,12 +206,39 @@ describe("Field Base", () => {
     });
 
     it("informs store on value change", () => {
+        const newValue = "NEW_VALUE";
+        const formId = "FORM_ID";
+
+        spy(FormStore.prototype, "ValueChanged");
+
         const fieldName = "fieldName";
+        const form = mount(<MyForm formId={formId}>
+            <MyField name={fieldName}></MyField>
+        </MyForm>);
+        const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
+
+        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(0);
+
+        const input = form.find("input");
+
+        // Initial value should be empty
+        expect(input.props().value).toEqual("");
+
+        // Simulate value change
+        input.simulate("change", { target: { value: newValue } });
+
+        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(1);
+        // Check if it really changed value in form store
+        expect(formStore.GetField(fieldName).Value).toBe(newValue);
+    });
+
+    it("renders new value from store after input value change", () => {
+        const newValue = "NEW_VALUE";
+        const fieldName = "fieldName";
+
         const form = mount(<MyForm>
             <MyField name={fieldName}></MyField>
         </MyForm>);
-
-        const newValue = "NEW_VALUE";
 
         const input = form.find("input");
 
