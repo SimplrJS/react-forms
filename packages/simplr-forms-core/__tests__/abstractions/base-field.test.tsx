@@ -1,11 +1,13 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
+import { spy } from "sinon";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
 import { BaseField, BaseFieldState } from "../../src/abstractions/base-field";
 import { FieldProps, FieldValue } from "../../src/contracts/field";
 import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
+import { FormStore } from "../../src/stores/form-store";
 
 interface MyFormProps extends FormProps {
     renderChildren?: boolean;
@@ -166,7 +168,7 @@ describe("Field Base", () => {
         let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
         </MyForm>);
-        expect(form.html()).toEqual("<form><input type=\"text\"></form>");
+        expect(form.html()).toEqual("<form><input type=\"text\" value=\"\"></form>");
     });
 
     it("adds event listener to form store when mounts", () => {
@@ -199,13 +201,40 @@ describe("Field Base", () => {
         expect(formStore.listenersCount()).toBe(0);
     });
 
-    fit("informs store on value change", () => {
+    it("informs store on value change", () => {
+        const newValue = "NEW_VALUE";
+        const formId = "FORM_ID";
+
+        spy(FormStore.prototype, "ValueChanged");
+
         const fieldName = "fieldName";
+        const form = mount(<MyForm formId={formId}>
+            <MyField name={fieldName}></MyField>
+        </MyForm>);
+        const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
+
+        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(0);
+
+        const input = form.find("input");
+
+        // Initial value should be empty
+        expect(input.props().value).toEqual("");
+
+        // Simulate value change
+        input.simulate("change", { target: { value: newValue } });
+
+        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(1);
+        // Check if it really changed value in form store
+        expect(formStore.GetField(fieldName).Value).toBe(newValue);
+    });
+
+    it("renders new value from store after input value change", () => {
+        const newValue = "NEW_VALUE";
+        const fieldName = "fieldName";
+
         const form = mount(<MyForm>
             <MyField name={fieldName}></MyField>
         </MyForm>);
-
-        const newValue = "NEW_VALUE";
 
         const input = form.find("input");
 
