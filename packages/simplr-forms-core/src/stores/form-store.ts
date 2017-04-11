@@ -2,7 +2,7 @@ import * as Immutable from "immutable";
 import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
-import * as Actions from "./form-store-actions";
+import * as Actions from "../actions/form-store-actions";
 import {
     FieldState,
     FieldValue,
