@@ -8,6 +8,19 @@ describe("Form store", () => {
         expect(formStore.GetState()).not.toBeUndefined();
     });
 
+    it("returns fieldId from fieldName and fieldGroupId", () => {
+        const formId = "FORM-ID";
+        const fieldName = "FIELD-NAME";
+        const fieldGroupId = "FIELD-GROUP-ID";
+        const formStore = new FormStore(formId);
+
+        const fieldId = formStore.GetFieldId(fieldName, fieldGroupId);
+
+        expect(typeof fieldId).toBe("string");
+        expect(fieldId.indexOf(fieldName)).not.toBe(-1);
+        expect(fieldId.indexOf(fieldGroupId)).not.toBe(-1);
+    });
+
     it("registers a field", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
