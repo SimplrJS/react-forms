@@ -1,4 +1,5 @@
 import { FormStore } from "../../src/stores/form-store";
+import { FormError } from "../../src/contracts/error";
 
 describe("Form store", () => {
     it("returns state", () => {
@@ -78,5 +79,70 @@ describe("Form store", () => {
         expect(formStore.GetField(fieldId).Value).toBe(initialValue);
         formStore.ValueChanged(fieldId, nextValue);
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
+    });
+
+    it("validate field without error", async (done) => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const initialValue = "INITIAL-VALUE";
+        const formStore = new FormStore(formId);
+
+        formStore.RegisterField(fieldId, initialValue);
+        const validationPromise = new Promise<void>((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, 50);
+        });
+
+        formStore.Validate(fieldId, validationPromise);
+        try {
+            expect(formStore.GetField(fieldId).Validating).toBe(true);
+        } catch (error) {
+            done.fail(error);
+        }
+
+        setTimeout(() => {
+            try {
+                expect(formStore.GetField(fieldId).Validating).toBe(false);
+                done();
+            } catch (error) {
+                done.fail(error);
+            }
+        }, 60);
+    });
+
+    it("validate field with error", async (done) => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const initialValue = "INITIAL-VALUE";
+        const formStore = new FormStore(formId);
+        const formError: FormError = { Message: "Error Message" };
+
+        formStore.RegisterField(fieldId, initialValue);
+        const validationPromise = new Promise<void>((resolve, reject) => {
+            setTimeout(() => {
+                reject(formError);
+            }, 50);
+        });
+
+        formStore.Validate(fieldId, validationPromise);
+        try {
+            expect(formStore.GetField(fieldId).Validating).toBe(true);
+        } catch (error) {
+            done.fail(error);
+        }
+
+        setTimeout(() => {
+            try {
+                const error = formStore.GetField(fieldId).Error;
+                expect(formStore.GetField(fieldId).Validating).toBe(false);
+                expect(error).not.toBeUndefined();
+                expect(error).not.toBeNull();
+                expect(error!.Message).toBe(formError.Message);
+                done();
+            } catch (error) {
+                done.fail(error);
+            }
+        }, 60);
     });
 });

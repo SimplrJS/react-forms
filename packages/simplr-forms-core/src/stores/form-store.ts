@@ -3,11 +3,12 @@ import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "./form-store-actions";
-import { FieldState, FieldValue, FieldStateRecord, FieldProps } from "../contracts/field";
+import { FieldState, FieldValue, FieldStateRecord, FieldProps, FormErrorRecord } from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ResolveError } from "../utils/form-error-helpers";
+import { FormError } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -121,14 +122,14 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FieldState));
             });
-        }).catch((error) => {
+        }).catch(error => {
             let resolvedError = ResolveError(error);
             if (resolvedError != null) {
                 this.State = this.State.withMutations(state => {
                     const fieldState = state.Fields.get(fieldId);
                     state.Fields = state.Fields.set(fieldId, fieldState.merge({
                         Validating: false,
-                        Error: resolvedError
+                        Error: recordify<FormError, FormErrorRecord>(resolvedError!)
                     } as FieldState));
                 });
             } else {
