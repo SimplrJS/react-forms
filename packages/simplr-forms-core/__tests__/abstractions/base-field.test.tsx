@@ -168,7 +168,11 @@ describe("Field Base", () => {
         let form = mount(<MyForm formId={formId}>
             <MyField name="fieldName"></MyField>
         </MyForm>);
-        expect(form.html()).toEqual("<form><input type=\"text\"></form>");
+
+        const formDOM = ReactDOM.findDOMNode(form.instance());
+        expect(formDOM.tagName).toEqual("FORM");
+        expect(formDOM.children.item(0).tagName).toEqual("INPUT");
+        // expect(form.type()).toEqual("<form><input type=\"text\"></form>");
     });
 
     it("adds event listener to form store when mounts", () => {
@@ -201,7 +205,7 @@ describe("Field Base", () => {
         expect(formStore.listenersCount()).toBe(0);
     });
 
-    fit("informs store on value change", () => {
+    it("informs store on value change", () => {
         const fieldName = "fieldName";
         const form = mount(<MyForm>
             <MyField name={fieldName}></MyField>
