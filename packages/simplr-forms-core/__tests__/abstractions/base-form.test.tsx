@@ -1,6 +1,5 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { shallow, mount, render } from "enzyme";
+import { shallow, mount } from "enzyme";
 
 import { BaseForm } from "../../src/abstractions/base-form";
 import { FormProps } from "../../src/contracts/form";
@@ -41,7 +40,7 @@ describe("Form base", () => {
         it("formId is present and destroyOnUnmount is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
             const FORM_ID = "custom-form-id";
-            const form = mount(
+            shallow(
                 <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>
             );
 
@@ -51,7 +50,6 @@ describe("Form base", () => {
         it("formId is present and destroyOnUnmount is true and already exists in FormStoresHandler", () => {
             // This is to check the case, when form is rendered with destroyOnUnmount false first
             // and destroyOnUnmount true second
-            const FormStoresHandler = FSHContainer.FormStoresHandler;
             const FORM_ID = "custom-form-id";
 
             mount(<MyForm destroyOnUnmount={false} formId={FORM_ID}></MyForm>);
@@ -61,12 +59,11 @@ describe("Form base", () => {
         it("another FormBase registered with the same formId", () => {
             // This is to check the case, when form is rendered with destroyOnUnmount false first
             // and destroyOnUnmount true second
-            const FormStoresHandler = FSHContainer.FormStoresHandler;
             const FORM_ID = "custom-form-id";
             const formComponent = <MyForm destroyOnUnmount={true} formId={FORM_ID}></MyForm>;
 
-            mount(formComponent);
-            expect(() => mount(formComponent)).toThrow();
+            shallow(formComponent);
+            expect(() => shallow(formComponent)).toThrow();
         });
     });
 

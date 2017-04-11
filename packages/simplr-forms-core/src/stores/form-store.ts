@@ -7,7 +7,7 @@ import { FieldState, FieldValue, FieldStateRecord } from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
-
+import { ResolveError } from "../utils/form-error-helpers";
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
         super();
@@ -87,11 +87,45 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
+        this.emit(new Actions.ValueChanged(fieldId));
+
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Value: newValue
-            }));
+            } as FieldState));
+        });
+    }
+
+    public Validate(fieldId: string, promise: Promise<void>) {
+        this.State = this.State.withMutations(state => {
+            const fieldState = state.Fields.get(fieldId);
+            state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                Validating: true,
+                Error: undefined
+            } as FieldState));
+        });
+
+        promise.then(() => {
+            this.State = this.State.withMutations(state => {
+                const fieldState = state.Fields.get(fieldId);
+                state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                    Validating: false
+                } as FieldState));
+            });
+        }).catch((error) => {
+            let resolvedError = ResolveError(error);
+            if (resolvedError != null) {
+                this.State = this.State.withMutations(state => {
+                    const fieldState = state.Fields.get(fieldId);
+                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                        Validating: false,
+                        Error: resolvedError
+                    } as FieldState));
+                });
+            } else {
+                throw Error(error);
+            }
         });
     }
 
