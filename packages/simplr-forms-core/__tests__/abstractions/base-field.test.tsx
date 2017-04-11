@@ -37,7 +37,11 @@ interface MyFieldState { }
 
 class MyField extends BaseField<MyFieldProps, MyFieldState> {
     render() {
-        return <input type="text" />;
+        return <input type="text" onChange={this.onChange} value={this.state.Value} />;
+    }
+
+    onChange = (event: React.FormEvent<HTMLInputElement | any>) => {
+        this.OnValueChange(event.target.value);
     }
 
     protected get RawInitialValue(): FieldValue {
@@ -203,7 +207,17 @@ describe("Field Base", () => {
             <MyField name={fieldName}></MyField>
         </MyForm>);
 
+        const newValue = "NEW_VALUE";
+
         const input = form.find("input");
-        // input.simulate("change", { target: { value: "abc" } });
+
+        // Initial value should be empty
+        expect(input.props().value).toEqual("");
+
+        // Simulate value change
+        input.simulate("change", { target: { value: newValue } });
+
+        // Value should be updated
+        expect(input.props().value).toEqual(newValue);
     });
 });

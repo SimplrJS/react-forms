@@ -87,15 +87,11 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
-        console.warn("ValueChanged");
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
-            const newFieldState = {
-                ...fieldState,
+            state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Value: newValue
-            };
-
-            state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(newFieldState));
+            }));
         });
     }
 
