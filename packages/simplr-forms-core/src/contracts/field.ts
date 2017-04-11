@@ -27,7 +27,6 @@ export interface FieldState {
     Touched: boolean;
     Pristine: boolean;
     Validating: boolean;
-    Validators?: Array<JSX.Element | any>;
     FieldsGroup?: {
         Id: string;
     };
