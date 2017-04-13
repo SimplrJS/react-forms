@@ -17,7 +17,7 @@ export interface FieldProps {
     validationType?: FieldValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
-    children?: React.ReactNode;
+    // children?: React.ReactNode;
 }
 
 export interface FieldState {
@@ -33,7 +33,7 @@ export interface FieldState {
     Props?: FieldStatePropsRecord;
 }
 
-export type FieldStateProps = FieldProps & React.Props<void>;
+export type FieldStateProps = FieldProps & React.Props<any>;
 
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
 export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }
