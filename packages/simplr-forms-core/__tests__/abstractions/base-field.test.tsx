@@ -8,11 +8,7 @@ import { FormStore } from "../../src/stores/form-store";
 import { BasicForm } from "../basic-components/basic-form";
 import { BasicField } from "../basic-components/basic-field";
 import { FormChildContext } from "../../src/contracts/form";
-import { FieldProps } from "../../src/contracts/field";
-
-interface FieldPropsTest extends FieldProps {
-    value?: string;
-}
+import { MyFieldProps } from "../basic-components/basic-field";
 
 describe("Field Base", () => {
     beforeEach(() => {
@@ -215,7 +211,7 @@ describe("Field Base", () => {
     it("registers with passing props", () => {
         const fieldName = "fieldName";
         const formId = "form-id";
-        const fieldProps: FieldPropsTest = {
+        const fieldProps: MyFieldProps = {
             name: fieldName,
             value: "initialValue"
         };
@@ -225,17 +221,17 @@ describe("Field Base", () => {
         </BasicForm>);
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
-        expect((formStore.GetField(fieldName).Props as FieldPropsTest).value).toBe(fieldProps.value);
+        expect((formStore.GetField(fieldName).Props as MyFieldProps).value).toBe(fieldProps.value);
     });
 
     it("updates props when componentWillReceiveProps is called", () => {
         const fieldName = "fieldName";
         const formId = "form-id";
-        const fieldProps: FieldPropsTest = {
+        const fieldProps: MyFieldProps = {
             name: fieldName,
             value: "initialValue"
         };
-        const fieldPropsNext: FieldPropsTest = {
+        const fieldPropsNext: MyFieldProps = {
             name: fieldName,
             value: "Updated value"
         };
@@ -250,7 +246,7 @@ describe("Field Base", () => {
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
         // Mount with formId as a context
-        const field = mount<FieldPropsTest>(<BasicField {...fieldProps} />, {
+        const field = mount<MyFieldProps>(<BasicField {...fieldProps} />, {
             context: {
                 FormId: formId
             } as FormChildContext
@@ -261,6 +257,6 @@ describe("Field Base", () => {
 
         expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
         expect((BasicField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
-        expect((formStore.GetField(fieldName).Props as FieldPropsTest).value).toBe(fieldPropsNext.value);
+        expect((formStore.GetField(fieldName).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
     });
 });

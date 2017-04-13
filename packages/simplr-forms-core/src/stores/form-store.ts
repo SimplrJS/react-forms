@@ -110,7 +110,8 @@ export class FormStore extends ActionEmitter {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
-        if (!fieldState.Props.equals(propsRecord)) {
+        if (fieldState.Props != null &&
+            !fieldState.Props.equals(propsRecord)) {
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
