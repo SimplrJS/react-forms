@@ -1,5 +1,11 @@
+import { recordify } from "typed-immutable-record";
+import * as Immutable from "immutable";
+
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
+import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
+
+import { MyFieldProps } from "../basic-components/basic-field";
 
 describe("Form store", () => {
     it("returns state", () => {
@@ -149,5 +155,47 @@ describe("Form store", () => {
         } catch (error) {
             done.fail(error);
         }
+    });
+
+    it("registers field with props", () => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const fieldProps: MyFieldProps = {
+            name: "fieldName",
+            value: "initial-value",
+            randomKey: "random value"
+        };
+        const formStore = new FormStore(formId);
+
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+
+        const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
+
+        // Deep-check the updated props
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
+    });
+
+    it("updates field props", () => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const fieldProps: MyFieldProps = {
+            name: "field-name",
+            value: "initialValue",
+            randomKey: "random value"
+        };
+
+        // Changed value and removed randomKey prop
+        const fieldPropsNext: MyFieldProps = {
+            name: fieldProps.name,
+            value: "Updated value"
+        };
+        const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
+        const formStore = new FormStore(formId);
+
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+        formStore.UpdateProps(fieldId, fieldPropsNext);
+
+        // Deep-check the updated props
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
     });
 });

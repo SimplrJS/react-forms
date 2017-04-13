@@ -7,7 +7,10 @@ import {
     FieldState,
     FieldValue,
     FieldStateRecord,
-    FormErrorRecord
+    FormErrorRecord,
+    FieldProps,
+    FieldStatePropsRecord,
+    FieldStateProps
 } from "../contracts/field";
 import { FormState, FormStateRecord } from "../contracts/form";
 import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
@@ -64,12 +67,17 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
+        props?: FieldProps,
         fieldsGroupId?: string
     ) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
+
+        if (props != null) {
+            fieldState.Props = recordify<FieldStateProps, FieldStatePropsRecord>(props);
+        }
 
         if (fieldsGroupId != null) {
             fieldState.FieldsGroup = {
@@ -96,6 +104,24 @@ export class FormStore extends ActionEmitter {
 
     public GetField(fieldId: string): FieldStateRecord {
         return this.State.Fields.get(fieldId);
+    }
+
+    public UpdateProps(fieldId: string, props: FieldProps) {
+        const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
+        const fieldState = this.State.Fields.get(fieldId);
+
+        if (fieldState.Props == null || fieldState.Props.equals(propsRecord)) {
+            return;
+        }
+
+        this.State = this.State.withMutations(state => {
+            const fieldState = state.Fields.get(fieldId);
+            state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                Props: recordify<FieldStateProps, FieldStatePropsRecord>(props)
+            } as FieldState));
+        });
+
+        this.emit(new Actions.PropsChanged(fieldId));
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
@@ -174,7 +200,8 @@ export class FormStore extends ActionEmitter {
             Pristine: true,
             Validating: false,
             Error: undefined,
-            FieldsGroup: undefined
+            FieldsGroup: undefined,
+            Props: undefined
         };
     }
 }

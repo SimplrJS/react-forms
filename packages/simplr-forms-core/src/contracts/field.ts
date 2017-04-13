@@ -17,7 +17,6 @@ export interface FieldProps {
     validationType?: FieldValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
-    children?: React.ReactNode;
 }
 
 export interface FieldState {
@@ -30,9 +29,13 @@ export interface FieldState {
     FieldsGroup?: {
         Id: string;
     };
+    Props?: FieldStatePropsRecord;
 }
 
+export type FieldStateProps = FieldProps & React.Props<any>;
+
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
+export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }
 export interface FormErrorRecord extends TypedRecord<FormErrorRecord>, FormError { }
 
 export enum FieldValidationType {

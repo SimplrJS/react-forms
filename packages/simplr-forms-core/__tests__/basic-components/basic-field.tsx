@@ -3,7 +3,10 @@ import * as React from "react";
 import { BaseField, BaseFieldState } from "../../src/abstractions/base-field";
 import { FieldProps, FieldValue } from "../../src/contracts/field";
 
-export interface MyFieldProps extends FieldProps { }
+export interface MyFieldProps extends FieldProps {
+    value?: string;
+    randomKey?: string;
+}
 
 export interface MyFieldState extends BaseFieldState { }
 

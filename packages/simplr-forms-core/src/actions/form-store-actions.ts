@@ -7,3 +7,11 @@ export class ValueChanged {
         return this.fieldId;
     }
 }
+
+export class PropsChanged {
+    constructor(private fieldId: string) { }
+
+    public get FieldId() {
+        return this.fieldId;
+    }
+}
