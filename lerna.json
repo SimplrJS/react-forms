@@ -1,0 +1,12 @@
+{
+  "lerna": "2.0.0-rc.1",
+  "packages": [
+    "packages/*"
+  ],
+  "version": "4.0.0-alpha",
+  "command": {
+    "init": {
+      "exact": true
+    }
+  }
+}
