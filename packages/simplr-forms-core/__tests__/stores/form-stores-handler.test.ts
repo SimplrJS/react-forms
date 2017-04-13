@@ -97,7 +97,7 @@ describe("Form stores handler", () => {
         expect(callbackSpy.called).toBe(true);
     });
 
-    fit("emits unregister action when unregistering a form", () => {
+    it("emits unregister action when unregistering a form", () => {
         const storesHandler = new FormStoresHandlerClass();
         const formId = "form-id";
         const callbackSpy = sinon.spy();

@@ -83,8 +83,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
                 FormStoreActions.StateUpdated,
                 this.OnStoreUpdated.bind(this));
         this.registerFieldInFormStore();
-
-        // TODO: Set validators
     }
 
     componentWillReceiveProps(nextProps: FieldProps) {
@@ -93,7 +91,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             throw new Error(`simplr-forms-core: Field name must be constant`);
         }
 
-        // TODO: Update validators
+        this.FormStore.UpdateProps(this.FieldId, nextProps);
     }
 
     componentWillUnmount() {
@@ -273,6 +271,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         const initialValue = this.RawInitialValue;
-        this.FormStore.RegisterField(this.FieldId, initialValue, this.FieldsGroupId);
+        this.FormStore.RegisterField(
+            this.FieldId,
+            initialValue,
+            this.props,
+            this.FieldsGroupId
+        );
     }
 }

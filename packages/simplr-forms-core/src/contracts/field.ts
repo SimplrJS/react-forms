@@ -30,9 +30,13 @@ export interface FieldState {
     FieldsGroup?: {
         Id: string;
     };
+    Props?: FieldStatePropsRecord;
 }
 
+export type FieldStateProps = FieldProps & React.Props<void>;
+
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
+export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }
 export interface FormErrorRecord extends TypedRecord<FormErrorRecord>, FormError { }
 
 export enum FieldValidationType {
