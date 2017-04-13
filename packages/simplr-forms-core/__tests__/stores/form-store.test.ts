@@ -1,5 +1,13 @@
+import { recordify } from "typed-immutable-record";
+import * as Immutable from "immutable";
+
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
+import { FieldProps, FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
+
+interface FieldPropsTest extends FieldProps {
+    value?: string;
+}
 
 describe("Form store", () => {
     it("returns state", () => {
@@ -149,5 +157,40 @@ describe("Form store", () => {
         } catch (error) {
             done.fail(error);
         }
+    });
+
+    fit("registers field with props", () => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const fieldProps: FieldPropsTest = {
+            name: "fieldName",
+            value: "initial-value"
+        };
+        const formStore = new FormStore(formId);
+
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+
+        const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
+
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
+    });
+
+    fit("updates field props", () => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const fieldProps: FieldPropsTest = {
+            name: "fieldName",
+            value: "initialValue"
+        };
+        const fieldPropsNext: FieldPropsTest = {
+            name: "fieldName",
+            value: "Updated value"
+        };
+        const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
+        const formStore = new FormStore(formId);
+
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+        formStore.UpdateProps(fieldId, fieldPropsNext);
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
     });
 });
