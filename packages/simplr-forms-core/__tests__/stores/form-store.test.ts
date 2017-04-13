@@ -5,7 +5,7 @@ import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
 import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
 
-import { MyFieldProps } from "../basic-components/basic-field";
+import { MyFieldProps } from "../test-components/test-field";
 
 describe("Form store", () => {
     it("returns state", () => {

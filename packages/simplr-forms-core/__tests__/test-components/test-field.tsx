@@ -10,7 +10,7 @@ export interface MyFieldProps extends FieldProps {
 
 export interface MyFieldState extends BaseFieldState { }
 
-export class BasicField extends BaseField<MyFieldProps, MyFieldState> {
+export class MyTestField extends BaseField<MyFieldProps, MyFieldState> {
     render() {
         return <input type="text" onChange={this.onChange} value={this.state.Value} />;
     }

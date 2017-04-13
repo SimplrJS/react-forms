@@ -9,7 +9,7 @@ export interface MyFormProps extends FormProps {
 
 export interface MyFormState { }
 
-export class BasicForm extends BaseForm<MyFormProps, MyFormState> {
+export class MyTestForm extends BaseForm<MyFormProps, MyFormState> {
     static defaultProps: MyFormProps = {
         ...BaseForm.defaultProps,
         renderChildren: true

@@ -1,7 +1,7 @@
 import { FormError } from "../contracts/error";
 
-export function IsFormError(value: any): value is FormError {
-    return (value != null && (value as FormError).Message != null);
+export function IsFormError(error: any): error is FormError {
+    return (error != null && (error as FormError).Message != null);
 }
 
 export function ConstructFormError(error: any) {

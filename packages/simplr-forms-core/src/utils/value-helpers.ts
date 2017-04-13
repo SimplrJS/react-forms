@@ -46,7 +46,9 @@ export function IsComponentOfType(component: JSX.Element, requiredType: string) 
 
 export function RenderComponents<TComponent>(components: Array<JSX.Element>): Array<TComponent> {
     const virtualDiv = document.createElement("div");
-    const renderedComponents = components.map(component => ReactDOM.render(component, virtualDiv) as any as TComponent);
+    const renderedComponents = components.map(component => {
+        return ReactDOM.render(component, virtualDiv) as any as TComponent;
+    });
 
     ReactDOM.unmountComponentAtNode(virtualDiv);
     return renderedComponents;

@@ -5,10 +5,9 @@ import { spy } from "sinon";
 
 import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
 import { FormStore } from "../../src/stores/form-store";
-import { BasicForm } from "../basic-components/basic-form";
-import { BasicField } from "../basic-components/basic-field";
+import { MyTestForm } from "../test-components/test-form";
+import { MyTestField, MyFieldProps } from "../test-components/test-field";
 import { FormChildContext } from "../../src/contracts/form";
-import { MyFieldProps } from "../basic-components/basic-field";
 
 describe("Field Base", () => {
     beforeEach(() => {
@@ -21,7 +20,7 @@ describe("Field Base", () => {
 
     it("is rendered outside of Form", () => {
         expect(() => shallow(
-            <BasicField name="fieldName"></BasicField>
+            <MyTestField name="fieldName"></MyTestField>
         )).toThrow();
     });
 
@@ -30,9 +29,9 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        mount(<BasicForm formId={formId} >
-            <BasicField name="fieldName"></BasicField>
-        </BasicForm>);
+        mount(<MyTestForm formId={formId} >
+            <MyTestField name="fieldName"></MyTestField>
+        </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
@@ -45,9 +44,9 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<BasicForm formId={formId}>
-            <BasicField name="fieldName"></BasicField>
-        </BasicForm>);
+        let form = mount(<MyTestForm formId={formId}>
+            <MyTestField name="fieldName"></MyTestField>
+        </MyTestForm>);
 
         let formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
@@ -67,9 +66,9 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<BasicForm formId={formId}>
-            <BasicField destroyOnUnmount={true} name="fieldName"></BasicField>
-        </BasicForm>);
+        let form = mount(<MyTestForm formId={formId}>
+            <MyTestField destroyOnUnmount={true} name="fieldName"></MyTestField>
+        </MyTestForm>);
 
         let formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
@@ -88,42 +87,42 @@ describe("Field Base", () => {
         expect(() => {
             const fieldName = "fieldName";
 
-            mount(<BasicForm>
-                <BasicField name={fieldName}></BasicField>
-                <BasicField name={fieldName}></BasicField>
-            </BasicForm>);
+            mount(<MyTestForm>
+                <MyTestField name={fieldName}></MyTestField>
+                <MyTestField name={fieldName}></MyTestField>
+            </MyTestForm>);
         }).toThrow();
     });
 
     it("throws when rendering an empty fieldName", () => {
         expect(() => {
-            mount(<BasicForm>
-                <BasicField name=""></BasicField>
-            </BasicForm>);
+            mount(<MyTestForm>
+                <MyTestField name=""></MyTestField>
+            </MyTestForm>);
         }).toThrow();
     });
 
     it("throws when rendering an undefined fieldName", () => {
         expect(() => {
-            mount(<BasicForm>
-                <BasicField name={undefined as any}></BasicField>
-            </BasicForm>);
+            mount(<MyTestForm>
+                <MyTestField name={undefined as any}></MyTestField>
+            </MyTestForm>);
         }).toThrow();
     });
 
     it("throws when rendering a null fieldName", () => {
         expect(() => {
-            mount(<BasicForm>
-                <BasicField name={null as any}></BasicField>
-            </BasicForm>);
+            mount(<MyTestForm>
+                <MyTestField name={null as any}></MyTestField>
+            </MyTestForm>);
         }).toThrow();
     });
 
     it("renders html without wrappers", () => {
         const formId = "FORM_ID";
-        let form = mount(<BasicForm formId={formId}>
-            <BasicField name="fieldName"></BasicField>
-        </BasicForm>);
+        let form = mount(<MyTestForm formId={formId}>
+            <MyTestField name="fieldName"></MyTestField>
+        </MyTestForm>);
 
         const formDOM = ReactDOM.findDOMNode(form.instance());
         expect(formDOM.tagName).toEqual("FORM");
@@ -134,9 +133,9 @@ describe("Field Base", () => {
     it("adds event listener to form store when mounts", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
-        mount(<BasicForm formId={formId}>
-            <BasicField name="fieldName"></BasicField>
-        </BasicForm>);
+        mount(<MyTestForm formId={formId}>
+            <MyTestField name="fieldName"></MyTestField>
+        </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
 
@@ -146,9 +145,9 @@ describe("Field Base", () => {
     it("removes event listener form store when destroyOnUnmount is true and it is unmounted", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
-        const form = mount(<BasicForm formId={formId} >
-            <BasicField name="fieldName" destroyOnUnmount={true}></BasicField>
-        </BasicForm>);
+        const form = mount(<MyTestForm formId={formId} >
+            <MyTestField name="fieldName" destroyOnUnmount={true}></MyTestField>
+        </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
         expect(formStore.listenersCount()).toBe(1);
@@ -168,9 +167,9 @@ describe("Field Base", () => {
         spy(FormStore.prototype, "ValueChanged");
 
         const fieldName = "fieldName";
-        const form = mount(<BasicForm formId={formId}>
-            <BasicField name={fieldName}></BasicField>
-        </BasicForm>);
+        const form = mount(<MyTestForm formId={formId}>
+            <MyTestField name={fieldName}></MyTestField>
+        </MyTestForm>);
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
         expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(0);
@@ -192,9 +191,9 @@ describe("Field Base", () => {
         const newValue = "NEW_VALUE";
         const fieldName = "fieldName";
 
-        const form = mount(<BasicForm>
-            <BasicField name={fieldName}></BasicField>
-        </BasicForm>);
+        const form = mount(<MyTestForm>
+            <MyTestField name={fieldName}></MyTestField>
+        </MyTestForm>);
 
         const input = form.find("input");
 
@@ -216,9 +215,9 @@ describe("Field Base", () => {
             value: "initialValue"
         };
 
-        mount(<BasicForm formId={formId}>
-            <BasicField {...fieldProps} />
-        </BasicForm>);
+        mount(<MyTestForm formId={formId}>
+            <MyTestField {...fieldProps} />
+        </MyTestForm>);
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
         expect((formStore.GetField(fieldName).Props as MyFieldProps).value).toBe(fieldProps.value);
@@ -238,25 +237,25 @@ describe("Field Base", () => {
 
         // Set spies on methods
         spy(FormStore.prototype, "UpdateProps");
-        spy(BasicField.prototype, "componentWillReceiveProps");
+        spy(MyTestField.prototype, "componentWillReceiveProps");
 
         // Render form to create FormStore
-        shallow(<BasicForm formId={formId}></BasicForm>);
+        shallow(<MyTestForm formId={formId}></MyTestForm>);
 
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
         // Mount with formId as a context
-        const field = mount<MyFieldProps>(<BasicField {...fieldProps} />, {
+        const field = mount<MyFieldProps>(<MyTestField {...fieldProps} />, {
             context: {
                 FormId: formId
             } as FormChildContext
         });
 
-        // Update BasicField props
+        // Update MyTestField props
         field.setProps(fieldPropsNext);
 
         expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
-        expect((BasicField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
+        expect((MyTestField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
         expect((formStore.GetField(fieldId).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
     });
 });

@@ -110,7 +110,7 @@ export class FormStoresHandlerClass extends ActionEmitter {
      * @memberOf FormStoreHandlerBase
      */
     public Exists(formId: string) {
-        return this.formStores.get(formId) != null;
+        return this.formStores.has(formId);
     }
 
     private resetFormStores() {
