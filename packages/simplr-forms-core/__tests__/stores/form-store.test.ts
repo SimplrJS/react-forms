@@ -3,11 +3,9 @@ import * as Immutable from "immutable";
 
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
-import { FieldProps, FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
+import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
 
-interface FieldPropsTest extends FieldProps {
-    value?: string;
-}
+import { MyFieldProps } from "../basic-components/basic-field";
 
 describe("Form store", () => {
     it("returns state", () => {
@@ -162,7 +160,7 @@ describe("Form store", () => {
     it("registers field with props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
-        const fieldProps: FieldPropsTest = {
+        const fieldProps: MyFieldProps = {
             name: "fieldName",
             value: "initial-value"
         };
@@ -178,11 +176,11 @@ describe("Form store", () => {
     it("updates field props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
-        const fieldProps: FieldPropsTest = {
+        const fieldProps: MyFieldProps = {
             name: "fieldName",
             value: "initialValue"
         };
-        const fieldPropsNext: FieldPropsTest = {
+        const fieldPropsNext: MyFieldProps = {
             name: "fieldName",
             value: "Updated value"
         };
