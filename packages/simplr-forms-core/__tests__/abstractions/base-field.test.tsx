@@ -208,7 +208,7 @@ describe("Field Base", () => {
         expect(input.props().value).toEqual(newValue);
     });
 
-    it("registers with passing props", () => {
+    it("registers and passes props", () => {
         const fieldName = "fieldName";
         const formId = "form-id";
         const fieldProps: MyFieldProps = {
