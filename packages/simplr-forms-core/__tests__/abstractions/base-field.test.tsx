@@ -212,7 +212,7 @@ describe("Field Base", () => {
         expect(input.props().value).toEqual(newValue);
     });
 
-    fit("registers with passing props", () => {
+    it("registers with passing props", () => {
         const fieldName = "fieldName";
         const formId = "form-id";
         const fieldProps: FieldPropsTest = {

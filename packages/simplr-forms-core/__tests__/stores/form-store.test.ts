@@ -159,7 +159,7 @@ describe("Form store", () => {
         }
     });
 
-    fit("registers field with props", () => {
+    it("registers field with props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const fieldProps: FieldPropsTest = {
@@ -175,7 +175,7 @@ describe("Form store", () => {
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
     });
 
-    fit("updates field props", () => {
+    it("updates field props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const fieldProps: FieldPropsTest = {
