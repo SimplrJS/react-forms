@@ -225,14 +225,14 @@ describe("Field Base", () => {
     });
 
     it("updates props when componentWillReceiveProps is called", () => {
-        const fieldName = "fieldName";
-        const formId = "form-id";
+        const formId = "FORM-ID";
+        const fieldId = "field";
         const fieldProps: MyFieldProps = {
-            name: fieldName,
+            name: "field",
             value: "initialValue"
         };
         const fieldPropsNext: MyFieldProps = {
-            name: fieldName,
+            name: fieldProps.name,
             value: "Updated value"
         };
 
@@ -257,6 +257,6 @@ describe("Field Base", () => {
 
         expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
         expect((BasicField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
-        expect((formStore.GetField(fieldName).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
+        expect((formStore.GetField(fieldId).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
     });
 });

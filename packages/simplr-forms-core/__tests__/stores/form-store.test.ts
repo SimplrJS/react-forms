@@ -159,6 +159,7 @@ describe("Form store", () => {
 
     it("registers field with props", () => {
         const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
         const fieldProps: MyFieldProps = {
             name: "fieldName",
             value: "initial-value",
@@ -166,31 +167,35 @@ describe("Form store", () => {
         };
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldProps.name, fieldProps.value, fieldProps);
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
 
         const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
+
         // Deep-check the updated props
-        expect(Immutable.is(formStore.GetField(fieldProps.name).Props, fieldPropsRecord)).toBe(true);
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
     });
 
     it("updates field props", () => {
         const formId = "FORM-ID";
-        const fieldName = "field-name";
+        const fieldId = "FIELD-ID";
         const fieldProps: MyFieldProps = {
-            name: fieldName,
+            name: "field-name",
             value: "initialValue",
             randomKey: "random value"
         };
+
+        // Changed value and removed randomKey prop
         const fieldPropsNext: MyFieldProps = {
-            name: fieldName,
+            name: fieldProps.name,
             value: "Updated value"
         };
         const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldProps.name, fieldProps.value, fieldProps);
-        formStore.UpdateProps(fieldProps.name, fieldPropsNext);
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+        formStore.UpdateProps(fieldId, fieldPropsNext);
+
         // Deep-check the updated props
-        expect(Immutable.is(formStore.GetField(fieldProps.name).Props, fieldPropsNextRecord)).toBe(true);
+        expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
     });
 });
