@@ -7,6 +7,12 @@ import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stor
 import { FormStore } from "../../src/stores/form-store";
 import { BasicForm } from "../basic-components/basic-form";
 import { BasicField } from "../basic-components/basic-field";
+import { FormChildContext } from "../../src/contracts/form";
+import { FieldProps } from "../../src/contracts/field";
+
+interface FieldPropsTest extends FieldProps {
+    value?: string;
+}
 
 describe("Field Base", () => {
     beforeEach(() => {
@@ -204,5 +210,57 @@ describe("Field Base", () => {
 
         // Value should be updated
         expect(input.props().value).toEqual(newValue);
+    });
+
+    fit("registers with passing props", () => {
+        const fieldName = "fieldName";
+        const formId = "form-id";
+        const fieldProps: FieldPropsTest = {
+            name: fieldName,
+            value: "initialValue"
+        };
+
+        mount(<BasicForm formId={formId}>
+            <BasicField {...fieldProps} />
+        </BasicForm>);
+        const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
+
+        expect((formStore.GetField(fieldName).Props as FieldPropsTest).value).toBe(fieldProps.value);
+    });
+
+    it("updates props when componentWillReceiveProps is called", () => {
+        const fieldName = "fieldName";
+        const formId = "form-id";
+        const fieldProps: FieldPropsTest = {
+            name: fieldName,
+            value: "initialValue"
+        };
+        const fieldPropsNext: FieldPropsTest = {
+            name: fieldName,
+            value: "Updated value"
+        };
+
+        // Set spies on methods
+        spy(FormStore.prototype, "UpdateProps");
+        spy(BasicField.prototype, "componentWillReceiveProps");
+
+        // Render form to create FormStore
+        shallow(<BasicForm formId={formId}></BasicForm>);
+
+        const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
+
+        // Mount with formId as a context
+        const field = mount(<BasicField {...fieldProps} />, {
+            context: {
+                FormId: formId
+            } as FormChildContext
+        });
+
+        // Update BasicField props
+        field.setProps(fieldPropsNext as any);
+
+        expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
+        expect((BasicField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
+        expect((formStore.GetField(fieldName).Props as FieldPropsTest).value).toBe(fieldPropsNext.value);
     });
 });

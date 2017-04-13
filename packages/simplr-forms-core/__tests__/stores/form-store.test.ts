@@ -171,7 +171,7 @@ describe("Form store", () => {
         formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
 
         const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
-
+        // Check deeply if it's the equal object.
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
     });
 
@@ -191,6 +191,7 @@ describe("Form store", () => {
 
         formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
         formStore.UpdateProps(fieldId, fieldPropsNext);
+        // Check deeply if it's the equal object.
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
     });
 });
