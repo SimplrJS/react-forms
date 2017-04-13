@@ -17,7 +17,6 @@ export interface FieldProps {
     validationType?: FieldValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
-    // children?: React.ReactNode;
 }
 
 export interface FieldState {
