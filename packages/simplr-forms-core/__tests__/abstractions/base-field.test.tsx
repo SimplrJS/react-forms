@@ -250,14 +250,14 @@ describe("Field Base", () => {
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
         // Mount with formId as a context
-        const field = mount(<BasicField {...fieldProps} />, {
+        const field = mount<FieldPropsTest>(<BasicField {...fieldProps} />, {
             context: {
                 FormId: formId
             } as FormChildContext
         });
 
         // Update BasicField props
-        field.setProps(fieldPropsNext as any);
+        field.setProps(fieldPropsNext);
 
         expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
         expect((BasicField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
