@@ -11,7 +11,12 @@
         "pretty": true,
         "strict": true,
         "noEmit": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es6"
+        ]
     },
     "exclude": [
         "node_modules",
