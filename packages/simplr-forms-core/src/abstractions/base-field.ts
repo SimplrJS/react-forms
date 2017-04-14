@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as fbemitter from "fbemitter";
+import * as actionEmitter from "action-emitter";
 
 import {
     FieldProps,
@@ -67,7 +67,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         return this.context.FieldsGroupId;
     }
 
-    protected StoreEventSubscription: fbemitter.EventSubscription;
+    protected StoreEventSubscription: actionEmitter.EventSubscription;
 
     componentWillMount() {
         // props.name MUST have a proper value
