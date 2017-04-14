@@ -1,5 +1,11 @@
 const packageJson = require("./package.json");
 
+let externals = {};
+
+for (let key in packageJson.dependencies) {
+    externals[key] = key;
+}
+
 module.exports = {
     entry: "./src/index.ts",
     output: {
@@ -19,5 +25,5 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx"]
     },
-    externals: packageJson.dependencies
+    externals: externals
 };
