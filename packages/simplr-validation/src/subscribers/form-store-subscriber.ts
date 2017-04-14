@@ -22,9 +22,10 @@ export class FormStoreSubscriber {
 
     private onValueChanged = (action: Actions.ValueChanged) => {
         const fieldState = this.formStore.GetField(action.FieldId);
+        const fieldProps = fieldState.Props;
     }
 
     private onPropsChanged = (action: Actions.PropsChanged) => {
-
+        const fieldState = this.formStore.GetField(action.FieldId);
     }
 }
