@@ -11,7 +11,12 @@
         "declaration": true,
         "declarationDir": "@types",
         "pretty": true,
-        "strict": true
+        "strict": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es6"
+        ]
     },
     "exclude": [
         "node_modules",
