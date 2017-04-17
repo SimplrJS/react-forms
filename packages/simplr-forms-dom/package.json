@@ -2,9 +2,17 @@
   "name": "simplr-validation",
   "version": "4.0.0-alpha",
   "description": "DOM components for simplr-forms.",
-  "main": "index.js",
+  "main": "dist/simplr-forms-dom.js",
+  "types": "@types/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack && npm run tslint",
+    "watch": "webpack -w",
+    "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle",
+    "release": "npm run build && npm run uglifyjs",
+    "test": "jest",
+    "test-watch": "jest --watchAll",
+    "test-coverage": "npm test -- --coverage"
   },
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "license": "AGPL-3.0",
@@ -17,8 +25,10 @@
     "jest-enzyme": "^3.0.0",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
+    "ts-loader": "^2.0.3",
     "tslint": "^5.0.0",
-    "typescript": "2.3.0"
+    "typescript": "2.3.0",
+    "webpack": "^2.4.1"
   },
   "dependencies": {
     "@types/react": "^15.0.21",
