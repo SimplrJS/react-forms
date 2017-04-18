@@ -1,6 +1,6 @@
 {
-  "name": "simplr-validation",
-  "version": "4.0.0-alpha",
+  "name": "simplr-forms-dom",
+  "version": "4.0.0-pre-alpha.6",
   "description": "DOM components for simplr-forms.",
   "main": "dist/simplr-forms-dom.js",
   "types": "@types/index.d.ts",
@@ -33,7 +33,7 @@
   "dependencies": {
     "@types/react": "^15.0.21",
     "react": "^15.5.4",
-    "simplr-forms-core": "4.0.0-alpha"
+    "simplr-forms-core": "^4.0.0-pre-alpha.3"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
