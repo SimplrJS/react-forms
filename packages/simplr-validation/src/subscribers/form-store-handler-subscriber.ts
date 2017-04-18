@@ -13,7 +13,7 @@ export class FormStoreHandlerSubscriber {
         return this.fshContainer.FormStoresHandler;
     }
 
-    constructor(private fshContainer = Stores.FSHContainer) {
+    constructor(private fshContainer: Stores.FSHContainerClass = Stores.FSHContainer) {
         this.formRegisterSubscription = this.formStoresHandler.addListener(Actions.FormRegistered, this.onFormRegistered);
         this.formUnregisterSubscription = this.formStoresHandler.addListener(Actions.FormUnregistered, this.onFormUnregistered);
     }

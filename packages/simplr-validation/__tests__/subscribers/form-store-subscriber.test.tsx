@@ -1,9 +1,17 @@
 import * as React from "react";
-import { Stores } from "simplr-forms-core";
+import { Stores, Actions } from "simplr-forms-core";
 import * as Sinon from "sinon";
 
 import { ContainsValidator } from "../../src/validators/index";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
+
+class MySubscriber extends FormStoreSubscriber {
+    protected onValueChanged(action: Actions.ValueChanged) {
+        return new Promise<any>((resolve, reject) => {
+            super.onValueChanged(action).then(resolve).catch(reject);
+        });
+    }
+}
 
 let sandbox: Sinon.SinonSandbox;
 describe("FormStoreSubscriber", () => {
@@ -28,21 +36,37 @@ describe("FormStoreSubscriber", () => {
         // TODO
     });
 
-    fit("MUST validate when value changed with an error", async (done) => {
+    it("MUST validate when value changed with an error", async (done) => {
         const fieldId = "field-id";
         const nextValue = "next value";
-        const fieldChildren = [<ContainsValidator value="ok" errorMessage="error message" />];
+        const errorMessage = "error message";
+
+        const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
+        const fieldChildren = [<ContainsValidator value="ok" errorMessage={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
-        const callback = sandbox.stub(Stores.FormStore.prototype, "Validate");
-        new FormStoreSubscriber(formStore);
+        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
+        new MySubscriber(formStore);
 
         formStore.RegisterField(fieldId, "initial", { name: "field-name", children: fieldChildren });
-        console.warn(formStore.GetField(fieldId));
         formStore.ValueChanged(fieldId, nextValue);
 
+        const [onValueChangedPromise] = onValueChangedCallback.returnValues;
+
         try {
-            expect(callback.called).toBe(true);
-            console.warn(formStore.GetField(fieldId).Error);
+            expect(onValueChangedPromise).toBeDefined();
+            expect(onValueChangedPromise.then).toBeDefined();
+        } catch (err) {
+            done.fail(err);
+        }
+
+        await onValueChangedPromise;
+
+        try {
+            expect(formStoreValidateCallback.called).toBe(true);
+            expect(validatorValidateCallback.called).toBe(true);
+            expect(formStore.GetField(fieldId).Error).toBeDefined();
+            expect(formStore.GetField(fieldId).Error!.Message).toEqual(errorMessage);
         } catch (error) {
             done.fail(error);
         }

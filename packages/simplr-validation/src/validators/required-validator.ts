@@ -1,23 +1,25 @@
 import { BaseValidator, ValidatorProps } from "../abstractions/base-validator";
-import { ValidationReturn } from "../contracts";
+import { ValidationResult } from "../contracts";
+
+import { Contracts } from "simplr-forms-core";
 
 export interface RequiredValidatorProps extends ValidatorProps { }
 
 export class RequiredValidator extends BaseValidator<RequiredValidatorProps> {
 
-    private isString(value: any) {
+    private isString(value: Contracts.FieldValue) {
         return typeof value === "string";
     }
 
-    private isArray(value: any) {
+    private isArray(value: Contracts.FieldValue) {
         return {}.toString.call(value) === "[object Array]";
     }
 
-    private isObject(value: any) {
+    private isObject(value: Contracts.FieldValue) {
         return value === Object(value);
     }
 
-    Validate(value: any): ValidationReturn {
+    Validate(value: Contracts.FieldValue): ValidationResult {
         if (value == null) {
             return this.InvalidSync(this.props.errorMessage);
         }

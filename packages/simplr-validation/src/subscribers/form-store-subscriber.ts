@@ -2,7 +2,7 @@ import * as React from "React";
 import { Stores, Actions } from "simplr-forms-core";
 import * as ActionEmitter from "action-emitter";
 
-import { Validate } from "../validation";
+import { Validate } from "../utils/validation";
 
 export class FormStoreSubscriber {
 
@@ -10,7 +10,7 @@ export class FormStoreSubscriber {
     private formOnPropsChangedSubscription: ActionEmitter.EventSubscription | undefined;
 
     constructor(private formStore: Stores.FormStore) {
-        this.formOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.onValueChanged);
+        this.formOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.onValueChanged.bind(this));
         this.formOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.onPropsChanged);
     }
 
@@ -23,20 +23,18 @@ export class FormStoreSubscriber {
         }
     }
 
-    private onValueChanged = async (action: Actions.ValueChanged) => {
+    protected async onValueChanged(action: Actions.ValueChanged) {
         const fieldState = this.formStore.GetField(action.FieldId);
         const fieldProps = fieldState.Props;
+
+        if (fieldProps == null) {
+            return;
+        }
 
         const children = React.Children.toArray(fieldProps.children) as JSX.Element[];
         const validationPromise = Validate(children, action.NewValue);
 
-        try {
-            await validationPromise;
-        } catch (err) {
-            console.error("---", err);
-        }
-
-        this.formStore.Validate(action.FieldId, validationPromise, action.NewValue);
+        this.formStore.Validate(action.FieldId, validationPromise);
     }
 
     private onPropsChanged = (action: Actions.PropsChanged) => {

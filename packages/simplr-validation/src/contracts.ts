@@ -1,7 +1,7 @@
 export interface Validator {
-    Validate(value: any): ValidationReturn;
+    Validate(value: any): ValidationResult;
 }
 
-export type ValidationReturn = Promise<void> | string | undefined;
+export type ValidationResult = Promise<void> | string | undefined;
 
-export const VALIDATOR = "SimplrValidationValidatorComponent";
+export const VALIDATOR_FUNCTION_NAME = "SimplrValidationValidatorComponent";
