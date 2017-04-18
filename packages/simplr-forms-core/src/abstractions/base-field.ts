@@ -14,7 +14,7 @@ import * as ValueHelpers from "../utils/value-helpers";
 import { FormContextPropsObject } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
 import { FormStoreStateRecord } from "../contracts/form-store";
-import * as FormStoreActions from "../actions/form-store-actions";
+import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
 
