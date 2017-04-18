@@ -67,7 +67,7 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
-        props?: FieldProps,
+        props?: FieldStateProps,
         fieldsGroupId?: string
     ) {
         // Construct field state
@@ -106,7 +106,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
-    public UpdateProps(fieldId: string, props: FieldProps) {
+    public UpdateProps(fieldId: string, props: FieldStateProps) {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
@@ -135,11 +135,9 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public async Validate(fieldId: string, validationPromise: Promise<void>, validatedValue: FieldValue) {
+    public async Validate(fieldId: string, validationPromise: Promise<void>) {
         const field = this.State.Fields.get(fieldId);
-        if (field.Value !== validatedValue) {
-            return;
-        }
+        const fieldValue = field.Value;
 
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
@@ -150,7 +148,14 @@ export class FormStore extends ActionEmitter {
         });
 
         try {
+            // Wait for validation to finish
             await validationPromise;
+
+            // Skip validation if the value has changed again
+            if (field.Value !== fieldValue) {
+                return;
+            }
+
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -158,6 +163,11 @@ export class FormStore extends ActionEmitter {
                 } as FieldState));
             });
         } catch (error) {
+            // Skip validation if the value has changed again
+            if (field.Value !== fieldValue) {
+                return;
+            }
+
             const formError = ConstructFormError(error);
             if (formError == null) {
                 throw Error(error);
