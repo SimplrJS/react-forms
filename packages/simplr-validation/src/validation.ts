@@ -17,6 +17,8 @@ export function Validate(components: Array<JSX.Element>, value: any) {
                     await response;
                 }
             }
+
+            resolve();
         } catch (error) {
             reject(error);
         }
