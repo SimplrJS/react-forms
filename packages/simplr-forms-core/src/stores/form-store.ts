@@ -67,7 +67,7 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
-        props?: FieldProps,
+        props?: FieldStateProps,
         fieldsGroupId?: string
     ) {
         // Construct field state
@@ -106,7 +106,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
-    public UpdateProps(fieldId: string, props: FieldProps) {
+    public UpdateProps(fieldId: string, props: FieldStateProps) {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
