@@ -125,7 +125,7 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
-        this.emit(new Actions.ValueChanged(fieldId));
+        this.emit(new Actions.ValueChanged(fieldId, newValue));
 
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
@@ -135,7 +135,12 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public async Validate(fieldId: string, validationPromise: Promise<void>) {
+    public async Validate(fieldId: string, validationPromise: Promise<void>, validatedValue: FieldValue) {
+        const field = this.State.Fields.get(fieldId);
+        if (field.Value !== validatedValue) {
+            return;
+        }
+
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
