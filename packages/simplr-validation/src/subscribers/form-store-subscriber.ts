@@ -23,13 +23,20 @@ export class FormStoreSubscriber {
         }
     }
 
-    private onValueChanged = (action: Actions.ValueChanged) => {
+    private onValueChanged = async (action: Actions.ValueChanged) => {
         const fieldState = this.formStore.GetField(action.FieldId);
         const fieldProps = fieldState.Props;
 
         const children = React.Children.toArray(fieldProps.children) as JSX.Element[];
+        const validationPromise = Validate(children, action.NewValue);
 
-        this.formStore.Validate(action.FieldId, Validate(children, action.NewValue), action.NewValue);
+        try {
+            await validationPromise;
+        } catch (err) {
+            console.error("---", err);
+        }
+
+        this.formStore.Validate(action.FieldId, validationPromise, action.NewValue);
     }
 
     private onPropsChanged = (action: Actions.PropsChanged) => {
