@@ -11,7 +11,7 @@ export class FormStoreSubscriber {
 
     constructor(private formStore: Stores.FormStore) {
         this.formOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.onValueChanged.bind(this));
-        this.formOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.onPropsChanged);
+        this.formOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.onPropsChanged.bind(this));
     }
 
     public RemoveFormListeners() {
@@ -37,7 +37,7 @@ export class FormStoreSubscriber {
         this.formStore.Validate(action.FieldId, validationPromise);
     }
 
-    private onPropsChanged = (action: Actions.PropsChanged) => {
+    private async onPropsChanged(action: Actions.PropsChanged) {
         // const fieldState = this.formStore.GetField(action.FieldId);
         // TODO: OnPropsChanged
     }
