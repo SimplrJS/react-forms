@@ -1,9 +1,11 @@
 import * as React from "react";
-import { Stores, Actions } from "simplr-forms-core";
+import { Stores, Actions, Contracts as FormsCoreContracts } from "simplr-forms-core";
 import * as Sinon from "sinon";
 
 import { ContainsValidator } from "../../src/validators/index";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
+
+const { FieldValidationType } = FormsCoreContracts;
 
 class MySubscriber extends FormStoreSubscriber {
     protected onValueChanged(action: Actions.ValueChanged) {
@@ -63,7 +65,13 @@ describe("FormStoreSubscriber", () => {
         const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
         new MySubscriber(formStore);
 
-        formStore.RegisterField(fieldId, "initial", { name: "field-name", children: fieldChildren });
+        const fieldProps: FormsCoreContracts.FieldStateProps = {
+            name: "field-name",
+            children: fieldChildren,
+            validationType: FieldValidationType.OnPropsChange
+        };
+
+        formStore.RegisterField(fieldId, "initial", fieldProps);
         formStore.ValueChanged(fieldId, nextValue);
 
         const [onValueChangedPromise] = onValueChangedCallback.returnValues;
@@ -99,7 +107,13 @@ describe("FormStoreSubscriber", () => {
         const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
         new MySubscriber(formStore);
 
-        formStore.RegisterField(fieldId, "initial", { name: "field-name", children: fieldChildren });
+        const fieldProps: FormsCoreContracts.FieldStateProps = {
+            name: "field-name",
+            children: fieldChildren,
+            validationType: FieldValidationType.OnPropsChange
+        };
+
+        formStore.RegisterField(fieldId, "initial", fieldProps);
         formStore.ValueChanged(fieldId, nextValue);
 
         const [onValueChangedPromise] = onValueChangedCallback.returnValues;

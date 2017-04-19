@@ -6,7 +6,7 @@ export type ValidationResult = Promise<void> | string | undefined;
 
 export const VALIDATOR_FUNCTION_NAME = "SimplrValidationValidatorComponent";
 
-export const enum SubscriberType {
+export enum SubscriberType {
     // Manually = 8,
     Automatically = 16
 }

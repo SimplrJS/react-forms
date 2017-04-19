@@ -16,7 +16,7 @@ let sandbox: Sinon.SinonSandbox;
 describe("FormStoreHandlerSubscriber", () => {
     beforeEach(() => {
         sandbox = Sinon.sandbox.create();
-        FSHContainer.SetFormStoresHandler(new Stores.FormStoresHandlerClass());
+        FSHContainer.SetFormStoresHandler(new Stores.FormStoresHandler());
     });
 
     afterEach(function () {
@@ -24,7 +24,7 @@ describe("FormStoreHandlerSubscriber", () => {
     });
 
     it("add listeners on form stores handler", () => {
-        const callback = sandbox.spy(Stores.FormStoresHandlerClass.prototype, "addListener");
+        const callback = sandbox.spy(Stores.FormStoresHandler.prototype, "addListener");
         const formStoreHandler = FSHContainer.FormStoresHandler;
 
         expect(formStoreHandler.listeners(Actions.FormRegistered).length).toBe(0);

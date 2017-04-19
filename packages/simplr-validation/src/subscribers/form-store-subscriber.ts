@@ -1,8 +1,10 @@
 import * as React from "React";
-import { Stores, Actions } from "simplr-forms-core";
+import { Stores, Actions, Contracts as FormsCoreContracts } from "simplr-forms-core";
 import * as ActionEmitter from "action-emitter";
 
 import { Validate } from "../utils/validation";
+
+const { FieldValidationType } = FormsCoreContracts;
 
 export class FormStoreSubscriber {
 
@@ -27,7 +29,9 @@ export class FormStoreSubscriber {
         const fieldState = this.formStore.GetField(action.FieldId);
         const fieldProps = fieldState.Props;
 
-        if (fieldProps == null) {
+        if (fieldProps == null ||
+            fieldProps != null &&
+            fieldProps.validationType ^ FieldValidationType.OnPropsChange) {
             return;
         }
 
