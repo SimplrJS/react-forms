@@ -139,8 +139,6 @@ export class FormStore extends ActionEmitter {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
-        console.warn("Validate");
-
         // Skip if it's already validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
@@ -154,14 +152,11 @@ export class FormStore extends ActionEmitter {
 
         try {
             // Wait for validation to finish
-            console.warn("Await validation promise");
             await validationPromise;
-            console.warn("AWAITED OK");
 
             // Skip validation if the value has changed again
             const currentFieldValue = this.State.Fields.get(fieldId).Value;
             if (currentFieldValue !== fieldValue) {
-                console.warn("ok skip validation");
                 return;
             }
 
@@ -172,11 +167,9 @@ export class FormStore extends ActionEmitter {
                 } as FieldState));
             });
         } catch (error) {
-            console.warn("FAILED");
             // Skip validation if the value has changed again
             const currentFieldValue = this.State.Fields.get(fieldId).Value;
             if (currentFieldValue !== fieldValue) {
-                console.warn("failed skip validation", currentFieldValue, fieldValue);
                 return;
             }
 
