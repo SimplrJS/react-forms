@@ -125,19 +125,21 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
-        this.emit(new Actions.ValueChanged(fieldId, newValue));
-
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Value: newValue
             } as FieldState));
         });
+
+        this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
     public async Validate(fieldId: string, validationPromise: Promise<void>) {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
+
+        console.warn("Validate");
 
         // Skip if it's already validating
         if (!field.Validating) {
@@ -152,11 +154,14 @@ export class FormStore extends ActionEmitter {
 
         try {
             // Wait for validation to finish
+            console.warn("Await validation promise");
             await validationPromise;
+            console.warn("AWAITED OK");
 
             // Skip validation if the value has changed again
             const currentFieldValue = this.State.Fields.get(fieldId).Value;
             if (currentFieldValue !== fieldValue) {
+                console.warn("ok skip validation");
                 return;
             }
 
@@ -167,9 +172,11 @@ export class FormStore extends ActionEmitter {
                 } as FieldState));
             });
         } catch (error) {
+            console.warn("FAILED");
             // Skip validation if the value has changed again
             const currentFieldValue = this.State.Fields.get(fieldId).Value;
             if (currentFieldValue !== fieldValue) {
+                console.warn("failed skip validation", currentFieldValue, fieldValue);
                 return;
             }
 
