@@ -100,7 +100,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise, initialValue);
+        formStore.Validate(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
@@ -130,7 +130,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise, initialValue);
+        formStore.Validate(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
