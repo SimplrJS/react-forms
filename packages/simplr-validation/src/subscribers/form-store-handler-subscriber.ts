@@ -9,23 +9,29 @@ export class FormStoreHandlerSubscriber {
     private formRegisterSubscription: ActionEmitter.EventSubscription;
     private formUnregisterSubscription: ActionEmitter.EventSubscription;
 
+    protected get FormStoresSubscribers() {
+        return this.formStoresSubscribers;
+    }
+
     private get formStoresHandler() {
         return this.fshContainer.FormStoresHandler;
     }
 
     constructor(private fshContainer: Stores.FSHContainerClass = Stores.FSHContainer) {
-        this.formRegisterSubscription = this.formStoresHandler.addListener(Actions.FormRegistered, this.onFormRegistered);
-        this.formUnregisterSubscription = this.formStoresHandler.addListener(Actions.FormUnregistered, this.onFormUnregistered);
+        this.formRegisterSubscription = this.formStoresHandler
+            .addListener(Actions.FormRegistered, this.onFormRegistered.bind(this));
+        this.formUnregisterSubscription = this.formStoresHandler
+            .addListener(Actions.FormUnregistered, this.onFormUnregistered.bind(this));
     }
 
-    private onFormRegistered = (action: Actions.FormRegistered) => {
+    private onFormRegistered(action: Actions.FormRegistered) {
         const formStore = this.fshContainer.FormStoresHandler.GetStore(action.FormId);
 
         this.formStoresSubscribers = this.formStoresSubscribers
             .set(action.FormId, new FormStoreSubscriber(formStore));
     }
 
-    private onFormUnregistered = (action: Actions.FormUnregistered) => {
+    private onFormUnregistered(action: Actions.FormUnregistered) {
         const formStoreSubscriber = this.formStoresSubscribers.get(action.FormId);
         formStoreSubscriber.RemoveFormListeners();
 
