@@ -30,7 +30,7 @@
     "@types/validator": "^6.2.0",
     "immutable": "^3.8.1",
     "react": "^15.5.4",
-    "simplr-forms-core": "4.0.0-alpha",
+    "simplr-forms-core": "4.0.0-pre-alpha.4",
     "validator": "^7.0.0"
   },
   "jest": {
