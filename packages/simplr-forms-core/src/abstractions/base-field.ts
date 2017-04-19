@@ -46,7 +46,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     static defaultProps: FieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
-        validationType: FieldValidationType.OnChange,
+        validationType: FieldValidationType.OnFieldRegistered |
+        FieldValidationType.OnValueChange |
+        FieldValidationType.OnPropsChange,
         // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };
