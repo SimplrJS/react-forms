@@ -51,6 +51,42 @@ describe("FormStoreSubscriber", () => {
 
     });
 
+    it("MUST validate when value changed without an error", async (done) => {
+        const fieldId = "field-id";
+        const nextValue = "valid value";
+        const errorMessage = "error message";
+
+        const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
+        const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
+        const formStore = new Stores.FormStore("form-id");
+        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
+        new MySubscriber(formStore);
+
+        formStore.RegisterField(fieldId, "initial", { name: "field-name", children: fieldChildren });
+        formStore.ValueChanged(fieldId, nextValue);
+
+        const [onValueChangedPromise] = onValueChangedCallback.returnValues;
+
+        try {
+            expect(onValueChangedPromise).toBeDefined();
+            expect(onValueChangedPromise.then).toBeDefined();
+        } catch (err) {
+            done.fail(err);
+        }
+
+        await onValueChangedPromise;
+
+        try {
+            expect(formStoreValidateCallback.called).toBe(true);
+            expect(validatorValidateCallback.called).toBe(true);
+            expect(formStore.GetField(fieldId).Error).toBeUndefined();
+        } catch (error) {
+            done.fail(error);
+        }
+        done();
+    });
+
     it("MUST validate when value changed with an error", async (done) => {
         const fieldId = "field-id";
         const nextValue = "next value";
