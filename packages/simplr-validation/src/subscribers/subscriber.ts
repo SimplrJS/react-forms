@@ -1,11 +1,11 @@
-import { FormStoreHandlerSubscriber } from "./form-store-handler-subscriber";
+import { FormStoresHandlerSubscriber } from "./form-stores-handler-subscriber";
 import { SubscriberType } from "../contracts";
 
 export class SubscriberClass {
-    private formStoreHandlerSubscriber: FormStoreHandlerSubscriber;
+    private formStoreHandlerSubscriber: FormStoresHandlerSubscriber;
 
     constructor(private type: SubscriberType = SubscriberType.Automatically) {
-        this.formStoreHandlerSubscriber = new FormStoreHandlerSubscriber();
+        this.formStoreHandlerSubscriber = new FormStoresHandlerSubscriber();
     }
 }
 

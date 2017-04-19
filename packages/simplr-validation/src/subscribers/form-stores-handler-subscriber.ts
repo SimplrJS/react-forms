@@ -3,7 +3,7 @@ import * as ActionEmitter from "action-emitter";
 import * as Immutable from "immutable";
 import { FormStoreSubscriber } from "./form-store-subscriber";
 
-export class FormStoreHandlerSubscriber {
+export class FormStoresHandlerSubscriber {
     private formStoresSubscribers = Immutable.Map<string, FormStoreSubscriber>();
 
     private formRegisterSubscription: ActionEmitter.EventSubscription;

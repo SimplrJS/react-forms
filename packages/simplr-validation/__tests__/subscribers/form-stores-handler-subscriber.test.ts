@@ -1,12 +1,12 @@
 import { Stores, Actions } from "simplr-forms-core";
 import * as Sinon from "sinon";
 
-import { FormStoreHandlerSubscriber } from "../../src/subscribers/form-store-handler-subscriber";
+import { FormStoresHandlerSubscriber } from "../../src/subscribers/form-stores-handler-subscriber";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
 
 const { FSHContainer } = Stores;
 
-class FormStoreHandlerSubscriberTest extends FormStoreHandlerSubscriber {
+class FormStoreHandlerSubscriberTest extends FormStoresHandlerSubscriber {
     public get TestFormStoresSubscribers() {
         return this.FormStoresSubscribers;
     }
@@ -30,7 +30,7 @@ describe("FormStoreHandlerSubscriber", () => {
         expect(formStoreHandler.listeners(Actions.FormRegistered).length).toBe(0);
         expect(formStoreHandler.listeners(Actions.FormUnregistered).length).toBe(0);
 
-        new FormStoreHandlerSubscriber(FSHContainer);
+        new FormStoresHandlerSubscriber(FSHContainer);
 
         expect(callback.called).toBe(true);
 
@@ -55,7 +55,7 @@ describe("FormStoreHandlerSubscriber", () => {
     it("remove FormStoreSubscriber and it listeners when form unregisters", () => {
         const formId = "form-id";
         const callback = sandbox.spy(FormStoreSubscriber.prototype, "RemoveFormListeners");
-        new FormStoreHandlerSubscriber(FSHContainer);
+        new FormStoresHandlerSubscriber(FSHContainer);
         const formStoreHandler = FSHContainer.FormStoresHandler;
 
         formStoreHandler.RegisterForm(formId);
