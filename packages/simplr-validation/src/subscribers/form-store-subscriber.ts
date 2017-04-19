@@ -39,5 +39,6 @@ export class FormStoreSubscriber {
 
     private onPropsChanged = (action: Actions.PropsChanged) => {
         // const fieldState = this.formStore.GetField(action.FieldId);
+        // TODO: OnPropsChanged
     }
 }
