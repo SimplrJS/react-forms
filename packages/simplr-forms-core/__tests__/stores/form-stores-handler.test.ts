@@ -1,10 +1,10 @@
-import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
-import * as Actions from "../../src/actions/form-stores-handler-actions";
+import { FSHContainer, FormStoresHandler } from "../../src/stores/form-stores-handler";
+import * as Actions from "../../src/actions/form-stores-handler";
 import * as sinon from "Sinon";
 
 describe("Form stores handler", () => {
     it("returns next store unique formId", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         let a = storesHandler.NextStoreId();
         let b = storesHandler.NextStoreId();
 
@@ -14,7 +14,7 @@ describe("Form stores handler", () => {
     });
 
     it("returns count of currently registered stores", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         let id = storesHandler.NextStoreId();
         let id2 = storesHandler.NextStoreId();
 
@@ -29,7 +29,7 @@ describe("Form stores handler", () => {
     });
 
     it("registers and gets generated formId", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(generatedFormId).toBeTruthy();
@@ -38,7 +38,7 @@ describe("Form stores handler", () => {
     });
 
     it("registers with custom formId", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         const FORM_ID = "custom-form-id";
 
         expect(storesHandler.RegisterForm(FORM_ID)).toBe(FORM_ID);
@@ -56,13 +56,13 @@ describe("Form stores handler", () => {
         expect(storesHandler.StoresCount).toBe(1);
         expect(storesHandler.Exists(FORM_ID)).toBe(true);
 
-        FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
+        FSHContainer.SetFormStoresHandler(new FormStoresHandler(), true);
 
         expect(storesHandler.StoresCount).toBe(0);
     });
 
     it("returns true if form store exists", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         const FORM_ID = "custom-form-id";
         const ANOTHER_FORM_ID = "another-custom-form-id";
         storesHandler.RegisterForm(FORM_ID);
@@ -72,7 +72,7 @@ describe("Form stores handler", () => {
     });
 
     it("registers and unregisters form", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(storesHandler.Exists(generatedFormId)).toBe(true);
@@ -81,14 +81,14 @@ describe("Form stores handler", () => {
     });
 
     it("returns store", () => {
-        let storesHandler = new FormStoresHandlerClass();
+        let storesHandler = new FormStoresHandler();
         let generatedFormId = storesHandler.RegisterForm();
 
         expect(storesHandler.GetStore(generatedFormId)).toBeTruthy();
     });
 
     it("emits register action when registering a new form", () => {
-        const storesHandler = new FormStoresHandlerClass();
+        const storesHandler = new FormStoresHandler();
         const callbackSpy = sinon.spy();
 
         storesHandler.addListener(Actions.FormRegistered, callbackSpy);
@@ -98,7 +98,7 @@ describe("Form stores handler", () => {
     });
 
     it("emits unregister action when unregistering a form", () => {
-        const storesHandler = new FormStoresHandlerClass();
+        const storesHandler = new FormStoresHandler();
         const formId = "form-id";
         const callbackSpy = sinon.spy();
 

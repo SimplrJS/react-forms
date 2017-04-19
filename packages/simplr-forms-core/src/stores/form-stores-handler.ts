@@ -4,7 +4,7 @@ import { ActionEmitter } from "action-emitter";
 import { FormStore } from "./form-store";
 import * as Actions from "../actions/form-stores-handler";
 
-export class FormStoresHandlerClass extends ActionEmitter {
+export class FormStoresHandler extends ActionEmitter {
     private storesCount: number;
     private formStores: Immutable.Map<string, FormStore>;
 
@@ -120,9 +120,9 @@ export class FormStoresHandlerClass extends ActionEmitter {
 }
 
 export class FSHContainerClass {
-    private instance: FormStoresHandlerClass;
+    private instance: FormStoresHandler;
 
-    SetFormStoresHandler(newHandler: FormStoresHandlerClass, disposeOldOne: boolean = true) {
+    SetFormStoresHandler(newHandler: FormStoresHandler, disposeOldOne: boolean = true) {
         if (disposeOldOne) {
             if (this.instance != null) {
                 // Call internal method to reset stores
@@ -135,10 +135,10 @@ export class FSHContainerClass {
 
     get FormStoresHandler() {
         if (this.instance == null) {
-            this.instance = new FormStoresHandlerClass();
+            this.instance = new FormStoresHandler();
         }
         return this.instance;
     }
 }
 
-export var FSHContainer = new FSHContainerClass();
+export const FSHContainer = new FSHContainerClass();

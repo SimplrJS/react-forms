@@ -1,12 +1,12 @@
 import * as React from "react";
 import { shallow, mount } from "enzyme";
 
-import { FSHContainer, FormStoresHandlerClass } from "../../src/stores/form-stores-handler";
+import { FSHContainer, FormStoresHandler } from "../../src/stores/form-stores-handler";
 import { MyTestForm } from "../test-components/test-form";
 
 describe("Form base", () => {
     beforeEach(() => {
-        FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
+        FSHContainer.SetFormStoresHandler(new FormStoresHandler(), true);
     });
 
     describe("registers when", () => {
