@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as fbemitter from "fbemitter";
+import * as actionEmitter from "action-emitter";
 
 import {
     FieldProps,
@@ -14,7 +14,7 @@ import * as ValueHelpers from "../utils/value-helpers";
 import { FormContextPropsObject } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
 import { FormStoreStateRecord } from "../contracts/form-store";
-import * as FormStoreActions from "../actions/form-store-actions";
+import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
 
@@ -46,7 +46,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     static defaultProps: FieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
-        validationType: FieldValidationType.OnChange,
+        validationType: FieldValidationType.OnFieldRegistered |
+        FieldValidationType.OnValueChange |
+        FieldValidationType.OnPropsChange,
         // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };
@@ -67,7 +69,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         return this.context.FieldsGroupId;
     }
 
-    protected StoreEventSubscription: fbemitter.EventSubscription;
+    protected StoreEventSubscription: actionEmitter.EventSubscription;
 
     componentWillMount() {
         // props.name MUST have a proper value

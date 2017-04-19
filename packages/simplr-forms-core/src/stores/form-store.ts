@@ -2,7 +2,7 @@ import * as Immutable from "immutable";
 import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
-import * as Actions from "../actions/form-store-actions";
+import * as Actions from "../actions/form-store";
 import {
     FieldState,
     FieldValue,
@@ -67,7 +67,7 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
-        props?: FieldProps,
+        props?: FieldStateProps,
         fieldsGroupId?: string
     ) {
         // Construct field state
@@ -106,7 +106,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
-    public UpdateProps(fieldId: string, props: FieldProps) {
+    public UpdateProps(fieldId: string, props: FieldStateProps) {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
@@ -125,7 +125,7 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
-        this.emit(new Actions.ValueChanged(fieldId));
+        this.emit(new Actions.ValueChanged(fieldId, newValue));
 
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
@@ -136,16 +136,30 @@ export class FormStore extends ActionEmitter {
     }
 
     public async Validate(fieldId: string, validationPromise: Promise<void>) {
-        this.State = this.State.withMutations(state => {
-            const fieldState = state.Fields.get(fieldId);
-            state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                Validating: true,
-                Error: undefined
-            } as FieldState));
-        });
+        const field = this.State.Fields.get(fieldId);
+        const fieldValue = field.Value;
+
+        // Skip if it's already validating
+        if (!field.Validating) {
+            this.State = this.State.withMutations(state => {
+                const fieldState = state.Fields.get(fieldId);
+                state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                    Validating: true,
+                    Error: undefined
+                } as FieldState));
+            });
+        }
 
         try {
+            // Wait for validation to finish
             await validationPromise;
+
+            // Skip validation if the value has changed again
+            const currentFieldValue = this.State.Fields.get(fieldId).Value;
+            if (currentFieldValue !== fieldValue) {
+                return;
+            }
+
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -153,6 +167,12 @@ export class FormStore extends ActionEmitter {
                 } as FieldState));
             });
         } catch (error) {
+            // Skip validation if the value has changed again
+            const currentFieldValue = this.State.Fields.get(fieldId).Value;
+            if (currentFieldValue !== fieldValue) {
+                return;
+            }
+
             const formError = ConstructFormError(error);
             if (formError == null) {
                 throw Error(error);
