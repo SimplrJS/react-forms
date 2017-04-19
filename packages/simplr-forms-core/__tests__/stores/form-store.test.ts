@@ -157,6 +157,49 @@ describe("Form store", () => {
         }
     });
 
+    it("skip validation when newValue has expired", async (done) => {
+        const formId = "FORM-ID";
+        const fieldId = "FIELD-ID";
+        const initialValue = "INITIAL-VALUE";
+        const formStore = new FormStore(formId);
+        const formError = "field error";
+
+        formStore.RegisterField(fieldId, initialValue);
+        const validationPromise = new Promise<void>((resolve, reject) => {
+            setTimeout(() => {
+                reject(formError);
+            }, 50);
+        });
+
+        formStore.Validate(fieldId, validationPromise);
+
+        // Imitate removal of last letter
+        formStore.ValueChanged(fieldId, initialValue.slice(0, initialValue.length - 1));
+
+        try {
+            expect(formStore.GetField(fieldId).Validating).toBe(true);
+        } catch (error) {
+            done.fail(error);
+        }
+
+        try {
+            await validationPromise;
+        } catch (err) {
+            // Validation promise was rejected
+            // Expects in the subsequent try block
+        }
+
+        try {
+            // It SHOULD still validating to be true because validation was skipped of expired value
+            expect(formStore.GetField(fieldId).Validating).toBe(true);
+            expect(formStore.GetField(fieldId).Error).toBeUndefined();
+        } catch (err) {
+            done.fail(err);
+        }
+
+        done();
+    });
+
     it("registers field with props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";

@@ -139,20 +139,24 @@ export class FormStore extends ActionEmitter {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
-        this.State = this.State.withMutations(state => {
-            const fieldState = state.Fields.get(fieldId);
-            state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                Validating: true,
-                Error: undefined
-            } as FieldState));
-        });
+        // Skip if it's already validating
+        if (!field.Validating) {
+            this.State = this.State.withMutations(state => {
+                const fieldState = state.Fields.get(fieldId);
+                state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                    Validating: true,
+                    Error: undefined
+                } as FieldState));
+            });
+        }
 
         try {
             // Wait for validation to finish
             await validationPromise;
 
             // Skip validation if the value has changed again
-            if (field.Value !== fieldValue) {
+            const currentFieldValue = this.State.Fields.get(fieldId).Value;
+            if (currentFieldValue !== fieldValue) {
                 return;
             }
 
@@ -164,7 +168,8 @@ export class FormStore extends ActionEmitter {
             });
         } catch (error) {
             // Skip validation if the value has changed again
-            if (field.Value !== fieldValue) {
+            const currentFieldValue = this.State.Fields.get(fieldId).Value;
+            if (currentFieldValue !== fieldValue) {
                 return;
             }
 
