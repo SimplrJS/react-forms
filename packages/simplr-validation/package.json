@@ -4,7 +4,9 @@
   "description": "Validation library for simplr-forms.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test-watch": "jest --watchAll",
+    "test-coverage": "npm test -- --coverage"
   },
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "license": "AGPL-3.0",
@@ -12,9 +14,11 @@
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
     "@types/sinon": "^2.1.2",
-    "enzyme": "^2.8.0",
+    "enzyme": "^2.8.2",
     "jest": "^19.0.2",
-    "jest-enzyme": "^3.0.0",
+    "jest-enzyme": "^3.0.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "tslint": "^5.0.0",
@@ -22,8 +26,13 @@
   },
   "dependencies": {
     "@types/react": "^15.0.21",
+    "@types/react-dom": "^0.14.23",
+    "@types/validator": "^6.2.0",
+    "action-emitter": "^0.2.1",
+    "immutable": "^3.8.1",
     "react": "^15.5.4",
-    "simplr-forms-core": "4.0.0-alpha"
+    "simplr-forms-core": "4.0.0-alpha",
+    "validator": "^7.0.0"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

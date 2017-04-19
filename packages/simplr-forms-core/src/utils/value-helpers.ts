@@ -6,25 +6,25 @@ export const MODIFIER_FUNCTION_NAME = "SimplrFormsCoreModifier";
 export const NORMALIZER_FUNCTION_NAME = "SimplrFormsCoreNormalizer";
 
 export function FormatValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Modifier>(components, value, MODIFIER_FUNCTION_NAME,
+    return ProcessValue<Modifier, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
         (processor, value) => processor.Format(value));
 }
 
 export function ParseValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Modifier>(components, value, MODIFIER_FUNCTION_NAME,
+    return ProcessValue<Modifier, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
         (processor, value) => processor.Parse(value));
 }
 
 export function NormalizeValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Normalizer>(components, value, MODIFIER_FUNCTION_NAME,
+    return ProcessValue<Normalizer, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
         (processor, value) => processor.Normalize(value));
 }
 
-export function ProcessValue<TProcessor>(
+export function ProcessValue<TProcessor, TProcessedResult>(
     components: Array<JSX.Element>,
     value: FieldValue,
     processorTypeFunctionName: string,
-    process: (processor: TProcessor, value: FieldValue) => FieldValue) {
+    process: (processor: TProcessor, value: FieldValue) => TProcessedResult): TProcessedResult {
     if (components == null || components.length === 0) {
         return value;
     }
