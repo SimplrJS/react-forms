@@ -25,15 +25,30 @@ describe("FormStoreSubscriber", () => {
 
     it("add listeners to form store", () => {
         const formStore = new Stores.FormStore("form-id");
-        const callback = sandbox.stub(Stores.FormStore.prototype, "addListener");
+        const callback = sandbox.spy(Stores.FormStore.prototype, "addListener");
 
         expect(callback.called).toEqual(false);
+
+        expect(formStore.listeners(Actions.PropsChanged).length).toBe(0);
+        expect(formStore.listeners(Actions.ValueChanged).length).toBe(0);
+
         new FormStoreSubscriber(formStore);
         expect(callback.called).toEqual(true);
+
+        expect(formStore.listeners(Actions.PropsChanged).length).toBe(1);
+        expect(formStore.listeners(Actions.ValueChanged).length).toBe(1);
     });
 
     it("remove listeners from form store", () => {
-        // TODO
+        const formStore = new Stores.FormStore("form-id");
+
+        const formSubscriber = new MySubscriber(formStore);
+
+        formSubscriber.RemoveFormListeners();
+
+        expect(formStore.listeners(Actions.PropsChanged).length).toBe(0);
+        expect(formStore.listeners(Actions.ValueChanged).length).toBe(0);
+
     });
 
     it("MUST validate when value changed with an error", async (done) => {
