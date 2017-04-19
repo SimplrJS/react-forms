@@ -2,7 +2,7 @@ import * as Immutable from "immutable";
 import { ActionEmitter } from "action-emitter";
 
 import { FormStore } from "./form-store";
-import * as Actions from "../actions/form-stores-handler-actions";
+import * as Actions from "../actions/form-stores-handler";
 
 export class FormStoresHandlerClass extends ActionEmitter {
     private storesCount: number;

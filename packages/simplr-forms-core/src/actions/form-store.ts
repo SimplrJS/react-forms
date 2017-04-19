@@ -1,14 +1,10 @@
 export class StateUpdated { }
 
 export class ValueChanged {
-    constructor(private fieldId: string, private newValue: any) { }
+    constructor(private fieldId: string) { }
 
     public get FieldId() {
         return this.fieldId;
-    }
-
-    public get NewValue() {
-        return this.newValue;
     }
 }
 
