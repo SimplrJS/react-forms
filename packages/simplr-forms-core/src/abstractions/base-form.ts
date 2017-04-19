@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import * as FormContracts from "../contracts/form";
-import { FSHContainer, FormStoresHandlerClass } from "../stores/form-stores-handler";
+import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
 
 export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> extends React.Component<TProps, TState> {
     protected FormId: string;
@@ -25,7 +25,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         this.registerForm(props);
     }
 
-    protected get FormStoresHandler(): FormStoresHandlerClass {
+    protected get FormStoresHandler(): FormStoresHandler {
         return FSHContainer.FormStoresHandler;
     }
 

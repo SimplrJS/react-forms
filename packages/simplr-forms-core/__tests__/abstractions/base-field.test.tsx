@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { shallow, mount } from "enzyme";
 import { spy } from "sinon";
 
-import { FormStoresHandlerClass, FSHContainer } from "../../src/stores/form-stores-handler";
+import { FormStoresHandler, FSHContainer } from "../../src/stores/form-stores-handler";
 import { FormStore } from "../../src/stores/form-store";
 import { MyTestForm } from "../test-components/test-form";
 import { MyTestField, MyFieldProps } from "../test-components/test-field";
@@ -11,7 +11,7 @@ import { FormChildContext } from "../../src/contracts/form";
 
 describe("Field Base", () => {
     beforeEach(() => {
-        FSHContainer.SetFormStoresHandler(new FormStoresHandlerClass(), true);
+        FSHContainer.SetFormStoresHandler(new FormStoresHandler(), true);
     });
 
     it("works", () => {
