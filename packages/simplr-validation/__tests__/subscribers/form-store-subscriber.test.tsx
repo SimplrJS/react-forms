@@ -71,6 +71,7 @@ describe("FormStoreSubscriber", () => {
         try {
             expect(onValueChangedPromise).toBeDefined();
             expect(onValueChangedPromise.then).toBeDefined();
+            expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (err) {
             done.fail(err);
         }
@@ -78,6 +79,7 @@ describe("FormStoreSubscriber", () => {
         await onValueChangedPromise;
 
         try {
+            expect(formStore.GetField(fieldId).Validating).toBe(false);
             expect(formStoreValidateCallback.called).toBe(true);
             expect(validatorValidateCallback.called).toBe(true);
             expect(formStore.GetField(fieldId).Error).toBeDefined();
