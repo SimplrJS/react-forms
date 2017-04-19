@@ -1,9 +1,9 @@
 import * as Abstractions from "./abstractions/index";
 import * as Contracts from "./contracts";
-
-export * from "./validators/index";
+import * as Validators from "./validators/index";
 
 export {
     Abstractions,
-    Contracts
+    Contracts,
+    Validators
 };
