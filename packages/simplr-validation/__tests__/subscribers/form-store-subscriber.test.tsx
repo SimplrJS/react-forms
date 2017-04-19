@@ -127,6 +127,6 @@ describe("FormStoreSubscriber", () => {
     });
 
     // TODO: OnPropsChanged tests
-    it("validate when props changed without an error", async (done) => { });
-    it("validate when props changed with an error", async (done) => { });
+    it("validate when props changed without an error", () => { });
+    it("validate when props changed with an error", () => { });
 });
