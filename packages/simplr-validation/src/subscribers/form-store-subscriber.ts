@@ -25,7 +25,7 @@ export class FormStoreSubscriber {
         }
     }
 
-    private validateField(
+    protected async ValidateField(
         fieldId: string,
         value: FormsCoreContracts.FieldValue,
         validationType: FormsCoreContracts.FieldValidationType
@@ -42,15 +42,15 @@ export class FormStoreSubscriber {
         const children = React.Children.toArray(fieldProps.children) as JSX.Element[];
         const validationPromise = Validate(children, value);
 
-        this.formStore.Validate(fieldId, validationPromise);
+        await this.formStore.Validate(fieldId, validationPromise);
     }
 
-    protected async OnValueChanged(action: Actions.ValueChanged) {
-        this.validateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
+    protected OnValueChanged(action: Actions.ValueChanged) {
+        this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
     }
 
     private async OnPropsChanged(action: Actions.PropsChanged) {
-        // const fieldState = this.formStore.GetField(action.FieldId);
-        // TODO: OnPropsChanged
+        const fieldState = this.formStore.GetField(action.FieldId);
+        this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
     }
 }
