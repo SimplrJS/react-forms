@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "0.0.0-dev",
+  "version": "4.0.0-pre-alpha.7",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",

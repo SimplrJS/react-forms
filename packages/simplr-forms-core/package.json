@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-core",
-  "version": "0.0.0-dev",
+  "version": "4.0.0-pre-alpha.7",
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
