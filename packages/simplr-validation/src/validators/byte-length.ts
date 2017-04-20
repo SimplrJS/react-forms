@@ -15,7 +15,7 @@ export class ByteLengthValidator extends BaseValidator<ByteLengthValidatorProps>
         }
 
         if (!Validator.isByteLength(value, this.props.options)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

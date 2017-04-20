@@ -13,7 +13,7 @@ export class CreditCardValidator extends BaseValidator<CreditCardValidatorProps>
         }
 
         if (!Validator.isCreditCard(value)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

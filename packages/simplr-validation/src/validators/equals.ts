@@ -15,7 +15,7 @@ export class EqualsValidator extends BaseValidator<EqualsValidatorProps> {
         }
 
         if (!Validator.equals(value, this.props.value)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

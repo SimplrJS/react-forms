@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Contracts as FormsCoreContracts } from "simplr-forms-core";
 
-import { Validator, ValidationResult } from "../contracts";
+import { Validator, ValidationResult, ValidationError } from "../contracts";
 
 export interface ValidatorProps {
-    errorMessage: string;
+    error: ValidationError;
 }
 
 export abstract class BaseValidator<TProps extends ValidatorProps>
@@ -33,7 +33,7 @@ export abstract class BaseValidator<TProps extends ValidatorProps>
         return;
     }
 
-    protected InvalidSync(error: string): string {
+    protected InvalidSync(error: ValidationError): ValidationError {
         return error;
     }
 

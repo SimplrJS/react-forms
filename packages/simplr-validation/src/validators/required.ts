@@ -21,22 +21,22 @@ export class RequiredValidator extends BaseValidator<RequiredValidatorProps> {
 
     Validate(value: Contracts.FieldValue): ValidationResult {
         if (value == null) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         if (this.isString(value) &&
             value.trim().length === 0) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         if (this.isArray(value) &&
             value.length === 0) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         if (this.isObject(value) &&
             Object.keys(value).length === 0) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

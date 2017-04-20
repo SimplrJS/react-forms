@@ -15,7 +15,7 @@ export class ContainsValidator extends BaseValidator<ContainsValidatorProps> {
         }
 
         if (!Validator.contains(value, this.props.value)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

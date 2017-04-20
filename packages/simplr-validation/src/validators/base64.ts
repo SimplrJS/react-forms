@@ -13,7 +13,7 @@ export class Base64Validator extends BaseValidator<Base64ValidatorProps> {
         }
 
         if (!Validator.isBase64(value)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();
