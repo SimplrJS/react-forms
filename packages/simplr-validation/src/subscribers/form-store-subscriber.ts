@@ -8,9 +8,9 @@ const { FieldValidationType } = FormsCoreContracts;
 
 export class FormStoreSubscriber {
 
-    private fieldOnRegisteredSubscription: ActionEmitter.EventSubscription | undefined;
-    private fieldOnValueChangedSubscription: ActionEmitter.EventSubscription | undefined;
-    private fieldOnPropsChangedSubscription: ActionEmitter.EventSubscription | undefined;
+    private fieldOnRegisteredSubscription?: ActionEmitter.EventSubscription;
+    private fieldOnValueChangedSubscription?: ActionEmitter.EventSubscription;
+    private fieldOnPropsChangedSubscription?: ActionEmitter.EventSubscription;
 
     constructor(private formStore: Stores.FormStore) {
         this.fieldOnRegisteredSubscription = this.formStore.addListener(Actions.FieldRegistered, this.OnRegistered.bind(this));
@@ -19,6 +19,10 @@ export class FormStoreSubscriber {
     }
 
     public RemoveFormListeners() {
+        if (this.fieldOnRegisteredSubscription != null) {
+            this.fieldOnRegisteredSubscription.remove();
+        }
+
         if (this.fieldOnValueChangedSubscription != null) {
             this.fieldOnValueChangedSubscription.remove();
         }
@@ -37,6 +41,7 @@ export class FormStoreSubscriber {
 
         if (fieldProps == null ||
             fieldProps != null &&
+            fieldProps.validationType != null &&
             fieldProps.validationType ^ validationType) {
             return;
         }
