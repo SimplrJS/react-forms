@@ -46,8 +46,8 @@ export class FormStoreSubscriber {
             return;
         }
 
-        const children = React.Children.toArray(fieldProps.children) as JSX.Element[];
-        const validationPromise = Validate(children, value);
+        const childrenArray = React.Children.toArray(fieldProps.children) as JSX.Element[];
+        const validationPromise = Validate(childrenArray, value);
 
         await this.formStore.Validate(fieldId, validationPromise);
     }
