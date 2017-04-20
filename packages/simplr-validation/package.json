@@ -1,6 +1,6 @@
 {
   "name": "simplr-validation",
-  "version": "0.0.0-dev",
+  "version": "4.0.0-pre-alpha.8",
   "description": "Validation library for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -22,7 +22,8 @@
     "dist",
     "@types",
     "**/*.md",
-    "*.js"
+    "*.js",
+    "!*.config.js"
   ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
