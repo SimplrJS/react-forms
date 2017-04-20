@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as actionEmitter from "action-emitter";
+import * as PropTypes from "prop-types";
 
 import {
     FieldProps,
@@ -37,10 +38,10 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     public context: ParentContext;
 
     static contextTypes: React.ValidationMap<ParentContext> = {
-        FormId: React.PropTypes.string,
-        FormProps: React.PropTypes.object,
-        FieldsGroupId: React.PropTypes.string,
-        // FieldsGroupProps: React.PropTypes.object
+        FormId: PropTypes.string,
+        FormProps: PropTypes.object,
+        FieldsGroupId: PropTypes.string,
+        // FieldsGroupProps: PropTypes.object
     };
 
     static defaultProps: FieldProps = {
