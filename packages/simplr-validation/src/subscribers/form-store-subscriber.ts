@@ -1,4 +1,4 @@
-import * as React from "React";
+import * as React from "react";
 import { Stores, Actions, Contracts as FormsCoreContracts } from "simplr-forms-core";
 import * as ActionEmitter from "action-emitter";
 
