@@ -63,7 +63,7 @@ describe("FormStoreSubscriber", () => {
         const errorMessage = "error message";
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-        const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
+        const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
@@ -93,7 +93,7 @@ describe("FormStoreSubscriber", () => {
         const errorMessage = "error message";
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-        const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
+        const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
@@ -123,7 +123,7 @@ describe("FormStoreSubscriber", () => {
         const errorMessage = "error message";
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-        const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
+        const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
@@ -146,10 +146,8 @@ describe("FormStoreSubscriber", () => {
     it("MUST NOT validate when field props is undefined", () => {
         const fieldId = "field-id";
         const initialValue = "initial value";
-        const errorMessage = "error message";
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-        const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
