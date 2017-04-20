@@ -12,15 +12,12 @@ import { OnChangeCallback } from "../contracts/field";
  * @extends {CoreContracts.FieldProps}
  * @extends {React.HTMLProps<HTMLInputElement>}
  */
-export interface Props extends CoreContracts.FieldProps, React.HTMLProps<HTMLInputElement> {
+export interface TextProps extends CoreContracts.FieldProps, React.HTMLProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    ref?: any;
-}
-
-export interface TextProps extends Props {
     onChange?: OnChangeCallback<HTMLInputElement>;
+    ref?: any;
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
@@ -38,6 +35,21 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         }
 
         // TODO: FormProps.OnFieldChange
+    }
+
+
+    protected get RawInitialValue(): CoreContracts.FieldValue {
+        if (this.props != null && this.props.value != null) {
+            return this.props.value;
+        }
+        return "";
+    }
+
+    protected get DefaultValue(): CoreContracts.FieldValue {
+        if (this.props != null && this.props.defaultValue != null) {
+            return this.props.defaultValue;
+        }
+        return "";
     }
 
     protected get IsDisabled() {

@@ -1,7 +1,2 @@
-import * as Form from "./form";
-import * as Text from "./text";
-
-export {
-    Form,
-    Text
-};
+export * from "./form";
+export * from "./text";

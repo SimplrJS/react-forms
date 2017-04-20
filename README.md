@@ -16,4 +16,5 @@ Development right now is being done by [SimplrJS](https://github.com/SimplrJS) t
 
 ### Notes
 
-[2017-04-08 Initial notes](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-08.md)
+* [2017-04-08 Initial notes](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-08.md)
+* [2017-04-14 Progress update](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-14.md)
