@@ -1,7 +1,7 @@
 import { FormStoresHandlerSubscriber } from "./form-stores-handler-subscriber";
 import { SubscriberType } from "../contracts";
 
-export class SubscriberClass {
+export class Subscriber {
     private formStoreHandlerSubscriber: FormStoresHandlerSubscriber;
 
     constructor(private type: SubscriberType = SubscriberType.Automatically) {
@@ -10,9 +10,9 @@ export class SubscriberClass {
 }
 
 export class SubscriberContainerClass {
-    private instance: SubscriberClass;
+    private instance: Subscriber;
 
-    SetSubscriber(newHandler: SubscriberClass, disposeOldOne: boolean = true) {
+    SetSubscriber(newHandler: Subscriber, disposeOldOne: boolean = true) {
         if (disposeOldOne) {
             if (this.instance != null) {
                 delete this.instance;
@@ -23,7 +23,7 @@ export class SubscriberContainerClass {
 
     get Subscriber() {
         if (this.instance == null) {
-            this.instance = new SubscriberClass();
+            this.instance = new Subscriber();
         }
         return this.instance;
     }
