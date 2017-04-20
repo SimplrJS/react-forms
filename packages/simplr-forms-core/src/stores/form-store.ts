@@ -89,6 +89,8 @@ export class FormStore extends ActionEmitter {
         this.State = this.State.withMutations(state => {
             state.Fields = state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
         });
+
+        this.emit(new Actions.FieldRegistered(fieldId, initialValue));
     }
 
     public UnregisterField(fieldId: string) {
