@@ -1,15 +1,24 @@
 {
   "name": "simplr-validation",
-  "version": "4.0.0-alpha",
+  "version": "0.0.0-dev",
   "description": "Validation library for simplr-forms.",
-  "main": "index.js",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "main": "dist/simplr-validation.js",
+  "types": "@types/index.d.ts",
+  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage"
   },
-  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
