@@ -23,7 +23,7 @@ describe("FormStoreSubscriber", () => {
         sandbox = Sinon.sandbox.create();
     });
 
-    afterEach(function () {
+    afterEach(() => {
         sandbox.restore();
     });
 
