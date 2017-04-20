@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/enzyme": "^2.7.9",
     "@types/jest": "^19.2.2",
+    "@types/prop-types": "^15.5.1",
     "@types/sinon": "^2.1.2",
     "enzyme": "^2.8.2",
     "jest": "^19.0.2",
@@ -50,6 +51,7 @@
     "action-emitter": "^0.2.1",
     "fbemitter": "^2.1.1",
     "immutable": "^3.8.1",
+    "prop-types": "^15.5.8",
     "react": "15.5.4",
     "react-dom": "^15.5.4",
     "typed-immutable-record": "^0.0.6"
