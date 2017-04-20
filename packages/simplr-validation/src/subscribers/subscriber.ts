@@ -29,5 +29,4 @@ export class SubscriberContainerClass {
     }
 }
 
-
 export const SubscriberContainer = new SubscriberContainerClass();
