@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import * as FormContracts from "../contracts/form";
 import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
@@ -7,7 +8,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     protected FormId: string;
 
     static childContextTypes = {
-        FormId: React.PropTypes.string.isRequired
+        FormId: PropTypes.string.isRequired
     };
 
     getChildContext(): FormContracts.FormChildContext {
