@@ -26,7 +26,6 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
     }
 
     protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
-        console.log("This");
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
