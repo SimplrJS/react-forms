@@ -35,12 +35,14 @@ describe("FormStoreSubscriber", () => {
 
         expect(callback.called).toEqual(false);
 
+        expect(formStore.listeners(Actions.FieldRegistered).length).toBe(0);
         expect(formStore.listeners(Actions.PropsChanged).length).toBe(0);
         expect(formStore.listeners(Actions.ValueChanged).length).toBe(0);
 
         new FormStoreSubscriber(formStore);
         expect(callback.called).toEqual(true);
 
+        expect(formStore.listeners(Actions.FieldRegistered).length).toBe(1);
         expect(formStore.listeners(Actions.PropsChanged).length).toBe(1);
         expect(formStore.listeners(Actions.ValueChanged).length).toBe(1);
     });
@@ -87,7 +89,7 @@ describe("FormStoreSubscriber", () => {
         }
     });
 
-    fit("MUST validate when specific validationType flag is present with error", async (done) => {
+    it("MUST validate when specific validationType flag is present with error", async (done) => {
         const fieldId = "field-id";
         const initialValue = "initial value";
         const errorMessage = "error message";
