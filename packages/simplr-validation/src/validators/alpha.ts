@@ -15,7 +15,7 @@ export class AlphaValidator extends BaseValidator<AlphaValidatorProps> {
         }
 
         if (!Validator.isAlpha(value, this.props.locale)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

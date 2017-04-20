@@ -15,7 +15,7 @@ export class CurrencyValidator extends BaseValidator<CurrencyValidatorProps> {
         }
 
         if (!Validator.isCurrency(value, this.props.options)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();
