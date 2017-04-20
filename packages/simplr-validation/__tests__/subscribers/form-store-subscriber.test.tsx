@@ -13,9 +13,7 @@ class MySubscriber extends FormStoreSubscriber {
         value: FormsCoreContracts.FieldValue,
         validationType: FormsCoreContracts.FieldValidationType
     ) {
-        return new Promise<any>((resolve, reject) => {
-            super.ValidateField(fieldId, value, validationType).then(resolve).catch(reject);
-        });
+        return super.ValidateField(fieldId, value, validationType);
     }
 }
 
