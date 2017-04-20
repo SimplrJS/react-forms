@@ -41,7 +41,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        // FieldsGroupProps: React.PropTypes.object
+        // FieldsGroupProps: PropTypes.object
     };
 
     static defaultProps: FieldProps = {
