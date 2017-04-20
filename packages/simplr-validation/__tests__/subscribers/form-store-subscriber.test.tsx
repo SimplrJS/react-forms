@@ -62,13 +62,13 @@ describe("FormStoreSubscriber", () => {
         const fieldChildren = [<ContainsValidator value="valid" errorMessage={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
-        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
+        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "OnValueChanged");
         new MySubscriber(formStore);
 
         const fieldProps: FormsCoreContracts.FieldStateProps = {
             name: "field-name",
             children: fieldChildren,
-            validationType: FieldValidationType.OnPropsChange
+            validationType: FieldValidationType.OnValueChange
         };
 
         formStore.RegisterField(fieldId, "initial", fieldProps);
@@ -104,13 +104,13 @@ describe("FormStoreSubscriber", () => {
         const fieldChildren = [<ContainsValidator value="ok" errorMessage={errorMessage} />];
         const formStore = new Stores.FormStore("form-id");
         const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
-        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "onValueChanged");
+        const onValueChangedCallback = sandbox.spy(MySubscriber.prototype, "OnValueChanged");
         new MySubscriber(formStore);
 
         const fieldProps: FormsCoreContracts.FieldStateProps = {
             name: "field-name",
             children: fieldChildren,
-            validationType: FieldValidationType.OnPropsChange
+            validationType: FieldValidationType.OnValueChange
         };
 
         formStore.RegisterField(fieldId, "initial", fieldProps);

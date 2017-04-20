@@ -12,8 +12,8 @@ export class FormStoreSubscriber {
     private formOnPropsChangedSubscription: ActionEmitter.EventSubscription | undefined;
 
     constructor(private formStore: Stores.FormStore) {
-        this.formOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.onValueChanged.bind(this));
-        this.formOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.onPropsChanged.bind(this));
+        this.formOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.OnValueChanged.bind(this));
+        this.formOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.OnPropsChanged.bind(this));
     }
 
     public RemoveFormListeners() {
@@ -25,23 +25,31 @@ export class FormStoreSubscriber {
         }
     }
 
-    protected async onValueChanged(action: Actions.ValueChanged) {
-        const fieldState = this.formStore.GetField(action.FieldId);
+    private validateField(
+        fieldId: string,
+        value: FormsCoreContracts.FieldValue,
+        validationType: FormsCoreContracts.FieldValidationType
+    ) {
+        const fieldState = this.formStore.GetField(fieldId);
         const fieldProps = fieldState.Props;
 
         if (fieldProps == null ||
             fieldProps != null &&
-            fieldProps.validationType ^ FieldValidationType.OnPropsChange) {
+            fieldProps.validationType ^ validationType) {
             return;
         }
 
         const children = React.Children.toArray(fieldProps.children) as JSX.Element[];
-        const validationPromise = Validate(children, action.NewValue);
+        const validationPromise = Validate(children, value);
 
-        this.formStore.Validate(action.FieldId, validationPromise);
+        this.formStore.Validate(fieldId, validationPromise);
     }
 
-    private async onPropsChanged(action: Actions.PropsChanged) {
+    protected async OnValueChanged(action: Actions.ValueChanged) {
+        this.validateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
+    }
+
+    private async OnPropsChanged(action: Actions.PropsChanged) {
         // const fieldState = this.formStore.GetField(action.FieldId);
         // TODO: OnPropsChanged
     }
