@@ -89,6 +89,8 @@ export class FormStore extends ActionEmitter {
         this.State = this.State.withMutations(state => {
             state.Fields = state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
         });
+
+        this.emit(new Actions.FieldRegistered(fieldId, initialValue));
     }
 
     public UnregisterField(fieldId: string) {
@@ -125,14 +127,14 @@ export class FormStore extends ActionEmitter {
     }
 
     public ValueChanged(fieldId: string, newValue: FieldValue) {
-        this.emit(new Actions.ValueChanged(fieldId, newValue));
-
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Value: newValue
             } as FieldState));
         });
+
+        this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
     public async Validate(fieldId: string, validationPromise: Promise<void>) {

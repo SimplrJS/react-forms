@@ -15,7 +15,7 @@ export class AlphanumericValidator extends BaseValidator<AlphanumericValidatorPr
         }
 
         if (!Validator.isAlphanumeric(value, this.props.locale)) {
-            return this.InvalidSync(this.props.errorMessage);
+            return this.InvalidSync(this.props.error);
         }
 
         return this.ValidSync();

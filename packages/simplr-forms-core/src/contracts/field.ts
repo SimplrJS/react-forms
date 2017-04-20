@@ -38,7 +38,7 @@ export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldSt
 export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }
 export interface FormErrorRecord extends TypedRecord<FormErrorRecord>, FormError { }
 
-export const enum FieldValidationType {
+export enum FieldValidationType {
     None,
     OnFieldRegistered = 1 << 1,
     OnValueChange = 1 << 2,
