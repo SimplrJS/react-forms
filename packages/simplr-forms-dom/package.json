@@ -18,6 +18,13 @@
     "test-coverage": "npm test -- --coverage"
   },
   "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js",
+    "!*.config.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
@@ -35,7 +42,7 @@
   "dependencies": {
     "@types/react": "^15.0.21",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.3"
+    "simplr-forms-core": "^4.0.0-pre-alpha.7"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

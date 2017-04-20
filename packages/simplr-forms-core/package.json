@@ -18,6 +18,13 @@
     "test-coverage": "npm test -- --coverage"
   },
   "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js",
+    "!*.config.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.9",
     "@types/jest": "^19.2.2",
