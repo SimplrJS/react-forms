@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-core",
-  "version": "0.0.0-dev",
+  "version": "4.0.0-pre-alpha.8",
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -18,6 +18,13 @@
     "test-coverage": "npm test -- --coverage"
   },
   "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js",
+    "!*.config.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.9",
     "@types/jest": "^19.2.2",
