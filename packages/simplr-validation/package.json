@@ -1,15 +1,29 @@
 {
   "name": "simplr-validation",
-  "version": "4.0.0-alpha",
+  "version": "0.0.0-dev",
   "description": "Validation library for simplr-forms.",
-  "main": "index.js",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "main": "dist/simplr-validation.js",
+  "types": "@types/index.d.ts",
+  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watchAll",
-    "test-coverage": "npm test -- --coverage"
+    "test-coverage": "npm test -- --coverage",
+    "build": "webpack && npm run tslint",
+    "watch": "webpack -w",
+    "release": "npm run build && npm run uglifyjs",
+    "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle"
   },
-  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
@@ -21,8 +35,11 @@
     "react-test-renderer": "^15.5.4",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
+    "ts-loader": "^2.0.3",
     "tslint": "^5.0.0",
-    "typescript": "2.3.0"
+    "typescript": "2.3.0",
+    "uglifyjs": "^2.4.10",
+    "webpack": "^2.4.1"
   },
   "dependencies": {
     "@types/react": "^15.0.21",

@@ -1,9 +1,12 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.0-pre-alpha.6",
+  "version": "0.0.0-dev",
   "description": "DOM components for simplr-forms.",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
   "main": "dist/simplr-forms-dom.js",
   "types": "@types/index.d.ts",
+  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "webpack && npm run tslint",
     "watch": "webpack -w",
@@ -14,7 +17,6 @@
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage"
   },
-  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "license": "AGPL-3.0",
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
