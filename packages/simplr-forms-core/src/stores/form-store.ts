@@ -67,12 +67,13 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         initialValue: FieldValue,
+        defaultValue: FieldValue,
         props?: FieldStateProps,
         fieldsGroupId?: string
     ) {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
-        fieldState.InitialValue = initialValue;
+        fieldState.DefaultValue = defaultValue;
         fieldState.Value = initialValue;
 
         if (props != null) {
@@ -216,7 +217,7 @@ export class FormStore extends ActionEmitter {
 
     protected GetInitialFieldState(): FieldState {
         return {
-            InitialValue: undefined,
+            DefaultValue: undefined,
             Value: undefined,
             Touched: false,
             Pristine: true,
