@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "simplr-forms-publish",
+  "version": "0.0.0-dev",
+  "dependencies": {
+    "nodegit": "^0.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.13",
+    "typescript": "^2.3.0"
+  }
+}
