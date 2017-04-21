@@ -16,7 +16,7 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "git diff-index --quiet HEAD && npm run build && node postbuild.js",
+    "prepublishOnly": "node postbuild.js",
     "postpublish": "git clean -fdn"
   },
   "license": "AGPL-3.0",
@@ -35,6 +35,7 @@
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
     "mv": "^2.1.1",
+    "mz": "^2.6.0",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
