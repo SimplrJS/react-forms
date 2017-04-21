@@ -16,7 +16,8 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublish": "git diff-index --quiet HEAD && npm run build"
+    "prepublishOnly": "git diff-index --quiet HEAD && npm run build && node postbuild.js",
+    "postpublish": "git clean -fdn"
   },
   "license": "AGPL-3.0",
   "files": [
@@ -33,6 +34,7 @@
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
+    "mv": "^2.1.1",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
@@ -43,7 +45,7 @@
   "dependencies": {
     "@types/react": "^15.0.21",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.11"
+    "simplr-forms-core": "^4.0.0-pre-alpha.10"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
