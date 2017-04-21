@@ -15,7 +15,8 @@
     "release": "npm run build && npm run uglifyjs",
     "test": "jest",
     "test-watch": "jest --watchAll",
-    "test-coverage": "npm test -- --coverage"
+    "test-coverage": "npm test -- --coverage",
+    "ppublish": "git diff-index --quiet HEAD -- && echo \"Hey\""
   },
   "license": "AGPL-3.0",
   "files": [
