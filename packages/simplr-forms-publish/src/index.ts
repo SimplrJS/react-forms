@@ -1,37 +1,67 @@
-import * as git from "nodegit";
+import * as fs from "mz/fs";
+import * as path from "path";
 import * as process from "process";
+import * as mkdirp from "mkdirp";
 
-process.chdir("../simplr-forms-dom");
+async function move(
+    from: string,
+    to: string,
+    recursively: boolean = true,
+    removeFromDirectory = true,
+    rootFrom?: string) {
 
-function statusToText(status: any) {
-    var words = [];
-    if (status.isNew()) { words.push("[new]"); }
-    if (status.isModified()) { words.push("[modified]"); }
-    if (status.isTypechange()) { words.push("[typechange]"); }
-    if (status.isRenamed()) { words.push("[renamed]"); }
-    if (status.isIgnored()) { words.push("[ignored]"); }
+    from = path.resolve(from);
+    to = path.resolve(to);
 
-    return words.join(" ");
+    rootFrom = rootFrom || from;
+
+    const files = await fs.readdir(from);
+    for (const file of files) {
+        const stats = await fs.stat(path.join(from, file));
+        if (await stats.isFile()) {
+            const fileResolved = path.resolve(from, file);
+            const fromDirectory = path.dirname(fileResolved);
+            const toDirectory = fromDirectory.replace(rootFrom, to);
+            const toFile = path.join(toDirectory, fileResolved.replace(fromDirectory, ""));
+
+            try {
+                await mkdirpAsync(toDirectory);
+                await fs.rename(fileResolved, toFile);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        if (await stats.isDirectory()) {
+            if (recursively === true) {
+                const fromDirectory = path.join(from, file);
+                await move(fromDirectory, to, recursively, removeFromDirectory, from);
+                if (removeFromDirectory === true && await fs.exists(fromDirectory)) {
+                    await fs.rmdir(fromDirectory);
+                }
+            }
+        }
+    }
+    if (removeFromDirectory === true && await fs.exists(from)) {
+        await fs.rmdir(from);
+    }
 }
 
-async function ensureRepositoryIsClean(repository: any) {
-    const statuses = await repository.getStatus();
-    if (statuses != null && statuses.length > 0) {
-        console.error(`Repository is dirty:`);
-        for (const file of statuses) {
-            console.info(`\t${file.path()} ${statusToText(file)}`);
-        }
-        console.info("");
-        console.error("Repository must be clean before publishing.");
-        console.info("Exiting...");
-        process.exit(1);
-    }
-    console.info("Repository is clean. Starting publish...");
+async function mkdirpAsync(dir: string) {
+    return new Promise((resolve, reject) => {
+        mkdirp(dir, (err, made) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(made);
+        });
+    });
 }
 
 async function run() {
-    const repository = await git.Repository.open("../../");
-    ensureRepositoryIsClean(repository);
+    const from = "./dist";
+    const to = ".";
+    await move(from, to, true);
 }
 
 run();

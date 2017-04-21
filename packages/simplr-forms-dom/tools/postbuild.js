@@ -54,8 +54,9 @@ async function mkdirpAsync(dir) {
 }
 
 async function run() {
-    const distPath = "./dist";
-    await move(distPath, "./dist2", true);
+    const from = "./dist";
+    const to = ".";
+    await move(from, to, true);
 }
 
 run();

@@ -4,8 +4,8 @@
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "dist/main.js",
-  "types": "dist/index.d.ts",
+  "main": "main.js",
+  "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "webpack && npm run tslint",
@@ -16,16 +16,16 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "git diff-index --quiet HEAD && npm run build && node postbuild.js",
+    "prepublishOnly": "npm run build && node tools/postbuild.js",
     "postpublish": "git clean -fd"
   },
   "license": "AGPL-3.0",
   "files": [
-    "dist",
-    "@types",
     "**/*.md",
     "*.js",
-    "!*.config.js"
+    "*.d.ts",
+    "!*.config.js",
+    "!tools"
   ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
@@ -42,7 +42,8 @@
     "ts-loader": "^2.0.3",
     "tslint": "^5.0.0",
     "typescript": "2.3.0",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "simplr-forms-publish": "0.0.0-dev"
   },
   "dependencies": {
     "@types/react": "^15.0.21",

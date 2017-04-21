@@ -2,11 +2,18 @@
   "private": true,
   "name": "simplr-forms-publish",
   "version": "0.0.0-dev",
+  "scripts": {
+    "build": "tsc -p ."
+  },
   "dependencies": {
+    "@types/mkdirp": "^0.3.29",
+    "@types/mz": "0.0.31",
+    "@types/node": "^7.0.13",
     "nodegit": "^0.18.1"
   },
   "devDependencies": {
-    "@types/node": "^7.0.13",
+    "mkdirp": "^0.5.1",
+    "mz": "^2.6.0",
     "typescript": "^2.3.0"
   }
 }
