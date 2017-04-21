@@ -17,7 +17,7 @@ function statusToText(status: any) {
 async function ensureRepositoryIsClean(repository: any) {
     const statuses = await repository.getStatus();
     if (statuses != null && statuses.length > 0) {
-        console.error(`Your repository is dirty:`);
+        console.error(`Repository is dirty:`);
         for (const file of statuses) {
             console.info(`\t${file.path()} ${statusToText(file)}`);
         }
@@ -26,6 +26,7 @@ async function ensureRepositoryIsClean(repository: any) {
         console.info("Exiting...");
         process.exit(1);
     }
+    console.info("Repository is clean. Starting publish...");
 }
 
 async function run() {
