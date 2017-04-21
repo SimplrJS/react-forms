@@ -20,7 +20,7 @@ export interface FieldProps {
 }
 
 export interface FieldState {
-    InitialValue: FieldValue;
+    DefaultValue: FieldValue;
     Value: FieldValue;
     Error?: FormErrorRecord;
     Touched: boolean;
