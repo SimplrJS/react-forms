@@ -42,7 +42,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         if (this.props != null && this.props.value != null) {
             return this.props.value;
         }
-        return "";
+        return this.DefaultValue;
     }
 
     protected get DefaultValue(): CoreContracts.FieldValue {
