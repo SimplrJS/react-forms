@@ -16,7 +16,7 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "ppublish": "git diff-index --quiet HEAD -- && echo \"Hey\""
+    "prepublish": "git diff-index --quiet HEAD && npm run build"
   },
   "license": "AGPL-3.0",
   "files": [
