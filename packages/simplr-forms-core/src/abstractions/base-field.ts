@@ -273,10 +273,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             throw new Error(`simplr-forms-core: Duplicate field id '${this.FieldId}'`);
         }
 
-        const initialValue = this.RawInitialValue;
+        const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
         this.FormStore.RegisterField(
             this.FieldId,
             initialValue,
+            this.DefaultValue,
             this.props,
             this.FieldsGroupId
         );
