@@ -37,7 +37,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     extends React.Component<TProps, TState> {
     public context: ParentContext;
 
-    static contextTypes: React.ValidationMap<ParentContext> = {
+    static contextTypes: PropTypes.ValidationMap<ParentContext> = {
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
