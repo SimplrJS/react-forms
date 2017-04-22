@@ -3,7 +3,7 @@ import * as path from "path";
 import * as process from "process";
 import * as mkdirp from "mkdirp";
 
-async function move(
+export async function move(
     from: string,
     to: string,
     recursively: boolean = true,
@@ -57,11 +57,3 @@ async function mkdirpAsync(dir: string) {
         });
     });
 }
-
-async function run() {
-    const from = "./dist";
-    const to = ".";
-    await move(from, to, true);
-}
-
-run();
