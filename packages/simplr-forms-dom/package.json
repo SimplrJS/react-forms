@@ -16,7 +16,8 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "npm run build && node tools/postbuild.js",
+    "prepublishOnly": "npm run build && simplr-forms-publish",
+    "t": "simplr-mvdir -h",
     "postpublish": "git clean -fd"
   },
   "license": "AGPL-3.0",
@@ -37,13 +38,13 @@
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "mz": "^2.6.0",
+    "simplr-mvdir": "0.0.1-beta.6",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
     "tslint": "^5.0.0",
     "typescript": "2.3.0",
-    "webpack": "^2.4.1",
-    "simplr-forms-publish": "0.0.0-dev"
+    "webpack": "^2.4.1"
   },
   "dependencies": {
     "@types/react": "^15.0.21",
