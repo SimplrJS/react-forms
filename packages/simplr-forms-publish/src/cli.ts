@@ -6,7 +6,7 @@ import * as mvDir from "./index";
 
 class Cli {
     constructor(argumentValues: Contracts.ArgumentsValues) {
-
+        this.mvDir(argumentValues);
     }
 
     private async mvDir(argumentValues: Contracts.ArgumentsValues) {

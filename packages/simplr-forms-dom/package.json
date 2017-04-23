@@ -16,8 +16,7 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "npm run build && simplr-forms-publish",
-    "t": "simplr-mvdir -h",
+    "prepublishOnly": "npm run build && node ../simplr-forms-publish/dist/cli.js --from dist --to .",
     "postpublish": "git clean -fd"
   },
   "license": "AGPL-3.0",
@@ -25,8 +24,7 @@
     "**/*.md",
     "*.js",
     "*.d.ts",
-    "!*.config.js",
-    "!tools"
+    "!*.config.js"
   ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",

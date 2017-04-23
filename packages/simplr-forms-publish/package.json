@@ -1,6 +1,9 @@
 {
   "name": "simplr-mvdir",
   "version": "0.0.1-beta.6",
+  "description": "A simple tool for moving files from one directory to another.",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -8,6 +11,7 @@
     "watch": "tsc -p . -w",
     "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed."
   },
+  "license": "AGPL-3.0",
   "files": [
     "dist",
     "@types",
