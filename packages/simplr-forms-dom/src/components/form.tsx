@@ -1,14 +1,15 @@
 import * as React from "react";
-import { Abstractions as CoreAbstractions, Contracts as CoreContracts } from "simplr-forms-core";
+import { BaseForm } from "simplr-forms-core";
+import { FormProps } from "simplr-forms-core/contracts";
 import { OnChangeCallback } from "../contracts/field";
 import { FormOnSubmitCallback } from "../contracts/form";
 
-export interface FormProps extends CoreContracts.FormProps, React.HTMLProps<HTMLFormElement> {
+export interface FormProps extends FormProps, React.HTMLProps<HTMLFormElement> {
     onSubmit?: FormOnSubmitCallback;
     onChange?: OnChangeCallback<any>;
 }
 
-export class Form extends CoreAbstractions.BaseForm<FormProps, {}> {
+export class Form extends BaseForm<FormProps, {}> {
     render() {
         return <form>
             {this.props.children}

@@ -1,12 +1,13 @@
 import * as React from "react";
-import { Abstractions as CoreAbstractions, Contracts as CoreContracts } from "simplr-forms-core";
+import { BaseField, BaseFieldState } from "simplr-forms-core";
+import { FieldProps } from "simplr-forms-core/contracts";
 
-export interface BaseDomFieldState extends CoreAbstractions.BaseFieldState {
+export interface BaseDomFieldState extends BaseFieldState {
 
 }
 
-export abstract class BaseDomField<TProps extends CoreContracts.FieldProps, TState extends BaseDomFieldState>
-    extends CoreAbstractions.BaseField<TProps, TState> {
+export abstract class BaseDomField<TProps extends FieldProps, TState extends BaseDomFieldState>
+    extends BaseField<TProps, TState> {
     public abstract renderField(): JSX.Element | null;
 
     public render() {

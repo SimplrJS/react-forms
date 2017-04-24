@@ -4,8 +4,8 @@
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "dist/simplr-forms-core.js",
-  "types": "@types/index.d.ts",
+  "main": "main.js",
+  "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "webpack && npm run tslint",
