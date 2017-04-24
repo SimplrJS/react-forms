@@ -14,7 +14,13 @@ for (let key in packageJson.dependencies) {
 let externalsResolver = [
     externals,
     function (context, request, callback) {
-        if (/.*\/abstractions\/.+$/.test(request)) {
+        if (/\..*\/abstractions\/.+$/.test(request)) {
+            console.log(`
+            =====
+            context: ${context}
+            request: ${request}
+            =====
+            `);
             const resolvedPath = path.resolve(context, request);
             const customResolve =
                 request.indexOf("src") === -1 &&
