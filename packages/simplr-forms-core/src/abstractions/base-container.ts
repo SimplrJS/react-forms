@@ -2,20 +2,21 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import { FormStore } from "../stores/form-store";
+import { StateUpdated } from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 
-export interface ContainerBaseProps {
+export interface BaseContainerProps {
     formId: string;
 }
 
-export interface ContainerBaseParentContext {
+export interface BaseContainerParentContext {
     FormId: string;
 }
 
-export abstract class ContainerBase<TProps extends ContainerBaseProps, TState> extends React.Component<TProps, TState> {
-    context: ContainerBaseParentContext;
+export abstract class BaseContainer<TProps extends BaseContainerProps, TState> extends React.Component<TProps, TState> {
+    context: BaseContainerParentContext;
 
-    static contextTypes: PropTypes.ValidationMap<ContainerBaseParentContext> = {
+    static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
         FormId: PropTypes.string.isRequired
     };
 
@@ -36,16 +37,18 @@ export abstract class ContainerBase<TProps extends ContainerBaseProps, TState> e
     }
 
     componentWillMount() {
-        if (this.FormId == null) {
-            throw new Error("simplr-forms-core: Container must be in a Form or have 'formId' prop");
+        if (this.props.formId == null && this.context.FormId == null) {
+            throw new Error("simplr-forms-core: Container must be in a Form or have prop 'formId' set.");
         }
 
 
         if (this.props.formId != null && this.context.FormId != null) {
-            const but = `but form id was defined: '${this.props.formId}'.`;
-            throw new Error(`simplr-forms-core: Container is already in a Form '${this.context.FormId}' context, ${but}`);
+            const but = `but form id was defined: '${this.props.formId}'`;
+            throw new Error(`simplr-forms-core: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
         }
 
-
+        this.FormStore.addListener(StateUpdated, this.OnStoreUpdated.bind(this));
     }
+
+    protected abstract OnStoreUpdated(): void;
 }
