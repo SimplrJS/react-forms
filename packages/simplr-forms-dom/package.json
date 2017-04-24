@@ -36,6 +36,7 @@
     "mkdirp": "^0.5.1",
     "mv": "^2.1.1",
     "mz": "^2.6.0",
+    "on-build-webpack": "^0.1.0",
     "simplr-mvdir": "0.0.1-beta.6",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
