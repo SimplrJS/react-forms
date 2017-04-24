@@ -9,7 +9,6 @@
         "sourceMap": false,
         "skipDefaultLibCheck": true,
         "declaration": true,
-        "declarationDir": "@types",
         "pretty": true,
         "strict": true,
         "lib": [

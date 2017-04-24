@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Contracts as CoreContracts } from "simplr-forms-core";
+import { FieldProps, FieldValue } from "simplr-forms-core/contracts";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { OnChangeCallback } from "../contracts/field";
@@ -12,7 +12,7 @@ import { OnChangeCallback } from "../contracts/field";
  * @extends {CoreContracts.FieldProps}
  * @extends {React.HTMLProps<HTMLInputElement>}
  */
-export interface TextProps extends CoreContracts.FieldProps, React.HTMLProps<HTMLInputElement> {
+export interface TextProps extends FieldProps, React.HTMLProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
@@ -21,7 +21,7 @@ export interface TextProps extends CoreContracts.FieldProps, React.HTMLProps<HTM
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): CoreContracts.FieldValue {
+    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
@@ -38,14 +38,14 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
     }
 
 
-    protected get RawInitialValue(): CoreContracts.FieldValue {
+    protected get RawInitialValue(): FieldValue {
         if (this.props != null && this.props.value != null) {
             return this.props.value;
         }
         return this.DefaultValue;
     }
 
-    protected get DefaultValue(): CoreContracts.FieldValue {
+    protected get DefaultValue(): FieldValue {
         if (this.props != null && this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
