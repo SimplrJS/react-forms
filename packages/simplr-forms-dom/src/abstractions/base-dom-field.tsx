@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BaseField, BaseFieldState } from "simplr-forms-core/abstractions";
+import { BaseField, BaseFieldState } from "simplr-forms-core";
 import { FieldProps } from "simplr-forms-core/contracts";
 
 export interface BaseDomFieldState extends BaseFieldState {
