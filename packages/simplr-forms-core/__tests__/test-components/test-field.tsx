@@ -5,6 +5,7 @@ import { FieldProps, FieldValue } from "../../src/contracts/field";
 
 export interface MyFieldProps extends FieldProps {
     value?: string;
+    defaultValue?: string;
     randomKey?: string;
 }
 
