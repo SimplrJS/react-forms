@@ -4,7 +4,7 @@
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "main.js",
+  "main": "index.js",
   "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
