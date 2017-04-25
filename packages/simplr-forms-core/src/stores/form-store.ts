@@ -226,7 +226,7 @@ export class FormStore extends ActionEmitter {
                 resolve(result);
             });
         }
-
+      
         // Form.Submitting -> true
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.merge({
