@@ -2,16 +2,16 @@ const packageJson = require("./package.json");
 const tsConfig = require("./tsconfig.json");
 const path = require("path");
 
-var WebpackOnBuildPlugin = require('on-build-webpack');
-var childProcess = require('child_process');
+const WebpackOnBuildPlugin = require('on-build-webpack');
+const childProcess = require('child_process');
 
 let externals = {};
 
-for (let key in packageJson.dependencies) {
+for (const key in packageJson.dependencies) {
     externals[key] = key;
 }
 
-let externalsResolver = [
+const externalsResolver = [
     externals,
     function (context, request, callback) {
         if (/\..*\/abstractions\/.+$/.test(request)) {

@@ -146,7 +146,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
-    public async Validate(fieldId: string, validationPromise: Promise<void>) {
+    public async Validate(fieldId: string, validationPromise: Promise<never>) {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
