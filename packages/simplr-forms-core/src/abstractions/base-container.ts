@@ -6,7 +6,7 @@ import { StateUpdated } from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseContainerProps {
-    formId: string;
+    formId?: string;
 }
 
 export interface BaseContainerParentContext {
@@ -21,8 +21,9 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
     };
 
     protected get FormId(): string {
-        if (this.props.formId == null) {
-            return this.props.formId;
+        const propFormId: string | undefined = this.props.formId;
+        if (propFormId != null) {
+            return propFormId;
         }
         if (this.context.FormId != null) {
             return this.context.FormId;

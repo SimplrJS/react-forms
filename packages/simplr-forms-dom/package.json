@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.0-pre-alpha.13",
+  "version": "4.0.0-pre-alpha.18",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -16,14 +16,14 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "npm run build && node ../simplr-forms-publish/dist/cli.js --from dist --to .",
-    "postpublish": "git clean -fd"
+    "prepublishOnly": "npm run build"
   },
   "license": "AGPL-3.0",
   "files": [
+    "!node_modules",
     "**/*.md",
     "*.js",
-    "*.d.ts",
+    "**/*.d.ts",
     "!*.config.js"
   ],
   "devDependencies": {
@@ -51,7 +51,7 @@
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.11",
+    "simplr-forms-core": "^4.0.0-pre-alpha.18",
     "typed-immutable-record": "0.0.6"
   },
   "jest": {
