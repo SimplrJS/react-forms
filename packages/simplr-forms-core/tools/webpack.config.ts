@@ -1,39 +1,48 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var path = require("path");
-var packageJson = require("./package.json");
-var externals = {};
-for (var key in packageJson.dependencies) {
+import * as path from "path";
+import * as childProcess from "child_process";
+
+const packageJson = require("./package.json");
+
+let externals: {
+    [key: string]: any
+} = {};
+
+for (const key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
         externals[key] = key;
     }
 }
-var externalsResolver = [
+
+const externalsResolver = [
     externals,
-    function (context, request, callback) {
-        var directoriesToTest = [
+    function (context: string, request: string, callback: Function) {
+        const directoriesToTest = [
             "abstractions",
             "actions",
             "stores",
             "utils"
         ];
-        var tests = directoriesToTest.map(function (directory) { return ({
-            regex: new RegExp(".*/" + directory + "/.+$"),
+
+        const tests = directoriesToTest.map(directory => ({
+            regex: new RegExp(`.*/${directory}/.+$`),
             directory: directory
-        }); });
-        var passingTest;
-        for (var _i = 0, tests_1 = tests; _i < tests_1.length; _i++) {
-            var test_1 = tests_1[_i];
-            if (test_1.regex.test(request)) {
-                passingTest = test_1;
+        }));
+
+        let passingTest;
+        for (const test of tests) {
+            if (test.regex.test(request)) {
+                passingTest = test;
             }
         }
+
         if (passingTest != null) {
-            var resolvedPath = path.resolve(context, request);
-            var shouldReplaceWithCustomResolve = request.indexOf("src") === -1 &&
-                resolvedPath.indexOf(path.join(__dirname, "src/" + passingTest.directory)) !== -1;
+            const resolvedPath = path.resolve(context, request);
+            const shouldReplaceWithCustomResolve =
+                request.indexOf("src") === -1 &&
+                resolvedPath.indexOf(path.join(__dirname, `src/${passingTest.directory}`)) !== -1;
+
             if (shouldReplaceWithCustomResolve) {
-                var customResolve = "./" + passingTest.directory;
+                const customResolve = `./${passingTest.directory}`;
                 callback(null, customResolve);
                 return;
             }
@@ -41,6 +50,7 @@ var externalsResolver = [
         callback();
     }
 ];
+
 module.exports = {
     entry: {
         main: "./src/index.ts",
@@ -58,7 +68,8 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
-                options: {}
+                options: {
+                }
             }
         ]
     },
