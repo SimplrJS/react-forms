@@ -4,7 +4,7 @@
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "main.js",
+  "main": "index.js",
   "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
+    "@types/prop-types": "^15.5.1",
     "@types/sinon": "^2.1.2",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
@@ -47,8 +48,11 @@
   },
   "dependencies": {
     "@types/react": "^15.0.21",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.10"
+    "simplr-forms-core": "^4.0.0-pre-alpha.10",
+    "typed-immutable-record": "0.0.6"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

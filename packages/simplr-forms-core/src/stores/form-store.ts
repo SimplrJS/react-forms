@@ -109,6 +109,14 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
+    public SetSubmitCallback(submitCallback: () => void) {
+        this.State = this.State.withMutations(state => {
+            state.Form = state.Form.merge({
+                SubmitCallback: submitCallback
+            } as FormState);
+        });
+    }
+
     public UpdateProps(fieldId: string, props: FieldStateProps) {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
@@ -145,6 +153,12 @@ export class FormStore extends ActionEmitter {
         // Skip if it's already validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
+                // Set form state to Validating: true
+                state.Form = state.Form.merge({
+                    Validating: true,
+                    Error: undefined
+                } as FormState);
+
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: true,
@@ -191,6 +205,13 @@ export class FormStore extends ActionEmitter {
         }
     }
 
+    public InitiateSubmit() {
+        if (this.State.Form.SubmitCallback == null) {
+            throw new Error("simplr-forms-core: Submit method is called before SubmitCallback is set.");
+        }
+        this.State.Form.SubmitCallback();
+    }
+
     /**
      * ========================
      *  Local helper methods
@@ -207,7 +228,9 @@ export class FormStore extends ActionEmitter {
 
     protected GetInitialFormState(): FormState {
         return {
+            Validating: false,
             Submitting: false,
+            Pristine: true,
             SuccessfullySubmitted: false,
             ActiveFieldId: undefined,
             Error: undefined,
