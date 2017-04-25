@@ -16,7 +16,8 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "gulp-watch": "tsc -p ./tools/tsconfig.gulp.json -w"
+    "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
+    "gulp-watch": "npm run gulp-build -- -w"
   },
   "license": "AGPL-3.0",
   "files": [

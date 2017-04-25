@@ -17,7 +17,8 @@
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
     "prepublishOnly": "npm run build",
-    "gulp-watch": "tsc -p ./tools/tsconfig.gulp.json -w"
+    "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
+    "gulp-watch": "npm run gulp-build -- -w"
   },
   "license": "AGPL-3.0",
   "files": [
@@ -39,6 +40,7 @@
     "@types/vinyl-fs": "^2.4.5",
     "@types/webpack": "^2.2.15",
     "enzyme": "^2.8.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
     "mkdirp": "^0.5.1",
