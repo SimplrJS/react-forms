@@ -6,16 +6,17 @@ import { FormProps, FormOnSubmitCallback } from "../contracts/form";
 export class Form extends BaseForm<FormProps, {}> {
     public Element: HTMLFormElement;
 
-    static defaultProps: FormProps = {
-        preventSubmitDefaultAndPropagation: true
-    };
-
     protected SetElementRef = (element: HTMLFormElement) => {
         this.Element = element;
         this.FormStore.SetSubmitCallback(() => {
             element.dispatchEvent(new Event("submit"));
         });
     }
+
+    static defaultProps: FormProps = {
+        ...BaseForm.defaultProps,
+        preventSubmitDefaultAndPropagation: true
+    };
 
     protected FormSubmitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
         if (this.props.preventSubmitDefaultAndPropagation) {
@@ -32,8 +33,10 @@ export class Form extends BaseForm<FormProps, {}> {
             return;
         }
 
+        event.persist();
+
         const result = this.props.onSubmit(event, this.FormStore);
-        this.Submit(result);
+        this.FormStore.Submit(result);
     }
 
     render() {

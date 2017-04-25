@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.0-pre-alpha.13",
+  "version": "4.0.0-pre-alpha.18",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -16,21 +16,28 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "npm run build && node ../simplr-forms-publish/dist/cli.js --from dist --to .",
-    "postpublish": "git clean -fd"
+    "prepublishOnly": "npm run build",
+    "gulp-watch": "tsc -p ./tools/tsconfig.gulp.json -w"
   },
   "license": "AGPL-3.0",
   "files": [
     "**/*.md",
     "*.js",
-    "*.d.ts",
-    "!*.config.js"
+    "**/*.d.ts",
+    "!*.config.js",
+    "!gulpfile.js",
+    "!node_modules/**"
   ],
   "devDependencies": {
+    "@types/chokidar": "^1.6.0",
     "@types/enzyme": "^2.7.7",
+    "@types/gulp": "^4.0.2",
     "@types/jest": "^19.2.2",
     "@types/prop-types": "^15.5.1",
     "@types/sinon": "^2.1.2",
+    "@types/undertaker": "^0.12.28",
+    "@types/vinyl-fs": "^2.4.5",
+    "@types/webpack": "^2.2.15",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
@@ -51,7 +58,7 @@
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.11",
+    "simplr-forms-core": "^4.0.0-pre-alpha.18",
     "typed-immutable-record": "0.0.6"
   },
   "jest": {

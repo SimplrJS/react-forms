@@ -212,6 +212,49 @@ export class FormStore extends ActionEmitter {
         this.State.Form.SubmitCallback();
     }
 
+    public async Submit(result: Promise<void> | FormError | any) {
+        let promise: Promise<void>;
+        if (this.IsPromise<void>(result)) {
+            promise = result;
+        } else {
+            promise = new Promise<void>((resolve, reject) => {
+                const error = ConstructFormError(result);
+                if (error !== undefined) {
+                    reject(result);
+                    return;
+                }
+                resolve(result);
+            });
+        }
+
+        // Form.Submitting -> true
+        this.State = this.State.withMutations(state => {
+            state.Form = state.Form.merge({
+                Submitting: true
+            } as FormState);
+        });
+
+        // Try submitting
+        try {
+            await promise;
+            // No error and submitting -> false
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Submitting: false,
+                    Error: undefined
+                } as FormState);
+            });
+        } catch (err) {
+            // Error and submitting -> false
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Submitting: false,
+                    Error: err
+                } as FormState);
+            });
+        }
+    }
+
     /**
      * ========================
      *  Local helper methods
@@ -249,5 +292,9 @@ export class FormStore extends ActionEmitter {
             FieldsGroup: undefined,
             Props: undefined
         };
+    }
+
+    protected IsPromise<T>(value: any): value is Promise<T> {
+        return value != null && value.then != null && value.catch != null;
     }
 }
