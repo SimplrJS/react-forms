@@ -36,7 +36,7 @@ export class Form extends BaseForm<FormProps, {}> {
         event.persist();
 
         const result = this.props.onSubmit(event, this.FormStore);
-        this.Submit(result);
+        this.FormStore.Submit(result);
     }
 
     render() {

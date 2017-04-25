@@ -44,23 +44,6 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         return this.FormStore.GetState().Form.Error == null;
     }
 
-    protected async Submit(result: Promise<void> | FormError | any): Promise<void> {
-        let promise: Promise<void>;
-        if (this.isPromise<void>(result)) {
-            promise = result;
-        } else {
-            promise = new Promise<void>((resolve, reject) => {
-                const error = ConstructFormError(result);
-                if (error !== undefined) {
-                    reject(result);
-                    return;
-                }
-                resolve(result);
-            });
-        }
-        await this.FormStore.Submit(promise);
-    }
-
     componentWillUnmount() {
         if (this.props.destroyOnUnmount) {
             this.FormStoresHandler.UnregisterForm(this.FormId);
@@ -95,9 +78,5 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
                 this.FormId = this.FormStoresHandler.RegisterForm(props.formId, props.formStore);
             }
         }
-    }
-
-    private isPromise<T>(value: any): value is Promise<T> {
-        return value != null && value.then != null && value.catch != null;
     }
 }
