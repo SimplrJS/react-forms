@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-core",
-  "version": "4.0.0-pre-alpha.10",
+  "version": "4.0.0-pre-alpha.18",
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -19,16 +19,15 @@
   },
   "license": "AGPL-3.0",
   "files": [
-    "dist",
-    "@types",
+    "!node_modules",
     "**/*.md",
     "*.js",
+    "**/*.d.ts",
     "!*.config.js"
   ],
   "devDependencies": {
     "@types/enzyme": "^2.7.9",
     "@types/jest": "^19.2.2",
-    "@types/prop-types": "^15.5.1",
     "@types/sinon": "^2.1.2",
     "enzyme": "^2.8.2",
     "jest": "^19.0.2",
@@ -47,6 +46,7 @@
   "dependencies": {
     "@types/fbemitter": "^2.0.32",
     "@types/flux": "^3.0.1",
+    "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.22",
     "@types/react-dom": "^15.5.0",
     "action-emitter": "^0.2.1",
