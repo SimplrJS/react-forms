@@ -14,7 +14,7 @@ for (const key in packageJson.dependencies) {
 const externalsResolver = [
     externals,
     function (context, request, callback) {
-        if (/.*\/abstractions\/.+$/.test(request)) {
+        if (/\..*\/abstractions\/.+$/.test(request)) {
             const resolvedPath = path.resolve(context, request);
             const customResolve =
                 request.indexOf("src") === -1 &&
@@ -59,7 +59,7 @@ async function runScript(path, args) {
 
 module.exports = {
     entry: {
-        main: "./src/index.ts",
+        index: "./src/index.ts",
         abstractions: "./src/abstractions/index.ts"
     },
     output: {

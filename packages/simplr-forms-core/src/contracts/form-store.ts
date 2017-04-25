@@ -8,7 +8,7 @@ import { FormStateRecord } from "../contracts/form";
 export interface FormStoreState {
     Fields: Immutable.Map<string, FieldStateRecord>;
     FieldsGroups: Immutable.Map<string, FieldsGroupStoreState>;
-    Form?: FormStateRecord;
+    Form: FormStateRecord;
 }
 
 export interface FormStoreStateRecord extends TypedRecord<FormStoreStateRecord>, FormStoreState { }

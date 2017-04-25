@@ -7,6 +7,7 @@ export interface FormProps {
     formId?: string;
     formStore?: FormStore;
     destroyOnUnmount?: boolean;
+    forceSubmit?: boolean;
 }
 
 export interface FormChildContext {
@@ -14,11 +15,13 @@ export interface FormChildContext {
 }
 
 export interface FormState {
-    Error: FormError | undefined;
+    Validating: boolean;
+    Pristine: boolean;
+    Error?: FormError;
     Submitting: boolean;
     SuccessfullySubmitted: boolean;
-    SubmitCallback: Function | undefined;
-    ActiveFieldId: string | undefined;
+    SubmitCallback?: () => void;
+    ActiveFieldId?: string;
 }
 
 export interface FormStateRecord extends TypedRecord<FormStateRecord>, FormState { }

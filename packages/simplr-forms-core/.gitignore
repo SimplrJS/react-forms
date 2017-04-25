@@ -1,3 +1,5 @@
 dist
 @types
 coverage
+*.js
+**/*.d.ts
