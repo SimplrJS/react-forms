@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Contracts as FormsCoreContracts } from "simplr-forms-core";
+import { FieldValue } from "simplr-forms-core/contracts";
 
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 
@@ -11,7 +11,7 @@ export abstract class BaseValidator<TProps extends ValidatorProps>
     extends React.Component<TProps, {}> implements Validator {
     static SimplrValidationValidatorComponent(): void { }
 
-    abstract Validate(value: FormsCoreContracts.FieldValue): ValidationResult;
+    abstract Validate(value: FieldValue): ValidationResult;
 
     protected SkipValidation(value: any) {
         return (value == null || value === "");

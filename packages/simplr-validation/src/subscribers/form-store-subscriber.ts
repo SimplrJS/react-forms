@@ -1,10 +1,18 @@
 import * as React from "react";
-import { Stores, Actions, Contracts as FormsCoreContracts } from "simplr-forms-core";
 import * as ActionEmitter from "action-emitter";
 
-import { Validate } from "../utils/validation";
+import {
+    FieldValue,
+    FieldValidationType
+} from "simplr-forms-core/contracts";
+import { FormStore } from "simplr-forms-core/stores";
+import {
+    FieldRegistered,
+    ValueChanged,
+    PropsChanged
+ } from "simplr-forms-core/actions";
 
-const { FieldValidationType } = FormsCoreContracts;
+import { Validate } from "../utils/validation";
 
 export class FormStoreSubscriber {
 
@@ -12,10 +20,10 @@ export class FormStoreSubscriber {
     private fieldOnValueChangedSubscription?: ActionEmitter.EventSubscription;
     private fieldOnPropsChangedSubscription?: ActionEmitter.EventSubscription;
 
-    constructor(private formStore: Stores.FormStore) {
-        this.fieldOnRegisteredSubscription = this.formStore.addListener(Actions.FieldRegistered, this.OnRegistered.bind(this));
-        this.fieldOnValueChangedSubscription = this.formStore.addListener(Actions.ValueChanged, this.OnValueChanged.bind(this));
-        this.fieldOnPropsChangedSubscription = this.formStore.addListener(Actions.PropsChanged, this.OnPropsChanged.bind(this));
+    constructor(private formStore: FormStore) {
+        this.fieldOnRegisteredSubscription = this.formStore.addListener(FieldRegistered, this.OnRegistered.bind(this));
+        this.fieldOnValueChangedSubscription = this.formStore.addListener(ValueChanged, this.OnValueChanged.bind(this));
+        this.fieldOnPropsChangedSubscription = this.formStore.addListener(PropsChanged, this.OnPropsChanged.bind(this));
     }
 
     public RemoveFormListeners() {
@@ -33,8 +41,8 @@ export class FormStoreSubscriber {
 
     protected async ValidateField(
         fieldId: string,
-        value: FormsCoreContracts.FieldValue,
-        validationType: FormsCoreContracts.FieldValidationType
+        value: FieldValue,
+        validationType: FieldValidationType
     ) {
         const fieldState = this.formStore.GetField(fieldId);
         const fieldProps = fieldState.Props;
@@ -52,15 +60,15 @@ export class FormStoreSubscriber {
         await this.formStore.Validate(fieldId, validationPromise);
     }
 
-    protected OnRegistered(action: Actions.FieldRegistered) {
+    protected OnRegistered(action: FieldRegistered) {
         this.ValidateField(action.FieldId, action.InitialValue, FieldValidationType.OnFieldRegistered);
     }
 
-    protected OnValueChanged(action: Actions.ValueChanged) {
+    protected OnValueChanged(action: ValueChanged) {
         this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
     }
 
-    protected OnPropsChanged(action: Actions.PropsChanged) {
+    protected OnPropsChanged(action: PropsChanged) {
         const fieldState = this.formStore.GetField(action.FieldId);
         this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
     }

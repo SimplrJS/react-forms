@@ -1,4 +1,5 @@
-import { Stores, Actions } from "simplr-forms-core";
+import { FSHContainerClass, FSHContainer } from "simplr-forms-core/stores";
+import { FormRegistered, FormUnregistered } from "simplr-forms-core/actions";
 import * as ActionEmitter from "action-emitter";
 import * as Immutable from "immutable";
 import { FormStoreSubscriber } from "./form-store-subscriber";
@@ -17,21 +18,21 @@ export class FormStoresHandlerSubscriber {
         return this.fshContainer.FormStoresHandler;
     }
 
-    constructor(private fshContainer: Stores.FSHContainerClass = Stores.FSHContainer) {
+    constructor(private fshContainer: FSHContainerClass = FSHContainer) {
         this.formRegisterSubscription = this.formStoresHandler
-            .addListener(Actions.FormRegistered, this.onFormRegistered.bind(this));
+            .addListener(FormRegistered, this.onFormRegistered.bind(this));
         this.formUnregisterSubscription = this.formStoresHandler
-            .addListener(Actions.FormUnregistered, this.onFormUnregistered.bind(this));
+            .addListener(FormUnregistered, this.onFormUnregistered.bind(this));
     }
 
-    private onFormRegistered(action: Actions.FormRegistered) {
+    private onFormRegistered(action: FormRegistered) {
         const formStore = this.fshContainer.FormStoresHandler.GetStore(action.FormId);
 
         this.formStoresSubscribers = this.formStoresSubscribers
             .set(action.FormId, new FormStoreSubscriber(formStore));
     }
 
-    private onFormUnregistered(action: Actions.FormUnregistered) {
+    private onFormUnregistered(action: FormUnregistered) {
         const formStoreSubscriber = this.formStoresSubscribers.get(action.FormId);
         formStoreSubscriber.RemoveFormListeners();
 
