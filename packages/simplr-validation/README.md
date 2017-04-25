@@ -3,7 +3,7 @@
         <img src="https://img.shields.io/npm/v/simplr-validation.svg?style=flat-square" alt="version" />
     </a>
     <a href="https://npmjs.org/package/simplr-validation">
-        <img src="https://img.shields.io/npm/l/simplr-validation.svg?style=flat-square" alt="version" />
+        <img src="https://img.shields.io/npm/l/simplr-validation.svg?style=flat-square" alt="license" />
     </a>
 </p>
 
