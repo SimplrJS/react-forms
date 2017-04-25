@@ -58,6 +58,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
                 resolve(result);
             });
         }
+        await this.FormStore.Submit(promise);
     }
 
     componentWillUnmount() {

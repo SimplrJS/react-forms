@@ -212,6 +212,35 @@ export class FormStore extends ActionEmitter {
         this.State.Form.SubmitCallback();
     }
 
+    public async Submit(promise: Promise<void>) {
+        // Form.Submitting -> true
+        this.State = this.State.withMutations(state => {
+            state.Form = state.Form.merge({
+                Submitting: true
+            } as FormState);
+        });
+
+        // Try submitting
+        try {
+            await promise;
+            // No error and submitting -> false
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Submitting: false,
+                    Error: undefined
+                } as FormState);
+            });
+        } catch (err) {
+            // Error and submitting -> false
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Submitting: false,
+                    Error: err
+                } as FormState);
+            });
+        }
+    }
+
     /**
      * ========================
      *  Local helper methods
