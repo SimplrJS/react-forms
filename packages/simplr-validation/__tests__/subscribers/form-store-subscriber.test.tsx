@@ -61,6 +61,7 @@ describe("FormStoreSubscriber", () => {
 
         formSubscriber.RemoveFormListeners();
 
+        expect(formStore.listeners(FieldRegistered).length).toBe(0);
         expect(formStore.listeners(PropsChanged).length).toBe(0);
         expect(formStore.listeners(ValueChanged).length).toBe(0);
 
