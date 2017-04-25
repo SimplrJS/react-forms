@@ -21,6 +21,7 @@
         "node_modules",
         "dist",
         "@types",
-        "__tests__"
+        "__tests__",
+        "tools"
     ]
 }

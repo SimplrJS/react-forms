@@ -1,66 +1,53 @@
-const packageJson = require("./package.json");
-const tsConfig = require("./tsconfig.json");
-const path = require("path");
-
-const WebpackOnBuildPlugin = require('on-build-webpack');
-const childProcess = require('child_process');
-
-let externals = {};
-
-for (const key in packageJson.dependencies) {
-    externals[key] = key;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var path = require("path");
+var packageJson = require("./package.json");
+var externals = {};
+for (var key in packageJson.dependencies) {
+    if (packageJson.dependencies.hasOwnProperty(key)) {
+        externals[key] = key;
+    }
 }
-
-const externalsResolver = [
+var externalsResolver = [
     externals,
     function (context, request, callback) {
-        if (/\..*\/abstractions\/.+$/.test(request)) {
-            const resolvedPath = path.resolve(context, request);
-            const customResolve =
-                request.indexOf("src") === -1 &&
-                resolvedPath.indexOf(path.join(__dirname, "src/abstractions")) !== -1;
-
-            if (customResolve) {
-                callback(null, "./abstractions");
+        var directoriesToTest = [
+            "abstractions",
+            "actions",
+            "stores",
+            "utils"
+        ];
+        var tests = directoriesToTest.map(function (directory) { return ({
+            regex: new RegExp(".*/" + directory + "/.+$"),
+            directory: directory
+        }); });
+        var passingTest;
+        for (var _i = 0, tests_1 = tests; _i < tests_1.length; _i++) {
+            var test_1 = tests_1[_i];
+            if (test_1.regex.test(request)) {
+                passingTest = test_1;
+            }
+        }
+        if (passingTest != null) {
+            var resolvedPath = path.resolve(context, request);
+            var shouldReplaceWithCustomResolve = request.indexOf("src") === -1 &&
+                resolvedPath.indexOf(path.join(__dirname, "src/" + passingTest.directory)) !== -1;
+            if (shouldReplaceWithCustomResolve) {
+                var customResolve = "./" + passingTest.directory;
+                callback(null, customResolve);
                 return;
             }
         }
         callback();
     }
 ];
-
-async function runScript(path, args) {
-    return new Promise((resolve, reject) => {
-        let invoked = false;
-
-        const process = childProcess.fork(path, args);
-
-        process.on("error", err => {
-            if (invoked) {
-                return;
-            }
-            invoked = true;
-            reject(err);
-        });
-
-        process.on("exit", code => {
-            if (invoked) {
-                return;
-            }
-            invoked = true;
-            if (code === 0) {
-                resolve();
-                return;
-            }
-            reject(new Error(`Exit code: ${code}`));
-        });
-    });
-}
-
 module.exports = {
     entry: {
-        index: "./src/index.ts",
-        abstractions: "./src/abstractions/index.ts"
+        main: "./src/index.ts",
+        abstractions: "./src/abstractions/index.ts",
+        stores: "./src/stores/index.ts",
+        actions: "./src/actions/index.ts",
+        utils: "./src/utils/index.ts"
     },
     output: {
         filename: "./dist/[name].js",
@@ -69,24 +56,14 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /.+\.tsx?$/,
-                exclude: [
-                    /!.+\/src.+/,
-                    /\.d\.ts$/
-                ],
+                test: /\.tsx?$/,
                 loader: "ts-loader",
-                options: {
-                }
+                options: {}
             }
         ]
     },
     resolve: {
         extensions: [".ts", ".tsx"]
     },
-    externals: externalsResolver,
-    plugins: [
-        new WebpackOnBuildPlugin(async (stats) => {
-            await runScript("../simplr-mvdir/dist/cli.js", ["--from", "dist", "--to", "."]);
-        }),
-    ]
+    externals: externalsResolver
 };
