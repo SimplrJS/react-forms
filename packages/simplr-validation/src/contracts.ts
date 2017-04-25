@@ -1,10 +1,10 @@
-import { Contracts as FormsCoreContracts } from "simplr-forms-core";
+import { FormError } from "simplr-forms-core/contracts";
 
 export interface Validator {
     Validate(value: any): ValidationResult;
 }
 
-export type ValidationError = string | FormsCoreContracts.FormError;
+export type ValidationError = string | FormError;
 
 export type ValidationResult = Promise<void> | ValidationError | undefined;
 

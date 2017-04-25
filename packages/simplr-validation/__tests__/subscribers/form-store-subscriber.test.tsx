@@ -1,17 +1,26 @@
 import * as React from "react";
-import { Stores, Actions, Contracts as FormsCoreContracts } from "simplr-forms-core";
 import * as Sinon from "sinon";
+
+import {
+    FieldValue,
+    FieldValidationType,
+    FieldStateProps
+} from "simplr-forms-core/contracts";
+import { FormStore } from "simplr-forms-core/stores";
+import {
+    FieldRegistered,
+    PropsChanged,
+    ValueChanged,
+} from "simplr-forms-core/actions";
 
 import { ContainsValidator } from "../../src/validators/index";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
 
-const { FieldValidationType } = FormsCoreContracts;
-
 class MySubscriber extends FormStoreSubscriber {
     public ValidateField(
         fieldId: string,
-        value: FormsCoreContracts.FieldValue,
-        validationType: FormsCoreContracts.FieldValidationType
+        value: FieldValue,
+        validationType: FieldValidationType
     ) {
         return super.ValidateField(fieldId, value, validationType);
     }
@@ -28,32 +37,32 @@ describe("FormStoreSubscriber", () => {
     });
 
     it("add listeners to form store", () => {
-        const formStore = new Stores.FormStore("form-id");
-        const callback = sandbox.spy(Stores.FormStore.prototype, "addListener");
+        const formStore = new FormStore("form-id");
+        const callback = sandbox.spy(FormStore.prototype, "addListener");
 
         expect(callback.called).toEqual(false);
 
-        expect(formStore.listeners(Actions.FieldRegistered).length).toBe(0);
-        expect(formStore.listeners(Actions.PropsChanged).length).toBe(0);
-        expect(formStore.listeners(Actions.ValueChanged).length).toBe(0);
+        expect(formStore.listeners(FieldRegistered).length).toBe(0);
+        expect(formStore.listeners(PropsChanged).length).toBe(0);
+        expect(formStore.listeners(ValueChanged).length).toBe(0);
 
         new FormStoreSubscriber(formStore);
         expect(callback.called).toEqual(true);
 
-        expect(formStore.listeners(Actions.FieldRegistered).length).toBe(1);
-        expect(formStore.listeners(Actions.PropsChanged).length).toBe(1);
-        expect(formStore.listeners(Actions.ValueChanged).length).toBe(1);
+        expect(formStore.listeners(FieldRegistered).length).toBe(1);
+        expect(formStore.listeners(PropsChanged).length).toBe(1);
+        expect(formStore.listeners(ValueChanged).length).toBe(1);
     });
 
     it("remove listeners from form store", () => {
-        const formStore = new Stores.FormStore("form-id");
+        const formStore = new FormStore("form-id");
 
         const formSubscriber = new MySubscriber(formStore);
 
         formSubscriber.RemoveFormListeners();
 
-        expect(formStore.listeners(Actions.PropsChanged).length).toBe(0);
-        expect(formStore.listeners(Actions.ValueChanged).length).toBe(0);
+        expect(formStore.listeners(PropsChanged).length).toBe(0);
+        expect(formStore.listeners(ValueChanged).length).toBe(0);
 
     });
 
@@ -64,11 +73,11 @@ describe("FormStoreSubscriber", () => {
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
-        const formStore = new Stores.FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const formStore = new FormStore("form-id");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
 
-        const fieldProps: FormsCoreContracts.FieldStateProps = {
+        const fieldProps: FieldStateProps = {
             name: "field-name",
             children: fieldChildren,
             validationType: FieldValidationType.OnValueChange
@@ -94,11 +103,11 @@ describe("FormStoreSubscriber", () => {
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
-        const formStore = new Stores.FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const formStore = new FormStore("form-id");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
 
-        const fieldProps: FormsCoreContracts.FieldStateProps = {
+        const fieldProps: FieldStateProps = {
             name: "field-name",
             children: fieldChildren,
             validationType: FieldValidationType.OnValueChange
@@ -124,11 +133,11 @@ describe("FormStoreSubscriber", () => {
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
-        const formStore = new Stores.FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const formStore = new FormStore("form-id");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
 
-        const fieldProps: FormsCoreContracts.FieldStateProps = {
+        const fieldProps: FieldStateProps = {
             name: "field-name",
             children: fieldChildren,
             validationType: FieldValidationType.OnPropsChange
@@ -148,8 +157,8 @@ describe("FormStoreSubscriber", () => {
         const initialValue = "initial value";
 
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-        const formStore = new Stores.FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(Stores.FormStore.prototype, "Validate");
+        const formStore = new FormStore("form-id");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
         const subscriber = new MySubscriber(formStore);
 
         // Validation is skipped because props are undefined
