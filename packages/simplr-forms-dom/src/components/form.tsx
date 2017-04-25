@@ -1,17 +1,46 @@
 import * as React from "react";
-import { Abstractions as CoreAbstractions, Contracts as CoreContracts } from "simplr-forms-core";
+import { BaseForm } from "simplr-forms-core";
 
-export interface Props extends CoreContracts.FormProps, React.HTMLProps<HTMLFormElement> {
+import { FormProps, FormOnSubmitCallback } from "../contracts/form";
 
-}
+export class Form extends BaseForm<FormProps, {}> {
+    public Element: HTMLFormElement;
 
-export interface FormProps extends Props {
+    static defaultProps: FormProps = {
+        preventSubmitDefaultAndPropagation: true
+    };
 
-}
+    protected SetElementRef = (element: HTMLFormElement) => {
+        this.Element = element;
+        this.FormStore.SetSubmitCallback(() => {
+            element.dispatchEvent(new Event("submit"));
+        });
+    }
 
-export class Form extends CoreAbstractions.BaseForm<FormProps, {}> {
+    protected FormSubmitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
+        if (this.props.preventSubmitDefaultAndPropagation) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        if (!this.ShouldFormSubmit()) {
+            return;
+        }
+
+        // TODO: Touch all fields to validate
+
+        if (this.props.onSubmit == null) {
+            return;
+        }
+
+        const result = this.props.onSubmit(event, this.FormStore);
+        this.Submit(result);
+    }
+
     render() {
-        return <form>
+        return <form
+            ref={this.SetElementRef}
+            onSubmit={this.FormSubmitHandler}
+        >
             {this.props.children}
         </form>;
     }

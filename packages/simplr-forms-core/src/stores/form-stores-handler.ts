@@ -13,7 +13,7 @@ export class FormStoresHandler extends ActionEmitter {
         this.resetFormStores();
     }
 
-    protected GetFormStoreId(formNumber: number) {
+    protected GetFormStoreId(formNumber: number): string {
         return `form-store-${formNumber}`;
     }
 
@@ -24,7 +24,7 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoresHandlerClass
      */
-    public NextStoreId() {
+    public NextStoreId(): string {
         return this.GetFormStoreId(++this.storesCount);
     }
 
@@ -35,7 +35,7 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoresHandlerClass
      */
-    public get StoresCount() {
+    public get StoresCount(): number {
         return this.formStores.count();
     }
 
@@ -51,7 +51,7 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoreHandlerBase
      */
-    public RegisterForm(customFormId?: string, store?: any) {
+    public RegisterForm(customFormId?: string, store?: any): string {
         if (customFormId != null) {
             // To keep store count present nomatter the customFormId was given
             ++this.storesCount;
@@ -81,7 +81,7 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoreHandlerBase
      */
-    public UnregisterForm(formId: string) {
+    public UnregisterForm(formId: string): void {
         const store = this.formStores.get(formId);
         if (store != null) {
             this.formStores = this.formStores.delete(formId);
@@ -97,7 +97,7 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoreHandlerBase
      */
-    public GetStore(formId: string) {
+    public GetStore(formId: string): FormStore {
         return this.formStores.get(formId);
     }
 
@@ -109,11 +109,11 @@ export class FormStoresHandler extends ActionEmitter {
      *
      * @memberOf FormStoreHandlerBase
      */
-    public Exists(formId: string) {
+    public Exists(formId: string): boolean {
         return this.formStores.has(formId);
     }
 
-    private resetFormStores() {
+    private resetFormStores(): void {
         this.storesCount = 0;
         this.formStores = Immutable.Map<string, FormStore>();
     }

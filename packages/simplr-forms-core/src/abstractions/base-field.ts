@@ -1,14 +1,15 @@
 import * as React from "react";
 import * as actionEmitter from "action-emitter";
+import * as PropTypes from "prop-types";
 
 import {
     FieldProps,
-    FieldState,
     FieldValue,
     FieldValidationType,
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
-    FieldParseValueCallback
+    FieldParseValueCallback,
+    FieldStateRecord
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
 import { FormContextPropsObject } from "../contracts/form";
@@ -19,7 +20,7 @@ import * as FormStoreActions from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseFieldState {
-    Field?: FieldState;
+    Field?: FieldStateRecord;
     Form?: FormStoreStateRecord;
     Value?: FieldValue;
 }
@@ -36,11 +37,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     extends React.Component<TProps, TState> {
     public context: ParentContext;
 
-    static contextTypes: React.ValidationMap<ParentContext> = {
-        FormId: React.PropTypes.string,
-        FormProps: React.PropTypes.object,
-        FieldsGroupId: React.PropTypes.string,
-        // FieldsGroupProps: React.PropTypes.object
+    static contextTypes: PropTypes.ValidationMap<ParentContext> = {
+        FormId: PropTypes.string,
+        FormProps: PropTypes.object,
+        FieldsGroupId: PropTypes.string,
+        // FieldsGroupProps: PropTypes.object
     };
 
     static defaultProps: FieldProps = {
@@ -135,7 +136,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         // If field is defined
         if (this.state != null && this.state.Field != null) {
             // Return its value
-            return (this.state.Field as FieldState).Value;
+            return (this.state.Field as FieldStateRecord).Value;
         }
 
         // Return default value
@@ -201,9 +202,13 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
 
         if (isStateDifferent && newFieldState != null) {
             this.setState((state: TState) => {
+                if (state == null) {
+                    state = {} as any;
+                }
                 state.Form = newFormState;
                 state.Field = newFieldState;
                 state.Value = this.ProcessValueFromStore(newFieldState.Value);
+                return state;
             });
         }
     }
@@ -272,10 +277,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             throw new Error(`simplr-forms-core: Duplicate field id '${this.FieldId}'`);
         }
 
-        const initialValue = this.RawInitialValue;
+        const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
         this.FormStore.RegisterField(
             this.FieldId,
             initialValue,
+            this.DefaultValue,
             this.props,
             this.FieldsGroupId
         );

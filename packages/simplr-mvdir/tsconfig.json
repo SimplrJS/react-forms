@@ -5,15 +5,12 @@
         "removeComments": false,
         "outDir": "dist",
         "rootDir": "src",
-        "jsx": "react",
         "sourceMap": false,
         "skipDefaultLibCheck": true,
         "declaration": true,
         "pretty": true,
         "strict": true,
         "lib": [
-            "dom",
-            "dom.iterable",
             "es6"
         ]
     },

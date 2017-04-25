@@ -1,11 +1,11 @@
 {
   "name": "simplr-forms-dom",
-  "version": "0.0.0-dev",
+  "version": "4.0.0-pre-alpha.13",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "dist/simplr-forms-dom.js",
-  "types": "@types/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "webpack && npm run tslint",
@@ -15,16 +15,30 @@
     "release": "npm run build && npm run uglifyjs",
     "test": "jest",
     "test-watch": "jest --watchAll",
-    "test-coverage": "npm test -- --coverage"
+    "test-coverage": "npm test -- --coverage",
+    "prepublishOnly": "npm run build && node ../simplr-forms-publish/dist/cli.js --from dist --to .",
+    "postpublish": "git clean -fd"
   },
   "license": "AGPL-3.0",
+  "files": [
+    "**/*.md",
+    "*.js",
+    "*.d.ts",
+    "!*.config.js"
+  ],
   "devDependencies": {
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
+    "@types/prop-types": "^15.5.1",
     "@types/sinon": "^2.1.2",
     "enzyme": "^2.8.0",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.0",
+    "mkdirp": "^0.5.1",
+    "mv": "^2.1.1",
+    "mz": "^2.6.0",
+    "on-build-webpack": "^0.1.0",
+    "simplr-mvdir": "0.0.1-beta.6",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
     "ts-loader": "^2.0.3",
@@ -34,8 +48,11 @@
   },
   "dependencies": {
     "@types/react": "^15.0.21",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.3"
+    "simplr-forms-core": "^4.0.0-pre-alpha.11",
+    "typed-immutable-record": "0.0.6"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

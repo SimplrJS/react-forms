@@ -32,21 +32,24 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, initialValue);
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
         expect(formStore.HasField(fieldId)).toBe(true);
         expect(formStore.GetField(fieldId)).not.toBeUndefined();
-        expect(formStore.GetField(fieldId).InitialValue).toBe(initialValue);
+        expect(formStore.GetField(fieldId).Value).toBe(initialValue);
+        expect(formStore.GetField(fieldId).DefaultValue).toBe(defaultValue);
     });
 
     it("unregisters a field", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, initialValue);
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
         formStore.UnregisterField(fieldId);
         expect(formStore.GetField(fieldId)).toBeUndefined();
         expect(formStore.HasField(fieldId)).toBe(false);
@@ -56,10 +59,11 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
 
         expect(formStore.HasField(fieldId)).toBe(false);
-        formStore.RegisterField(fieldId, initialValue);
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
         expect(formStore.HasField(fieldId)).toBe(true);
     });
 
@@ -67,10 +71,11 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
 
         expect(formStore.GetField(fieldId)).toBeUndefined();
-        formStore.RegisterField(fieldId, initialValue);
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
         expect(formStore.GetField(fieldId)).not.toBeUndefined();
     });
 
@@ -78,10 +83,11 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const nextValue = "NEXT-VALUE";
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, initialValue);
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
         expect(formStore.GetField(fieldId).Value).toBe(initialValue);
         formStore.ValueChanged(fieldId, nextValue);
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
@@ -91,10 +97,11 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, initialValue);
-        const validationPromise = new Promise<void>((resolve, reject) => {
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
+        const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 resolve();
             }, 50);
@@ -120,11 +127,12 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
         const formError: FormError = { Message: "Error Message" };
 
-        formStore.RegisterField(fieldId, initialValue);
-        const validationPromise = new Promise<void>((resolve, reject) => {
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
+        const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
             }, 50);
@@ -161,11 +169,12 @@ describe("Form store", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
         const initialValue = "INITIAL-VALUE";
+        const defaultValue = "DEFAULT-VALUE";
         const formStore = new FormStore(formId);
         const formError = "field error";
 
-        formStore.RegisterField(fieldId, initialValue);
-        const validationPromise = new Promise<void>((resolve, reject) => {
+        formStore.RegisterField(fieldId, initialValue, defaultValue);
+        const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
             }, 50);
@@ -203,14 +212,16 @@ describe("Form store", () => {
     it("registers field with props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
+        const defaultValue = "DEFAULT-VALUE";
         const fieldProps: MyFieldProps = {
             name: "fieldName",
             value: "initial-value",
+            defaultValue: defaultValue,
             randomKey: "random value"
         };
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps.defaultValue, fieldProps);
 
         const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
 
@@ -221,9 +232,11 @@ describe("Form store", () => {
     it("updates field props", () => {
         const formId = "FORM-ID";
         const fieldId = "FIELD-ID";
+        const defaultValue = "DEFAULT-VALUE";
         const fieldProps: MyFieldProps = {
             name: "field-name",
             value: "initialValue",
+            defaultValue: defaultValue,
             randomKey: "random value"
         };
 
@@ -235,7 +248,7 @@ describe("Form store", () => {
         const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
         const formStore = new FormStore(formId);
 
-        formStore.RegisterField(fieldId, fieldProps.value, fieldProps);
+        formStore.RegisterField(fieldId, fieldProps.value, fieldProps.defaultValue, fieldProps);
         formStore.UpdateProps(fieldId, fieldPropsNext);
 
         // Deep-check the updated props

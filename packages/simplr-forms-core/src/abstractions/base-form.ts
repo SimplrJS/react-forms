@@ -1,13 +1,17 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import * as FormContracts from "../contracts/form";
+import { FormStore } from "../stores/form-store";
+import { FormError } from "../contracts/error";
+import { ConstructFormError } from "../utils/form-error-helpers";
 import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
 
 export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> extends React.Component<TProps, TState> {
     protected FormId: string;
 
     static childContextTypes = {
-        FormId: React.PropTypes.string.isRequired
+        FormId: PropTypes.string.isRequired
     };
 
     getChildContext(): FormContracts.FormChildContext {
@@ -27,6 +31,33 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
 
     protected get FormStoresHandler(): FormStoresHandler {
         return FSHContainer.FormStoresHandler;
+    }
+
+    protected get FormStore(): FormStore {
+        return this.FormStoresHandler.GetStore(this.FormId);
+    }
+
+    protected ShouldFormSubmit() {
+        if (this.props.forceSubmit === true) {
+            return true;
+        }
+        return this.FormStore.GetState().Form.Error == null;
+    }
+
+    protected async Submit(result: Promise<void> | FormError | any): Promise<void> {
+        let promise: Promise<void>;
+        if (this.isPromise<void>(result)) {
+            promise = result;
+        } else {
+            promise = new Promise<void>((resolve, reject) => {
+                const error = ConstructFormError(result);
+                if (error !== undefined) {
+                    reject(result);
+                    return;
+                }
+                resolve(result);
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -64,5 +95,9 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
                 this.FormId = this.FormStoresHandler.RegisterForm(props.formId, props.formStore);
             }
         }
+    }
+
+    private isPromise<T>(value: any): value is Promise<T> {
+        return value != null && value.then != null && value.catch != null;
     }
 }
