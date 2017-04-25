@@ -212,10 +212,6 @@ export class FormStore extends ActionEmitter {
         this.State.Form.SubmitCallback();
     }
 
-    // public Submit(submitPromise: Promise<>) {
-
-    // }
-
     /**
      * ========================
      *  Local helper methods
