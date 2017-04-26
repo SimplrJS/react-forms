@@ -12,3 +12,8 @@ export interface FormStoreState {
 }
 
 export interface FormStoreStateRecord extends TypedRecord<FormStoreStateRecord>, FormStoreState { }
+
+export interface BuiltFormObject {
+    Fields: Immutable.Map<string, FieldStateRecord>;
+    Object: any;
+}

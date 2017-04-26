@@ -2,7 +2,7 @@ import * as React from "react";
 import { FieldProps, FieldValue } from "simplr-forms-core/contracts";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
-import { OnChangeCallback } from "../contracts/field";
+import { FieldOnChangeCallback } from "../contracts/field";
 
 /**
  * Override the differences between extended interfaces.
@@ -16,7 +16,7 @@ export interface TextProps extends FieldProps, React.HTMLProps<HTMLInputElement>
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: OnChangeCallback<HTMLInputElement>;
+    onChange?: FieldOnChangeCallback<HTMLInputElement>;
     ref?: any;
 }
 
