@@ -325,7 +325,7 @@ describe("Form store", () => {
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
-        const resetedFieldId = fieldsIds[0];
+        const resetFieldId = fieldsIds[0];
         const initialValue = "initial value";
         const nextValue = "next value";
         const fieldProps: MyFieldProps = {
@@ -339,11 +339,11 @@ describe("Form store", () => {
             formStore.RegisterField(fieldId, fieldProps.value, fieldProps.defaultValue, fieldProps);
             formStore.ValueChanged(fieldId, nextValue);
         }
-        formStore.ResetFields([resetedFieldId]);
+        formStore.ResetFields([resetFieldId]);
 
         for (const fieldId of fieldsIds) {
             const fieldState = formStore.GetField(fieldId);
-            if (fieldId === resetedFieldId) {
+            if (fieldId === resetFieldId) {
                 expect(fieldState.Value).toBe(initialValue);
             } else {
                 expect(fieldState.Value).toBe(nextValue);
