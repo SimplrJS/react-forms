@@ -15,6 +15,14 @@ export interface ResetState {
 export interface ResetStateRecord extends TypedRecord<ResetStateRecord>, ResetState { }
 
 export class Reset extends BaseContainer<ResetProps, ResetStateRecord> {
+    constructor(props: ResetProps) {
+        super(props);
+
+        this.state = recordify<ResetState, ResetStateRecord>({
+            Submitting: false
+        });
+    }
+
     protected OnStoreUpdated(): void {
         const formStore = this.FormStore.GetState();
         const newState = recordify({

@@ -15,6 +15,14 @@ export interface ClearState {
 export interface ClearStateRecord extends TypedRecord<ClearStateRecord>, ClearState { }
 
 export class Clear extends BaseContainer<ClearProps, ClearStateRecord> {
+    constructor(props: ClearProps) {
+        super(props);
+
+        this.state = recordify<ClearState, ClearStateRecord>({
+            Submitting: false
+        });
+    }
+
     protected OnStoreUpdated(): void {
         const formStore = this.FormStore.GetState();
         const newState = recordify({
