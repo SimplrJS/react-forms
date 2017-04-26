@@ -1,5 +1,7 @@
 # simplr-forms
-The only forms for React you will ever need
+Declarative forms for React.
+
+Includes declarative modifiers, normalizers and validators.
 
 At the moment library is work-in-progress. We will try to document some of the notes here, in GitHub.
 Feel free to comment on [PRs](https://github.com/SimplrJS/simplr-forms/pulls?utf8=%E2%9C%93&q=is%3Apr%20) and open [issues](https://github.com/SimplrJS/simplr-forms/issues).
