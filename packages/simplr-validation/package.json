@@ -1,0 +1,67 @@
+{
+  "name": "simplr-validation",
+  "version": "4.0.0-pre-alpha.8",
+  "description": "Validation library for simplr-forms.",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "main": "dist/simplr-validation.js",
+  "types": "@types/index.d.ts",
+  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
+  "scripts": {
+    "test": "jest",
+    "test-watch": "jest --watchAll",
+    "test-coverage": "npm test -- --coverage",
+    "build": "webpack && npm run tslint",
+    "watch": "webpack -w",
+    "release": "npm run build && npm run uglifyjs",
+    "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle"
+  },
+  "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js",
+    "!*.config.js"
+  ],
+  "devDependencies": {
+    "@types/enzyme": "^2.7.7",
+    "@types/jest": "^19.2.2",
+    "@types/sinon": "^2.1.2",
+    "enzyme": "^2.8.2",
+    "jest": "^19.0.2",
+    "jest-enzyme": "^3.0.1",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "sinon": "^2.1.0",
+    "ts-jest": "^19.0.8",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.0.0",
+    "typescript": "2.3.0",
+    "uglifyjs": "^2.4.10",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "@types/react": "^15.0.21",
+    "@types/react-dom": "^0.14.23",
+    "@types/validator": "^6.2.0",
+    "action-emitter": "^0.2.1",
+    "immutable": "^3.8.1",
+    "react": "^15.5.4",
+    "simplr-forms-core": "4.0.0-pre-alpha.18",
+    "validator": "^7.0.0"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}

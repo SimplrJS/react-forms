@@ -1,0 +1,82 @@
+{
+  "name": "simplr-forms-core",
+  "version": "4.0.0-pre-alpha.18",
+  "description": "Shared simplr-forms logic.",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "main": "main.js",
+  "types": "index.d.ts",
+  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
+  "scripts": {
+    "build": "webpack && npm run tslint",
+    "watch": "webpack -w",
+    "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle",
+    "release": "npm run build && npm run uglifyjs",
+    "test": "jest",
+    "test-watch": "jest --watchAll",
+    "test-coverage": "npm test -- --coverage",
+    "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
+    "gulp-watch": "npm run gulp-build -- -w"
+  },
+  "license": "AGPL-3.0",
+  "files": [
+    "**/*.md",
+    "*.js",
+    "**/*.d.ts",
+    "!*.config.js",
+    "!gulpfile.js",
+    "!node_modules/**"
+  ],
+  "devDependencies": {
+    "@types/chokidar": "^1.6.0",
+    "@types/enzyme": "^2.7.9",
+    "@types/gulp": "^4.0.2",
+    "@types/jest": "^19.2.2",
+    "@types/sinon": "^2.1.2",
+    "@types/undertaker": "^0.12.28",
+    "@types/vinyl-fs": "^2.4.5",
+    "@types/webpack": "^2.2.15",
+    "enzyme": "^2.8.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "jest": "^19.0.2",
+    "jest-enzyme": "^3.0.1",
+    "on-build-webpack": "^0.1.0",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "simplr-mvdir": "0.0.1-beta.7",
+    "sinon": "^2.1.0",
+    "ts-jest": "^19.0.10",
+    "ts-loader": "^2.0.3",
+    "tslint": "^5.1.0",
+    "typescript": "2.3.0",
+    "uglify-js": "^2.8.22",
+    "webpack": "^2.4.1"
+  },
+  "dependencies": {
+    "@types/fbemitter": "^2.0.32",
+    "@types/flux": "^3.0.1",
+    "@types/prop-types": "^15.5.1",
+    "@types/react": "^15.0.22",
+    "@types/react-dom": "^15.5.0",
+    "action-emitter": "^0.2.1",
+    "fbemitter": "^2.1.1",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.8",
+    "react": "15.5.4",
+    "react-dom": "^15.5.4",
+    "typed-immutable-record": "^0.0.6"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}

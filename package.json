@@ -1,0 +1,9 @@
+{
+  "name": "simplr-forms",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "lerna": "2.0.0-rc.1",
+    "typescript": "2.3.0"
+  }
+}
