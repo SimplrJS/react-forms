@@ -26,7 +26,7 @@ export class Clear extends BaseContainer<ClearProps, ClearStateRecord> {
     protected OnStoreUpdated(): void {
         const formStore = this.FormStore.GetState();
         const newState = recordify({
-            Submitting: formStore.Form.Submitting,
+            Submitting: formStore.Form.Submitting
         });
 
         if (!newState.equals(this.state)) {
@@ -34,7 +34,7 @@ export class Clear extends BaseContainer<ClearProps, ClearStateRecord> {
         }
     }
 
-    protected get Disabled() {
+    protected get Disabled(): boolean {
         if (this.props.disabled != null) {
             return this.props.disabled;
         }
