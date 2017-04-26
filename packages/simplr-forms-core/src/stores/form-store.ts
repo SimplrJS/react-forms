@@ -12,8 +12,15 @@ import {
     FieldStatePropsRecord,
     FieldStateProps
 } from "../contracts/field";
-import { FormState, FormStateRecord } from "../contracts/form";
-import { FormStoreState, FormStoreStateRecord } from "../contracts/form-store";
+import {
+    FormState,
+    FormStateRecord
+} from "../contracts/form";
+import {
+    FormStoreState,
+    FormStoreStateRecord,
+    BuiltFormObject
+} from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError } from "../contracts/error";
@@ -26,6 +33,7 @@ export class FormStore extends ActionEmitter {
     }
 
     protected FormId: string;
+    protected BuiltFormObject: BuiltFormObject;
 
     private state: FormStoreStateRecord;
     protected get State(): FormStoreStateRecord {
@@ -33,7 +41,6 @@ export class FormStore extends ActionEmitter {
     }
     protected set State(newState: FormStoreStateRecord) {
         this.state = newState;
-
         this.emit(new Actions.StateUpdated());
     }
 
@@ -255,6 +262,17 @@ export class FormStore extends ActionEmitter {
         }
     }
 
+    public ToObject<TObject = any>(): TObject {
+        if (this.BuiltFormObject == null ||
+            this.BuiltFormObject.Fields !== this.State.Fields) {
+            this.BuiltFormObject = {
+                Fields: this.State.Fields,
+                Object: this.BuildFormObject(this.State)
+            };
+        }
+        return this.BuiltFormObject.Object;
+    }
+
     /**
      * ========================
      *  Local helper methods
@@ -292,6 +310,21 @@ export class FormStore extends ActionEmitter {
             FieldsGroup: undefined,
             Props: undefined
         };
+    }
+
+    protected BuildFormObject(state: FormStoreStateRecord) {
+        const formStoreObject: { [id: string]: any } = {};
+
+        this.State.Fields.forEach((field, fieldId) => {
+            if (fieldId == null || field == null) {
+                return;
+            }
+            formStoreObject[fieldId] = field.Value;
+        });
+
+        // TODO: FieldsGroups values
+
+        return formStoreObject;
     }
 
     protected IsPromise<T>(value: any): value is Promise<T> {
