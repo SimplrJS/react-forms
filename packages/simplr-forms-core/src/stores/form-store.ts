@@ -81,6 +81,7 @@ export class FormStore extends ActionEmitter {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.DefaultValue = defaultValue;
+        fieldState.InitialValue = initialValue;
         fieldState.Value = initialValue;
 
         if (props != null) {
@@ -262,6 +263,54 @@ export class FormStore extends ActionEmitter {
         }
     }
 
+    /**
+     * Set fields to default values.
+     */
+    public ClearFields(fieldsIds?: string[]) {
+        this.State = this.State.withMutations(state => {
+            if (fieldsIds == null) {
+                fieldsIds = state.Fields.keySeq().toArray();
+            }
+
+            fieldsIds.forEach(fieldId => {
+                const fieldState = state.Fields.get(fieldId);
+
+                if (fieldState != null) {
+                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                        Error: undefined,
+                        Value: fieldState.DefaultValue,
+                        Pristine: (fieldState.InitialValue === fieldState.DefaultValue),
+                        Touched: false
+                    } as FieldState));
+                }
+            });
+        });
+    }
+
+    /**
+     * Set fields to initial values.
+     */
+    public ResetFields(fieldsIds?: string[]) {
+        this.State = this.State.withMutations(state => {
+            if (fieldsIds == null) {
+                fieldsIds = state.Fields.keySeq().toArray();
+            }
+
+            fieldsIds.forEach(fieldId => {
+                const fieldState = state.Fields.get(fieldId);
+
+                if (fieldState != null) {
+                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                        Error: undefined,
+                        Value: fieldState.InitialValue,
+                        Pristine: true,
+                        Touched: false
+                    } as FieldState));
+                }
+            });
+        });
+    }
+
     public ToObject<TObject = any>(): TObject {
         if (this.BuiltFormObject == null ||
             this.BuiltFormObject.Fields !== this.State.Fields) {
@@ -302,6 +351,7 @@ export class FormStore extends ActionEmitter {
     protected GetInitialFieldState(): FieldState {
         return {
             DefaultValue: undefined,
+            InitialValue: undefined,
             Value: undefined,
             Touched: false,
             Pristine: true,
