@@ -10,7 +10,10 @@ const packageJson = require("./package.json");
 
 const compiler = webpack(webpackConfig);
 const paths = {
-    src: "./src",
+    src: [
+        "./src",
+        "./tsconfig.json"
+    ],
     dist: "./dist",
     root: "."
 };
@@ -36,7 +39,6 @@ export async function moveFromDistTask() {
 export async function copyToJspm() {
     const jspmPath = `../simplr-forms-test/dist/jspm_packages/npm/simplr-forms-dom@${packageJson.version}`;
     const outputPath = path.resolve(jspmPath);
-    console.log(outputPath);
     gulp.src(packageJson.files)
         .pipe(gulp.dest(outputPath));
 }

@@ -10,7 +10,10 @@ const packageJson = require("./package.json");
 
 const compiler = webpack(webpackConfig);
 const paths = {
-    src: "./src",
+    src: [
+        "./src",
+        "./tsconfig.json"
+    ],
     dist: "./dist",
     root: "."
 };
