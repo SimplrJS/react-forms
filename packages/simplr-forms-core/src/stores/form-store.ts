@@ -8,7 +8,6 @@ import {
     FieldValue,
     FieldStateRecord,
     FormErrorRecord,
-    FieldProps,
     FieldStatePropsRecord,
     FieldStateProps
 } from "../contracts/field";
@@ -63,7 +62,7 @@ export class FormStore extends ActionEmitter {
      *
      * @memberOf FormStore
      */
-    public GetFieldId(fieldName: string, fieldsGroupId?: string) {
+    public GetFieldId(fieldName: string, fieldsGroupId?: string): string {
         if (fieldsGroupId != null) {
             return `${fieldsGroupId}___${fieldName}`;
         }
@@ -77,7 +76,7 @@ export class FormStore extends ActionEmitter {
         defaultValue: FieldValue,
         props?: FieldStateProps,
         fieldsGroupId?: string
-    ) {
+    ): void {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
         fieldState.DefaultValue = defaultValue;
@@ -102,7 +101,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldRegistered(fieldId, initialValue));
     }
 
-    public UnregisterField(fieldId: string) {
+    public UnregisterField(fieldId: string): void {
         // Remove field from form store state
         this.State = this.State.withMutations(state => {
             state.Fields = state.Fields.remove(fieldId);
@@ -117,7 +116,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
-    public SetSubmitCallback(submitCallback: () => void) {
+    public SetSubmitCallback(submitCallback: () => void): void {
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.merge({
                 SubmitCallback: submitCallback
@@ -125,7 +124,7 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public UpdateProps(fieldId: string, props: FieldStateProps) {
+    public UpdateProps(fieldId: string, props: FieldStateProps): void {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
@@ -143,7 +142,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.PropsChanged(fieldId));
     }
 
-    public ValueChanged(fieldId: string, newValue: FieldValue) {
+    public ValueChanged(fieldId: string, newValue: FieldValue): void {
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -154,7 +153,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
-    public async Validate(fieldId: string, validationPromise: Promise<never>) {
+    public async Validate(fieldId: string, validationPromise: Promise<never>): Promise<void> {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
@@ -213,14 +212,14 @@ export class FormStore extends ActionEmitter {
         }
     }
 
-    public InitiateSubmit() {
+    public InitiateSubmit(): void {
         if (this.State.Form.SubmitCallback == null) {
             throw new Error("simplr-forms-core: Submit method is called before SubmitCallback is set.");
         }
         this.State.Form.SubmitCallback();
     }
 
-    public async Submit(result: Promise<void> | FormError | any) {
+    public async Submit(result: Promise<void> | FormError | any): Promise<void> {
         let promise: Promise<void>;
         if (this.IsPromise<void>(result)) {
             promise = result;
@@ -266,7 +265,7 @@ export class FormStore extends ActionEmitter {
     /**
      * Set fields to default values.
      */
-    public ClearFields(fieldsIds?: string[]) {
+    public ClearFields(fieldsIds?: string[]): void {
         this.State = this.State.withMutations(state => {
             if (fieldsIds == null) {
                 fieldsIds = state.Fields.keySeq().toArray();
@@ -290,7 +289,7 @@ export class FormStore extends ActionEmitter {
     /**
      * Set fields to initial values.
      */
-    public ResetFields(fieldsIds?: string[]) {
+    public ResetFields(fieldsIds?: string[]): void {
         this.State = this.State.withMutations(state => {
             if (fieldsIds == null) {
                 fieldsIds = state.Fields.keySeq().toArray();
