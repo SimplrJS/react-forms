@@ -47,6 +47,8 @@
     "mv": "^2.1.1",
     "mz": "^2.6.0",
     "on-build-webpack": "^0.1.0",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "simplr-mvdir": "0.0.1-beta.6",
     "sinon": "^2.1.0",
     "ts-jest": "^19.0.8",
