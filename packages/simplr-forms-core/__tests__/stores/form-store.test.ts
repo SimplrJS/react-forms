@@ -270,7 +270,7 @@ describe("Form store", () => {
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
-        const clearedFieldId = fieldsIds[0];
+        const fieldToClearId = fieldsIds[0];
         const defaultValue = "default value";
         const fieldProps: MyFieldProps = {
             name: "field-name",
@@ -282,11 +282,11 @@ describe("Form store", () => {
         for (const fieldId of fieldsIds) {
             formStore.RegisterField(fieldId, fieldProps.value, fieldProps.defaultValue, fieldProps);
         }
-        formStore.ClearFields([clearedFieldId]);
+        formStore.ClearFields([fieldToClearId]);
 
         for (const fieldId of fieldsIds) {
             const fieldState = formStore.GetField(fieldId);
-            if (fieldId === clearedFieldId) {
+            if (fieldId === fieldToClearId) {
                 expect(fieldState.Value).toBe(defaultValue);
             } else {
                 expect(fieldState.Value).not.toBe(defaultValue);
@@ -325,7 +325,7 @@ describe("Form store", () => {
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
-        const resetFieldId = fieldsIds[0];
+        const fieldToResetId = fieldsIds[0];
         const initialValue = "initial value";
         const nextValue = "next value";
         const fieldProps: MyFieldProps = {
@@ -339,11 +339,11 @@ describe("Form store", () => {
             formStore.RegisterField(fieldId, fieldProps.value, fieldProps.defaultValue, fieldProps);
             formStore.ValueChanged(fieldId, nextValue);
         }
-        formStore.ResetFields([resetFieldId]);
+        formStore.ResetFields([fieldToResetId]);
 
         for (const fieldId of fieldsIds) {
             const fieldState = formStore.GetField(fieldId);
-            if (fieldId === resetFieldId) {
+            if (fieldId === fieldToResetId) {
                 expect(fieldState.Value).toBe(initialValue);
             } else {
                 expect(fieldState.Value).toBe(nextValue);
