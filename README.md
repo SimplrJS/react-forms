@@ -18,6 +18,9 @@ Development right now is being done by [SimplrJS](https://github.com/SimplrJS) t
 
 ### Notes
 
-* [2017-04-08 Initial notes](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-08.md)
-* [2017-04-14 Progress update](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-14.md)
-* [2017-04-26 Progress update](https://github.com/SimplrJS/simplr-forms/blob/master/docs/2017-04/2017-04-26.md)
+Notes can be found in this repo and in Medium:
+
+* [Part 1: Why are we doing this?](https://medium.com/@DovydasNavickas/part-1-simplr-forms-declarative-forms-for-react-why-are-we-doing-this-293b9a9c45bd)
+* [Part 2: Core, validation, testing.](https://medium.com/@DovydasNavickas/part-2-simplr-forms-declarative-forms-for-react-core-validation-testing-fd9494304305)
+* [Part 3: First e2e flow, FormStore.ToObject()](https://medium.com/@DovydasNavickas/part-3-simplr-forms-declarative-forms-for-react-first-e2e-flow-formstore-toobject-ed81d930e14c)
+* [Part 4: Normalizers and Modifiers](https://medium.com/@DovydasNavickas/part-4-simplr-forms-declarative-forms-for-react-normalizers-and-modifiers-6cefbd0269c4)
