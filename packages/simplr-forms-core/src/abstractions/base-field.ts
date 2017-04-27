@@ -238,15 +238,15 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     abstract render(): JSX.Element | null;
 
     /**
-     * Initial value before render.
-     * Most common usage is for getting initial value from field props.
+     * Value before render.
+     * Most common usage is for getting value from field props.
      *
      * @readonly
      * @protected
      * @type {(FieldContracts.ValueTypes | any)}
      * @memberOf BaseField
      */
-    protected abstract get RawInitialValue(): FieldValue;
+    protected abstract get RawValue(): FieldValue;
 
 
     /**
@@ -258,6 +258,11 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
      * @memberOf BaseField
      */
     protected abstract get DefaultValue(): FieldValue;
+
+    /**
+     * Initial value.
+     */
+    protected abstract get RawInitialValue(): FieldValue;
 
     /**
      * ========================
@@ -278,10 +283,12 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
+        const value = this.ProcessValueBeforeStore(this.RawValue);
         this.FormStore.RegisterField(
             this.FieldId,
-            initialValue,
             this.DefaultValue,
+            initialValue,
+            value,
             this.props,
             this.FieldsGroupId
         );
