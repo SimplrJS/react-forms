@@ -248,7 +248,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
      */
     protected abstract get RawValue(): FieldValue;
 
-
     /**
      * Default field value.
      *

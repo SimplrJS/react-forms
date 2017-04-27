@@ -4,8 +4,9 @@ import { BaseField, BaseFieldState } from "../../src/abstractions/base-field";
 import { FieldProps, FieldValue } from "../../src/contracts/field";
 
 export interface MyFieldProps extends FieldProps {
-    value?: string;
     defaultValue?: string;
+    initialValue?: string;
+    value?: string;
     randomKey?: string;
 }
 
@@ -25,7 +26,14 @@ export class MyTestField extends BaseField<MyFieldProps, MyFieldState> {
         return "";
     }
 
+    protected get RawValue(): FieldValue {
+        return "";
+    }
+
     protected get DefaultValue(): FieldValue {
+        if (this.props.defaultValue != null) {
+            return this.props.defaultValue;
+        }
         return "";
     }
 }
