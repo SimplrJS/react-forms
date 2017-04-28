@@ -3,8 +3,6 @@ import * as PropTypes from "prop-types";
 
 import * as FormContracts from "../contracts/form";
 import { FormStore } from "../stores/form-store";
-import { FormError } from "../contracts/error";
-import { ConstructFormError } from "../utils/form-error-helpers";
 import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
 
 export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> extends React.Component<TProps, TState> {

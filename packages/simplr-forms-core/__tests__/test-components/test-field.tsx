@@ -30,7 +30,7 @@ export class MyTestField extends BaseField<MyFieldProps, MyFieldState> {
         return "";
     }
 
-    protected get DefaultValue(): FieldValue {
+    protected get RawDefaultValue(): FieldValue {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
