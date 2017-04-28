@@ -1,4 +1,3 @@
-import * as React from "react";
 import { BaseField, BaseFieldState } from "simplr-forms-core";
 import { FieldProps } from "simplr-forms-core/contracts";
 
@@ -11,6 +10,7 @@ export abstract class BaseDomField<TProps extends FieldProps, TState extends Bas
     public abstract renderField(): JSX.Element | null;
 
     public render() {
+        // TODO: FieldTemplate
         return this.renderField();
     }
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldValue, FormError } from "simplr-forms-core/contracts";
+import { FormError } from "simplr-forms-core/contracts";
 import { FormProps as CoreFormProps } from "simplr-forms-core/contracts";
 import { FormStore } from "simplr-forms-core/stores";
 import { FieldOnChangeCallback } from "../contracts/field";
