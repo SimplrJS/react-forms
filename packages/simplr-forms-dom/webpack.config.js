@@ -43,11 +43,8 @@ var externalsResolver = [
 ];
 module.exports = {
     entry: {
-        main: "./src/index.ts",
-        abstractions: "./src/abstractions/index.ts",
-        stores: "./src/stores/index.ts",
-        actions: "./src/actions/index.ts",
-        utils: "./src/utils/index.ts"
+        index: "./src/index.ts",
+        abstractions: "./src/abstractions/index.ts"
     },
     output: {
         filename: "./dist/[name].js",
