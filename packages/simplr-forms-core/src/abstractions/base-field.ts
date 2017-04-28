@@ -140,7 +140,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         // Return default value
-        return this.DefaultValue;
+        return this.RawDefaultValue;
     }
 
     protected ProcessValueBeforeStore(value: FieldValue) {
@@ -238,6 +238,21 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     abstract render(): JSX.Element | null;
 
     /**
+     * Default field value.
+     *
+     * @readonly
+     * @protected
+     *
+     * @memberOf BaseField
+     */
+    protected abstract get RawDefaultValue(): FieldValue;
+
+    /**
+     * Initial value.
+     */
+    protected abstract get RawInitialValue(): FieldValue;
+
+    /**
      * Value before render.
      * Most common usage is for getting value from field props.
      *
@@ -247,21 +262,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
      * @memberOf BaseField
      */
     protected abstract get RawValue(): FieldValue;
-
-    /**
-     * Default field value.
-     *
-     * @readonly
-     * @protected
-     *
-     * @memberOf BaseField
-     */
-    protected abstract get DefaultValue(): FieldValue;
-
-    /**
-     * Initial value.
-     */
-    protected abstract get RawInitialValue(): FieldValue;
 
     /**
      * ========================
@@ -281,11 +281,12 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             throw new Error(`simplr-forms-core: Duplicate field id '${this.FieldId}'`);
         }
 
+        const defaultValue = this.RawDefaultValue;
         const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
         const value = this.ProcessValueBeforeStore(this.RawValue);
         this.FormStore.RegisterField(
             this.FieldId,
-            this.DefaultValue,
+            defaultValue,
             initialValue,
             value,
             this.props,
