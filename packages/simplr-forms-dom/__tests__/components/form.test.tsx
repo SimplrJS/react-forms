@@ -1,6 +1,6 @@
 import * as React from "react";
 import { mount } from "enzyme";
-import * as sinon from "sinon";
+import * as Sinon from "sinon";
 
 import { FormStore, FSHContainer, FormStoresHandler } from "simplr-forms-core/stores";
 
@@ -14,7 +14,7 @@ describe("Form", () => {
     });
 
     it("calls submit callback when submit button is clicked", () => {
-        const submitCallback = sinon.stub();
+        const submitCallback = Sinon.stub();
 
         const wrapper = mount(<Form onSubmit={submitCallback}>
             <button type="submit">Submit</button>
@@ -27,7 +27,7 @@ describe("Form", () => {
 
     it("calls submit callback when submit called from FormStore", () => {
         const formId = "form-id";
-        const submitCallback = sinon.stub();
+        const submitCallback = Sinon.stub();
 
         const wrapper = mount(<Form formId={formId} onSubmit={submitCallback}></Form>);
 
