@@ -16,7 +16,7 @@ export function ParseValue(components: Array<JSX.Element>, value: FieldValue) {
 }
 
 export function NormalizeValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Normalizer, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
+    return ProcessValue<Normalizer, FieldValue>(components, value, NORMALIZER_FUNCTION_NAME,
         (processor, value) => processor.Normalize(value));
 }
 
@@ -52,4 +52,28 @@ export function RenderComponents<TComponent>(components: Array<JSX.Element>): Ar
 
     ReactDOM.unmountComponentAtNode(virtualDiv);
     return renderedComponents;
+}
+
+/**
+ * Normalizers and modifiers helpers
+ */
+
+export type ValueTypeConfirmation = (valueToCheck: FieldValue) => boolean;
+
+export function ValueOfType<TRequiredType>(
+    value: FieldValue,
+    normalizerName: string,
+    requiredTypeOf: string,
+    valueTypeConfirmation?: ValueTypeConfirmation): value is TRequiredType {
+    if (valueTypeConfirmation == null) {
+        valueTypeConfirmation = (v) => typeof v !== requiredTypeOf;
+    }
+    if (valueTypeConfirmation(value)) {
+        let message = `${normalizerName} can only accept ${requiredTypeOf}, but received ${typeof value}. `;
+        message += `Either use it with ${requiredTypeOf} value field or use modifier to do required type conversions. `;
+        // TODO: Link to docs
+        message += `More info: {link to docs}`;
+        throw new Error(message);
+    }
+    return true;
 }
