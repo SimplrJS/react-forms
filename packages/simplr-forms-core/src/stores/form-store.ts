@@ -73,16 +73,40 @@ export class FormStore extends ActionEmitter {
     public RegisterField(
         fieldId: string,
         defaultValue: FieldValue,
-        initialValue: FieldValue,
-        value: FieldValue,
+        initialValue?: FieldValue,
+        value?: FieldValue,
         props?: FieldStateProps,
         fieldsGroupId?: string
     ): void {
         // Construct field state
         let fieldState = this.GetInitialFieldState();
+
+        // Set default value without fallbacks
         fieldState.DefaultValue = defaultValue;
-        fieldState.InitialValue = (initialValue != null) ? initialValue : value;
-        fieldState.Value = value;
+
+        // (initialValue)(value)
+        // 0 => null
+        // 1 => not null
+
+        // If neither initialValue, nor value is given
+        // Fallback to defaultValue
+        if (initialValue == null && value == null) {
+            // 0 0
+            fieldState.InitialValue = defaultValue;
+            fieldState.Value = defaultValue;
+        } else if (initialValue != null && value == null) {
+            // 1 0
+            fieldState.InitialValue = initialValue;
+            fieldState.Value = initialValue;
+        } else if (initialValue == null && value != null) {
+            // 0 1
+            fieldState.InitialValue = value;
+            fieldState.Value = value;
+        } else {
+            // 0 0
+            fieldState.InitialValue = initialValue;
+            fieldState.Value = value;
+        }
 
         if (props != null) {
             fieldState.Props = recordify<FieldStateProps, FieldStatePropsRecord>(props);
