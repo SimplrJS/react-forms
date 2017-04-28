@@ -12,7 +12,7 @@ Initial development is happening in the [dev](https://github.com/SimplrJS/simplr
 
 Development right now is being done by [SimplrJS](https://github.com/SimplrJS) team inside [QuatroDev](http://quatrodev.com):
 * [Dovydas](https://twitter.com/dovydasnav) (QuatroDev) [[GH](https://github.com/DovydasNavickas)]
-* [Martynas](https://twitter.com/MartiogalaLT) (QuatroDev) [[GH](https://github.com/MartynasZilinskas)]
+* [Martynas](https://twitter.com/MartinZilinskas) (QuatroDev) [[GH](https://github.com/MartynasZilinskas)]
 * [Giedrius](https://twitter.com/Giedrucis) (QuatroDev) [[GH](https://github.com/GiedriusGrabauskas)]
 * Deividas (QuatroDev) [[GH](https://github.com/DeividasBakanas)]
 
