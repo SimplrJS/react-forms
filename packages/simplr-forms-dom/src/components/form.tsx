@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BaseForm } from "simplr-forms-core";
 
-import { FormProps, FormOnSubmitCallback } from "../contracts/form";
+import { FormProps } from "../contracts/form";
 
 export class Form extends BaseForm<FormProps, {}> {
     public Element: HTMLFormElement;

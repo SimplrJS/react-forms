@@ -18,6 +18,9 @@ export interface TextProps extends FieldProps, React.HTMLProps<HTMLInputElement>
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onChange?: FieldOnChangeCallback<HTMLInputElement>;
     ref?: any;
+
+    defaultValue?: FieldValue;
+    value?: FieldValue;
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
@@ -37,16 +40,8 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         // TODO: FormProps.OnFieldChange
     }
 
-
-    protected get RawInitialValue(): FieldValue {
-        if (this.props != null && this.props.value != null) {
-            return this.props.value;
-        }
-        return this.DefaultValue;
-    }
-
-    protected get DefaultValue(): FieldValue {
-        if (this.props != null && this.props.defaultValue != null) {
+    protected get RawDefaultValue() {
+        if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
         return "";

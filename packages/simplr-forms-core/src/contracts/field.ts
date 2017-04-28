@@ -8,7 +8,7 @@ export type FieldFormatValueCallback = (value: FieldValue) => FieldValue;
 export type FieldParseValueCallback = (value: FieldValue) => FieldValue;
 export type FieldNormalizeValueCallback = (value: FieldValue) => FieldValue;
 
-export interface FieldProps {
+export interface CoreFieldProps {
     name: string;
     destroyOnUnmount?: boolean;
     formatValue?: FieldFormatValueCallback;
@@ -17,6 +17,12 @@ export interface FieldProps {
     validationType?: FieldValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
+}
+
+export interface FieldProps extends CoreFieldProps {
+    defaultValue?: FieldValue;
+    initialValue?: FieldValue;
+    value?: FieldValue;
 }
 
 export interface FieldState {
@@ -33,7 +39,7 @@ export interface FieldState {
     Props?: FieldStatePropsRecord;
 }
 
-export type FieldStateProps = FieldProps & React.Props<any>;
+export type FieldStateProps = CoreFieldProps & React.Props<any>;
 
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
 export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }

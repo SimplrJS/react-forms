@@ -2,11 +2,9 @@ import * as React from "react";
 import { mount } from "enzyme";
 import * as Sinon from "sinon";
 
-import { FormStore, FSHContainer, FormStoresHandler } from "simplr-forms-core/stores";
+import { FSHContainer, FormStoresHandler } from "simplr-forms-core/stores";
 
 import { Form } from "../../src/components/form";
-import { Text } from "../../src/components/text";
-import { FormOnSubmitCallback } from "../../src/contracts/form";
 
 describe("Form", () => {
     beforeEach(() => {
@@ -29,7 +27,7 @@ describe("Form", () => {
         const formId = "form-id";
         const submitCallback = Sinon.stub();
 
-        const wrapper = mount(<Form formId={formId} onSubmit={submitCallback}></Form>);
+        mount(<Form formId={formId} onSubmit={submitCallback}></Form>);
 
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
         formStore.InitiateSubmit();
