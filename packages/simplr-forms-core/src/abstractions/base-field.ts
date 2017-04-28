@@ -134,9 +134,9 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
      */
     protected get Value(): FieldValue {
         // If field is defined
-        if (this.state != null && this.state.Field != null) {
+        if (this.state != null && this.state.Value != null) {
             // Return its value
-            return (this.state.Field as FieldStateRecord).Value;
+            return this.state.Value;
         }
 
         // Return default value
@@ -157,7 +157,6 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
             const parser = this.props.parseValue as FieldParseValueCallback;
             return parser(value);
         }
-
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
             value
@@ -166,7 +165,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
 
     protected FormatValue(value: FieldValue): FieldValue {
         if (this.props.formatValue != null) {
-            const formatter = this.props.parseValue as FieldFormatValueCallback;
+            const formatter = this.props.formatValue as FieldFormatValueCallback;
             return formatter(value);
         }
 
@@ -177,8 +176,8 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     }
 
     protected NormalizeValue(value: FieldValue): FieldValue {
-        if (this.props.formatValue != null) {
-            const normalizer = this.props.parseValue as FieldNormalizeValueCallback;
+        if (this.props.normalizeValue != null) {
+            const normalizer = this.props.normalizeValue as FieldNormalizeValueCallback;
             return normalizer(value);
         }
 

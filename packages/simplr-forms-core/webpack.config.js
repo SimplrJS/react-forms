@@ -43,8 +43,10 @@ var externalsResolver = [
 ];
 module.exports = {
     entry: {
-        main: "./src/index.ts",
+        index: "./src/index.ts",
         abstractions: "./src/abstractions/index.ts",
+        modifiers: "./src/modifiers/index.ts",
+        normalizers: "./src/normalizers/index.ts",
         stores: "./src/stores/index.ts",
         actions: "./src/actions/index.ts",
         utils: "./src/utils/index.ts"
