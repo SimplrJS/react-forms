@@ -179,9 +179,29 @@ export class FormStore extends ActionEmitter {
     public UpdateFieldValue(fieldId: string, newValue: FieldValue): void {
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
+            const fieldPristine = (newValue === fieldState.InitialValue);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                Value: newValue
+                Value: newValue,
+                Pristine: fieldPristine
             } as FieldState));
+
+            if (!fieldPristine) {
+                state.Form = state.Form.merge({
+                    Pristine: false
+                } as FormState);
+            } else {
+                let allFieldsPristine = true;
+                state.Fields.forEach(field => {
+                    if (field != null && !field.Pristine) {
+                        allFieldsPristine = false;
+                        return false;
+                    }
+                });
+
+                state.Form = state.Form.merge({
+                    Pristine: allFieldsPristine
+                });
+            }
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
