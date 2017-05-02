@@ -13,7 +13,9 @@ import {
 } from "../contracts/field";
 import {
     FormState,
-    FormStateRecord
+    FormStateRecord,
+    FormProps,
+    FormPropsRecord
 } from "../contracts/form";
 import {
     FormStoreState,
@@ -40,7 +42,7 @@ export class FormStore extends ActionEmitter {
     }
     protected set State(newState: FormStoreStateRecord) {
         this.state = newState;
-        this.emit(new Actions.StateUpdated());
+        this.emit(new Actions.StateChanged());
     }
 
     public GetState(): FormStoreStateRecord {
@@ -141,7 +143,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
-    public SetSubmitCallback(submitCallback: () => void): void {
+    public SetFormSubmitCallback(submitCallback: () => void): void {
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.merge({
                 SubmitCallback: submitCallback
@@ -149,7 +151,14 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public UpdateProps(fieldId: string, props: FieldStateProps): void {
+    public UpdateFormProps(props: FormProps): void {
+        this.State = this.State.withMutations(state => {
+            state.FormProps = recordify<FormProps, FormPropsRecord>(props);
+            this.emit(new Actions.FormPropsChanged());
+        });
+    }
+
+    public UpdateFieldProps(fieldId: string, props: FieldStateProps): void {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
@@ -164,10 +173,10 @@ export class FormStore extends ActionEmitter {
             } as FieldState));
         });
 
-        this.emit(new Actions.PropsChanged(fieldId));
+        this.emit(new Actions.FieldPropsChanged(fieldId));
     }
 
-    public ValueChanged(fieldId: string, newValue: FieldValue): void {
+    public UpdateFieldValue(fieldId: string, newValue: FieldValue): void {
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -178,7 +187,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
-    public async Validate(fieldId: string, validationPromise: Promise<never>): Promise<void> {
+    public async ValidateiField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
@@ -237,14 +246,14 @@ export class FormStore extends ActionEmitter {
         }
     }
 
-    public InitiateSubmit(): void {
+    public InitiateFormSubmit(): void {
         if (this.State.Form.SubmitCallback == null) {
             throw new Error("simplr-forms-core: Submit method is called before SubmitCallback is set.");
         }
         this.State.Form.SubmitCallback();
     }
 
-    public async Submit(result: Promise<void> | FormError | any): Promise<void> {
+    public async SubmitForm(result: Promise<void> | FormError | any): Promise<void> {
         let promise: Promise<void>;
         if (this.IsPromise<void>(result)) {
             promise = result;
@@ -356,7 +365,8 @@ export class FormStore extends ActionEmitter {
         return recordify<FormStoreState, FormStoreStateRecord>({
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
-            Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState())
+            Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
+            FormProps: recordify<FormProps, FormPropsRecord>({})
         });
     }
 

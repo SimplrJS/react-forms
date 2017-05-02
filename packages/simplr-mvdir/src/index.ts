@@ -36,13 +36,13 @@ export async function move(
                 const fromDirectory = path.join(from, file);
                 await move(fromDirectory, to, recursively, removeFromDirectory, from);
                 if (removeFromDirectory === true && await fs.exists(fromDirectory)) {
-                    await fs.rmdir(fromDirectory);
+                    await waitForEmptyAndRemoveDirAsync(fromDirectory);
                 }
             }
         }
     }
     if (removeFromDirectory === true && await fs.exists(from)) {
-        await fs.rmdir(from);
+        await waitForEmptyAndRemoveDirAsync(from);
     }
 }
 
@@ -56,4 +56,37 @@ async function mkdirpAsync(dir: string) {
             resolve(made);
         });
     });
+}
+
+async function waitForEmptyAndRemoveDirAsync(dir: string) {
+    let files;
+    while ((files = await fs.readdir(dir)) && files!.length > 0) {
+        await sleep(10);
+    }
+    await fs.rmdir(dir);
+}
+
+function sleep(milliseconds: number) {
+    return new Promise<void>(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
+}
+
+async function rmdir(dir: string) {
+    let list = await fs.readdir(dir);
+    for (var i = 0; i < list.length; i++) {
+        var filename = path.join(dir, list[i]);
+        var stat = await fs.stat(filename);
+
+        if (filename === "." || filename === "..") {
+            // pass these files
+        } else if (stat.isDirectory()) {
+            // rmdir recursively
+            await rmdir(filename);
+        } else {
+            // rm fiilename
+            await fs.unlink(filename);
+        }
+    }
+    await fs.rmdir(dir);
 }

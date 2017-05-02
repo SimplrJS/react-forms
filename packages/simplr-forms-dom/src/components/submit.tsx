@@ -52,20 +52,48 @@ export interface SubmitStateRecord extends TypedRecord<SubmitStateRecord>, Submi
 export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
     protected OnStoreUpdated(): void {
         const formStore = this.FormStore.GetState();
-        const newState = recordify({
+        const newState = {
             Error: formStore.Form.Error,
             Validating: formStore.Form.Validating,
             Submitting: formStore.Form.Submitting,
             Pristine: formStore.Form.Pristine
-        });
+        };
 
-        if (!newState.equals(this.state)) {
-            this.setState(() => newState);
+        const newStateRecord = recordify(newState);
+        if (!newStateRecord.equals(this.state)) {
+            this.setState((prevState) => {
+                // TODO: newStateRecord becomes an empty object after setState
+                return newState;
+            });
         }
     }
 
-    protected get Disabled() {
-        // TODO: Disabled....
+    protected get Disabled(): boolean {
+        if (this.props.disabled != null) {
+            return this.props.disabled;
+        }
+        if (this.state != null) {
+            if (this.props.disableOnError === true &&
+                this.state.Error != null) {
+                console.log("Disabling submit on error.");
+                return true;
+            }
+
+            // TODO: waiting/busy
+
+            if (this.props.disableOnSubmitting === true &&
+                this.state.Submitting === true) {
+                console.log("Disabling submit on submitting.");
+                return true;
+            }
+
+            if (this.props.disableOnPristine === true &&
+                this.state.Pristine === true) {
+                console.log("Disabling submit on pristine.");
+                return true;
+            }
+        }
+
         return false;
     }
 

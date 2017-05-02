@@ -82,8 +82,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             throw new Error("simplr-forms-core: Field must be used inside a Form component.");
         }
         this.StoreEventSubscription =
-            this.FormStore.addListener<FormStoreActions.StateUpdated>(
-                FormStoreActions.StateUpdated,
+            this.FormStore.addListener<FormStoreActions.StateChanged>(
+                FormStoreActions.StateChanged,
                 this.OnStoreUpdated.bind(this));
         this.registerFieldInFormStore();
     }
@@ -94,7 +94,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             throw new Error(`simplr-forms-core: Field name must be constant`);
         }
 
-        this.FormStore.UpdateProps(this.FieldId, nextProps);
+        this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
     }
 
     componentWillUnmount() {
@@ -133,9 +133,12 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         return this.RawDefaultValue;
     }
 
-    protected ProcessValueBeforeStore(value: FieldValue) {
+    protected ProcessValueBeforeStore(value: FieldValue): FieldValue {
         // Parse and normalize value
-        return this.NormalizeValue(this.ParseValue(value));
+        if (value != null) {
+            return this.NormalizeValue(this.ParseValue(value));
+        }
+        return value;
     }
 
     protected ProcessValueFromStore(value: FieldValue) {
@@ -212,7 +215,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             newValue = this.ProcessValueBeforeStore(newValue);
         }
 
-        this.FormStore.ValueChanged(this.FieldId, newValue);
+        this.FormStore.UpdateFieldValue(this.FieldId, newValue);
     }
 
     /**

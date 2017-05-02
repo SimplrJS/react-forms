@@ -8,7 +8,10 @@ export interface FormProps {
     formStore?: FormStore;
     destroyOnUnmount?: boolean;
     forceSubmit?: boolean;
+    disabled?: boolean;
 }
+
+export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormProps { }
 
 export interface FormChildContext {
     FormId: string;

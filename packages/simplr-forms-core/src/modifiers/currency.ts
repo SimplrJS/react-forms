@@ -17,7 +17,6 @@ export class CurrencyModifier extends BaseModifier<CurrencyProps, {}> {
     }
     Parse(value: FieldValue): FieldValue {
         if (value === this.emptyFormattedValue) {
-            console.log(`Parser got an emptyFormattedValue.`);
             return 0;
         }
         if (ValueOfType<string>(value, CurrencyModifier.name, "string")) {
