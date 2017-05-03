@@ -22,6 +22,7 @@ export interface FormState {
     Pristine: boolean;
     Error?: FormError;
     Submitting: boolean;
+    Touched: boolean;
     SuccessfullySubmitted: boolean;
     SubmitCallback?: () => void;
     ActiveFieldId?: string;

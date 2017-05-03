@@ -1,3 +1,4 @@
+import * as React from "react";
 import * as Immutable from "immutable";
 import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
@@ -162,7 +163,70 @@ export class FormStore extends ActionEmitter {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
-        if (fieldState.Props == null || fieldState.Props.equals(propsRecord)) {
+        if (fieldState.Props == null) {
+            return;
+        }
+
+        // Custom props diff, because Immutable.Reacord.equals always returns false
+        // (because of children always changing?..)
+        let changed = false;
+        propsRecord.toSeq().forEach((value, key) => {
+            if (key == null) {
+                return;
+            }
+            const oldValue = fieldState.Props!.get(key);
+            if (key !== "children") {
+                if (!this.ObjectsEqualDeepCheck(oldValue, value)) {
+                    changed = true;
+                    return false;
+                }
+            } else {
+                // Take old children
+                const oldChildren = fieldState.Props!.get(key) as React.ReactNode | undefined;
+                if (oldChildren != null) {
+                    // Take new children and convert them to an array with React.Children.toArray
+                    const newChildren = React.Children.toArray(value);
+
+                    // For each oldChildren
+                    React.Children.forEach(oldChildren, (child: React.ReactChild, index) => {
+                        // If a child is a text component and no new children is equal to it
+                        if (typeof child === "string" && !newChildren.some(x => x === child)) {
+                            // Props have changed
+                            changed = true;
+                            return false;
+                        }
+
+                        const childElement = child as React.ReactElement<any>;
+
+                        // Try to find best a match for an old child in the newChildren array
+                        const newChildElement = newChildren.find(x => {
+                            // String case has been checked before
+                            if (typeof x !== "string") {
+                                const xElement = x as React.ReactElement<any>;
+                                // If type and key properties match
+                                // Children should be the same
+                                if (xElement.type === childElement.type &&
+                                    xElement.key === childElement.key) {
+                                    return true;
+                                }
+                            }
+                            // Return false explicitly by default
+                            return false;
+                        }) as React.ReactElement<any>;
+
+                        // If newChildElement was found and its props are different
+                        if (newChildElement != null &&
+                            !this.ObjectsEqualDeepCheck(childElement.props, newChildElement.props)) {
+                            // Props have changed
+                            changed = true;
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+
+        if (!changed) {
             return;
         }
 
@@ -177,37 +241,29 @@ export class FormStore extends ActionEmitter {
     }
 
     public UpdateFieldValue(fieldId: string, newValue: FieldValue): void {
+        const fieldState = this.State.Fields.get(fieldId);
+        if (fieldState.Value === newValue) {
+            return;
+        }
+
         this.State = this.State.withMutations(state => {
-            const fieldState = state.Fields.get(fieldId);
-            const fieldPristine = (newValue === fieldState.InitialValue);
+            const newPristine = (newValue === fieldState.InitialValue);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Value: newValue,
-                Pristine: fieldPristine
+                Pristine: newPristine,
+                Touched: true
             } as FieldState));
 
-            if (!fieldPristine) {
-                state.Form = state.Form.merge({
-                    Pristine: false
-                } as FormState);
-            } else {
-                let allFieldsPristine = true;
-                state.Fields.forEach(field => {
-                    if (field != null && !field.Pristine) {
-                        allFieldsPristine = false;
-                        return false;
-                    }
-                });
-
-                state.Form = state.Form.merge({
-                    Pristine: allFieldsPristine
-                });
-            }
+            state.Form = this.RecalculateDependentFormState(state, {
+                Pristine: newPristine,
+                Touched: true
+            });
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
     }
 
-    public async ValidateiField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
+    public async ValidateField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
@@ -329,11 +385,12 @@ export class FormStore extends ActionEmitter {
                 const fieldState = state.Fields.get(fieldId);
 
                 if (fieldState != null) {
+                    const oldValue = fieldState.Value;
                     state.Fields = state.Fields.set(fieldId, fieldState.merge({
                         Error: undefined,
                         Value: fieldState.DefaultValue,
                         Pristine: (fieldState.InitialValue === fieldState.DefaultValue),
-                        Touched: false
+                        Touched: oldValue !== fieldState.DefaultValue
                     } as FieldState));
                 }
             });
@@ -397,6 +454,7 @@ export class FormStore extends ActionEmitter {
             Pristine: true,
             SuccessfullySubmitted: false,
             ActiveFieldId: undefined,
+            Touched: false,
             Error: undefined,
             SubmitCallback: undefined
         };
@@ -431,7 +489,65 @@ export class FormStore extends ActionEmitter {
         return formStoreObject;
     }
 
+    protected RecalculateDependentFormState(
+        formStoreState: FormStoreStateRecord,
+        newStatePartial: Partial<FormState>): FormStateRecord {
+        let updater = {
+            Pristine: true,
+            Touched: false,
+            ...newStatePartial
+        } as FormState;
+
+        // TODO: might build curried function for more efficient checking
+
+        this.State.Fields.forEach(field => {
+            if (field != null) {
+                if (updater.Pristine && !field.Pristine) {
+                    updater.Pristine = false;
+                }
+                if (!updater.Touched && field.Touched) {
+                    updater.Touched = true;
+                }
+
+                // Short circuit if both Pristine and Touched are already resolved
+                if (!updater.Pristine && updater.Touched) {
+                    return false;
+                }
+            }
+        });
+
+        return formStoreState.Form.merge(updater);
+    }
+
     protected IsPromise<T>(value: any): value is Promise<T> {
         return value != null && value.then != null && value.catch != null;
+    }
+
+    protected ObjectsEqualDeepCheck(obj: { [key: string]: any }, obj2: { [key: string]: any }) {
+        if (typeof obj !== "object" && typeof obj !== typeof obj2) {
+            console.warn("Object Deep Check: Variable given is not an object!");
+            return false;
+        }
+
+        if ((obj == null && obj2 != null) || (obj != null && obj2 == null)) {
+            return false;
+        } else if (obj == null && obj2 == null) {
+            return true;
+        }
+
+        if (Object.keys(obj2).length !== Object.keys(obj).length) {
+            return false;
+        }
+
+        for (let key in obj) {
+            if (typeof obj[key] === "object" && typeof obj2[key] === "object") {
+                if (!this.ObjectsEqualDeepCheck(obj[key], obj2[key])) {
+                    return false;
+                }
+            } else if (obj[key] !== obj2[key]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
