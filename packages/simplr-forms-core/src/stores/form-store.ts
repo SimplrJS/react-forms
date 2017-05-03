@@ -163,8 +163,6 @@ export class FormStore extends ActionEmitter {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
-        const s1 = performance.now();
-
         if (fieldState.Props == null ||
             this.PropsEqual(propsRecord, fieldState.Props)) {
             return;
