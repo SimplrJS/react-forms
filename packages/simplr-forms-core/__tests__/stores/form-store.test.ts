@@ -85,7 +85,7 @@ describe("Form store", () => {
         formStore.RegisterField(fieldId, undefined, undefined, value);
         expect(formStore.GetField(fieldId).Value).toBe(value);
 
-        formStore.ValueChanged(fieldId, nextValue);
+        formStore.UpdateFieldValue(fieldId, nextValue);
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
     });
 
@@ -99,7 +99,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
@@ -126,7 +126,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
@@ -166,10 +166,10 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
 
         // Imitate removal of last letter
-        formStore.ValueChanged(fieldId, value.slice(0, value.length - 1));
+        formStore.UpdateFieldValue(fieldId, value.slice(0, value.length - 1));
 
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
@@ -224,7 +224,7 @@ describe("Form store", () => {
         const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
 
         formStore.RegisterField(fieldId, undefined, undefined, undefined, fieldProps);
-        formStore.UpdateProps(fieldId, fieldPropsNext);
+        formStore.UpdateFieldProps(fieldId, fieldPropsNext);
 
         // Deep-check the updated props
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
@@ -298,7 +298,7 @@ describe("Form store", () => {
 
         for (const fieldId of fieldsIds) {
             formStore.RegisterField(fieldId, undefined, fieldProps.initialValue, fieldProps.value, fieldProps);
-            formStore.ValueChanged(fieldId, nextValue);
+            formStore.UpdateFieldValue(fieldId, nextValue);
         }
         formStore.ResetFields();
 
@@ -324,7 +324,7 @@ describe("Form store", () => {
 
         for (const fieldId of fieldsIds) {
             formStore.RegisterField(fieldId, undefined, undefined, fieldProps.value, fieldProps);
-            formStore.ValueChanged(fieldId, nextValue);
+            formStore.UpdateFieldValue(fieldId, nextValue);
         }
         formStore.ResetFields([fieldToResetId]);
 
