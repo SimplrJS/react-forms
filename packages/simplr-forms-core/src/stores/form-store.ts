@@ -461,7 +461,7 @@ export class FormStore extends ActionEmitter {
         return value != null && value.then != null && value.catch != null;
     }
 
-    protected DeepCompare(...args: any[]) {
+    protected DeepCompare(...args: any[]): boolean {
         var i, l, leftChain: any, rightChain: any;
 
         function Compare2Objects(x: any, y: any) {
@@ -576,8 +576,8 @@ export class FormStore extends ActionEmitter {
         return true;
     }
 
-    protected ArrayUnique<T>(array: Array<T>, concat: boolean = true) {
-        var result = concat ? array.concat() : array;
+    protected ArrayUnique<T>(array: Array<T>, concat: boolean = true): Array<T> {
+        let result = concat ? array.concat() : array;
         for (var i = 0; i < result.length; ++i) {
             for (var j = i + 1; j < result.length; ++j) {
                 if (result[i] === result[j]) {
@@ -585,18 +585,18 @@ export class FormStore extends ActionEmitter {
                 }
             }
         }
-
         return result;
     }
 
-    protected RemoveValues<T>(array: T[], valuesToRemove: T[]) {
+    protected RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true) {
+        let result = concat ? array.concat() : array;
         for (const value of valuesToRemove) {
             let index;
-            while ((index = array.indexOf(value)) !== -1) {
-                array.splice(index, 1);
+            while ((index = result.indexOf(value)) !== -1) {
+                result.splice(index, 1);
             }
         }
-        return array;
+        return result;
     }
 
     protected PropsEqual(newProps: FieldStatePropsRecord, oldProps: FieldStatePropsRecord): boolean {
@@ -607,7 +607,8 @@ export class FormStore extends ActionEmitter {
             return false;
         }
         const childrenKey = "children";
-        const allKeys = this.RemoveValues(this.ArrayUnique(newKeys.concat(oldKeys), false), [childrenKey]);
+        let allKeys = this.ArrayUnique(newKeys.concat(oldKeys), false);
+        allKeys = this.RemoveValues(allKeys, [childrenKey], false);
 
         // Custom props diff, to have most efficient diffing
 
