@@ -6,14 +6,6 @@ import { FormError } from "simplr-forms-core/contracts";
 
 export interface SubmitProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
     /**
-     * Disable when form is submitting.
-     *
-     * Default: false
-     * @type {boolean}
-     * @memberOf SubmitProps
-     */
-    disableOnSubmitting?: boolean;
-    /**
      * Disable when at least one field has error.
      *
      * Default: true
@@ -28,7 +20,7 @@ export interface SubmitProps extends BaseContainerProps, React.HTMLProps<HTMLBut
      * @type {boolean}
      * @memberOf SubmitProps
      */
-    disableOnWaiting?: boolean;
+    disableOnBusy?: boolean;
     /**
      * Disable when all fields are pristine.
      *
@@ -37,7 +29,8 @@ export interface SubmitProps extends BaseContainerProps, React.HTMLProps<HTMLBut
      * @memberOf SubmitProps
      */
     disableOnPristine?: boolean;
-    waiting?: boolean;
+    busy?: boolean;
+    busyClass?: string;
 }
 
 export interface SubmitState {
@@ -50,6 +43,13 @@ export interface SubmitState {
 export interface SubmitStateRecord extends TypedRecord<SubmitStateRecord>, SubmitState { }
 
 export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
+    public static defaultProps: SubmitProps = {
+        disableOnBusy: true,
+        disableOnError: true,
+        disableOnPristine: false,
+        busyClass: "busy"
+    };
+
     protected OnStoreUpdated(): void {
         const formStore = this.FormStore.GetState();
         const newState = {
@@ -62,7 +62,8 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
         const newStateRecord = recordify(newState);
         if (!newStateRecord.equals(this.state)) {
             this.setState((prevState) => {
-                // TODO: newStateRecord becomes an empty object after setState
+                // newStateRecord becomes an empty object after setState
+                // This happens because of an underlying Immutable.Record
                 return newState;
             });
         }
@@ -79,17 +80,14 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
                 return true;
             }
 
-            // TODO: waiting/busy
-
-            if (this.props.disableOnSubmitting === true &&
-                this.state.Submitting === true) {
-                console.log("Disabling submit on submitting.");
+            if (this.props.disableOnBusy === true &&
+                this.Busy) {
+                console.log("Disabling submit on busy.");
                 return true;
             }
 
             if (this.props.disableOnPristine === true &&
                 this.state.Pristine === true) {
-                console.log("Disabling submit on pristine.");
                 return true;
             }
         }
@@ -97,10 +95,32 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
         return false;
     }
 
+    protected get Busy(): boolean {
+        return this.props.busy === true ||
+            this.state != null &&
+            (this.state.Validating ||
+                this.state.Submitting);
+    }
+
+    protected get InlineStyles() {
+        let inlineStyles: React.CSSProperties = {};
+
+        if (this.props.style != null) {
+            inlineStyles = this.props.style;
+        }
+
+        if (this.Busy && !this.props.disabled) {
+            inlineStyles.cursor = this.props.busyClass;
+        }
+
+        return inlineStyles;
+    }
+
     render() {
         return <button
             type="submit"
             disabled={this.Disabled}
+            style={this.InlineStyles}
         >
             {this.props.children}
         </button>;
