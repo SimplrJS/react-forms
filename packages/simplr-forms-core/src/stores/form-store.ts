@@ -163,77 +163,17 @@ export class FormStore extends ActionEmitter {
         const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
-        if (fieldState.Props == null) {
-            return;
-        }
+        const s1 = performance.now();
 
-        // Custom props diff, because Immutable.Reacord.equals always returns false
-        // (because of children always changing?..)
-        let changed = false;
-        propsRecord.toSeq().forEach((value, key) => {
-            if (key == null) {
-                return;
-            }
-            const oldValue = fieldState.Props!.get(key);
-            if (key !== "children") {
-                if (!this.ObjectsEqualDeepCheck(oldValue, value)) {
-                    changed = true;
-                    return false;
-                }
-            } else {
-                // Take old children
-                const oldChildren = fieldState.Props!.get(key) as React.ReactNode | undefined;
-                if (oldChildren != null) {
-                    // Take new children and convert them to an array with React.Children.toArray
-                    const newChildren = React.Children.toArray(value);
-
-                    // For each oldChildren
-                    React.Children.forEach(oldChildren, (child: React.ReactChild, index) => {
-                        // If a child is a text component and no new children is equal to it
-                        if (typeof child === "string" && !newChildren.some(x => x === child)) {
-                            // Props have changed
-                            changed = true;
-                            return false;
-                        }
-
-                        const childElement = child as React.ReactElement<any>;
-
-                        // Try to find best a match for an old child in the newChildren array
-                        const newChildElement = newChildren.find(x => {
-                            // String case has been checked before
-                            if (typeof x !== "string") {
-                                const xElement = x as React.ReactElement<any>;
-                                // If type and key properties match
-                                // Children should be the same
-                                if (xElement.type === childElement.type &&
-                                    xElement.key === childElement.key) {
-                                    return true;
-                                }
-                            }
-                            // Return false explicitly by default
-                            return false;
-                        }) as React.ReactElement<any>;
-
-                        // If newChildElement was found and its props are different
-                        if (newChildElement != null &&
-                            !this.ObjectsEqualDeepCheck(childElement.props, newChildElement.props)) {
-                            // Props have changed
-                            changed = true;
-                            return false;
-                        }
-                    });
-                }
-            }
-        });
-
-        if (!changed) {
+        if (fieldState.Props == null ||
+            this.PropsEqual(propsRecord, fieldState.Props)) {
             return;
         }
 
         this.State = this.State.withMutations(state => {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                Props: recordify<FieldStateProps, FieldStatePropsRecord>(props)
+                Props: propsRecord
             } as FieldState));
         });
 
@@ -523,31 +463,219 @@ export class FormStore extends ActionEmitter {
         return value != null && value.then != null && value.catch != null;
     }
 
-    protected ObjectsEqualDeepCheck(obj: { [key: string]: any }, obj2: { [key: string]: any }) {
-        if (typeof obj !== "object" && typeof obj !== typeof obj2) {
-            console.warn("Object Deep Check: Variable given is not an object!");
-            return false;
-        }
+    protected DeepCompare(...args: any[]) {
+        var i, l, leftChain: any, rightChain: any;
 
-        if ((obj == null && obj2 != null) || (obj != null && obj2 == null)) {
-            return false;
-        } else if (obj == null && obj2 == null) {
+        function Compare2Objects(x: any, y: any) {
+            var p;
+
+            // remember that NaN === NaN returns false
+            // and isNaN(undefined) returns true
+            if (isNaN(x) && isNaN(y) && typeof x === "number" && typeof y === "number") {
+                return true;
+            }
+
+            // Compare primitives and functions.
+            // Check if both arguments link to the same object.
+            // Especially useful on the step where we compare prototypes
+            if (x === y) {
+                return true;
+            }
+
+            // Works in case when functions are created in constructor.
+            // Comparing dates is a common scenario. Another built-ins?
+            // We can even handle functions passed across iframes
+            if ((typeof x === "function" && typeof y === "function") ||
+                (x instanceof Date && y instanceof Date) ||
+                (x instanceof RegExp && y instanceof RegExp) ||
+                (x instanceof String && y instanceof String) ||
+                (x instanceof Number && y instanceof Number)) {
+                return x.toString() === y.toString();
+            }
+
+            // At last checking prototypes as good as we can
+            if (!(x instanceof Object && y instanceof Object)) {
+                return false;
+            }
+
+            if (x.isPrototypeOf(y) || y.isPrototypeOf(x)) {
+                return false;
+            }
+
+            if (x.constructor !== y.constructor) {
+                return false;
+            }
+
+            if (x.prototype !== y.prototype) {
+                return false;
+            }
+
+            // Check for infinitive linking loops
+            if (leftChain.indexOf(x) > -1 || rightChain.indexOf(y) > -1) {
+                return false;
+            }
+
+            // Quick checking of one object being a subset of another.
+            // todo: cache the structure of arguments[0] for performance
+            for (p in y) {
+                if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+                    return false;
+                } else if (typeof y[p] !== typeof x[p]) {
+                    return false;
+                }
+            }
+
+            // tslint:disable-next-line:forin
+            for (p in x) {
+                if (y.hasOwnProperty(p) !== x.hasOwnProperty(p)) {
+                    return false;
+                } else if (typeof y[p] !== typeof x[p]) {
+                    return false;
+                }
+
+                switch (typeof (x[p])) {
+                    case "object":
+                    case "function":
+
+                        leftChain.push(x);
+                        rightChain.push(y);
+
+                        if (!Compare2Objects(x[p], y[p])) {
+                            return false;
+                        }
+
+                        leftChain.pop();
+                        rightChain.pop();
+                        break;
+
+                    default:
+                        if (x[p] !== y[p]) {
+                            return false;
+                        }
+                        break;
+                }
+            }
+
             return true;
         }
 
-        if (Object.keys(obj2).length !== Object.keys(obj).length) {
-            return false;
+        if (args.length < 1) {
+            //Die silently? Don't know how to handle such case, please help...
+            return true;
+            // throw "Need two or more arguments to compare";
         }
 
-        for (let key in obj) {
-            if (typeof obj[key] === "object" && typeof obj2[key] === "object") {
-                if (!this.ObjectsEqualDeepCheck(obj[key], obj2[key])) {
-                    return false;
-                }
-            } else if (obj[key] !== obj2[key]) {
+        for (i = 1, l = args.length; i < l; i++) {
+            //Todo: this can be cached
+            leftChain = [];
+            rightChain = [];
+
+            if (!Compare2Objects(args[0], args[i])) {
                 return false;
             }
         }
+
+        return true;
+    }
+
+    protected ArrayUnique<T>(array: Array<T>, concat: boolean = true) {
+        var result = concat ? array.concat() : array;
+        for (var i = 0; i < result.length; ++i) {
+            for (var j = i + 1; j < result.length; ++j) {
+                if (result[i] === result[j]) {
+                    result.splice(j--, 1);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    protected RemoveValues<T>(array: T[], valuesToRemove: T[]) {
+        for (const value of valuesToRemove) {
+            let index;
+            while ((index = array.indexOf(value)) !== -1) {
+                array.splice(index, 1);
+            }
+        }
+        return array;
+    }
+
+    protected PropsEqual(newProps: FieldStatePropsRecord, oldProps: FieldStatePropsRecord): boolean {
+        const newKeys = newProps.keySeq().toArray();
+        const oldKeys = oldProps.keySeq().toArray();
+
+        if (newKeys.length !== oldKeys.length) {
+            return false;
+        }
+        const childrenKey = "children";
+        const allKeys = this.RemoveValues(this.ArrayUnique(newKeys.concat(oldKeys), false), [childrenKey]);
+
+        // Custom props diff, to have most efficient diffing
+
+        // Fist, check top level properties
+        for (const key of allKeys) {
+            const newValue = newProps.get(key);
+            const oldValue = oldProps.get(key);
+
+            const newValueType = typeof newValue;
+            const oldValueType = typeof oldValue;
+
+            if (newValueType !== oldValueType) {
+                return false;
+            }
+
+            if (newValueType === "object" && !this.DeepCompare(newValue, oldValue)) {
+                return false;
+            } else if (newValue !== oldValue) {
+                return false;
+            }
+        }
+
+        const newChildrenValue = newProps.get(childrenKey) as React.ReactNode | undefined;
+        const oldChildrenValue = oldProps.get(childrenKey) as React.ReactNode | undefined;
+
+        const newChildren = React.Children.toArray(newChildrenValue);
+        const oldChildren = React.Children.toArray(oldChildrenValue);
+
+        if (newChildren.length !== oldChildren.length) {
+            return false;
+        }
+
+        // For each newChildren
+        for (const child of newChildren) {
+            // If a child is a text component and no old child is equal to it
+            if (typeof child === "string" && !oldChildren.some(x => x === child)) {
+                // Props have changed
+                return false;
+            }
+
+            const newChildElement = child as React.ReactElement<any>;
+
+            // Try to find best a match for an old child in the newChildren array
+            const oldChildElement = oldChildren.find(oldChild => {
+                // String case has been checked before
+                if (typeof oldChild !== "string") {
+                    const element = oldChild as React.ReactElement<any>;
+                    // If type and key properties match
+                    // Children should be the same
+                    if (element.type === newChildElement.type &&
+                        element.key === newChildElement.key) {
+                        return true;
+                    }
+                }
+                // Return false explicitly by default
+                return false;
+            }) as React.ReactElement<any> | undefined;
+
+            // If oldChildElement was found and its props are different
+            if (oldChildElement != null &&
+                !this.DeepCompare(newChildElement.props, oldChildElement.props)) {
+                // Props are not the same
+                return false;
+            }
+        }
+        // Props are equal
         return true;
     }
 }
