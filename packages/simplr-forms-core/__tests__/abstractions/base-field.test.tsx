@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { shallow, mount } from "enzyme";
-import { spy } from "sinon";
+import * as Sinon from "sinon";
 
 import { FormStoresHandler, FSHContainer } from "../../src/stores/form-stores-handler";
 import { FormStore } from "../../src/stores/form-store";
@@ -10,8 +10,15 @@ import { MyTestField, MyFieldProps } from "../test-components/test-field";
 import { FormChildContext } from "../../src/contracts/form";
 
 describe("Field Base", () => {
+    let sandbox: Sinon.SinonSandbox;
+
     beforeEach(() => {
+        sandbox = Sinon.sandbox.create();
         FSHContainer.SetFormStoresHandler(new FormStoresHandler(), true);
+    });
+
+    afterEach(function () {
+        sandbox.restore();
     });
 
     it("works", () => {
@@ -164,7 +171,7 @@ describe("Field Base", () => {
         const newValue = "NEW_VALUE";
         const formId = "FORM_ID";
 
-        spy(FormStore.prototype, "ValueChanged");
+        sandbox.spy(FormStore.prototype, "UpdateFieldValue");
 
         const fieldName = "fieldName";
         const form = mount(<MyTestForm formId={formId}>
@@ -172,7 +179,7 @@ describe("Field Base", () => {
         </MyTestForm>);
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
 
-        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(0);
+        expect((FormStore.prototype.UpdateFieldValue as any).callCount).toEqual(0);
 
         const input = form.find("input");
 
@@ -182,7 +189,7 @@ describe("Field Base", () => {
         // Simulate value change
         input.simulate("change", { target: { value: newValue } });
 
-        expect((FormStore.prototype.ValueChanged as any).callCount).toEqual(1);
+        expect((FormStore.prototype.UpdateFieldValue as any).callCount).toEqual(1);
         // Check if it really changed value in form store
         expect(formStore.GetField(fieldName).Value).toBe(newValue);
     });
@@ -236,8 +243,8 @@ describe("Field Base", () => {
         };
 
         // Set spies on methods
-        spy(FormStore.prototype, "UpdateProps");
-        spy(MyTestField.prototype, "componentWillReceiveProps");
+        sandbox.spy(FormStore.prototype, "UpdateFieldProps");
+        sandbox.spy(MyTestField.prototype, "componentWillReceiveProps");
 
         // Render form to create FormStore
         shallow(<MyTestForm formId={formId}></MyTestForm>);
@@ -254,7 +261,45 @@ describe("Field Base", () => {
         // Update MyTestField props
         field.setProps(fieldPropsNext);
 
-        expect((FormStore.prototype.UpdateProps as any).callCount).toEqual(1);
+        expect((FormStore.prototype.UpdateFieldProps as any).callCount).toEqual(1);
+        expect((MyTestField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
+        expect((formStore.GetField(fieldId).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
+    });
+
+    it("updates props when componentWillReceiveProps is called with multi-level object", () => {
+        const formId = "FORM-ID";
+        const fieldId = "field";
+        const fieldProps: MyFieldProps = {
+            name: "field",
+            value: "initialValue",
+            deepObject: { value: "1" }
+        };
+        const fieldPropsNext: MyFieldProps = {
+            name: fieldProps.name,
+            value: "Updated value",
+            deepObject: { value: "2" }
+        };
+
+        // Set spies on methods
+        sandbox.spy(FormStore.prototype, "UpdateFieldProps");
+        sandbox.spy(MyTestField.prototype, "componentWillReceiveProps");
+
+        // Render form to create FormStore
+        shallow(<MyTestForm formId={formId}></MyTestForm>);
+
+        const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
+
+        // Mount with formId as a context
+        const field = mount<MyFieldProps>(<MyTestField {...fieldProps} />, {
+            context: {
+                FormId: formId
+            } as FormChildContext
+        });
+
+        // Update MyTestField props
+        field.setProps(fieldPropsNext);
+
+        expect((FormStore.prototype.UpdateFieldProps as any).callCount).toEqual(1);
         expect((MyTestField.prototype.componentWillReceiveProps as any).callCount).toEqual(1);
         expect((formStore.GetField(fieldId).Props as MyFieldProps).value).toBe(fieldPropsNext.value);
     });
