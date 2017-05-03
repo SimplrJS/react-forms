@@ -9,40 +9,45 @@ export async function move(
     recursively: boolean = true,
     removeFromDirectory = true,
     rootFrom?: string) {
+    try {
+        from = path.resolve(from);
+        to = path.resolve(to);
 
-    from = path.resolve(from);
-    to = path.resolve(to);
+        rootFrom = rootFrom || from;
 
-    rootFrom = rootFrom || from;
+        const files = await fs.readdir(from);
+        for (const file of files) {
+            const stats = await fs.stat(path.join(from, file));
+            if (await stats.isFile()) {
+                const fileResolved = path.resolve(from, file);
+                const fromDirectory = path.dirname(fileResolved);
+                const toDirectory = fromDirectory.replace(rootFrom, to);
+                const toFile = path.join(toDirectory, fileResolved.replace(fromDirectory, ""));
 
-    const files = await fs.readdir(from);
-    for (const file of files) {
-        const stats = await fs.stat(path.join(from, file));
-        if (await stats.isFile()) {
-            const fileResolved = path.resolve(from, file);
-            const fromDirectory = path.dirname(fileResolved);
-            const toDirectory = fromDirectory.replace(rootFrom, to);
-            const toFile = path.join(toDirectory, fileResolved.replace(fromDirectory, ""));
-
-            try {
-                await mkdirpAsync(toDirectory);
-                await fs.rename(fileResolved, toFile);
-            } catch (err) {
-                console.log(err);
+                try {
+                    await mkdirpAsync(toDirectory);
+                    await fs.rename(fileResolved, toFile);
+                } catch (err) {
+                    console.log(err);
+                }
             }
-        }
-        if (await stats.isDirectory()) {
-            if (recursively === true) {
-                const fromDirectory = path.join(from, file);
-                await move(fromDirectory, to, recursively, removeFromDirectory, from);
-                if (removeFromDirectory === true && await fs.exists(fromDirectory)) {
-                    await waitForEmptyAndRemoveDirAsync(fromDirectory);
+            if (await stats.isDirectory()) {
+                if (recursively === true) {
+                    const fromDirectory = path.join(from, file);
+                    await tryAndRetry(async () => {
+                        await move(fromDirectory, to, recursively, removeFromDirectory, from);
+                    });
+                    if (removeFromDirectory === true && fs.existsSync(fromDirectory)) {
+                        await waitForEmptyAndRemoveDirAsync(fromDirectory);
+                    }
                 }
             }
         }
-    }
-    if (removeFromDirectory === true && await fs.exists(from)) {
-        await waitForEmptyAndRemoveDirAsync(from);
+        if (removeFromDirectory === true && fs.existsSync(from)) {
+            await waitForEmptyAndRemoveDirAsync(from);
+        }
+    } catch (err) {
+        console.error("That's an error: ", JSON.stringify(err));
     }
 }
 
@@ -59,11 +64,18 @@ async function mkdirpAsync(dir: string) {
 }
 
 async function waitForEmptyAndRemoveDirAsync(dir: string) {
-    let files;
-    while ((files = await fs.readdir(dir)) && files!.length > 0) {
+    let files = fs.readdirSync(dir);
+    while (files.length > 0) {
         await sleep(10);
+        if (fs.existsSync(dir)) {
+            files = fs.readdirSync(dir);
+        } else {
+            files = [];
+        }
     }
-    await fs.rmdir(dir);
+    if (fs.existsSync(dir)) {
+        fs.rmdirSync(dir);
+    }
 }
 
 function sleep(milliseconds: number) {
@@ -88,5 +100,17 @@ async function rmdir(dir: string) {
             await fs.unlink(filename);
         }
     }
-    await fs.rmdir(dir);
+    if (await fs.exists(dir)) {
+        await fs.rmdir(dir);
+    }
+}
+async function tryAndRetry(action: Function, maxTries = 5) {
+    while (true) {
+        try {
+            action();
+            break;
+        } catch (err) {
+            await sleep(10);
+        }
+    }
 }
