@@ -12,7 +12,7 @@ import {
     PropsChanged
  } from "simplr-forms-core/actions";
 
-import { Validate } from "../utils/validation";
+import { ValidateField } from "../utils/validation";
 
 export class FormStoreSubscriber {
 
@@ -55,7 +55,7 @@ export class FormStoreSubscriber {
         }
 
         const childrenArray = React.Children.toArray(fieldProps.children) as JSX.Element[];
-        const validationPromise = Validate(childrenArray, value);
+        const validationPromise = ValidateField(childrenArray, value);
 
         await this.formStore.Validate(fieldId, validationPromise);
     }

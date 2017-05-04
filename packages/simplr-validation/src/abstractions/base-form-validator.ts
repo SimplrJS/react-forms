@@ -5,5 +5,5 @@ export interface BaseFormValidatorProps extends BaseValidatorProps { }
 
 export abstract class BaseFieldValidator<TProps extends BaseFormValidatorProps>
     extends BaseValidator<TProps, {}> {
-    static SimplrValidationValidatorComponent(): void { }
+    static SimplrValidationFormValidatorComponent(): void { }
 }
