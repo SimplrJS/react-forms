@@ -21,7 +21,9 @@ import {
 import {
     FormStoreState,
     FormStoreStateRecord,
-    BuiltFormObject
+    BuiltFormObject,
+    FormStoreStateProperties,
+    WhoIsValidating
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
@@ -154,7 +156,9 @@ export class FormStore extends ActionEmitter {
 
     public UpdateFormProps(props: FormProps): void {
         this.State = this.State.withMutations(state => {
-            state.FormProps = recordify<FormProps, FormPropsRecord>(props);
+            state.Form = state.Form.withMutations(formState => {
+                formState.Props = recordify<FormProps, FormPropsRecord>(props);
+            });
             this.emit(new Actions.FormPropsChanged());
         });
     }
@@ -192,10 +196,7 @@ export class FormStore extends ActionEmitter {
                 Touched: true
             } as FieldState));
 
-            state.Form = this.RecalculateDependentFormState(state, {
-                Pristine: newPristine,
-                Touched: true
-            });
+            state = this.RecalculateDependentFormState(state);
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
@@ -381,7 +382,10 @@ export class FormStore extends ActionEmitter {
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
-            FormProps: recordify<FormProps, FormPropsRecord>({})
+            Validating: WhoIsValidating.None,
+            Error: false,
+            Pristine: true,
+            Touched: false
         });
     }
 
@@ -389,12 +393,11 @@ export class FormStore extends ActionEmitter {
         return {
             Validating: false,
             Submitting: false,
-            Pristine: true,
             SuccessfullySubmitted: false,
             ActiveFieldId: undefined,
-            Touched: false,
             Error: undefined,
-            SubmitCallback: undefined
+            SubmitCallback: undefined,
+            Props: recordify<FormProps, FormPropsRecord>({})
         };
     }
 
@@ -427,34 +430,52 @@ export class FormStore extends ActionEmitter {
         return formStoreObject;
     }
 
-    protected RecalculateDependentFormState(
-        formStoreState: FormStoreStateRecord,
-        newStatePartial: Partial<FormState>): FormStateRecord {
-        let updater = {
+    protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
+        let updater: FormStoreStateProperties = {
+            Error: false,
             Pristine: true,
             Touched: false,
-            ...newStatePartial
-        } as FormState;
+            Validating: WhoIsValidating.None
+        };
 
-        // TODO: might build curried function for more efficient checking
+        // TODO: might build curried function for more efficient checking.
 
-        this.State.Fields.forEach(field => {
-            if (field != null) {
-                if (updater.Pristine && !field.Pristine) {
+        // Check all fields
+        formStoreState.Fields.forEach((fieldState, key) => {
+            if (fieldState != null && key != null) {
+                if (!updater.Error && fieldState.Error != null) {
+                    updater.Error = true;
+                }
+                if (updater.Pristine && !fieldState.Pristine) {
                     updater.Pristine = false;
                 }
-                if (!updater.Touched && field.Touched) {
+                if (!updater.Touched && fieldState.Touched) {
                     updater.Touched = true;
                 }
+                if (updater.Validating ^ WhoIsValidating.Fields && fieldState.Validating) {
+                    updater.Validating |= WhoIsValidating.Fields;
+                }
 
-                // Short circuit if both Pristine and Touched are already resolved
-                if (!updater.Pristine && updater.Touched) {
+                // Short circuit if everything is resolved with fields.
+                if (updater.Error &&
+                    !updater.Pristine &&
+                    updater.Touched &&
+                    updater.Validating !== WhoIsValidating.None) {
                     return false;
                 }
             }
         });
 
-        return formStoreState.Form.merge(updater);
+        // Check form state
+        const formState = formStoreState.Form;
+        if (!updater.Error && formState.Error != null) {
+            updater.Error = true;
+        }
+        if (updater.Validating ^ WhoIsValidating.Form && formState.Validating) {
+            updater.Validating |= WhoIsValidating.Form;
+        }
+
+        return formStoreState.merge(updater);
     }
 
     protected IsPromise<T>(value: any): value is Promise<T> {

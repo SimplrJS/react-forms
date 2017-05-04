@@ -18,13 +18,12 @@ export interface FormChildContext {
 }
 
 export interface FormState {
+    Props: FormPropsRecord;
     Validating: boolean;
-    Pristine: boolean;
     Error?: FormError;
-    Submitting: boolean;
-    Touched: boolean;
-    SuccessfullySubmitted: boolean;
     SubmitCallback?: () => void;
+    Submitting: boolean;
+    SuccessfullySubmitted: boolean;
     ActiveFieldId?: string;
 }
 
