@@ -1,14 +1,14 @@
 import * as Validator from "validator";
 import { FieldValue } from "simplr-forms-core/contracts";
 
-import { BaseValidator, ValidatorProps } from "../abstractions/base-field-validator";
+import { BaseFieldValidator, ValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
 export interface CurrencyValidatorProps extends ValidatorProps {
     options: ValidatorJS.IsCurrencyOptions;
 }
 
-export class CurrencyValidator extends BaseValidator<CurrencyValidatorProps> {
+export class CurrencyValidator extends BaseFieldValidator<CurrencyValidatorProps> {
     Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
