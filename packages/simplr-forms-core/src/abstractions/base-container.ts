@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import { FormStore } from "../stores/form-store";
-import { StateUpdated } from "../actions/form-store";
+import { StateChanged } from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 
 export interface BaseContainerProps {
@@ -48,7 +48,7 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
             throw new Error(`simplr-forms-core: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
         }
 
-        this.FormStore.addListener(StateUpdated, this.OnStoreUpdated.bind(this));
+        this.FormStore.addListener(StateChanged, this.OnStoreUpdated.bind(this));
     }
 
     protected abstract OnStoreUpdated(): void;

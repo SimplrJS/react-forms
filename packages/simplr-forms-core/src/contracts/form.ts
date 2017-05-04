@@ -8,7 +8,10 @@ export interface FormProps {
     formStore?: FormStore;
     destroyOnUnmount?: boolean;
     forceSubmit?: boolean;
+    disabled?: boolean;
 }
+
+export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormProps { }
 
 export interface FormChildContext {
     FormId: string;
@@ -19,6 +22,7 @@ export interface FormState {
     Pristine: boolean;
     Error?: FormError;
     Submitting: boolean;
+    Touched: boolean;
     SuccessfullySubmitted: boolean;
     SubmitCallback?: () => void;
     ActiveFieldId?: string;

@@ -19,12 +19,14 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     }
 
     static defaultProps: FormContracts.FormProps = {
-        destroyOnUnmount: true
+        destroyOnUnmount: true,
+        disabled: false
     };
 
     constructor(props: FormContracts.FormProps) {
         super();
         this.registerForm(props);
+        this.FormStore.UpdateFormProps(props);
     }
 
     protected get FormStoresHandler(): FormStoresHandler {
@@ -53,7 +55,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     /*
      * Local helpers
      */
-    private registerForm(props: FormContracts.FormProps) {
+    private registerForm(props: FormContracts.FormProps): void {
         if (props.formId == null) {
             if (!props.destroyOnUnmount) {
                 throw new Error("simplr-forms-core: destroyOnUnmount cannot be falsy when formId is not set.");
