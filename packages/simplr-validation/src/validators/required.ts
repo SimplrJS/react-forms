@@ -1,4 +1,4 @@
-import { BaseValidator, ValidatorProps } from "../abstractions/base-validator";
+import { BaseValidator, ValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
 import { FieldValue } from "simplr-forms-core/contracts";
