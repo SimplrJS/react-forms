@@ -9,7 +9,7 @@ import {
 import { FormStore } from "simplr-forms-core/stores";
 import {
     FieldRegistered,
-    PropsChanged,
+    FieldPropsChanged,
     ValueChanged,
 } from "simplr-forms-core/actions";
 
@@ -43,14 +43,14 @@ describe("FormStoreSubscriber", () => {
         expect(callback.called).toEqual(false);
 
         expect(formStore.listeners(FieldRegistered).length).toBe(0);
-        expect(formStore.listeners(PropsChanged).length).toBe(0);
+        expect(formStore.listeners(FieldPropsChanged).length).toBe(0);
         expect(formStore.listeners(ValueChanged).length).toBe(0);
 
         new FormStoreSubscriber(formStore);
         expect(callback.called).toEqual(true);
 
         expect(formStore.listeners(FieldRegistered).length).toBe(1);
-        expect(formStore.listeners(PropsChanged).length).toBe(1);
+        expect(formStore.listeners(FieldPropsChanged).length).toBe(1);
         expect(formStore.listeners(ValueChanged).length).toBe(1);
     });
 
@@ -62,12 +62,12 @@ describe("FormStoreSubscriber", () => {
         formSubscriber.RemoveFormListeners();
 
         expect(formStore.listeners(FieldRegistered).length).toBe(0);
-        expect(formStore.listeners(PropsChanged).length).toBe(0);
+        expect(formStore.listeners(FieldPropsChanged).length).toBe(0);
         expect(formStore.listeners(ValueChanged).length).toBe(0);
 
     });
 
-    it("MUST validate when specific validationType flag is present without error", async (done) => {
+    it("MUST validate when specific validationType flag is present without error", async done => {
         const fieldId = "field-id";
         const initialValue = "initial valid value";
         const errorMessage = "error message";
@@ -75,7 +75,7 @@ describe("FormStoreSubscriber", () => {
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
         const subscriber = new MySubscriber(formStore);
 
         const fieldProps: FieldStateProps = {
@@ -84,11 +84,11 @@ describe("FormStoreSubscriber", () => {
             validationType: FieldValidationType.OnValueChange
         };
 
-        formStore.RegisterField(fieldId, initialValue, fieldProps);
+        formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
         try {
             await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
-            expect(formStoreValidateCallback.called).toBe(true);
             expect(validatorValidateCallback.called).toBe(true);
+            expect(formStoreValidateCallback.called).toBe(true);
             expect(formStore.GetField(fieldId).Error).toBeUndefined();
 
             done();
@@ -105,7 +105,7 @@ describe("FormStoreSubscriber", () => {
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
         const subscriber = new MySubscriber(formStore);
 
         const fieldProps: FieldStateProps = {
@@ -114,7 +114,7 @@ describe("FormStoreSubscriber", () => {
             validationType: FieldValidationType.OnValueChange
         };
 
-        formStore.RegisterField(fieldId, initialValue, fieldProps);
+        formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
         try {
             await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
             expect(formStoreValidateCallback.called).toBe(true);
@@ -135,7 +135,7 @@ describe("FormStoreSubscriber", () => {
         const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
         const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
         const formStore = new FormStore("form-id");
-        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "Validate");
+        const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
         const subscriber = new MySubscriber(formStore);
 
         const fieldProps: FieldStateProps = {
@@ -144,7 +144,7 @@ describe("FormStoreSubscriber", () => {
             validationType: FieldValidationType.OnPropsChange
         };
 
-        formStore.RegisterField(fieldId, initialValue, fieldProps);
+        formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
         // ValidateField should skip this validation because OnValueChange flag is missing
         subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
 
@@ -163,7 +163,7 @@ describe("FormStoreSubscriber", () => {
         const subscriber = new MySubscriber(formStore);
 
         // Validation is skipped because props are undefined
-        formStore.RegisterField(fieldId, initialValue, undefined);
+        formStore.RegisterField(fieldId, undefined, initialValue);
         subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
 
         expect(formStoreValidateCallback.called).toBe(false);
