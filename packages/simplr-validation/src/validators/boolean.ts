@@ -1,10 +1,10 @@
 import * as Validator from "validator";
 import { FieldValue } from "simplr-forms-core/contracts";
 
-import { BaseFieldValidator, BaseFieldProps } from "../abstractions/base-field-validator";
+import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
-export interface BooleanValidatorProps extends BaseFieldProps { }
+export interface BooleanValidatorProps extends BaseFieldValidatorProps { }
 
 export class BooleanValidator extends BaseFieldValidator<BooleanValidatorProps> {
     Validate(value: FieldValue): ValidationResult {

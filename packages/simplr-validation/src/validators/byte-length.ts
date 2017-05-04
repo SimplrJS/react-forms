@@ -1,10 +1,10 @@
 import * as Validator from "validator";
 import { FieldValue } from "simplr-forms-core/contracts";
 
-import { BaseFieldValidator, BaseFieldProps } from "../abstractions/base-field-validator";
+import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
-export interface ByteLengthValidatorProps extends BaseFieldProps {
+export interface ByteLengthValidatorProps extends BaseFieldValidatorProps {
     options: ValidatorJS.IsByteLengthOptions;
 }
 
