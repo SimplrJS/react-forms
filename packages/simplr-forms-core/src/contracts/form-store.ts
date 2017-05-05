@@ -13,8 +13,8 @@ export interface FormStoreState extends FormStoreStateProperties {
 
 // TODO: Naming
 export interface FormStoreStateProperties {
-    Validating: WhoIsType;
-    Error: WhoIsType;
+    Validating: boolean;
+    Error: boolean;
     Pristine: boolean;
     Touched: boolean;
 }
@@ -24,11 +24,4 @@ export interface FormStoreStateRecord extends TypedRecord<FormStoreStateRecord>,
 export interface BuiltFormObject {
     Fields: Immutable.Map<string, FieldStateRecord>;
     Object: any;
-}
-
-// TODO: Naming.
-export enum WhoIsType {
-    None = 0,
-    Fields = 1 << 0,
-    Form = 1 << 1
 }

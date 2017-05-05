@@ -3,13 +3,14 @@ import { TypedRecord } from "typed-immutable-record/dist";
 
 export interface FormError {
     Message: string;
-    Origin?: FormErrorOrigin; // Told you so.
+    // Told you so.
+    Origin?: FormErrorOrigin;
 }
 
 export interface FormErrorRecord extends TypedRecord<FormErrorRecord>, FormError { }
 
 export enum FormErrorOrigin {
-    None = 0,
-    Validation = 1 << 0,
-    Submit = 1 << 1
+    None,
+    Validation,
+    Submit
 }
