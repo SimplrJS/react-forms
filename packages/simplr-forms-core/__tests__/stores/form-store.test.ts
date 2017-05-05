@@ -359,6 +359,8 @@ describe("Form store", () => {
             expect(formStore.GetState().Touched).toBe(true);
         });
 
-        // TODO: Validation tests.
+        it("error true after field error ", () => {
+
+        });
     });
 });

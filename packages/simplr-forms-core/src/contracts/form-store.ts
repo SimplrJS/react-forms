@@ -13,8 +13,8 @@ export interface FormStoreState extends FormStoreStateProperties {
 
 // TODO: Naming
 export interface FormStoreStateProperties {
-    Validating: WhoIsValidating;
-    Error: boolean;
+    Validating: WhoIsType;
+    Error: WhoIsType;
     Pristine: boolean;
     Touched: boolean;
 }
@@ -27,7 +27,7 @@ export interface BuiltFormObject {
 }
 
 // TODO: Naming.
-export enum WhoIsValidating {
+export enum WhoIsType {
     None = 0,
     Fields = 1 << 0,
     Form = 1 << 1
