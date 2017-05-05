@@ -11,14 +11,16 @@ export interface FormProps {
     disabled?: boolean;
 }
 
-export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormProps { }
+export type FormStateProps = FormProps & React.Props<any>;
+
+export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormStateProps { }
 
 export interface FormChildContext {
     FormId: string;
 }
 
 export interface FormState {
-    Props: FormPropsRecord;
+    Props: FormStateProps;
     Validating: boolean;
     Error?: FormErrorRecord;
     SubmitCallback?: () => void;
