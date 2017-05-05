@@ -8,7 +8,6 @@ import {
     FieldState,
     FieldValue,
     FieldStateRecord,
-    FormErrorRecord,
     FieldStatePropsRecord,
     FieldStateProps
 } from "../contracts/field";
@@ -27,7 +26,7 @@ import {
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
-import { FormError } from "../contracts/error";
+import { FormError, FormErrorRecord } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -265,6 +264,60 @@ export class FormStore extends ActionEmitter {
                     Validating: false,
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
+
+                state = this.RecalculateDependentFormState(state);
+            });
+        }
+    }
+
+    public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
+        const form = this.State.Form;
+
+        // Skip if it's already validating
+        if (!form.Validating) {
+            this.State = this.State.withMutations(state => {
+                let error: WhoIsType;
+                // Remove form flag if exists from error.
+                if ((state.Error & WhoIsType.Form) === WhoIsType.Form) {
+                    error = state.Error ^ WhoIsType.Form;
+                } else {
+                    error = state.Error;
+                }
+
+                state.merge({
+                    Validating: state.Validating | WhoIsType.Form,
+                    Error: error
+                } as Partial<FormStoreState>);
+
+                state.Form = state.Form.merge({
+                    Validating: false,
+                    Error: undefined
+                } as FormState);
+            });
+        }
+
+        try {
+            // Wait for validation to finish
+            await validationPromise;
+
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Validating: false
+                } as FormState);
+
+                state = this.RecalculateDependentFormState(state);
+            });
+        } catch (error) {
+            const formError = ConstructFormError(error);
+            if (formError == null) {
+                throw Error(error);
+            }
+
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Validating: false,
+                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                } as FormState);
 
                 state = this.RecalculateDependentFormState(state);
             });

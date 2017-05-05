@@ -1,7 +1,7 @@
 import { TypedRecord } from "typed-immutable-record";
 
-import { FormError } from "./error";
 import { FormStore } from "../stores/form-store";
+import { FormErrorRecord } from "./error";
 
 export interface FormProps {
     formId?: string;
@@ -20,7 +20,7 @@ export interface FormChildContext {
 export interface FormState {
     Props: FormPropsRecord;
     Validating: boolean;
-    Error?: FormError;
+    Error?: FormErrorRecord;
     SubmitCallback?: () => void;
     Submitting: boolean;
     SuccessfullySubmitted: boolean;
