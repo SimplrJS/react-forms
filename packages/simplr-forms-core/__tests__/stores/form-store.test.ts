@@ -6,6 +6,7 @@ import { FormError } from "../../src/contracts/error";
 import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
 
 import { MyFieldProps } from "../test-components/test-field";
+import { WhoIsType } from "../../src/contracts/form-store";
 
 describe("Form store", () => {
     const formId = "form-id";
@@ -340,7 +341,7 @@ describe("Form store", () => {
 
     describe("state properties", () => {
         it("pristine false after field value changed", () => {
-            const fieldId = "form id";
+            const fieldId = "field id";
 
             formStore.RegisterField(fieldId, "");
             expect(formStore.GetState().Pristine).toBe(true);
@@ -350,7 +351,7 @@ describe("Form store", () => {
         });
 
         it("touched true after field value changed", () => {
-            const fieldId = "form id";
+            const fieldId = "field id";
 
             formStore.RegisterField(fieldId, "");
             expect(formStore.GetState().Touched).toBe(false);
@@ -359,8 +360,33 @@ describe("Form store", () => {
             expect(formStore.GetState().Touched).toBe(true);
         });
 
-        it("error true after field error ", () => {
+        it("error fields flag is present after field error ", async done => {
+            const fieldId = "field id";
+            try {
+                formStore.RegisterField(fieldId, "");
+                expect(formStore.GetState().Error).toBe(WhoIsType.None);
 
+                await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                    reject("error message");
+                }));
+                expect(formStore.GetState().Error).toBe(WhoIsType.Fields);
+            } catch (error) {
+                done.fail(error);
+            }
+
+            done();
+        });
+
+        it("validating fields flag is present after field error ", () => {
+            const fieldId = "field id";
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Validating).toBe(WhoIsType.None);
+
+            formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                reject("error message");
+            }));
+
+            expect(formStore.GetState().Validating).toBe(WhoIsType.Fields);
         });
     });
 });

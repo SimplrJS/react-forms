@@ -209,12 +209,18 @@ export class FormStore extends ActionEmitter {
         // Skip if it's already validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
-                // Set form state to Validating: true
-                state.Form = state.Form.merge({
-                    Validating: true,
-                    Error: undefined
-                } as FormState);
+                let error: WhoIsType;
+                // Remove fields flag if exists from error.
+                if ((state.Error & WhoIsType.Fields) === WhoIsType.Fields) {
+                    error = state.Error ^ WhoIsType.Fields;
+                } else {
+                    error = state.Error;
+                }
 
+                state.merge({
+                    Validating: state.Validating | WhoIsType.Fields,
+                    Error: error
+                } as Partial<FormStoreState>);
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: true,
@@ -238,6 +244,8 @@ export class FormStore extends ActionEmitter {
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
                 } as FieldState));
+
+                state = this.RecalculateDependentFormState(state);
             });
         } catch (error) {
             // Skip validation if the value has changed again
@@ -257,6 +265,8 @@ export class FormStore extends ActionEmitter {
                     Validating: false,
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
+
+                state = this.RecalculateDependentFormState(state);
             });
         }
     }
@@ -383,7 +393,7 @@ export class FormStore extends ActionEmitter {
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
             Validating: WhoIsType.None,
-            Error: false,
+            Error: WhoIsType.None,
             Pristine: true,
             Touched: false
         });
