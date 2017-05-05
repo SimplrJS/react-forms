@@ -12,7 +12,7 @@ import {
     FieldPropsChanged
 } from "simplr-forms-core/actions";
 
-import { ValidateField } from "../utils/validation";
+import { ValidateField, ValidateForm } from "../utils/validation";
 
 export class FormStoreSubscriber {
 
@@ -59,16 +59,32 @@ export class FormStoreSubscriber {
         await this.formStore.ValidateField(fieldId, validationPromise);
     }
 
-    protected OnRegistered(action: FieldRegistered) {
-        this.ValidateField(action.FieldId, action.InitialValue, FieldValidationType.OnFieldRegistered);
+    protected async ValidateForm() {
+        const formState = this.formStore.GetState();
+        const formProps = formState.Form.Props;
+
+        if (formState.Error != null || formState.Validating) {
+            return;
+        }
+
+        const childrenArray = React.Children.toArray(formProps.children) as JSX.Element[];
+        const validationPromise = ValidateForm(childrenArray, this.formStore.ToObject());
+        await this.formStore.ValidateForm(validationPromise);
     }
 
-    protected OnValueChanged(action: ValueChanged) {
-        this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
+    protected async OnRegistered(action: FieldRegistered) {
+        await this.ValidateField(action.FieldId, action.InitialValue, FieldValidationType.OnFieldRegistered);
+        // await this.ValidateForm();
     }
 
-    protected OnPropsChanged(action: FieldPropsChanged) {
+    protected async OnValueChanged(action: ValueChanged) {
+        await this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
+        await this.ValidateForm();
+    }
+
+    protected async OnPropsChanged(action: FieldPropsChanged) {
         const fieldState = this.formStore.GetField(action.FieldId);
-        this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
+        await this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
+        // await this.ValidateForm();
     }
 }
