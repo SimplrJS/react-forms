@@ -5,7 +5,6 @@ import * as PropTypes from "prop-types";
 import {
     CoreFieldProps,
     FieldValue,
-    FieldValidationType,
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
@@ -18,6 +17,7 @@ import { FormStoreStateRecord } from "../contracts/form-store";
 import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
+import { FieldValidationType } from "../contracts/validation";
 
 export interface CoreFieldState {
     Field?: FieldStateRecord;

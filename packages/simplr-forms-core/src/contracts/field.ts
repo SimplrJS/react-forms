@@ -1,6 +1,6 @@
 import { TypedRecord } from "typed-immutable-record";
 import { FormErrorRecord } from "./error";
-import { ValidationType } from "./validation";
+import { FieldValidationType } from "./validation";
 
 // Field value can be of any type or undefined
 export type FieldValue = any | undefined;
@@ -15,7 +15,7 @@ export interface CoreFieldProps {
     formatValue?: FieldFormatValueCallback;
     parseValue?: FieldParseValueCallback;
     normalizeValue?: FieldNormalizeValueCallback;
-    validationType?: ValidationType;
+    validationType?: FieldValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
 }
