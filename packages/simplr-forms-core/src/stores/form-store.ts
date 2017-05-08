@@ -209,7 +209,7 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.merge({
                     Validating: true,
-                    Error: false
+                    HasError: false
                 } as Partial<FormStoreState>);
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -269,7 +269,7 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.merge({
                     Validating: true,
-                    Error: false
+                    HasError: false
                 } as Partial<FormStoreState>);
 
                 state.Form = state.Form.merge({
@@ -429,7 +429,7 @@ export class FormStore extends ActionEmitter {
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
             Validating: false,
-            Error: false,
+            HasError: false,
             Pristine: true,
             Touched: false
         });
@@ -478,7 +478,7 @@ export class FormStore extends ActionEmitter {
 
     protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
         let updater: FormStoreStateProperties = {
-            Error: false,
+            HasError: false,
             Pristine: true,
             Touched: false,
             Validating: false
@@ -489,8 +489,8 @@ export class FormStore extends ActionEmitter {
         // Check all fields
         formStoreState.Fields.forEach((fieldState, key) => {
             if (fieldState != null && key != null) {
-                if (!updater.Error && fieldState.Error) {
-                    updater.Error = true;
+                if (!updater.HasError && fieldState.Error) {
+                    updater.HasError = true;
                 }
                 if (updater.Pristine && !fieldState.Pristine) {
                     updater.Pristine = false;
@@ -503,7 +503,7 @@ export class FormStore extends ActionEmitter {
                 }
 
                 // Short circuit if everything is resolved with fields.
-                if (updater.Error &&
+                if (updater.HasError &&
                     !updater.Pristine &&
                     updater.Touched &&
                     updater.Validating) {
@@ -514,8 +514,8 @@ export class FormStore extends ActionEmitter {
 
         // Check form state
         const formState = formStoreState.Form;
-        if (!updater.Error && formState.Error != null) {
-            updater.Error = true;
+        if (!updater.HasError && formState.Error != null) {
+            updater.HasError = true;
         }
         if (!updater.Validating && formState.Validating) {
             updater.Validating = true;

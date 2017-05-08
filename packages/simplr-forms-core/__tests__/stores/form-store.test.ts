@@ -363,12 +363,12 @@ describe("Form store", () => {
             const fieldId = "field id";
             try {
                 formStore.RegisterField(fieldId, "");
-                expect(formStore.GetState().Error).toBe(false);
+                expect(formStore.GetState().HasError).toBe(false);
 
                 await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
                     reject("error message");
                 }));
-                expect(formStore.GetState().Error).toBe(true);
+                expect(formStore.GetState().HasError).toBe(true);
             } catch (error) {
                 done.fail(error);
             }

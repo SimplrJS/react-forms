@@ -14,7 +14,7 @@ export interface FormStoreState extends FormStoreStateProperties {
 // TODO: Naming
 export interface FormStoreStateProperties {
     Validating: boolean;
-    Error: boolean;
+    HasError: boolean;
     Pristine: boolean;
     Touched: boolean;
 }
