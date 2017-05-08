@@ -2,6 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import * as FormContracts from "../contracts/form";
+import { FieldValidationType } from "../contracts/validation";
 import { FormStore } from "../stores/form-store";
 import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
 
@@ -20,6 +21,9 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
 
     static defaultProps: FormContracts.FormProps = {
         destroyOnUnmount: true,
+        fieldsValidationType: FieldValidationType.OnFieldRegistered |
+        FieldValidationType.OnValueChange |
+        FieldValidationType.OnPropsChange,
         disabled: false
     };
 

@@ -47,9 +47,6 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
-        validationType: FieldValidationType.OnFieldRegistered |
-        FieldValidationType.OnValueChange |
-        FieldValidationType.OnPropsChange,
         // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };
