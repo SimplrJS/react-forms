@@ -1,11 +1,11 @@
-import { BaseValidator, ValidatorProps } from "../abstractions/base-validator";
+import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
 import { FieldValue } from "simplr-forms-core/contracts";
 
-export interface RequiredValidatorProps extends ValidatorProps { }
+export interface RequiredValidatorProps extends BaseFieldValidatorProps { }
 
-export class RequiredValidator extends BaseValidator<RequiredValidatorProps> {
+export class RequiredValidator extends BaseFieldValidator<RequiredValidatorProps> {
 
     private isString(value: FieldValue) {
         return typeof value === "string";

@@ -1,7 +1,8 @@
 import { TypedRecord } from "typed-immutable-record";
 
-import { FormError } from "./error";
 import { FormStore } from "../stores/form-store";
+import { FormErrorRecord } from "./error";
+import { FieldValidationType } from "./validation";
 
 export interface FormProps {
     formId?: string;
@@ -9,22 +10,25 @@ export interface FormProps {
     destroyOnUnmount?: boolean;
     forceSubmit?: boolean;
     disabled?: boolean;
+    fieldsValidationType?: FieldValidationType;
+    formValidationType?: FieldValidationType;
 }
 
-export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormProps { }
+export type FormStateProps = FormProps & React.Props<any>;
+
+export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormStateProps { }
 
 export interface FormChildContext {
     FormId: string;
 }
 
 export interface FormState {
+    Props: FormStateProps;
     Validating: boolean;
-    Pristine: boolean;
-    Error?: FormError;
-    Submitting: boolean;
-    Touched: boolean;
-    SuccessfullySubmitted: boolean;
+    Error?: FormErrorRecord;
     SubmitCallback?: () => void;
+    Submitting: boolean;
+    SuccessfullySubmitted: boolean;
     ActiveFieldId?: string;
 }
 

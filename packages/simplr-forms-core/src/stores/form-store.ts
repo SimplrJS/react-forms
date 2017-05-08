@@ -8,7 +8,6 @@ import {
     FieldState,
     FieldValue,
     FieldStateRecord,
-    FormErrorRecord,
     FieldStatePropsRecord,
     FieldStateProps
 } from "../contracts/field";
@@ -21,11 +20,12 @@ import {
 import {
     FormStoreState,
     FormStoreStateRecord,
-    BuiltFormObject
+    BuiltFormObject,
+    FormStoreStateStatus
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
-import { FormError } from "../contracts/error";
+import { FormError, FormErrorRecord } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -154,7 +154,9 @@ export class FormStore extends ActionEmitter {
 
     public UpdateFormProps(props: FormProps): void {
         this.State = this.State.withMutations(state => {
-            state.FormProps = recordify<FormProps, FormPropsRecord>(props);
+            state.Form = state.Form.withMutations(formState => {
+                formState.Props = recordify<FormProps, FormPropsRecord>(props);
+            });
             this.emit(new Actions.FormPropsChanged());
         });
     }
@@ -192,10 +194,7 @@ export class FormStore extends ActionEmitter {
                 Touched: true
             } as FieldState));
 
-            state.Form = this.RecalculateDependentFormState(state, {
-                Pristine: newPristine,
-                Touched: true
-            });
+            state = this.RecalculateDependentFormState(state);
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
@@ -208,12 +207,10 @@ export class FormStore extends ActionEmitter {
         // Skip if it's already validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
-                // Set form state to Validating: true
-                state.Form = state.Form.merge({
+                state.merge({
                     Validating: true,
-                    Error: undefined
-                } as FormState);
-
+                    HasError: false
+                } as Partial<FormStoreState>);
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: true,
@@ -237,6 +234,8 @@ export class FormStore extends ActionEmitter {
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
                 } as FieldState));
+
+                state = this.RecalculateDependentFormState(state);
             });
         } catch (error) {
             // Skip validation if the value has changed again
@@ -256,6 +255,54 @@ export class FormStore extends ActionEmitter {
                     Validating: false,
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
+
+                state = this.RecalculateDependentFormState(state);
+            });
+        }
+    }
+
+    public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
+        const form = this.State.Form;
+
+        // Skip if it's already validating
+        if (!form.Validating) {
+            this.State = this.State.withMutations(state => {
+                state.merge({
+                    Validating: true,
+                    HasError: false
+                } as Partial<FormStoreState>);
+
+                state.Form = state.Form.merge({
+                    Validating: false,
+                    Error: undefined
+                } as FormState);
+            });
+        }
+
+        try {
+            // Wait for validation to finish
+            await validationPromise;
+
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Validating: false
+                } as FormState);
+
+                state = this.RecalculateDependentFormState(state);
+            });
+        } catch (error) {
+            const formError = ConstructFormError(error);
+            if (formError == null) {
+                throw Error(error);
+            }
+
+            this.State = this.State.withMutations(state => {
+                state.Form = state.Form.merge({
+                    Validating: false,
+                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                } as FormState);
+
+                state = this.RecalculateDependentFormState(state);
             });
         }
     }
@@ -381,7 +428,11 @@ export class FormStore extends ActionEmitter {
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
-            FormProps: recordify<FormProps, FormPropsRecord>({})
+            // MUST be identical with GetInitialFieldState method.
+            Validating: false,
+            HasError: false,
+            Pristine: true,
+            Touched: false
         });
     }
 
@@ -389,12 +440,11 @@ export class FormStore extends ActionEmitter {
         return {
             Validating: false,
             Submitting: false,
-            Pristine: true,
             SuccessfullySubmitted: false,
             ActiveFieldId: undefined,
-            Touched: false,
             Error: undefined,
-            SubmitCallback: undefined
+            SubmitCallback: undefined,
+            Props: recordify<FormProps, FormPropsRecord>({})
         };
     }
 
@@ -409,6 +459,15 @@ export class FormStore extends ActionEmitter {
             Error: undefined,
             FieldsGroup: undefined,
             Props: undefined
+        };
+    }
+
+    protected GetInitialStoreStatus(): FormStoreStateStatus {
+        return {
+            HasError: false,
+            Pristine: true,
+            Touched: false,
+            Validating: false
         };
     }
 
@@ -427,34 +486,47 @@ export class FormStore extends ActionEmitter {
         return formStoreObject;
     }
 
-    protected RecalculateDependentFormState(
-        formStoreState: FormStoreStateRecord,
-        newStatePartial: Partial<FormState>): FormStateRecord {
-        let updater = {
-            Pristine: true,
-            Touched: false,
-            ...newStatePartial
-        } as FormState;
+    protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
+        let updater: FormStoreStateStatus = this.GetInitialStoreStatus();
 
-        // TODO: might build curried function for more efficient checking
+        // TODO: might build curried function for more efficient checking.
 
-        this.State.Fields.forEach(field => {
-            if (field != null) {
-                if (updater.Pristine && !field.Pristine) {
+        // Check all fields
+        formStoreState.Fields.forEach((fieldState, key) => {
+            if (fieldState != null && key != null) {
+                if (!updater.HasError && fieldState.Error) {
+                    updater.HasError = true;
+                }
+                if (updater.Pristine && !fieldState.Pristine) {
                     updater.Pristine = false;
                 }
-                if (!updater.Touched && field.Touched) {
+                if (!updater.Touched && fieldState.Touched) {
                     updater.Touched = true;
                 }
+                if (!fieldState.Validating) {
+                    updater.Validating = true;
+                }
 
-                // Short circuit if both Pristine and Touched are already resolved
-                if (!updater.Pristine && updater.Touched) {
+                // Short circuit if everything is resolved with fields.
+                if (updater.HasError &&
+                    !updater.Pristine &&
+                    updater.Touched &&
+                    updater.Validating) {
                     return false;
                 }
             }
         });
 
-        return formStoreState.Form.merge(updater);
+        // Check form state
+        const formState = formStoreState.Form;
+        if (!updater.HasError && formState.Error != null) {
+            updater.HasError = true;
+        }
+        if (!updater.Validating && formState.Validating) {
+            updater.Validating = true;
+        }
+
+        return formStoreState.merge(updater);
     }
 
     protected IsPromise<T>(value: any): value is Promise<T> {

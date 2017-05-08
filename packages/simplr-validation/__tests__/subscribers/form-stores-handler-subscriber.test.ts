@@ -1,10 +1,9 @@
-import { Stores, Actions } from "simplr-forms-core";
+import { FSHContainer, FormStoresHandler } from "simplr-forms-core/stores";
+import { FormRegistered, FormUnregistered } from "simplr-forms-core/actions";
 import * as Sinon from "sinon";
 
 import { FormStoresHandlerSubscriber } from "../../src/subscribers/form-stores-handler-subscriber";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
-
-const { FSHContainer } = Stores;
 
 class FormStoreHandlerSubscriberTest extends FormStoresHandlerSubscriber {
     public get TestFormStoresSubscribers() {
@@ -16,7 +15,7 @@ let sandbox: Sinon.SinonSandbox;
 describe("FormStoreHandlerSubscriber", () => {
     beforeEach(() => {
         sandbox = Sinon.sandbox.create();
-        FSHContainer.SetFormStoresHandler(new Stores.FormStoresHandler());
+        FSHContainer.SetFormStoresHandler(new FormStoresHandler());
     });
 
     afterEach(function () {
@@ -24,18 +23,18 @@ describe("FormStoreHandlerSubscriber", () => {
     });
 
     it("add listeners on form stores handler", () => {
-        const callback = sandbox.spy(Stores.FormStoresHandler.prototype, "addListener");
+        const callback = sandbox.spy(FormStoresHandler.prototype, "addListener");
         const formStoreHandler = FSHContainer.FormStoresHandler;
 
-        expect(formStoreHandler.listeners(Actions.FormRegistered).length).toBe(0);
-        expect(formStoreHandler.listeners(Actions.FormUnregistered).length).toBe(0);
+        expect(formStoreHandler.listeners(FormRegistered).length).toBe(0);
+        expect(formStoreHandler.listeners(FormUnregistered).length).toBe(0);
 
         new FormStoresHandlerSubscriber(FSHContainer);
 
         expect(callback.called).toBe(true);
 
-        expect(formStoreHandler.listeners(Actions.FormRegistered).length).toBe(1);
-        expect(formStoreHandler.listeners(Actions.FormUnregistered).length).toBe(1);
+        expect(formStoreHandler.listeners(FormRegistered).length).toBe(1);
+        expect(formStoreHandler.listeners(FormUnregistered).length).toBe(1);
     });
 
     it("create FormStoreSubscriber when form registers", () => {

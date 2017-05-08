@@ -3,13 +3,19 @@ import { TypedRecord } from "typed-immutable-record";
 
 import { FieldStateRecord } from "../contracts/field";
 import { FieldsGroupStoreState } from "../contracts/fields-group";
-import { FormStateRecord, FormPropsRecord } from "../contracts/form";
+import { FormStateRecord } from "../contracts/form";
 
-export interface FormStoreState {
+export interface FormStoreState extends FormStoreStateStatus {
     Fields: Immutable.Map<string, FieldStateRecord>;
     FieldsGroups: Immutable.Map<string, FieldsGroupStoreState>;
     Form: FormStateRecord;
-    FormProps: FormPropsRecord;
+}
+
+export interface FormStoreStateStatus {
+    Validating: boolean;
+    HasError: boolean;
+    Pristine: boolean;
+    Touched: boolean;
 }
 
 export interface FormStoreStateRecord extends TypedRecord<FormStoreStateRecord>, FormStoreState { }

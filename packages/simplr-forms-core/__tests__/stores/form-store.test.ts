@@ -337,4 +337,65 @@ describe("Form store", () => {
             }
         }
     });
+
+    describe("state properties", () => {
+        it("pristine false after field value changed", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Pristine).toBe(true);
+
+            formStore.UpdateFieldValue(fieldId, "next value");
+            expect(formStore.GetState().Pristine).toBe(false);
+        });
+
+        it("touched true after field value changed", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+
+            formStore.UpdateFieldValue(fieldId, "next value");
+            expect(formStore.GetState().Touched).toBe(true);
+        });
+
+        it("touched false after value updated to identical one", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+
+            formStore.UpdateFieldValue(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+        });
+
+        it("error true is after field error ", async done => {
+            const fieldId = "field id";
+            try {
+                formStore.RegisterField(fieldId, "");
+                expect(formStore.GetState().HasError).toBe(false);
+
+                await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                    reject("error message");
+                }));
+                expect(formStore.GetState().HasError).toBe(true);
+            } catch (error) {
+                done.fail(error);
+            }
+
+            done();
+        });
+
+        it("validating true after field error ", () => {
+            const fieldId = "field id";
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Validating).toBe(false);
+
+            formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                reject("error message");
+            }));
+
+            expect(formStore.GetState().Validating).toBe(true);
+        });
+    });
 });

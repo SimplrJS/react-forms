@@ -5,7 +5,6 @@ import * as PropTypes from "prop-types";
 import {
     CoreFieldProps,
     FieldValue,
-    FieldValidationType,
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
@@ -18,6 +17,7 @@ import { FormStoreStateRecord } from "../contracts/form-store";
 import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
+import { FieldValidationType } from "../contracts/validation";
 
 export interface CoreFieldState {
     Field?: FieldStateRecord;
@@ -47,9 +47,6 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
-        validationType: FieldValidationType.OnFieldRegistered |
-        FieldValidationType.OnValueChange |
-        FieldValidationType.OnPropsChange,
         // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };

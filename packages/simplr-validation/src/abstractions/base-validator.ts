@@ -3,13 +3,12 @@ import { FieldValue } from "simplr-forms-core/contracts";
 
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 
-export interface ValidatorProps {
+export interface BaseValidatorProps {
     error: ValidationError;
 }
 
-export abstract class BaseValidator<TProps extends ValidatorProps>
-    extends React.Component<TProps, {}> implements Validator {
-    static SimplrValidationValidatorComponent(): void { }
+export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
+    extends React.Component<TProps, TState> implements Validator {
 
     abstract Validate(value: FieldValue): ValidationResult;
 
