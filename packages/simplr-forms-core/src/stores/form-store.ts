@@ -379,6 +379,8 @@ export class FormStore extends ActionEmitter {
                     } as FieldState));
                 }
             });
+
+            return this.RecalculateDependentFormState(state);
         });
     }
 
@@ -403,6 +405,8 @@ export class FormStore extends ActionEmitter {
                     } as FieldState));
                 }
             });
+
+            return this.RecalculateDependentFormState(state);
         });
     }
 
@@ -503,7 +507,7 @@ export class FormStore extends ActionEmitter {
                 if (!updater.Touched && fieldState.Touched) {
                     updater.Touched = true;
                 }
-                if (!fieldState.Validating) {
+                if (fieldState.Validating) {
                     updater.Validating = true;
                 }
 
