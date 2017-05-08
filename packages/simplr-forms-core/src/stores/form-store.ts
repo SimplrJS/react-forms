@@ -461,6 +461,15 @@ export class FormStore extends ActionEmitter {
         };
     }
 
+    protected GetInitialStateProperties(): FormStoreStateProperties {
+        return {
+            HasError: false,
+            Pristine: true,
+            Touched: false,
+            Validating: false
+        };
+    }
+
     protected BuildFormObject(state: FormStoreStateRecord) {
         const formStoreObject: { [id: string]: any } = {};
 
@@ -477,12 +486,7 @@ export class FormStore extends ActionEmitter {
     }
 
     protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
-        let updater: FormStoreStateProperties = {
-            HasError: false,
-            Pristine: true,
-            Touched: false,
-            Validating: false
-        };
+        let updater: FormStoreStateProperties = this.GetInitialStateProperties();
 
         // TODO: might build curried function for more efficient checking.
 
