@@ -10,7 +10,7 @@ export interface FormProps {
     destroyOnUnmount?: boolean;
     forceSubmit?: boolean;
     disabled?: boolean;
-    fieldValidationType?: FieldValidationType;
+    fieldsValidationType?: FieldValidationType;
     formValidationType?: FieldValidationType;
 }
 
