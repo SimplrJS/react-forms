@@ -194,7 +194,7 @@ export class FormStore extends ActionEmitter {
                 Touched: true
             } as FieldState));
 
-            state = this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormState(state);
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
@@ -235,7 +235,7 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FieldState));
 
-                state = this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormState(state);
             });
         } catch (error) {
             // Skip validation if the value has changed again
@@ -256,7 +256,7 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
 
-                state = this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormState(state);
             });
         }
     }
@@ -288,7 +288,7 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FormState);
 
-                state = this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormState(state);
             });
         } catch (error) {
             const formError = ConstructFormError(error);
@@ -302,7 +302,7 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FormState);
 
-                state = this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormState(state);
             });
         }
     }
