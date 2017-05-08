@@ -359,6 +359,16 @@ describe("Form store", () => {
             expect(formStore.GetState().Touched).toBe(true);
         });
 
+        it("touched false after value updated to identical one", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+
+            formStore.UpdateFieldValue(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+        });
+
         it("error true is after field error ", async done => {
             const fieldId = "field id";
             try {
