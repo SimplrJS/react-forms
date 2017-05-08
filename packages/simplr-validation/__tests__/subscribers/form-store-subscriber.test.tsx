@@ -239,5 +239,9 @@ describe("FormStoreSubscriber", () => {
 
             done();
         });
+
+        // TODO: Validate Form without an error
+        // TODO: Form will not validate if it has an error
+        // TODO: Form will not validate if it hasn't specific formValidationType
     });
 });
