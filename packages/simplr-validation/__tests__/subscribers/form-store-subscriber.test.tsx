@@ -117,6 +117,7 @@ describe("FormStoreSubscriber", () => {
 
             formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
             try {
+                // Simulating OnValueChanged.
                 await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
                 expect(validatorValidateCallback.called).toBe(true);
                 expect(formStoreValidateCallback.called).toBe(true);
@@ -134,7 +135,7 @@ describe("FormStoreSubscriber", () => {
             const errorMessage = "error message";
 
             const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-            const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
+            const fieldChildren = [<ContainsValidator value="good" error={errorMessage} />];
             const formStore = new FormStore("form-id");
             const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
             const subscriber = new MySubscriber(formStore);
@@ -147,6 +148,7 @@ describe("FormStoreSubscriber", () => {
 
             formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
             try {
+                // Simulating OnValueChanged.
                 await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
                 expect(formStoreValidateCallback.called).toBe(true);
                 expect(validatorValidateCallback.called).toBe(true);
@@ -164,7 +166,7 @@ describe("FormStoreSubscriber", () => {
             const errorMessage = "error message";
 
             const validatorValidateCallback = sandbox.spy(ContainsValidator.prototype, "Validate");
-            const fieldChildren = [<ContainsValidator value="valid" error={errorMessage} />];
+            const fieldChildren = [<ContainsValidator value="good" error={errorMessage} />];
             const formStore = new FormStore("form-id");
             const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
             const subscriber = new MySubscriber(formStore);
