@@ -1,5 +1,6 @@
 import { TypedRecord } from "typed-immutable-record";
 import { FormErrorRecord } from "./error";
+import { ValidationType } from "./validation";
 
 // Field value can be of any type or undefined
 export type FieldValue = any | undefined;
@@ -14,7 +15,7 @@ export interface CoreFieldProps {
     formatValue?: FieldFormatValueCallback;
     parseValue?: FieldParseValueCallback;
     normalizeValue?: FieldNormalizeValueCallback;
-    validationType?: FieldValidationType;
+    validationType?: ValidationType;
     onBlur?: (event: any) => void;
     onFocus?: (event: any) => void;
 }
@@ -43,10 +44,3 @@ export type FieldStateProps = CoreFieldProps & React.Props<any>;
 
 export interface FieldStateRecord extends TypedRecord<FieldStateRecord>, FieldState { }
 export interface FieldStatePropsRecord extends TypedRecord<FieldStatePropsRecord>, FieldStateProps { }
-
-export enum FieldValidationType {
-    None,
-    OnFieldRegistered = 1 << 1,
-    OnValueChange = 1 << 2,
-    OnPropsChange = 1 << 3
-}

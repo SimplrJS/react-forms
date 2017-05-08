@@ -2,6 +2,7 @@ import { TypedRecord } from "typed-immutable-record";
 
 import { FormStore } from "../stores/form-store";
 import { FormErrorRecord } from "./error";
+import { ValidationType } from "./validation";
 
 export interface FormProps {
     formId?: string;
@@ -9,6 +10,8 @@ export interface FormProps {
     destroyOnUnmount?: boolean;
     forceSubmit?: boolean;
     disabled?: boolean;
+    fieldValidationType?: ValidationType;
+    formValidationType?: ValidationType;
 }
 
 export type FormStateProps = FormProps & React.Props<any>;
