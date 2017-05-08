@@ -204,7 +204,7 @@ describe("FormStoreSubscriber", () => {
     });
 
     describe("form validation", () => {
-        fit("validate formState object with an error", async done => {
+        it("validate formState object with an error", async done => {
             const fieldId = "field-id";
             const initialValue = "initial value";
             const errorMessage = "error message";
