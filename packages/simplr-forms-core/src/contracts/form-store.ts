@@ -5,14 +5,13 @@ import { FieldStateRecord } from "../contracts/field";
 import { FieldsGroupStoreState } from "../contracts/fields-group";
 import { FormStateRecord } from "../contracts/form";
 
-export interface FormStoreState extends FormStoreStateProperties {
+export interface FormStoreState extends FormStoreStateStatus {
     Fields: Immutable.Map<string, FieldStateRecord>;
     FieldsGroups: Immutable.Map<string, FieldsGroupStoreState>;
     Form: FormStateRecord;
 }
 
-// TODO: Naming
-export interface FormStoreStateProperties {
+export interface FormStoreStateStatus {
     Validating: boolean;
     HasError: boolean;
     Pristine: boolean;

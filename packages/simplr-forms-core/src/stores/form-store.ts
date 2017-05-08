@@ -21,7 +21,7 @@ import {
     FormStoreState,
     FormStoreStateRecord,
     BuiltFormObject,
-    FormStoreStateProperties
+    FormStoreStateStatus
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
@@ -428,6 +428,7 @@ export class FormStore extends ActionEmitter {
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
+            // MUST be identical with GetInitialFieldState method.
             Validating: false,
             HasError: false,
             Pristine: true,
@@ -461,7 +462,7 @@ export class FormStore extends ActionEmitter {
         };
     }
 
-    protected GetInitialStateProperties(): FormStoreStateProperties {
+    protected GetInitialStoreStatus(): FormStoreStateStatus {
         return {
             HasError: false,
             Pristine: true,
@@ -486,7 +487,7 @@ export class FormStore extends ActionEmitter {
     }
 
     protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
-        let updater: FormStoreStateProperties = this.GetInitialStateProperties();
+        let updater: FormStoreStateStatus = this.GetInitialStoreStatus();
 
         // TODO: might build curried function for more efficient checking.
 
