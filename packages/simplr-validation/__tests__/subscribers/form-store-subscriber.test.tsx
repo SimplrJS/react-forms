@@ -3,9 +3,9 @@ import * as Sinon from "sinon";
 
 import {
     FieldValue,
-    FieldValidationType,
     FieldStateProps,
-    FormStateProps
+    FormStateProps,
+    FieldValidationType
 } from "simplr-forms-core/contracts";
 import { FormStore } from "simplr-forms-core/stores";
 import {
@@ -24,13 +24,13 @@ class MySubscriber extends FormStoreSubscriber {
     public ValidateField(
         fieldId: string,
         value: FieldValue,
-        validationType: FieldValidationType
+        targetValidationType: FieldValidationType
     ) {
-        return super.ValidateField(fieldId, value, validationType);
+        return super.ValidateField(fieldId, value, targetValidationType);
     }
 
-    public ValidateForm() {
-        return super.ValidateForm();
+    public ValidateForm(targetValidationType: FieldValidationType) {
+        return super.ValidateForm(targetValidationType);
     }
 }
 
@@ -204,17 +204,19 @@ describe("FormStoreSubscriber", () => {
     });
 
     describe("form validation", () => {
-        it("validate formState object with an error", async done => {
+        fit("validate formState object with an error", async done => {
             const fieldId = "field-id";
             const initialValue = "initial value";
             const errorMessage = "error message";
+            const formValidationType = FieldValidationType.OnValueChange;
 
             const validatorValidateCallback = sandbox.spy(TestFormValidator.prototype, "Validate");
-            const formChildren = [<TestFormValidator minLength={3} error={errorMessage} />];
+            const formChildren = [<TestFormValidator minLength={1000} error={errorMessage} />];
             const formStore = new FormStore("form-id");
 
             const formProps: FormStateProps = {
-                children: formChildren
+                children: formChildren,
+                formValidationType: formValidationType
             };
 
             formStore.UpdateFormProps(formProps);
@@ -225,12 +227,12 @@ describe("FormStoreSubscriber", () => {
             try {
                 // Validation is skipped because props are undefined
                 formStore.RegisterField(fieldId, undefined, initialValue);
-                await subscriber.ValidateForm();
+                await subscriber.ValidateForm(formValidationType);
 
                 expect(formStoreValidateCallback.called).toBe(true);
                 expect(validatorValidateCallback.called).toBe(true);
-                console.warn(formStore.GetState().Form.Error.Message);
-                expect(formStore.GetState().Form.Error.Message).toBe(errorMessage);
+                expect(formStore.GetState().Form.Error).toBeDefined();
+                expect(formStore.GetState().Form.Error!.Message).toBe(errorMessage);
             } catch (error) {
                 done.fail(error);
             }

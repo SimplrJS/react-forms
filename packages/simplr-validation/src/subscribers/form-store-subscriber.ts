@@ -42,15 +42,28 @@ export class FormStoreSubscriber {
     protected async ValidateField(
         fieldId: string,
         value: FieldValue,
-        validationType: FieldValidationType
+        targetValidationType: FieldValidationType
     ) {
         const fieldState = this.formStore.GetField(fieldId);
+        const formProps = this.formStore.GetState().Form.Props;
         const fieldProps = fieldState.Props;
+        let validationType: FieldValidationType = FieldValidationType.None;
 
-        if (fieldProps == null ||
-            fieldProps != null &&
-            fieldProps.validationType != null &&
-            fieldProps.validationType ^ validationType) {
+        if (formProps == null && fieldProps == null ||
+            fieldProps == null) {
+            return;
+        }
+
+        if (formProps != null && formProps.fieldsValidationType != null) {
+            validationType = formProps.fieldsValidationType;
+        }
+
+        if (fieldProps.validationType != null) {
+            validationType = fieldProps.validationType;
+        }
+
+        if (validationType == null ||
+            !(validationType & targetValidationType)) {
             return;
         }
 
@@ -59,11 +72,13 @@ export class FormStoreSubscriber {
         await this.formStore.ValidateField(fieldId, validationPromise);
     }
 
-    protected async ValidateForm() {
-        const formState = this.formStore.GetState();
-        const formProps = formState.Form.Props;
-
-        if (formState.Error != null || formState.Validating) {
+    protected async ValidateForm(targetValidationType: FieldValidationType) {
+        const formStoreState = this.formStore.GetState();
+        const formProps = formStoreState.Form.Props;
+        if (formStoreState.Error ||
+            formStoreState.Validating ||
+            formProps.formValidationType != null &&
+            !(formProps.formValidationType & targetValidationType)) {
             return;
         }
 
@@ -74,17 +89,17 @@ export class FormStoreSubscriber {
 
     protected async OnRegistered(action: FieldRegistered) {
         await this.ValidateField(action.FieldId, action.InitialValue, FieldValidationType.OnFieldRegistered);
-        // await this.ValidateForm();
+        await this.ValidateForm(FieldValidationType.OnFieldRegistered);
     }
 
     protected async OnValueChanged(action: ValueChanged) {
         await this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
-        await this.ValidateForm();
+        await this.ValidateForm(FieldValidationType.OnValueChange);
     }
 
     protected async OnPropsChanged(action: FieldPropsChanged) {
         const fieldState = this.formStore.GetField(action.FieldId);
         await this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
-        // await this.ValidateForm();
+        await this.ValidateForm(FieldValidationType.OnValueChange);
     }
 }
