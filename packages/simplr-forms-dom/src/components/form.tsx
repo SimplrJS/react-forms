@@ -8,7 +8,7 @@ export class Form extends BaseForm<FormProps, {}> {
 
     protected SetElementRef = (element: HTMLFormElement) => {
         this.Element = element;
-        this.FormStore.SetSubmitCallback(() => {
+        this.FormStore.SetFormSubmitCallback(() => {
             element.dispatchEvent(new Event("submit"));
         });
     }
@@ -36,7 +36,7 @@ export class Form extends BaseForm<FormProps, {}> {
         event.persist();
 
         const result = this.props.onSubmit(event, this.FormStore);
-        this.FormStore.Submit(result);
+        this.FormStore.SubmitForm(result);
     }
 
     render() {

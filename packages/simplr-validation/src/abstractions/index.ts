@@ -1,1 +1,1 @@
-export * from "./base-validator";
+export * from "./base-field-validator";

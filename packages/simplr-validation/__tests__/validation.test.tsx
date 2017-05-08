@@ -10,7 +10,7 @@ it("Validate value without errors", async (done) => {
         <ContainsValidator value="ok" error={errorMessage} />,
         <input type="text" />
     ];
-    const validationPromise = Validation.Validate(children, validValue);
+    const validationPromise = Validation.ValidateField(children, validValue);
     let validationResponse;
 
     try {
@@ -34,7 +34,7 @@ it("Validate value with error", async (done) => {
         <ContainsValidator value="ok" error={errorMessage} />,
         <input type="text" />
     ];
-    const validationPromise = Validation.Validate(children, invvalidValue);
+    const validationPromise = Validation.ValidateField(children, invvalidValue);
     let validationResponse;
 
     try {

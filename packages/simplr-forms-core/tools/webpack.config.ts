@@ -58,6 +58,7 @@ module.exports = {
         normalizers: "./src/normalizers/index.ts",
         stores: "./src/stores/index.ts",
         actions: "./src/actions/index.ts",
+        contracts: "./src/contracts/index.ts",
         utils: "./src/utils/index.ts"
     },
     output: {

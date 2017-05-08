@@ -1,6 +1,6 @@
 import { FieldValue } from "../contracts/field";
 
-export class StateUpdated { }
+export class StateChanged { }
 
 export class FieldRegistered {
     constructor(private fieldId: string, private initialValue: FieldValue) { }
@@ -26,10 +26,12 @@ export class ValueChanged {
     }
 }
 
-export class PropsChanged {
+export class FieldPropsChanged {
     constructor(private fieldId: string) { }
 
     public get FieldId() {
         return this.fieldId;
     }
 }
+
+export class FormPropsChanged { }

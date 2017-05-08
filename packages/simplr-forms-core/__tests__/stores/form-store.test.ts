@@ -85,7 +85,7 @@ describe("Form store", () => {
         formStore.RegisterField(fieldId, undefined, undefined, value);
         expect(formStore.GetField(fieldId).Value).toBe(value);
 
-        formStore.ValueChanged(fieldId, nextValue);
+        formStore.UpdateFieldValue(fieldId, nextValue);
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
     });
 
@@ -99,7 +99,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
@@ -126,7 +126,7 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
         } catch (error) {
@@ -166,10 +166,10 @@ describe("Form store", () => {
             }, 50);
         });
 
-        formStore.Validate(fieldId, validationPromise);
+        formStore.ValidateField(fieldId, validationPromise);
 
         // Imitate removal of last letter
-        formStore.ValueChanged(fieldId, value.slice(0, value.length - 1));
+        formStore.UpdateFieldValue(fieldId, value.slice(0, value.length - 1));
 
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
@@ -224,7 +224,7 @@ describe("Form store", () => {
         const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
 
         formStore.RegisterField(fieldId, undefined, undefined, undefined, fieldProps);
-        formStore.UpdateProps(fieldId, fieldPropsNext);
+        formStore.UpdateFieldProps(fieldId, fieldPropsNext);
 
         // Deep-check the updated props
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsNextRecord)).toBe(true);
@@ -298,7 +298,7 @@ describe("Form store", () => {
 
         for (const fieldId of fieldsIds) {
             formStore.RegisterField(fieldId, undefined, fieldProps.initialValue, fieldProps.value, fieldProps);
-            formStore.ValueChanged(fieldId, nextValue);
+            formStore.UpdateFieldValue(fieldId, nextValue);
         }
         formStore.ResetFields();
 
@@ -324,7 +324,7 @@ describe("Form store", () => {
 
         for (const fieldId of fieldsIds) {
             formStore.RegisterField(fieldId, undefined, undefined, fieldProps.value, fieldProps);
-            formStore.ValueChanged(fieldId, nextValue);
+            formStore.UpdateFieldValue(fieldId, nextValue);
         }
         formStore.ResetFields([fieldToResetId]);
 
@@ -336,5 +336,66 @@ describe("Form store", () => {
                 expect(fieldState.Value).toBe(nextValue);
             }
         }
+    });
+
+    describe("state properties", () => {
+        it("pristine false after field value changed", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Pristine).toBe(true);
+
+            formStore.UpdateFieldValue(fieldId, "next value");
+            expect(formStore.GetState().Pristine).toBe(false);
+        });
+
+        it("touched true after field value changed", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+
+            formStore.UpdateFieldValue(fieldId, "next value");
+            expect(formStore.GetState().Touched).toBe(true);
+        });
+
+        it("touched false after value updated to identical one", () => {
+            const fieldId = "field id";
+
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+
+            formStore.UpdateFieldValue(fieldId, "");
+            expect(formStore.GetState().Touched).toBe(false);
+        });
+
+        it("error true is after field error ", async done => {
+            const fieldId = "field id";
+            try {
+                formStore.RegisterField(fieldId, "");
+                expect(formStore.GetState().HasError).toBe(false);
+
+                await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                    reject("error message");
+                }));
+                expect(formStore.GetState().HasError).toBe(true);
+            } catch (error) {
+                done.fail(error);
+            }
+
+            done();
+        });
+
+        it("validating true after field error ", () => {
+            const fieldId = "field id";
+            formStore.RegisterField(fieldId, "");
+            expect(formStore.GetState().Validating).toBe(false);
+
+            formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                reject("error message");
+            }));
+
+            expect(formStore.GetState().Validating).toBe(true);
+        });
     });
 });

@@ -8,6 +8,7 @@ export interface MyFieldProps extends FieldProps {
     initialValue?: string;
     value?: string;
     randomKey?: string;
+    deepObject?: any;
 }
 
 export interface MyFieldState extends BaseFieldState { }
