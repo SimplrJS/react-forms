@@ -21,8 +21,7 @@ import {
     FormStoreState,
     FormStoreStateRecord,
     BuiltFormObject,
-    FormStoreStateProperties,
-    WhoIsType
+    FormStoreStateProperties
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
@@ -208,17 +207,9 @@ export class FormStore extends ActionEmitter {
         // Skip if it's already validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
-                let error: WhoIsType;
-                // Remove fields flag if exists from error.
-                if ((state.Error & WhoIsType.Fields) === WhoIsType.Fields) {
-                    error = state.Error ^ WhoIsType.Fields;
-                } else {
-                    error = state.Error;
-                }
-
                 state.merge({
-                    Validating: state.Validating | WhoIsType.Fields,
-                    Error: error
+                    Validating: true,
+                    Error: false
                 } as Partial<FormStoreState>);
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
@@ -276,17 +267,9 @@ export class FormStore extends ActionEmitter {
         // Skip if it's already validating
         if (!form.Validating) {
             this.State = this.State.withMutations(state => {
-                let error: WhoIsType;
-                // Remove form flag if exists from error.
-                if ((state.Error & WhoIsType.Form) === WhoIsType.Form) {
-                    error = state.Error ^ WhoIsType.Form;
-                } else {
-                    error = state.Error;
-                }
-
                 state.merge({
-                    Validating: state.Validating | WhoIsType.Form,
-                    Error: error
+                    Validating: true,
+                    Error: false
                 } as Partial<FormStoreState>);
 
                 state.Form = state.Form.merge({
@@ -445,8 +428,8 @@ export class FormStore extends ActionEmitter {
             Fields: Immutable.Map<string, FieldStateRecord>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
-            Validating: WhoIsType.None,
-            Error: WhoIsType.None,
+            Validating: false,
+            Error: false,
             Pristine: true,
             Touched: false
         });
@@ -495,10 +478,10 @@ export class FormStore extends ActionEmitter {
 
     protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
         let updater: FormStoreStateProperties = {
-            Error: WhoIsType.None,
+            Error: false,
             Pristine: true,
             Touched: false,
-            Validating: WhoIsType.None
+            Validating: false
         };
 
         // TODO: might build curried function for more efficient checking.
@@ -506,8 +489,8 @@ export class FormStore extends ActionEmitter {
         // Check all fields
         formStoreState.Fields.forEach((fieldState, key) => {
             if (fieldState != null && key != null) {
-                if (updater.Error ^ WhoIsType.Fields && fieldState.Error != null) {
-                    updater.Error |= WhoIsType.Fields;
+                if (!updater.Error && fieldState.Error) {
+                    updater.Error = true;
                 }
                 if (updater.Pristine && !fieldState.Pristine) {
                     updater.Pristine = false;
@@ -515,15 +498,15 @@ export class FormStore extends ActionEmitter {
                 if (!updater.Touched && fieldState.Touched) {
                     updater.Touched = true;
                 }
-                if (updater.Validating ^ WhoIsType.Fields && fieldState.Validating) {
-                    updater.Validating |= WhoIsType.Fields;
+                if (!fieldState.Validating) {
+                    updater.Validating = true;
                 }
 
                 // Short circuit if everything is resolved with fields.
                 if (updater.Error &&
                     !updater.Pristine &&
                     updater.Touched &&
-                    updater.Validating !== WhoIsType.None) {
+                    updater.Validating) {
                     return false;
                 }
             }
@@ -531,11 +514,11 @@ export class FormStore extends ActionEmitter {
 
         // Check form state
         const formState = formStoreState.Form;
-        if (updater.Error ^ WhoIsType.Form && formState.Error != null) {
-            updater.Error |= WhoIsType.Form;
+        if (!updater.Error && formState.Error != null) {
+            updater.Error = true;
         }
-        if (updater.Validating ^ WhoIsType.Form && formState.Validating) {
-            updater.Validating |= WhoIsType.Form;
+        if (!updater.Validating && formState.Validating) {
+            updater.Validating = true;
         }
 
         return formStoreState.merge(updater);

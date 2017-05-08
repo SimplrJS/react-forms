@@ -6,7 +6,6 @@ import { FormError } from "../../src/contracts/error";
 import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
 
 import { MyFieldProps } from "../test-components/test-field";
-import { WhoIsType } from "../../src/contracts/form-store";
 
 describe("Form store", () => {
     const formId = "form-id";
@@ -360,16 +359,16 @@ describe("Form store", () => {
             expect(formStore.GetState().Touched).toBe(true);
         });
 
-        it("error fields flag is present after field error ", async done => {
+        it("error true is after field error ", async done => {
             const fieldId = "field id";
             try {
                 formStore.RegisterField(fieldId, "");
-                expect(formStore.GetState().Error).toBe(WhoIsType.None);
+                expect(formStore.GetState().Error).toBe(false);
 
                 await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
                     reject("error message");
                 }));
-                expect(formStore.GetState().Error).toBe(WhoIsType.Fields);
+                expect(formStore.GetState().Error).toBe(true);
             } catch (error) {
                 done.fail(error);
             }
@@ -377,16 +376,16 @@ describe("Form store", () => {
             done();
         });
 
-        it("validating fields flag is present after field error ", () => {
+        it("validating true after field error ", () => {
             const fieldId = "field id";
             formStore.RegisterField(fieldId, "");
-            expect(formStore.GetState().Validating).toBe(WhoIsType.None);
+            expect(formStore.GetState().Validating).toBe(false);
 
             formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
                 reject("error message");
             }));
 
-            expect(formStore.GetState().Validating).toBe(WhoIsType.Fields);
+            expect(formStore.GetState().Validating).toBe(true);
         });
     });
 });
