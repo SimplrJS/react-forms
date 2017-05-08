@@ -75,7 +75,7 @@ export class FormStoreSubscriber {
     protected async ValidateForm(targetValidationType: FieldValidationType) {
         const formStoreState = this.formStore.GetState();
         const formProps = formStoreState.Form.Props;
-        if (formStoreState.Error ||
+        if (formStoreState.HasError ||
             formStoreState.Validating ||
             formProps.formValidationType != null &&
             !(formProps.formValidationType & targetValidationType)) {
