@@ -56,7 +56,7 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
             Error: formStore.Form.Error,
             Validating: formStore.Form.Validating,
             Submitting: formStore.Form.Submitting,
-            Pristine: formStore.Form.Pristine
+            Pristine: formStore.Pristine
         };
 
         const newStateRecord = recordify(newState);
