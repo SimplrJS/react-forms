@@ -1,4 +1,4 @@
-simplr-forms-core
+simplr-forms
 =================
 
 The core functionality of forms library.

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { recordify, TypedRecord } from "typed-immutable-record";
 
-import { BaseContainer, BaseContainerProps } from "simplr-forms-core";
-import { FormError } from "simplr-forms-core/contracts";
+import { BaseContainer, BaseContainerProps } from "simplr-forms";
+import { FormError } from "simplr-forms/contracts";
 
 export interface SubmitProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
     /**

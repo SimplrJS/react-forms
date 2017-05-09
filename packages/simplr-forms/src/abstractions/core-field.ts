@@ -72,11 +72,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     componentWillMount() {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
-            throw new Error("simplr-forms-core: A proper field name must be given (undefined and empty string are not valid).");
+            throw new Error("simplr-forms: A proper field name must be given (undefined and empty string are not valid).");
         }
 
         if (this.FormId == null) {
-            throw new Error("simplr-forms-core: Field must be used inside a Form component.");
+            throw new Error("simplr-forms: Field must be used inside a Form component.");
         }
         this.StoreEventSubscription =
             this.FormStore.addListener<FormStoreActions.StateChanged>(
@@ -88,7 +88,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     componentWillReceiveProps(nextProps: CoreFieldProps) {
         // Check if field name has not been changed
         if (this.props.name !== nextProps.name) {
-            throw new Error(`simplr-forms-core: Field name must be constant`);
+            throw new Error(`simplr-forms: Field name must be constant`);
         }
 
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
@@ -178,7 +178,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected ChildrenToRender() {
-        throw new Error("simplr-forms-core: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
+        throw new Error("simplr-forms: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
     }
 
     protected OnStoreUpdated() {
@@ -253,7 +253,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
      */
     private registerFieldInFormStore() {
         if (this.FormStore.HasField(this.FieldId)) {
-            throw new Error(`simplr-forms-core: Duplicate field id '${this.FieldId}'`);
+            throw new Error(`simplr-forms: Duplicate field id '${this.FieldId}'`);
         }
 
         const defaultValue = this.ProcessValueBeforeStore(this.RawDefaultValue);

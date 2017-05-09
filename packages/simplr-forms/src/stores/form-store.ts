@@ -309,7 +309,7 @@ export class FormStore extends ActionEmitter {
 
     public InitiateFormSubmit(): void {
         if (this.State.Form.SubmitCallback == null) {
-            throw new Error("simplr-forms-core: Submit method is called before SubmitCallback is set.");
+            throw new Error("simplr-forms: Submit method is called before SubmitCallback is set.");
         }
         this.State.Form.SubmitCallback();
     }

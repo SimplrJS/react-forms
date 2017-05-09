@@ -60,7 +60,7 @@ export class FormStoresHandler extends ActionEmitter {
         const formId = customFormId || this.NextStoreId();
 
         if (this.formStores.get(formId) != null) {
-            throw new Error(`simplr-forms-core: Form '${customFormId}' already exists.`);
+            throw new Error(`simplr-forms: Form '${customFormId}' already exists.`);
         }
 
         // Create store instance
