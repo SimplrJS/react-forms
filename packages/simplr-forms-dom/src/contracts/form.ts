@@ -1,7 +1,7 @@
 import * as React from "react";
-import { FormError } from "simplr-forms-core/contracts";
-import { FormProps as CoreFormProps } from "simplr-forms-core/contracts";
-import { FormStore } from "simplr-forms-core/stores";
+import { FormError } from "simplr-forms/contracts";
+import { FormProps as CoreFormProps } from "simplr-forms/contracts";
+import { FormStore } from "simplr-forms/stores";
 import { FieldOnChangeCallback } from "../contracts/field";
 
 export interface FormOnSubmitCallback extends React.FormEventHandler<HTMLFormElement> {

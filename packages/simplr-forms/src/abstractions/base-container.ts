@@ -30,7 +30,7 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
         }
 
         // Should never happen as componentWillMount handles this situation
-        throw new Error(`simplr-forms-core: form id is not present neither in props, nor in context.`);
+        throw new Error(`simplr-forms: form id is not present neither in props, nor in context.`);
     }
 
     protected get FormStore(): FormStore {
@@ -39,13 +39,13 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
 
     componentWillMount() {
         if (this.props.formId == null && this.context.FormId == null) {
-            throw new Error("simplr-forms-core: Container must be in a Form or have prop 'formId' set.");
+            throw new Error("simplr-forms: Container must be in a Form or have prop 'formId' set.");
         }
 
 
         if (this.props.formId != null && this.context.FormId != null) {
             const but = `but form id was defined: '${this.props.formId}'`;
-            throw new Error(`simplr-forms-core: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
+            throw new Error(`simplr-forms: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
         }
 
         this.FormStore.addListener(StateChanged, this.OnStoreUpdated.bind(this));

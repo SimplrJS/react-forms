@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.0-pre-alpha.18",
+  "version": "4.0.0-pre-alpha.20",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -11,7 +11,7 @@
     "build": "webpack && npm run tslint",
     "watch": "webpack -w",
     "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
-    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle",
+    "uglifyjs": "uglifyjs ./dist/simplr-forms-dom.js -o ./dist/simplr-forms-dom.min.js --compress --mangle",
     "release": "npm run build && npm run uglifyjs",
     "test": "jest",
     "test-watch": "jest --watchAll",
@@ -62,7 +62,7 @@
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms-core": "^4.0.0-pre-alpha.18",
+    "simplr-forms": "^4.0.0-pre-alpha.20",
     "typed-immutable-record": "0.0.6"
   },
   "jest": {

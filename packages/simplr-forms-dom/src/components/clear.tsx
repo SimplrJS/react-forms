@@ -1,7 +1,7 @@
 import * as React from "react";
 import { recordify, TypedRecord } from "typed-immutable-record";
 
-import { BaseContainer, BaseContainerProps } from "simplr-forms-core";
+import { BaseContainer, BaseContainerProps } from "simplr-forms";
 
 export interface ClearProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
     fieldIds?: string[];

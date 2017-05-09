@@ -1,5 +1,5 @@
-import { BaseField, BaseFieldState } from "simplr-forms-core";
-import { FieldProps } from "simplr-forms-core/contracts";
+import { BaseField, BaseFieldState } from "simplr-forms";
+import { FieldProps } from "simplr-forms/contracts";
 
 export interface BaseDomFieldState extends BaseFieldState {
 

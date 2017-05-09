@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldProps, FieldValue } from "simplr-forms-core/contracts";
+import { FieldProps, FieldValue } from "simplr-forms/contracts";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
