@@ -15,7 +15,7 @@
     "watch": "webpack -w",
     "release": "npm run build && npm run uglifyjs",
     "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
-    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle"
+    "uglifyjs": "uglifyjs ./dist/simplr-forms.js -o ./dist/simplr-forms.min.js --compress --mangle"
   },
   "license": "AGPL-3.0",
   "files": [
@@ -49,7 +49,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.5.4",
-    "simplr-forms-core": "4.0.0-pre-alpha.18",
+    "simplr-forms": "4.0.0-pre-alpha.18",
     "validator": "^7.0.0"
   },
   "jest": {
