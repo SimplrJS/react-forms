@@ -3,13 +3,12 @@
         "module": "commonjs",
         "target": "es5",
         "removeComments": false,
-        "outDir": "dist",
-        "rootDir": "src",
+        "rootDir": ".",
+        "outDir": "../",
         "jsx": "react",
         "sourceMap": false,
         "skipDefaultLibCheck": true,
-        "declaration": true,
-        "declarationDir": "@types",
+        "declaration": false,
         "pretty": true,
         "strict": true,
         "lib": [
@@ -22,7 +21,6 @@
         "node_modules",
         "dist",
         "@types",
-        "__tests__",
-        "tools"
+        "__tests__"
     ]
 }
