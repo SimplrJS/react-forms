@@ -21,13 +21,12 @@
   },
   "license": "AGPL-3.0",
   "files": [
-    "dist",
-    "@types",
     "**/*.md",
     "*.js",
+    "**/*.d.ts",
     "!*.config.js",
-    "!tools",
-    "gulpfile.js"
+    "!gulpfile.js",
+    "!node_modules/**"
   ],
   "devDependencies": {
     "@types/gulp": "^4.0.2",
