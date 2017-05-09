@@ -25,7 +25,9 @@
     "@types",
     "**/*.md",
     "*.js",
-    "!*.config.js"
+    "!*.config.js",
+    "!tools",
+    "gulpfile.js"
   ],
   "devDependencies": {
     "@types/gulp": "^4.0.2",
