@@ -1,5 +1,5 @@
-import { FieldValue } from "simplr-forms-core/contracts";
-import { ProcessValue } from "simplr-forms-core/utils";
+import { FieldValue } from "simplr-forms/contracts";
+import { ProcessValue } from "simplr-forms/utils";
 
 import { Validator, FIELD_VALIDATOR_FUNCTION_NAME, FORM_VALIDATOR_FUNCTION_NAME } from "../contracts";
 

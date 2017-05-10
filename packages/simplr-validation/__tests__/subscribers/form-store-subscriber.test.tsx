@@ -6,13 +6,13 @@ import {
     FieldStateProps,
     FormStateProps,
     FieldValidationType
-} from "simplr-forms-core/contracts";
-import { FormStore } from "simplr-forms-core/stores";
+} from "simplr-forms/contracts";
+import { FormStore } from "simplr-forms/stores";
 import {
     FieldRegistered,
     FieldPropsChanged,
     ValueChanged,
-} from "simplr-forms-core/actions";
+} from "simplr-forms/actions";
 
 import { BaseFormValidator, BaseFormValidatorProps } from "../../src/abstractions/base-form-validator";
 import { ValidationResult } from "../../src/contracts";

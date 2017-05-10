@@ -1,4 +1,4 @@
-import { FormError } from "simplr-forms-core/contracts";
+import { FormError } from "simplr-forms/contracts";
 
 export interface Validator {
     Validate(value: any): ValidationResult;
