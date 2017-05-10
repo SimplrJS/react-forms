@@ -14,6 +14,16 @@ for (const key in packageJson.dependencies) {
 }
 
 const externalsResolver = [
+    function (context, request, callback) {
+        // console.log(request);
+        if (request.indexOf("simplr-forms") !== -1) {
+            const resolveTo = "simplr-forms";
+            console.log(`Resolving:\n${request}\nTo:\n${resolveTo}\n`);
+            callback(resolveTo);
+            return;
+        }
+        callback();
+    },
     externals,
     function (context: string, request: string, callback: Function) {
         const directoriesToTest = [
@@ -36,7 +46,15 @@ const externalsResolver = [
 
         if (passingTest != null) {
             const resolvedPath = path.resolve(context, request);
+            let notIndexFile = true;
+            for (const directory of directoriesToTest) {
+                if (request === `./${directory}/index`) {
+                    notIndexFile = false;
+                }
+            }
+
             const shouldReplaceWithCustomResolve =
+                notIndexFile &&
                 request.indexOf("src") === -1 &&
                 resolvedPath.indexOf(path.join(__dirname, `src/${passingTest.directory}`)) !== -1;
 
@@ -53,9 +71,9 @@ const externalsResolver = [
 module.exports = {
     entry: {
         index: "./src/index.ts",
-        abstractions: "./src/abstractions.ts",
-        subscribers: "./src/subscribers.ts",
-        utils: "./src/utils.ts"
+        abstractions: "./src/abstractions/index.ts",
+        subscribers: "./src/subscribers/index.ts",
+        utils: "./src/utils/index.ts"
     },
     output: {
         filename: "./dist/[name].js",
