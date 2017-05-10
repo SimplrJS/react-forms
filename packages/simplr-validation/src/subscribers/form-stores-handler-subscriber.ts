@@ -1,5 +1,5 @@
-import { FSHContainerClass, FSHContainer } from "simplr-forms-core/stores";
-import { FormRegistered, FormUnregistered } from "simplr-forms-core/actions";
+import { FSHContainerClass, FSHContainer } from "simplr-forms/stores";
+import { FormRegistered, FormUnregistered } from "simplr-forms/actions";
 import * as ActionEmitter from "action-emitter";
 import * as Immutable from "immutable";
 import { FormStoreSubscriber } from "./form-store-subscriber";

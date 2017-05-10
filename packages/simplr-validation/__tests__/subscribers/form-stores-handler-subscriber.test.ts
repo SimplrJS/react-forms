@@ -1,5 +1,5 @@
-import { FSHContainer, FormStoresHandler } from "simplr-forms-core/stores";
-import { FormRegistered, FormUnregistered } from "simplr-forms-core/actions";
+import { FSHContainer, FormStoresHandler } from "simplr-forms/stores";
+import { FormRegistered, FormUnregistered } from "simplr-forms/actions";
 import * as Sinon from "sinon";
 
 import { FormStoresHandlerSubscriber } from "../../src/subscribers/form-stores-handler-subscriber";

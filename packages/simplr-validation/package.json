@@ -15,20 +15,27 @@
     "watch": "webpack -w",
     "release": "npm run build && npm run uglifyjs",
     "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
-    "uglifyjs": "uglifyjs ./dist/simplr-forms-core.js -o ./dist/simplr-forms-core.min.js --compress --mangle"
+    "uglifyjs": "echo \"Uglify is not implemented\" && exit 1",
+    "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
+    "gulp-watch": "npm run gulp-build -- -w"
   },
   "license": "AGPL-3.0",
   "files": [
-    "dist",
-    "@types",
     "**/*.md",
     "*.js",
-    "!*.config.js"
+    "**/*.d.ts",
+    "!*.config.js",
+    "!gulpfile.js",
+    "!node_modules/**"
   ],
   "devDependencies": {
+    "@types/gulp": "^4.0.2",
+    "@types/webpack": "^2.2.15",
     "@types/enzyme": "^2.7.7",
     "@types/jest": "^19.2.2",
     "@types/sinon": "^2.1.2",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "simplr-mvdir": "0.0.1-beta.7",
     "enzyme": "^2.8.2",
     "jest": "^19.0.2",
     "jest-enzyme": "^3.0.1",
@@ -49,7 +56,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.5.4",
-    "simplr-forms-core": "4.0.0-pre-alpha.18",
+    "simplr-forms": "4.0.0-pre-alpha.20",
     "validator": "^7.0.0"
   },
   "jest": {
