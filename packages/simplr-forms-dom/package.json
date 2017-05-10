@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.0-pre-alpha.20",
+  "version": "4.0.1-alpha",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -62,7 +62,7 @@
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
-    "simplr-forms": "^4.0.0-pre-alpha.20",
+    "simplr-forms": "^4.0.1-alpha",
     "typed-immutable-record": "0.0.6"
   },
   "jest": {
