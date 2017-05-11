@@ -59,14 +59,6 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         return disabled;
     }
 
-    protected OnFocus = () => {
-        this.Focus();
-    }
-
-    protected OnBlur = () => {
-        this.Blur();
-    }
-
     renderField(): JSX.Element | null {
         return <input
             type="text"
