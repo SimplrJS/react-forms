@@ -215,6 +215,14 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.UpdateFieldValue(this.FieldId, newValue);
     }
 
+    protected Focus() {
+        this.FormStore.SetActiveField(this.FieldId);
+    }
+
+    protected Blur() {
+        this.FormStore.SetActiveField(undefined);
+    }
+
     /**
      * ========================
      *  Abstract methods

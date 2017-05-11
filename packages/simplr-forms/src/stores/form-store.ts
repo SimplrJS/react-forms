@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Immutable from "immutable";
-import { recordify } from "typed-immutable-record";
+import { recordify, TypedRecord } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "../actions/form-store";
@@ -25,7 +25,7 @@ import {
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
-import { FormError, FormErrorRecord } from "../contracts/error";
+import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -194,6 +194,11 @@ export class FormStore extends ActionEmitter {
                 Touched: true
             } as FieldState));
 
+            state.Form = state.Form.merge({
+                SuccessfullySubmitted: false,
+                Error: undefined
+            } as FormState);
+
             return this.RecalculateDependentFormState(state);
         });
 
@@ -244,7 +249,7 @@ export class FormStore extends ActionEmitter {
                 return;
             }
 
-            const formError = ConstructFormError(error);
+            const formError = ConstructFormError(error, FormErrorOrigin.Validation);
             if (formError == null) {
                 throw Error(error);
             }
@@ -259,6 +264,15 @@ export class FormStore extends ActionEmitter {
                 return this.RecalculateDependentFormState(state);
             });
         }
+    }
+
+    public SetActiveField(fieldId: string | undefined) {
+        this.State = this.State.withMutations(state => {
+            state.Form = state.Form.merge({
+                ActiveFieldId: fieldId
+            } as FormState);
+            return state;
+        });
     }
 
     public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
@@ -291,7 +305,7 @@ export class FormStore extends ActionEmitter {
                 return this.RecalculateDependentFormState(state);
             });
         } catch (error) {
-            const formError = ConstructFormError(error);
+            const formError = ConstructFormError(error, FormErrorOrigin.Validation);
             if (formError == null) {
                 throw Error(error);
             }
@@ -320,7 +334,7 @@ export class FormStore extends ActionEmitter {
             promise = result;
         } else {
             promise = new Promise<void>((resolve, reject) => {
-                const error = ConstructFormError(result);
+                const error = ConstructFormError(result, FormErrorOrigin.Submit);
                 if (error !== undefined) {
                     reject(result);
                     return;
@@ -334,8 +348,8 @@ export class FormStore extends ActionEmitter {
             state.Form = state.Form.merge({
                 Submitting: true
             } as FormState);
+            return state;
         });
-
         // Try submitting
         try {
             await promise;
@@ -343,15 +357,25 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Submitting: false,
+                    SuccessfullySubmitted: true,
                     Error: undefined
                 } as FormState);
+                return state;
             });
         } catch (err) {
+            // Set error origin
+            const constructedError = ConstructFormError(err, FormErrorOrigin.Submit);
+            let error: FormErrorRecord;
+            if (constructedError != null) {
+                error = recordify<FormError, FormErrorRecord>(constructedError);
+            }
+
             // Error and submitting -> false
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Submitting: false,
-                    Error: err
+                    SuccessfullySubmitted: false,
+                    Error: error
                 } as FormState);
             });
         }
