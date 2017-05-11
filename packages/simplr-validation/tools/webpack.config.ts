@@ -62,7 +62,7 @@ const externalsResolver = [
         callback();
     }
 ];
-console.log(path.resolve("node_modules/simplr-forms/actions.js"));
+
 module.exports = {
     entry: {
         index: "./src/index.ts",
