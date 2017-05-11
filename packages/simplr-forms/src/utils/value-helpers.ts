@@ -29,12 +29,12 @@ export function ProcessValue<TProcessor, TProcessedResult>(
         return value;
     }
 
-    const modifiers = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
+    const processors = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
 
-    const renderedModifiers = RenderComponents<TProcessor>(modifiers);
+    const renderedProcessors = RenderComponents<TProcessor>(processors);
 
-    for (const modifier of renderedModifiers) {
-        value = process(modifier, value);
+    for (const processor of renderedProcessors) {
+        value = process(processor, value);
     }
     return value;
 }
