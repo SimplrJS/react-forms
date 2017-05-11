@@ -2,7 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var packageJson = require("./package.json");
-var externals = {};
+var externals = {
+    "simplr-forms/utils": "simplr-forms/utils",
+    "simplr-forms/actions": "simplr-forms/actions",
+    "simplr-forms/contracts": "simplr-forms/contracts",
+    "simplr-forms/stores": "simplr-forms/stores"
+};
 for (var key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
         externals[key] = key;
@@ -29,7 +34,15 @@ var externalsResolver = [
         }
         if (passingTest != null) {
             var resolvedPath = path.resolve(context, request);
-            var shouldReplaceWithCustomResolve = request.indexOf("src") === -1 &&
+            var notIndexFile = true;
+            for (var _a = 0, directoriesToTest_1 = directoriesToTest; _a < directoriesToTest_1.length; _a++) {
+                var directory = directoriesToTest_1[_a];
+                if (request === "./" + directory + "/index") {
+                    notIndexFile = false;
+                }
+            }
+            var shouldReplaceWithCustomResolve = notIndexFile &&
+                request.indexOf("src") === -1 &&
                 resolvedPath.indexOf(path.join(__dirname, "src/" + passingTest.directory)) !== -1;
             if (shouldReplaceWithCustomResolve) {
                 var customResolve = "./" + passingTest.directory;
@@ -43,9 +56,9 @@ var externalsResolver = [
 module.exports = {
     entry: {
         index: "./src/index.ts",
-        abstractions: "./src/abstractions.ts",
-        subscribers: "./src/subscribers.ts",
-        utils: "./src/utils.ts"
+        abstractions: "./src/abstractions/index.ts",
+        subscribers: "./src/subscribers/index.ts",
+        utils: "./src/utils/index.ts"
     },
     output: {
         filename: "./dist/[name].js",

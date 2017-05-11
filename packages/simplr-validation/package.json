@@ -1,11 +1,11 @@
 {
   "name": "simplr-validation",
-  "version": "4.0.0-pre-alpha.8",
+  "version": "4.0.1-alpha",
   "description": "Validation library for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
-  "main": "dist/simplr-validation.js",
-  "types": "@types/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "test": "jest",
@@ -56,7 +56,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.5.4",
-    "simplr-forms": "4.0.0-pre-alpha.20",
+    "simplr-forms": "4.0.1-alpha",
     "validator": "^7.0.0"
   },
   "jest": {

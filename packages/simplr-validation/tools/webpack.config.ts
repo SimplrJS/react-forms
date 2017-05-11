@@ -5,7 +5,12 @@ const packageJson = require("./package.json");
 
 let externals: {
     [key: string]: any
-} = {};
+} = {
+        "simplr-forms/utils": "simplr-forms/utils",
+        "simplr-forms/actions": "simplr-forms/actions",
+        "simplr-forms/contracts": "simplr-forms/contracts",
+        "simplr-forms/stores": "simplr-forms/stores"
+    };
 
 for (const key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
@@ -36,7 +41,15 @@ const externalsResolver = [
 
         if (passingTest != null) {
             const resolvedPath = path.resolve(context, request);
+            let notIndexFile = true;
+            for (const directory of directoriesToTest) {
+                if (request === `./${directory}/index`) {
+                    notIndexFile = false;
+                }
+            }
+
             const shouldReplaceWithCustomResolve =
+                notIndexFile &&
                 request.indexOf("src") === -1 &&
                 resolvedPath.indexOf(path.join(__dirname, `src/${passingTest.directory}`)) !== -1;
 
@@ -53,9 +66,9 @@ const externalsResolver = [
 module.exports = {
     entry: {
         index: "./src/index.ts",
-        abstractions: "./src/abstractions.ts",
-        subscribers: "./src/subscribers.ts",
-        utils: "./src/utils.ts"
+        abstractions: "./src/abstractions/index.ts",
+        subscribers: "./src/subscribers/index.ts",
+        utils: "./src/utils/index.ts"
     },
     output: {
         filename: "./dist/[name].js",
