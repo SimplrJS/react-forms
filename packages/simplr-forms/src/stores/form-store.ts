@@ -199,7 +199,7 @@ export class FormStore extends ActionEmitter {
                 Error: undefined
             } as FormState);
 
-            return this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormStatuses(state);
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
@@ -240,7 +240,7 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FieldState));
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         } catch (error) {
             // Skip validation if the value has changed again
@@ -261,17 +261,39 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
     }
 
     public SetActiveField(fieldId: string | undefined) {
         this.State = this.State.withMutations(state => {
+            if (fieldId == null) {
+                return state.Form.merge({
+                    ActiveFieldId: undefined
+                } as FormState);
+            }
+
+            const fieldState = this.State.Fields.get(fieldId);
+            if (fieldState == null) {
+                console.warn(`simplr-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
+                    + `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`);
+                return state.Form.merge({
+                    ActiveFieldId: undefined
+                } as FormState);
+            }
+
             state.Form = state.Form.merge({
                 ActiveFieldId: fieldId
             } as FormState);
-            return state;
+
+            state.Fields = state.Fields.withMutations(fields => {
+                fields.set(fieldId, fieldState.merge({
+                    Touched: true
+                } as FieldState));
+            });
+
+            return this.RecalculateDependentFormStatuses(state);
         });
     }
 
@@ -302,7 +324,7 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FormState);
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         } catch (error) {
             const formError = ConstructFormError(error, FormErrorOrigin.Validation);
@@ -316,7 +338,7 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FormState);
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
     }
@@ -404,7 +426,7 @@ export class FormStore extends ActionEmitter {
                 }
             });
 
-            return this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormStatuses(state);
         });
     }
 
@@ -430,7 +452,7 @@ export class FormStore extends ActionEmitter {
                 }
             });
 
-            return this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormStatuses(state);
         });
     }
 
@@ -514,7 +536,7 @@ export class FormStore extends ActionEmitter {
         return formStoreObject;
     }
 
-    protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
+    protected RecalculateDependentFormStatuses(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
         let updater: FormStoreStateStatus = this.GetInitialStoreStatus();
 
         // TODO: might build curried function for more efficient checking.
