@@ -53,7 +53,7 @@ const externalsResolver = [
 
 module.exports = {
     entry: {
-        index: "./src/index.ts",
+        index: "./src/abstractions/index.ts",
         modifiers: "./src/modifiers/index.ts",
         normalizers: "./src/normalizers/index.ts",
         stores: "./src/stores/index.ts",

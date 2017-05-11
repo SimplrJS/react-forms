@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Immutable from "immutable";
-import { recordify } from "typed-immutable-record";
+import { recordify, TypedRecord } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "../actions/form-store";
@@ -25,7 +25,7 @@ import {
 } from "../contracts/form-store";
 import { FieldsGroupStateRecord } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
-import { FormError, FormErrorRecord } from "../contracts/error";
+import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
@@ -194,7 +194,12 @@ export class FormStore extends ActionEmitter {
                 Touched: true
             } as FieldState));
 
-            return this.RecalculateDependentFormState(state);
+            state.Form = state.Form.merge({
+                SuccessfullySubmitted: false,
+                Error: undefined
+            } as FormState);
+
+            return this.RecalculateDependentFormStatuses(state);
         });
 
         this.emit(new Actions.ValueChanged(fieldId, newValue));
@@ -235,7 +240,7 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FieldState));
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         } catch (error) {
             // Skip validation if the value has changed again
@@ -244,7 +249,7 @@ export class FormStore extends ActionEmitter {
                 return;
             }
 
-            const formError = ConstructFormError(error);
+            const formError = ConstructFormError(error, FormErrorOrigin.Validation);
             if (formError == null) {
                 throw Error(error);
             }
@@ -256,9 +261,40 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FieldState));
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
+    }
+
+    public SetActiveField(fieldId: string | undefined): void {
+        this.State = this.State.withMutations(state => {
+            if (fieldId == null) {
+                return state.Form.merge({
+                    ActiveFieldId: undefined
+                } as FormState);
+            }
+
+            const fieldState = this.State.Fields.get(fieldId);
+            if (fieldState == null) {
+                console.warn(`simplr-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
+                    + `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`);
+                return state.Form.merge({
+                    ActiveFieldId: undefined
+                } as FormState);
+            }
+
+            state.Form = state.Form.merge({
+                ActiveFieldId: fieldId
+            } as FormState);
+
+            state.Fields = state.Fields.withMutations(fields => {
+                fields.set(fieldId, fieldState.merge({
+                    Touched: true
+                } as FieldState));
+            });
+
+            return this.RecalculateDependentFormStatuses(state);
+        });
     }
 
     public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
@@ -288,10 +324,10 @@ export class FormStore extends ActionEmitter {
                     Validating: false
                 } as FormState);
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         } catch (error) {
-            const formError = ConstructFormError(error);
+            const formError = ConstructFormError(error, FormErrorOrigin.Validation);
             if (formError == null) {
                 throw Error(error);
             }
@@ -302,7 +338,7 @@ export class FormStore extends ActionEmitter {
                     Error: recordify<FormError, FormErrorRecord>(formError!)
                 } as FormState);
 
-                return this.RecalculateDependentFormState(state);
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
     }
@@ -320,7 +356,7 @@ export class FormStore extends ActionEmitter {
             promise = result;
         } else {
             promise = new Promise<void>((resolve, reject) => {
-                const error = ConstructFormError(result);
+                const error = ConstructFormError(result, FormErrorOrigin.Submit);
                 if (error !== undefined) {
                     reject(result);
                     return;
@@ -334,8 +370,8 @@ export class FormStore extends ActionEmitter {
             state.Form = state.Form.merge({
                 Submitting: true
             } as FormState);
+            return state;
         });
-
         // Try submitting
         try {
             await promise;
@@ -343,15 +379,25 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Submitting: false,
+                    SuccessfullySubmitted: true,
                     Error: undefined
                 } as FormState);
+                return state;
             });
-        } catch (err) {
+        } catch (caughtError) {
+            // Set error origin
+            const constructedError = ConstructFormError(caughtError, FormErrorOrigin.Submit);
+            let error: FormErrorRecord;
+            if (constructedError != null) {
+                error = recordify<FormError, FormErrorRecord>(constructedError);
+            }
+
             // Error and submitting -> false
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Submitting: false,
-                    Error: err
+                    SuccessfullySubmitted: false,
+                    Error: error
                 } as FormState);
             });
         }
@@ -380,7 +426,7 @@ export class FormStore extends ActionEmitter {
                 }
             });
 
-            return this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormStatuses(state);
         });
     }
 
@@ -406,7 +452,7 @@ export class FormStore extends ActionEmitter {
                 }
             });
 
-            return this.RecalculateDependentFormState(state);
+            return this.RecalculateDependentFormStatuses(state);
         });
     }
 
@@ -490,7 +536,7 @@ export class FormStore extends ActionEmitter {
         return formStoreObject;
     }
 
-    protected RecalculateDependentFormState(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
+    protected RecalculateDependentFormStatuses(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
         let updater: FormStoreStateStatus = this.GetInitialStoreStatus();
 
         // TODO: might build curried function for more efficient checking.
@@ -664,7 +710,7 @@ export class FormStore extends ActionEmitter {
         return result;
     }
 
-    protected RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true) {
+    protected RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true): T[] {
         let result = concat ? array.concat() : array;
         for (const value of valuesToRemove) {
             let index;

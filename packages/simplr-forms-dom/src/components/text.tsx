@@ -66,6 +66,8 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.IsDisabled}
+            onFocus={this.OnFocus}
+            onBlur={this.OnBlur}
         />;
     }
 }

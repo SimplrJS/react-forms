@@ -33,8 +33,10 @@ export class Form extends BaseForm<FormProps, {}> {
             return;
         }
 
+        // Persist synthetic event, because it's passed into another method
         event.persist();
 
+        // Pass onSubmit result to FormStore for further processing
         const result = this.props.onSubmit(event, this.FormStore);
         this.FormStore.SubmitForm(result);
     }

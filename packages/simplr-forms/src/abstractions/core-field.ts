@@ -69,7 +69,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
     protected StoreEventSubscription: actionEmitter.EventSubscription;
 
-    componentWillMount() {
+    componentWillMount(): void {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
             throw new Error("simplr-forms: A proper field name must be given (undefined and empty string are not valid).");
@@ -85,7 +85,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.registerFieldInFormStore();
     }
 
-    componentWillReceiveProps(nextProps: CoreFieldProps) {
+    componentWillReceiveProps(nextProps: CoreFieldProps): void {
         // Check if field name has not been changed
         if (this.props.name !== nextProps.name) {
             throw new Error(`simplr-forms: Field name must be constant`);
@@ -94,7 +94,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         if (this.StoreEventSubscription != null) {
             this.StoreEventSubscription.remove();
         }
@@ -112,7 +112,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     /**
      * Is field currently controlled.
      */
-    protected get IsControlled() {
+    protected get IsControlled(): boolean {
         return false;
     }
 
@@ -138,7 +138,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         return value;
     }
 
-    protected ProcessValueFromStore(value: FieldValue) {
+    protected ProcessValueFromStore(value: FieldValue): FieldValue {
         return this.FormatValue(value);
     }
 
@@ -177,11 +177,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         );
     }
 
-    protected ChildrenToRender() {
+    protected ChildrenToRender(): void {
         throw new Error("simplr-forms: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
     }
 
-    protected OnStoreUpdated() {
+    protected OnStoreUpdated(): void {
         const newFormState = this.FormStore.GetState();
         const newFieldState = this.FormStore.GetField(this.FieldId);
 
@@ -202,7 +202,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
     }
 
-    protected OnValueChange(newValue: FieldValue, processValue: boolean = true) {
+    protected OnValueChange(newValue: FieldValue, processValue: boolean = true): void {
         // Noop if the component is controlled from outside
         if (this.IsControlled) {
             return;
@@ -213,6 +213,14 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
 
         this.FormStore.UpdateFieldValue(this.FieldId, newValue);
+    }
+
+    protected Focus(): void {
+        this.FormStore.SetActiveField(this.FieldId);
+    }
+
+    protected Blur(): void {
+        this.FormStore.SetActiveField(undefined);
     }
 
     /**
@@ -251,7 +259,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     /**
      * Registers a field in FormStore or throws if the field was already registered
      */
-    private registerFieldInFormStore() {
+    private registerFieldInFormStore(): void {
         if (this.FormStore.HasField(this.FieldId)) {
             throw new Error(`simplr-forms: Duplicate field id '${this.FieldId}'`);
         }
