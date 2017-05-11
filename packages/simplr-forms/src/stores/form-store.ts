@@ -266,7 +266,7 @@ export class FormStore extends ActionEmitter {
         }
     }
 
-    public SetActiveField(fieldId: string | undefined) {
+    public SetActiveField(fieldId: string | undefined): void {
         this.State = this.State.withMutations(state => {
             if (fieldId == null) {
                 return state.Form.merge({
@@ -710,7 +710,7 @@ export class FormStore extends ActionEmitter {
         return result;
     }
 
-    protected RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true) {
+    protected RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true): T[] {
         let result = concat ? array.concat() : array;
         for (const value of valuesToRemove) {
             let index;
