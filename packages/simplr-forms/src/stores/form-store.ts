@@ -384,9 +384,9 @@ export class FormStore extends ActionEmitter {
                 } as FormState);
                 return state;
             });
-        } catch (err) {
+        } catch (caughtError) {
             // Set error origin
-            const constructedError = ConstructFormError(err, FormErrorOrigin.Submit);
+            const constructedError = ConstructFormError(caughtError, FormErrorOrigin.Submit);
             let error: FormErrorRecord;
             if (constructedError != null) {
                 error = recordify<FormError, FormErrorRecord>(constructedError);
