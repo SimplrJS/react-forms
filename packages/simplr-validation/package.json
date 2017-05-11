@@ -5,6 +5,7 @@
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
   "main": "index.js",
+  "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "test": "jest",
