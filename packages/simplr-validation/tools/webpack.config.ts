@@ -5,7 +5,12 @@ const packageJson = require("./package.json");
 
 let externals: {
     [key: string]: any
-} = {};
+} = {
+        "simplr-forms/utils": "simplr-forms/utils",
+        "simplr-forms/actions": "simplr-forms/actions",
+        "simplr-forms/contracts": "simplr-forms/contracts",
+        "simplr-forms/stores": "simplr-forms/stores"
+    };
 
 for (const key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
@@ -14,16 +19,6 @@ for (const key in packageJson.dependencies) {
 }
 
 const externalsResolver = [
-    function (context, request, callback) {
-        // console.log(request);
-        if (request.indexOf("simplr-forms") !== -1) {
-            const resolveTo = "simplr-forms";
-            console.log(`Resolving:\n${request}\nTo:\n${resolveTo}\n`);
-            callback(resolveTo);
-            return;
-        }
-        callback();
-    },
     externals,
     function (context: string, request: string, callback: Function) {
         const directoriesToTest = [
@@ -67,7 +62,7 @@ const externalsResolver = [
         callback();
     }
 ];
-
+console.log(path.resolve("node_modules/simplr-forms/actions.js"));
 module.exports = {
     entry: {
         index: "./src/index.ts",

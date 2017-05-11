@@ -2,23 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var packageJson = require("./package.json");
-var externals = {};
+var externals = {
+    "simplr-forms/utils": "simplr-forms/utils",
+    "simplr-forms/actions": "simplr-forms/actions",
+    "simplr-forms/contracts": "simplr-forms/contracts",
+    "simplr-forms/stores": "simplr-forms/stores"
+};
 for (var key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
         externals[key] = key;
     }
 }
 var externalsResolver = [
-    function (context, request, callback) {
-        // console.log(request);
-        if (request.indexOf("simplr-forms") !== -1) {
-            var resolveTo = "simplr-forms";
-            console.log("Resolving:\n" + request + "\nTo:\n" + resolveTo + "\n");
-            callback(resolveTo);
-            return;
-        }
-        callback();
-    },
     externals,
     function (context, request, callback) {
         var directoriesToTest = [
