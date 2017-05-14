@@ -1,4 +1,5 @@
 import { TypedRecord } from "typed-immutable-record";
+import { FormContextPropsObject } from "./form";
 
 export interface FieldsGroupProps {
     name: string;
@@ -7,10 +8,18 @@ export interface FieldsGroupProps {
 export interface FieldsGroupState { }
 
 export interface FieldsGroupStoreState {
+    Name: string;
     Parent?: string;
     ArrayName?: string;
 }
 
-export interface FieldsGroupStateRecord extends TypedRecord<FieldsGroupStateRecord>, FieldsGroupState { }
+export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStoreStateRecord>, FieldsGroupStoreState { }
+
+export interface FieldsGroupChildContext {
+    FieldsGroupId: string;
+    FieldsGroupProps: FieldsGroupPropsObject;
+}
+
+export interface FieldsGroupPropsObject { }
 
 export interface FieldsGroupContextProps { }
