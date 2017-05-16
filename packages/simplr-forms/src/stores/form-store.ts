@@ -5,11 +5,11 @@ import { ActionEmitter } from "action-emitter";
 
 import * as Actions from "../actions/form-store";
 import {
-    FieldState,
+    FieldStoreState,
     FieldValue,
-    FieldStateRecord,
-    FieldStatePropsRecord,
-    FieldStateProps
+    FieldStoreStateRecord,
+    FieldStorePropsRecord,
+    FieldProps
 } from "../contracts/field";
 import {
     FormState,
@@ -23,15 +23,22 @@ import {
     BuiltFormObject,
     FormStoreStateStatus
 } from "../contracts/form-store";
-import { FieldsGroupStateRecord } from "../contracts/fields-group";
+import {
+    FieldsGroupStoreState,
+    FieldsGroupStoreStateRecord
+} from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
+
+export const FG_SEPARATOR = ".";
+
+export type Dictionary<TItem = any> = { [key: string]: TItem };
 
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
         super();
         this.FormId = formId;
-        this.state = this.GetInitialFormStoreState();
+        this.state = recordify<FormStoreState, FormStoreStateRecord>(this.GetInitialFormStoreState());
     }
 
     protected FormId: string;
@@ -67,27 +74,50 @@ export class FormStore extends ActionEmitter {
      */
     public GetFieldId(fieldName: string, fieldsGroupId?: string): string {
         if (fieldsGroupId != null) {
-            return `${fieldsGroupId}___${fieldName}`;
+            return `${fieldsGroupId}${FG_SEPARATOR}${fieldName}`;
         }
 
         return fieldName;
     }
 
+    public GetFieldsGroupId(name: string, parentId?: string): string {
+        if (parentId != null) {
+            return `${parentId}${FG_SEPARATOR}${name}`;
+        }
+
+        return name;
+    }
+
+    public GetFieldsArrayId(name: string, parentId?: string): string {
+        return this.GetFieldsGroupId(name, parentId);
+    }
+
     public RegisterField(
         fieldId: string,
+        name: string,
         defaultValue: FieldValue,
         initialValue?: FieldValue,
         value?: FieldValue,
-        props?: FieldStateProps,
+        props?: FieldProps,
         fieldsGroupId?: string
     ): void {
         // Construct field state
-        let fieldState = this.GetInitialFieldState();
+        const fieldState: FieldStoreState = {
+            Name: name,
+            // Set default value without fallbacks
+            DefaultValue: defaultValue,
+            InitialValue: undefined,
+            Value: undefined,
+            Touched: false,
+            Pristine: true,
+            Validating: false,
+            Error: undefined,
+            FieldsGroup: undefined,
+            Props: undefined
+        };
 
-        // Set default value without fallbacks
-        fieldState.DefaultValue = defaultValue;
 
-        // (initialValue)(value)
+        // (initialValue) (value)
         // 0 => null
         // 1 => not null
 
@@ -112,7 +142,7 @@ export class FormStore extends ActionEmitter {
         }
 
         if (props != null) {
-            fieldState.Props = recordify<FieldStateProps, FieldStatePropsRecord>(props);
+            fieldState.Props = recordify<FieldProps, FieldStorePropsRecord>(props);
         }
 
         if (fieldsGroupId != null) {
@@ -123,10 +153,39 @@ export class FormStore extends ActionEmitter {
 
         // Add field into form store state
         this.State = this.State.withMutations(state => {
-            state.Fields = state.Fields.set(fieldId, recordify<FieldState, FieldStateRecord>(fieldState));
+            state.Fields = state.Fields.set(fieldId, recordify<FieldStoreState, FieldStoreStateRecord>(fieldState));
         });
 
-        this.emit(new Actions.FieldRegistered(fieldId, initialValue));
+        this.emit(new Actions.FieldRegistered(fieldId));
+    }
+
+    public RegisterFieldsGroup(id: string, name: string, parentId?: string): void {
+        const fgState: FieldsGroupStoreState = {
+            Name: name,
+            Parent: parentId
+        };
+
+        const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
+        });
+
+        this.emit(new Actions.FieldsGroupRegistered(id));
+    }
+
+    public RegisterFieldsArray(id: string, name: string, index: number, parentId?: string): void {
+        const fgState: FieldsGroupStoreState = {
+            Name: name,
+            ArrayName: name,
+            Parent: parentId
+        };
+
+        const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
+        });
+
+        this.emit(new Actions.FieldsArrayRegistered(id));
     }
 
     public UnregisterField(fieldId: string): void {
@@ -140,7 +199,7 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.has(fieldId);
     }
 
-    public GetField(fieldId: string): FieldStateRecord {
+    public GetField(fieldId: string): FieldStoreStateRecord {
         return this.State.Fields.get(fieldId);
     }
 
@@ -161,8 +220,8 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public UpdateFieldProps(fieldId: string, props: FieldStateProps): void {
-        const propsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(props);
+    public UpdateFieldProps(fieldId: string, props: FieldProps): void {
+        const propsRecord = recordify<FieldProps, FieldStorePropsRecord>(props);
         const fieldState = this.State.Fields.get(fieldId);
 
         if (fieldState.Props == null ||
@@ -174,7 +233,7 @@ export class FormStore extends ActionEmitter {
             const fieldState = state.Fields.get(fieldId);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
                 Props: propsRecord
-            } as FieldState));
+            } as FieldStoreState));
         });
 
         this.emit(new Actions.FieldPropsChanged(fieldId));
@@ -192,7 +251,7 @@ export class FormStore extends ActionEmitter {
                 Value: newValue,
                 Pristine: newPristine,
                 Touched: true
-            } as FieldState));
+            } as FieldStoreState));
 
             state.Form = state.Form.merge({
                 SuccessfullySubmitted: false,
@@ -202,7 +261,7 @@ export class FormStore extends ActionEmitter {
             return this.RecalculateDependentFormStatuses(state);
         });
 
-        this.emit(new Actions.ValueChanged(fieldId, newValue));
+        this.emit(new Actions.ValueChanged(fieldId));
     }
 
     public async ValidateField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
@@ -220,7 +279,7 @@ export class FormStore extends ActionEmitter {
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: true,
                     Error: undefined
-                } as FieldState));
+                } as FieldStoreState));
             });
         }
 
@@ -238,7 +297,7 @@ export class FormStore extends ActionEmitter {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
-                } as FieldState));
+                } as FieldStoreState));
 
                 return this.RecalculateDependentFormStatuses(state);
             });
@@ -259,7 +318,7 @@ export class FormStore extends ActionEmitter {
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false,
                     Error: recordify<FormError, FormErrorRecord>(formError!)
-                } as FieldState));
+                } as FieldStoreState));
 
                 return this.RecalculateDependentFormStatuses(state);
             });
@@ -269,29 +328,30 @@ export class FormStore extends ActionEmitter {
     public SetActiveField(fieldId: string | undefined): void {
         this.State = this.State.withMutations(state => {
             if (fieldId == null) {
-                return state.Form.merge({
+                state.Form = state.Form.merge({
                     ActiveFieldId: undefined
                 } as FormState);
+                return state;
             }
 
             const fieldState = this.State.Fields.get(fieldId);
             if (fieldState == null) {
                 console.warn(`simplr-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
                     + `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`);
-                return state.Form.merge({
+                // Reset ActiveFieldId to an undefined
+                state.Form = state.Form.merge({
                     ActiveFieldId: undefined
                 } as FormState);
+                return state;
             }
 
             state.Form = state.Form.merge({
                 ActiveFieldId: fieldId
             } as FormState);
 
-            state.Fields = state.Fields.withMutations(fields => {
-                fields.set(fieldId, fieldState.merge({
-                    Touched: true
-                } as FieldState));
-            });
+            state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                Touched: true
+            } as FieldStoreState));
 
             return this.RecalculateDependentFormStatuses(state);
         });
@@ -422,7 +482,7 @@ export class FormStore extends ActionEmitter {
                         Value: fieldState.DefaultValue,
                         Pristine: (fieldState.InitialValue === fieldState.DefaultValue),
                         Touched: oldValue !== fieldState.DefaultValue
-                    } as FieldState));
+                    } as FieldStoreState));
                 }
             });
 
@@ -448,7 +508,7 @@ export class FormStore extends ActionEmitter {
                         Value: fieldState.InitialValue,
                         Pristine: true,
                         Touched: false
-                    } as FieldState));
+                    } as FieldStoreState));
                 }
             });
 
@@ -461,7 +521,7 @@ export class FormStore extends ActionEmitter {
             this.BuiltFormObject.Fields !== this.State.Fields) {
             this.BuiltFormObject = {
                 Fields: this.State.Fields,
-                Object: this.BuildFormObject(this.State)
+                Object: this.BuildFormObject()
             };
         }
         return this.BuiltFormObject.Object;
@@ -473,17 +533,17 @@ export class FormStore extends ActionEmitter {
      * ========================
      */
 
-    protected GetInitialFormStoreState(): FormStoreStateRecord {
-        return recordify<FormStoreState, FormStoreStateRecord>({
-            Fields: Immutable.Map<string, FieldStateRecord>(),
-            FieldsGroups: Immutable.Map<string, FieldsGroupStateRecord>(),
+    protected GetInitialFormStoreState(): FormStoreState {
+        return {
+            Fields: Immutable.Map<string, FieldStoreStateRecord>(),
+            FieldsGroups: Immutable.Map<string, FieldsGroupStoreStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
             // MUST be identical with GetInitialFieldState method.
             Validating: false,
             HasError: false,
             Pristine: true,
             Touched: false
-        });
+        };
     }
 
     protected GetInitialFormState(): FormState {
@@ -495,21 +555,7 @@ export class FormStore extends ActionEmitter {
             Error: undefined,
             SubmitCallback: undefined,
             Props: recordify<FormProps, FormPropsRecord>({})
-        };
-    }
-
-    protected GetInitialFieldState(): FieldState {
-        return {
-            DefaultValue: undefined,
-            InitialValue: undefined,
-            Value: undefined,
-            Touched: false,
-            Pristine: true,
-            Validating: false,
-            Error: undefined,
-            FieldsGroup: undefined,
-            Props: undefined
-        };
+        } as FormState;
     }
 
     protected GetInitialStoreStatus(): FormStoreStateStatus {
@@ -518,22 +564,38 @@ export class FormStore extends ActionEmitter {
             Pristine: true,
             Touched: false,
             Validating: false
-        };
+        } as FormStoreStateStatus;
     }
 
-    protected BuildFormObject(state: FormStoreStateRecord) {
-        const formStoreObject: { [id: string]: any } = {};
+    protected BuildFormObject(fieldsGroupId?: string): Dictionary {
+        const result: Dictionary = {};
 
-        this.State.Fields.forEach((field, fieldId) => {
-            if (fieldId == null || field == null) {
+        const groupFields = this.State.Fields.filter(x =>
+            x != null &&
+            (x.FieldsGroup == null || x.FieldsGroup.Id === fieldsGroupId));
+
+        groupFields.forEach((field, fieldId) => {
+            if (field == null || field == null) {
                 return;
             }
-            formStoreObject[fieldId] = field.Value;
+            result[field.Name] = field.Value;
         });
 
-        // TODO: FieldsGroups values
-
-        return formStoreObject;
+        const fieldsGroups = this.State.FieldsGroups.filter(x => x != null && x.Parent === fieldsGroupId);
+        fieldsGroups.forEach((fieldsGroup, fieldsGroupId) => {
+            if (fieldsGroup == null || fieldsGroupId == null) {
+                return;
+            }
+            if (fieldsGroup.ArrayName != null) {
+                if (result[fieldsGroup.ArrayName] == null) {
+                    result[fieldsGroup.ArrayName] = [];
+                }
+                result[fieldsGroup.ArrayName].push(this.BuildFormObject(fieldsGroupId));
+            } else {
+                result[fieldsGroup.Name] = this.BuildFormObject(fieldsGroupId);
+            }
+        });
+        return result;
     }
 
     protected RecalculateDependentFormStatuses(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
@@ -721,7 +783,7 @@ export class FormStore extends ActionEmitter {
         return result;
     }
 
-    protected PropsEqual(newProps: FieldStatePropsRecord, oldProps: FieldStatePropsRecord): boolean {
+    protected PropsEqual(newProps: FieldStorePropsRecord, oldProps: FieldStorePropsRecord): boolean {
         const newKeys = newProps.keySeq().toArray();
         const oldKeys = oldProps.keySeq().toArray();
 

@@ -3,33 +3,41 @@ import { FieldValue } from "../contracts/field";
 export class StateChanged { }
 
 export class FieldRegistered {
-    constructor(private fieldId: string, private initialValue: FieldValue) { }
+    constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
+}
 
-    public get InitialValue() {
-        return this.initialValue;
+export class FieldsGroupRegistered {
+    constructor(private fieldsGroupId: string) { }
+
+    public get FieldsGroupId(): string {
+        return this.fieldsGroupId;
+    }
+}
+
+export class FieldsArrayRegistered {
+    constructor(private fieldsGroupId: string) { }
+
+    public get FieldsArrayId(): string {
+        return this.fieldsGroupId;
     }
 }
 
 export class ValueChanged {
-    constructor(private fieldId: string, private newValue: FieldValue) { }
+    constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
-    }
-
-    public get NewValue() {
-        return this.newValue;
     }
 }
 
 export class FieldPropsChanged {
     constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
 }

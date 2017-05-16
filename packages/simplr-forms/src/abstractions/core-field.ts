@@ -8,7 +8,8 @@ import {
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
-    FieldStateRecord
+    FieldStoreStateRecord,
+    FieldContext
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
 import { FormContextPropsObject } from "../contracts/form";
@@ -20,28 +21,20 @@ import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
 
 export interface CoreFieldState {
-    Field?: FieldStateRecord;
+    Field?: FieldStoreStateRecord;
     Form?: FormStoreStateRecord;
     Value?: FieldValue;
 }
 
-export interface ParentContext {
-    FormId: string;
-    FormProps: FormContextPropsObject;
-    FieldsGroupId: string;
-    // FieldsGroupProps: FieldsGroupContextProps;
-}
-
-
 export abstract class CoreField<TProps extends CoreFieldProps, TState extends CoreFieldState>
     extends React.Component<TProps, TState> {
-    public context: ParentContext;
+    public context: FieldContext;
 
-    static contextTypes: PropTypes.ValidationMap<ParentContext> = {
+    static contextTypes: PropTypes.ValidationMap<FieldContext> = {
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        // FieldsGroupProps: PropTypes.object
+        FieldsGroupProps: PropTypes.object
     };
 
     static defaultProps: CoreFieldProps = {
@@ -269,6 +262,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         const value = this.ProcessValueBeforeStore(this.RawValue);
         this.FormStore.RegisterField(
             this.FieldId,
+            this.props.name,
             defaultValue,
             initialValue,
             value,

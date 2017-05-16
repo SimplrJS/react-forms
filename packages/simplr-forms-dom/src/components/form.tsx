@@ -41,7 +41,7 @@ export class Form extends BaseForm<FormProps, {}> {
         this.FormStore.SubmitForm(result);
     }
 
-    render() {
+    render(): JSX.Element | null {
         return <form
             ref={this.SetElementRef}
             onSubmit={this.FormSubmitHandler}
