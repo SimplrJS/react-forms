@@ -3,6 +3,7 @@ import { FormContextPropsObject } from "./form";
 
 export interface FieldsGroupProps {
     name: string;
+    destroyOnUnmount?: boolean;
 }
 
 export interface FieldsGroupState { }

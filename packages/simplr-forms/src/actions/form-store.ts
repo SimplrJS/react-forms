@@ -5,7 +5,7 @@ export class StateChanged { }
 export class FieldRegistered {
     constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
 }
@@ -13,7 +13,7 @@ export class FieldRegistered {
 export class FieldsGroupRegistered {
     constructor(private fieldsGroupId: string) { }
 
-    public get FieldsGroupId() {
+    public get FieldsGroupId(): string {
         return this.fieldsGroupId;
     }
 }
@@ -21,7 +21,7 @@ export class FieldsGroupRegistered {
 export class FieldsArrayRegistered {
     constructor(private fieldsGroupId: string) { }
 
-    public get FieldsArrayId() {
+    public get FieldsArrayId(): string {
         return this.fieldsGroupId;
     }
 }
@@ -29,7 +29,7 @@ export class FieldsArrayRegistered {
 export class ValueChanged {
     constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
 }
@@ -37,7 +37,7 @@ export class ValueChanged {
 export class FieldPropsChanged {
     constructor(private fieldId: string) { }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
 }

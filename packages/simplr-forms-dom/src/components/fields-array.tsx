@@ -18,24 +18,21 @@ interface Dictionary {
 export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArrayState> {
     public Element: HTMLDivElement;
 
-    private setElementRef = (element: HTMLDivElement) => {
+    private setElementRef = (element: HTMLDivElement): void => {
         this.Element = element;
     }
 
-    protected HTMLProps() {
-        let notHTMLProps = ["name", "index", "destroyOnUnmount"];
-        let newProps: { [id: string]: any } = {};
-
-        for (let key in this.props) {
-            if ((this.props as Dictionary)[key] != null && notHTMLProps.indexOf(key) === -1) {
-                newProps[key] = (this.props as Dictionary)[key];
-            }
-        }
-
-        return newProps;
+    protected HTMLProps(): {} {
+        const {
+            name,
+            index,
+            destroyOnUnmount,
+            children,
+            ...rest } = this.props;
+        return rest;
     }
 
-    render() {
+    render(): JSX.Element | null {
         return <div
             ref={this.setElementRef}
             {...this.HTMLProps() }

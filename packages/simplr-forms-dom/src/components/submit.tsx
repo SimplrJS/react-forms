@@ -102,7 +102,7 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
                 this.state.Submitting);
     }
 
-    protected get InlineStyles() {
+    protected get InlineStyles(): React.CSSProperties {
         let inlineStyles: React.CSSProperties = {};
 
         if (this.props.style != null) {
@@ -116,7 +116,7 @@ export class Submit extends BaseContainer<SubmitProps, SubmitStateRecord> {
         return inlineStyles;
     }
 
-    render() {
+    render(): JSX.Element | null {
         return <button
             type="submit"
             disabled={this.Disabled}

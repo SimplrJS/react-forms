@@ -41,7 +41,7 @@ export class Clear extends BaseContainer<ClearProps, ClearStateRecord> {
         return this.state.Submitting;
     }
 
-    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = (event): void => {
         event.persist();
         this.FormStore.ClearFields(this.props.fieldIds);
 
@@ -50,7 +50,7 @@ export class Clear extends BaseContainer<ClearProps, ClearStateRecord> {
         }
     }
 
-    render() {
+    render(): JSX.Element | null {
         // TODO: Pass all other props.
         return <button
             type="button"

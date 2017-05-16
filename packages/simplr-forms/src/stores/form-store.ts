@@ -32,6 +32,8 @@ import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error"
 
 export const FG_SEPARATOR = ".";
 
+export type Dictionary<TItem = any> = { [key: string]: TItem };
+
 export class FormStore extends ActionEmitter {
     constructor(formId: string) {
         super();
@@ -100,7 +102,7 @@ export class FormStore extends ActionEmitter {
         fieldsGroupId?: string
     ): void {
         // Construct field state
-        let fieldState = {
+        const fieldState: FieldStoreState = {
             Name: name,
             // Set default value without fallbacks
             DefaultValue: defaultValue,
@@ -112,7 +114,7 @@ export class FormStore extends ActionEmitter {
             Error: undefined,
             FieldsGroup: undefined,
             Props: undefined
-        } as FieldStoreState;
+        };
 
 
         // (initialValue) (value)
@@ -158,10 +160,10 @@ export class FormStore extends ActionEmitter {
     }
 
     public RegisterFieldsGroup(id: string, name: string, parentId?: string): void {
-        const fgState = {
+        const fgState: FieldsGroupStoreState = {
             Name: name,
             Parent: parentId
-        } as FieldsGroupStoreState;
+        };
 
         const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
         this.State = this.State.withMutations(state => {
@@ -172,11 +174,11 @@ export class FormStore extends ActionEmitter {
     }
 
     public RegisterFieldsArray(id: string, name: string, index: number, parentId?: string): void {
-        const fgState = {
+        const fgState: FieldsGroupStoreState = {
             Name: name,
             ArrayName: name,
             Parent: parentId
-        } as FieldsGroupStoreState;
+        };
 
         const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
         this.State = this.State.withMutations(state => {
@@ -326,29 +328,30 @@ export class FormStore extends ActionEmitter {
     public SetActiveField(fieldId: string | undefined): void {
         this.State = this.State.withMutations(state => {
             if (fieldId == null) {
-                return state.Form.merge({
+                state.Form = state.Form.merge({
                     ActiveFieldId: undefined
                 } as FormState);
+                return state;
             }
 
             const fieldState = this.State.Fields.get(fieldId);
             if (fieldState == null) {
                 console.warn(`simplr-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
                     + `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`);
-                return state.Form.merge({
+                // Reset ActiveFieldId to an undefined
+                state.Form = state.Form.merge({
                     ActiveFieldId: undefined
                 } as FormState);
+                return state;
             }
 
             state.Form = state.Form.merge({
                 ActiveFieldId: fieldId
             } as FormState);
 
-            state.Fields = state.Fields.withMutations(fields => {
-                fields.set(fieldId, fieldState.merge({
-                    Touched: true
-                } as FieldStoreState));
-            });
+            state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                Touched: true
+            } as FieldStoreState));
 
             return this.RecalculateDependentFormStatuses(state);
         });
@@ -564,8 +567,8 @@ export class FormStore extends ActionEmitter {
         } as FormStoreStateStatus;
     }
 
-    protected BuildFormObject(fieldsGroupId?: string): { [key: string]: any } {
-        const result: { [key: string]: any } = {};
+    protected BuildFormObject(fieldsGroupId?: string): Dictionary {
+        const result: Dictionary = {};
 
         const groupFields = this.State.Fields.filter(x =>
             x != null &&

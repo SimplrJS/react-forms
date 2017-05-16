@@ -41,7 +41,7 @@ export class Reset extends BaseContainer<ResetProps, ResetStateRecord> {
         return this.state.Submitting;
     }
 
-    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = (event): void => {
         event.persist();
         this.FormStore.ResetFields(this.props.fieldIds);
 
@@ -50,7 +50,7 @@ export class Reset extends BaseContainer<ResetProps, ResetStateRecord> {
         }
     }
 
-    render() {
+    render(): JSX.Element | null {
         // TODO: Pass all other props.
         return <button
             type="button"
