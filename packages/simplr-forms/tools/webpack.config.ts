@@ -42,7 +42,7 @@ const externalsResolver = [
                 resolvedPath.indexOf(path.join(__dirname, `src/${passingTest.directory}`)) !== -1;
 
             if (shouldReplaceWithCustomResolve) {
-                const customResolve = `./${passingTest.directory}`;
+                let customResolve = `./${passingTest.directory}`;
                 callback(null, customResolve);
                 return;
             }

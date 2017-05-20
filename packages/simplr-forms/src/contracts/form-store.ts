@@ -13,6 +13,8 @@ export interface FormStoreState extends FormStoreStateStatus {
 
 export interface FormStoreStateStatus {
     Validating: boolean;
+    Submitting: boolean;
+    Disabled: boolean;
     HasError: boolean;
     Pristine: boolean;
     Touched: boolean;

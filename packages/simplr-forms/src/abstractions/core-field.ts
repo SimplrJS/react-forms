@@ -8,21 +8,19 @@ import {
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
-    FieldStoreStateRecord,
     FieldContext
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
 import { FormContextPropsObject } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
-import { FormStoreStateRecord } from "../contracts/form-store";
 import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
+import { FormStoreStateRecord } from "../contracts/form-store";
 
 export interface CoreFieldState {
-    Field?: FieldStoreStateRecord;
-    Form?: FormStoreStateRecord;
+    FormStoreState: FormStoreStateRecord;
     Value?: FieldValue;
 }
 
@@ -175,20 +173,18 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected OnStoreUpdated(): void {
-        const newFormState = this.FormStore.GetState();
-        const newFieldState = this.FormStore.GetField(this.FieldId);
+        const newFormStoreState = this.FormStore.GetState();
 
         const isStateDifferent = this.state == null ||
-            this.state.Field !== newFieldState ||
-            this.state.Form !== newFormState;
+            this.state.FormStoreState !== newFormStoreState;
 
-        if (isStateDifferent && newFieldState != null) {
+        if (isStateDifferent) {
             this.setState((state: TState) => {
                 if (state == null) {
                     state = {} as any;
                 }
-                state.Form = newFormState;
-                state.Field = newFieldState;
+                state.FormStoreState = newFormStoreState;
+                const newFieldState = this.FormStore.GetField(this.FieldId);
                 state.Value = this.ProcessValueFromStore(newFieldState.Value);
                 return state;
             });

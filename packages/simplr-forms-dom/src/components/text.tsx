@@ -47,25 +47,13 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         return "";
     }
 
-    protected get IsDisabled() {
-        let disabled: boolean | undefined;
-
-        // TODO: FormProps.Disabled and FieldsGroupProps.Disabled
-
-        if (this.props.disabled != null) {
-            disabled = this.props.disabled;
-        }
-
-        return disabled;
-    }
-
     renderField(): JSX.Element | null {
         return <input
             type="text"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
-            disabled={this.IsDisabled}
+            disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
         />;

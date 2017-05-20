@@ -26,6 +26,7 @@ export interface FieldProps extends CoreFieldProps {
     defaultValue?: FieldValue;
     initialValue?: FieldValue;
     value?: FieldValue;
+    disabled?: boolean;
 }
 
 export interface FieldStoreState {

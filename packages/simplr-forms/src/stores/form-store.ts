@@ -50,7 +50,7 @@ export class FormStore extends ActionEmitter {
     }
     protected set State(newState: FormStoreStateRecord) {
         this.state = newState;
-        this.emit(new Actions.StateChanged());
+        this.emit(new Actions.StateChanged(this.FormId));
     }
 
     public GetState(): FormStoreStateRecord {
@@ -156,7 +156,7 @@ export class FormStore extends ActionEmitter {
             state.Fields = state.Fields.set(fieldId, recordify<FieldStoreState, FieldStoreStateRecord>(fieldState));
         });
 
-        this.emit(new Actions.FieldRegistered(fieldId));
+        this.emit(new Actions.FieldRegistered(this.FormId, fieldId));
     }
 
     public RegisterFieldsGroup(id: string, name: string, parentId?: string): void {
@@ -170,7 +170,7 @@ export class FormStore extends ActionEmitter {
             state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
         });
 
-        this.emit(new Actions.FieldsGroupRegistered(id));
+        this.emit(new Actions.FieldsGroupRegistered(this.FormId, id));
     }
 
     public RegisterFieldsArray(id: string, name: string, index: number, parentId?: string): void {
@@ -185,7 +185,7 @@ export class FormStore extends ActionEmitter {
             state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
         });
 
-        this.emit(new Actions.FieldsArrayRegistered(id));
+        this.emit(new Actions.FieldsArrayRegistered(this.FormId, id));
     }
 
     public UnregisterField(fieldId: string): void {
@@ -215,9 +215,13 @@ export class FormStore extends ActionEmitter {
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.withMutations(formState => {
                 formState.Props = recordify<FormProps, FormPropsRecord>(props);
+                if (props != null && props.disabled === true) {
+                    formState.Disabled = true;
+                }
             });
-            this.emit(new Actions.FormPropsChanged());
+            return this.RecalculateDependentFormStatuses(state);
         });
+        this.emit(new Actions.FormPropsChanged(this.FormId));
     }
 
     public UpdateFieldProps(fieldId: string, props: FieldProps): void {
@@ -236,7 +240,7 @@ export class FormStore extends ActionEmitter {
             } as FieldStoreState));
         });
 
-        this.emit(new Actions.FieldPropsChanged(fieldId));
+        this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
     }
 
     public UpdateFieldValue(fieldId: string, newValue: FieldValue): void {
@@ -261,7 +265,7 @@ export class FormStore extends ActionEmitter {
             return this.RecalculateDependentFormStatuses(state);
         });
 
-        this.emit(new Actions.ValueChanged(fieldId));
+        this.emit(new Actions.ValueChanged(this.FormId, fieldId));
     }
 
     public async ValidateField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
@@ -357,6 +361,22 @@ export class FormStore extends ActionEmitter {
         });
     }
 
+    public SetFormDisabled(disabled: boolean): void {
+        this.State = this.State.withMutations(state => {
+            state.Form = state.Form.merge({
+                Disabled: disabled
+            } as FormState);
+
+            return this.RecalculateDependentFormStatuses(state);
+        });
+
+        if (disabled) {
+            this.emit(new Actions.FormDisabled(this.FormId));
+        } else {
+            this.emit(new Actions.FormEnabled(this.FormId));
+        }
+    }
+
     public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
         const form = this.State.Form;
 
@@ -430,7 +450,7 @@ export class FormStore extends ActionEmitter {
             state.Form = state.Form.merge({
                 Submitting: true
             } as FormState);
-            return state;
+            return this.RecalculateDependentFormStatuses(state);
         });
         // Try submitting
         try {
@@ -442,7 +462,7 @@ export class FormStore extends ActionEmitter {
                     SuccessfullySubmitted: true,
                     Error: undefined
                 } as FormState);
-                return state;
+                return this.RecalculateDependentFormStatuses(state);
             });
         } catch (caughtError) {
             // Set error origin
@@ -459,6 +479,7 @@ export class FormStore extends ActionEmitter {
                     SuccessfullySubmitted: false,
                     Error: error
                 } as FormState);
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
     }
@@ -486,6 +507,11 @@ export class FormStore extends ActionEmitter {
                 }
             });
 
+            state.Form = state.Form.merge({
+                SuccessfullySubmitted: false,
+                Error: undefined
+            } as FormState);
+
             return this.RecalculateDependentFormStatuses(state);
         });
     }
@@ -511,6 +537,11 @@ export class FormStore extends ActionEmitter {
                     } as FieldStoreState));
                 }
             });
+
+            state.Form = state.Form.merge({
+                SuccessfullySubmitted: false,
+                Error: undefined
+            } as FormState);
 
             return this.RecalculateDependentFormStatuses(state);
         });
@@ -539,15 +570,18 @@ export class FormStore extends ActionEmitter {
             FieldsGroups: Immutable.Map<string, FieldsGroupStoreStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
             // MUST be identical with GetInitialFieldState method.
-            Validating: false,
             HasError: false,
             Pristine: true,
-            Touched: false
-        };
+            Touched: false,
+            Validating: false,
+            Submitting: false,
+            Disabled: false
+        } as FormStoreState;
     }
 
     protected GetInitialFormState(): FormState {
         return {
+            Disabled: false,
             Validating: false,
             Submitting: false,
             SuccessfullySubmitted: false,
@@ -563,7 +597,9 @@ export class FormStore extends ActionEmitter {
             HasError: false,
             Pristine: true,
             Touched: false,
-            Validating: false
+            Validating: false,
+            Submitting: false,
+            Disabled: false
         } as FormStoreStateStatus;
     }
 
@@ -636,6 +672,15 @@ export class FormStore extends ActionEmitter {
         }
         if (!updater.Validating && formState.Validating) {
             updater.Validating = true;
+        }
+
+        if (!updater.Submitting && formState.Submitting) {
+            updater.Submitting = formState.Submitting;
+        }
+
+        if (!updater.Disabled &&
+            (formState.Disabled || updater.Submitting)) {
+            updater.Disabled = true;
         }
 
         return formStoreState.merge(updater);

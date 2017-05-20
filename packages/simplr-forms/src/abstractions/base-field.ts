@@ -18,4 +18,15 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     protected get RawValue(): FieldValue {
         return this.props.value;
     }
+
+    protected get Disabled(): boolean | undefined {
+        // FormStore can only enforce disabling
+        if (this.FormStore.GetState().Disabled === true) {
+            return true;
+        }
+
+        if (this.props.disabled != null) {
+            return this.props.disabled;
+        }
+    }
 }

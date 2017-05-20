@@ -25,6 +25,7 @@ export interface FormChildContext {
 export interface FormState {
     Props: FormStateProps;
     Validating: boolean;
+    Disabled: boolean;
     Error?: FormErrorRecord;
     SubmitCallback?: () => void;
     Submitting: boolean;
