@@ -1,11 +1,19 @@
 import { BaseField, BaseFieldState } from "simplr-forms";
 import { FieldProps } from "simplr-forms/contracts";
+import {
+    DomFieldProps,
+    DomFieldTemplateCallback,
+    DomComponentData,
+    DomFieldDetails
+} from "../contracts/field";
+import { FormProps } from "../contracts/form";
+
 
 export interface BaseDomFieldState extends BaseFieldState {
 
 }
 
-export abstract class BaseDomField<TProps extends FieldProps, TState extends BaseDomFieldState>
+export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState>
     extends BaseField<TProps, TState> {
     protected OnFocus = (event: React.FocusEvent<HTMLInputElement>): void => {
         const props = this.props as FieldProps;
@@ -25,10 +33,34 @@ export abstract class BaseDomField<TProps extends FieldProps, TState extends Bas
         this.Blur();
     }
 
+    protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
+        const formProps = this.FormStore.GetState().Form.Props as FormProps;
+        if (formProps.template) {
+            return formProps.template;
+        }
+
+        if (this.props.template != null) {
+            return this.props.template;
+        }
+    }
+
     public abstract renderField(): JSX.Element | null;
 
     public render(): JSX.Element | null {
-        // TODO: FieldTemplate
-        return this.renderField();
+        if (this.FieldTemplate == null) {
+            return this.renderField();
+        }
+        return this.FieldTemplate(
+            this.renderField.bind(this),
+            {
+                name: this.Name,
+                fieldGroupId: this.FieldsGroupId,
+                id: this.FieldId
+            } as DomFieldDetails,
+            this.FormStore,
+            {
+                props: this.props,
+                state: this.FieldState
+            } as DomComponentData);
     }
 }

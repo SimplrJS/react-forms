@@ -110,10 +110,14 @@ export abstract class BaseFormButton<TProps extends BaseFormButtonProps, TState 
     }
 
     protected get ClassName(): string | undefined {
-        if (this.Busy) {
-            return `${this.props.busyClassName} ${this.props.className}`;
+        let className = "";
+        if (this.props.className != null) {
+            className += `${this.props.className} `;
         }
-        return this.props.className;
+        if (this.Busy) {
+            className += this.props.busyClassName;
+        }
+        return className.length > 0 ? className : undefined;
     }
 
     abstract render(): JSX.Element | null;
