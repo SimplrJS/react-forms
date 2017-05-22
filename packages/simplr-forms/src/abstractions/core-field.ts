@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as actionEmitter from "action-emitter";
+import * as ActionEmitter from "action-emitter";
 import * as PropTypes from "prop-types";
 
 import {
@@ -8,10 +8,14 @@ import {
     FieldFormatValueCallback,
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
-    FieldContext
+    FieldContext,
+    FieldStoreState
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
-import { FormContextPropsObject } from "../contracts/form";
+import {
+    FormContextPropsObject,
+    FormStateProps
+} from "../contracts/form";
 import { FormStore } from "../stores/form-store";
 import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
@@ -58,7 +62,15 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         return this.context.FieldsGroupId;
     }
 
-    protected StoreEventSubscription: actionEmitter.EventSubscription;
+    protected get FieldState(): FieldStoreState {
+        return this.FormStore.GetState().Fields.get(this.FieldId);
+    }
+
+    protected get Name(): string {
+        return this.FieldState.Name;
+    }
+
+    protected StoreEventSubscription: ActionEmitter.EventSubscription;
 
     componentWillMount(): void {
         // props.name MUST have a proper value
@@ -181,9 +193,12 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (isStateDifferent) {
             this.setState((state: TState) => {
                 if (state == null) {
-                    state = {} as any;
+                    state = {
+                        FormStoreState: newFormStoreState
+                    } as TState;
+                } else {
+                    state.FormStoreState = newFormStoreState;
                 }
-                state.FormStoreState = newFormStoreState;
                 const newFieldState = this.FormStore.GetField(this.FieldId);
                 state.Value = this.ProcessValueFromStore(newFieldState.Value);
                 return state;
