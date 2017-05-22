@@ -8,3 +8,4 @@ export * from "./components/fields-array";
 // Fields
 export * from "./components/text";
 export * from "./components/password";
+export * from "./components/email";
