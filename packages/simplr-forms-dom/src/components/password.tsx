@@ -8,7 +8,7 @@ import { FieldOnChangeCallback } from "../contracts/field";
 /**
  * Override the differences between extended interfaces.
  */
-export interface TextProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
+export interface PasswordProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
@@ -19,7 +19,7 @@ export interface TextProps extends DomFieldProps, React.HTMLProps<HTMLInputEleme
     value?: FieldValue;
 }
 
-export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
+export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
     protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
@@ -45,7 +45,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
-            type="text"
+            type="password"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
