@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms-dom",
-  "version": "4.0.1-alpha.2",
+  "version": "4.0.1-alpha.3",
   "description": "DOM components for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -57,11 +57,12 @@
     "@types/react": "^15.0.24",
     "@types/prop-types": "^15.5.1",
     "immutable": "^3.8.1",
-    "simplr-forms": "^4.0.1-alpha.2",
+    "simplr-forms": "^4.0.1-alpha.3",
     "typed-immutable-record": "0.0.6",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "tslib": "^1.7.1"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

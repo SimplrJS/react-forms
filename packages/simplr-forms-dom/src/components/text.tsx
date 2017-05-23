@@ -2,22 +2,25 @@ import * as React from "react";
 import { FieldValue } from "simplr-forms/contracts";
 import { DomFieldProps } from "../contracts/field";
 
-import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
-import { FieldOnChangeCallback } from "../contracts/field";
+import {
+    BaseDomField,
+    BaseDomFieldState
+} from "../abstractions/base-dom-field";
+import {
+    FieldOnChangeCallback,
+    FieldOnChangeInternalCallback
+} from "../contracts/field";
+
+export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
- *
- * @export
- * @interface Props
- * @extends {CoreContracts.FieldProps}
- * @extends {React.HTMLProps<HTMLInputElement>}
  */
 export interface TextProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: FieldOnChangeCallback<HTMLInputElement>;
+    onChange?: TextOnChangeCallback & FieldOnChangeInternalCallback;
     ref?: any;
 
     defaultValue?: FieldValue;
@@ -30,9 +33,13 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
     }
 
     protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
-        this.OnValueChange(this.GetValueFromEvent(event));
-
-        const newValue = this.FormStore.GetField(this.FieldId).Value;
+        let newValue: string | undefined;
+        if (!this.IsControlled) {
+            this.OnValueChange(this.GetValueFromEvent(event));
+            newValue = this.FormStore.GetField(this.FieldId).Value;
+        } else {
+            newValue = this.GetValueFromEvent(event);
+        }
 
         if (this.props.onChange != null) {
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
