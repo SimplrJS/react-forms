@@ -9,3 +9,4 @@ export * from "./components/fields-array";
 export * from "./components/text";
 export * from "./components/password";
 export * from "./components/email";
+export * from "./components/search";
