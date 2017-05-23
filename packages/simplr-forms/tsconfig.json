@@ -11,6 +11,7 @@
         "declaration": true,
         "pretty": true,
         "strict": true,
+        "noEmitHelpers": true,
         "lib": [
             "dom",
             "dom.iterable",

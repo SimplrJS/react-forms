@@ -6,8 +6,12 @@ import {
 } from "simplr-forms/contracts";
 import { FormStore } from "simplr-forms/stores";
 
-export interface FieldOnChangeCallback<TElement> extends React.EventHandler<React.FormEvent<TElement>> {
-    (event: React.FormEvent<TElement> | undefined, newValue: FieldValue, fieldId: string, formId: string): void;
+export interface FieldOnChangeInternalCallback {
+    (event: React.FormEvent<any>, ...parameters: any[]): void;
+}
+
+export interface FieldOnChangeCallback<TElement> {
+    (event: React.FormEvent<TElement>, newValue: FieldValue, fieldId: string, formId: string): void;
 }
 
 export interface DomFieldProps extends FieldProps {
