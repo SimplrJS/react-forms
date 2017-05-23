@@ -10,3 +10,4 @@ export * from "./components/text";
 export * from "./components/password";
 export * from "./components/email";
 export * from "./components/search";
+export * from "./components/textarea";
