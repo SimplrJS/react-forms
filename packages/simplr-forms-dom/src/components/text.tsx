@@ -10,6 +10,9 @@ import {
     FieldOnChangeCallback,
     FieldOnChangeInternalCallback
 } from "../contracts/field";
+import {
+    FormProps
+} from "../contracts/form";
 
 export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -33,6 +36,8 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
     }
 
     protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+        event.persist();
+
         let newValue: string | undefined;
         if (!this.IsControlled) {
             this.OnValueChange(this.GetValueFromEvent(event));
@@ -45,7 +50,11 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
         }
 
-        // TODO: FormProps.OnFieldChange
+        const formStoreState = this.FormStore.GetState();
+        const formProps = formStoreState.Form.Props as FormProps;
+        if (formProps.onChange != null) {
+            formProps.onChange(event, newValue, this.FieldId, this.FormId);
+        }
     }
 
     protected get RawDefaultValue() {
