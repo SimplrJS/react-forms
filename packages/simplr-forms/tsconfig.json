@@ -6,7 +6,7 @@
         "outDir": "dist",
         "rootDir": "src",
         "jsx": "react",
-        "sourceMap": false,
+        "sourceMap": true,
         "skipDefaultLibCheck": true,
         "declaration": true,
         "pretty": true,
