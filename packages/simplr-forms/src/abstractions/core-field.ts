@@ -46,11 +46,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         destroyOnUnmount: false
     };
 
-    static get DefaultModifiers(): JSX.Element[] {
+    protected get DefaultModifiers(): JSX.Element[] {
         return [];
     }
 
-    static get DefaultNormalizers(): JSX.Element[] {
+    protected get DefaultNormalizers(): JSX.Element[] {
         return [];
     }
 
@@ -160,7 +160,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
-            CoreField.DefaultModifiers,
+            this.DefaultModifiers,
             value
         );
     }
@@ -170,10 +170,9 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             const formatter = this.props.formatValue as FieldFormatValueCallback;
             value = formatter(value);
         }
-
         return ValueHelpers.FormatValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
-            CoreField.DefaultModifiers,
+            this.DefaultModifiers,
             value
         );
     }
@@ -186,7 +185,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         return ValueHelpers.NormalizeValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
-            CoreField.DefaultNormalizers,
+            this.DefaultNormalizers,
             value
         );
     }

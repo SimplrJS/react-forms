@@ -5,6 +5,7 @@ import { DomFieldProps } from "../contracts/field";
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
 import { FieldOnChangeInternalCallback } from "../contracts";
+import { NumericToStringModifier } from "simplr-forms/modifiers";
 
 export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -23,6 +24,10 @@ export interface NumberProps extends DomFieldProps, React.HTMLProps<HTMLInputEle
 }
 
 export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
+    protected get DefaultModifiers(): JSX.Element[] {
+        return [<NumericToStringModifier />];
+    }
+
     protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
@@ -48,13 +53,16 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
-            type="number"
+            type="tel"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
+            inputMode="numeric"
+            pattern="[0-9]"
+            noValidate
         />;
     }
 }

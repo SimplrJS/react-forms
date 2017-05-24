@@ -38,9 +38,10 @@ export function ProcessValue<TProcessor, TProcessedResult>(
     value: FieldValue,
     processorTypeFunctionName: string,
     process: (processor: TProcessor, value: FieldValue) => TProcessedResult): TProcessedResult {
-    if (components == null || components.length === 0) {
-        return value;
-    }
+    // TODO: Remake this.
+    // if (components == null || components.length === 0 ) {
+    //     return value;
+    // }
 
     // Filter out from components (usually this.props.children) list processors.
     let processors = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
