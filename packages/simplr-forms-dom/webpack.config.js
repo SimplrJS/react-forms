@@ -2,7 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var path = require("path");
 var packageJson = require("./package.json");
-var externals = {};
+var externals = {
+    "simplr-forms/utils": "simplr-forms/utils",
+    "simplr-forms/actions": "simplr-forms/actions",
+    "simplr-forms/contracts": "simplr-forms/contracts",
+    "simplr-forms/modifiers": "simplr-forms/modifiers",
+    "simplr-forms/stores": "simplr-forms/stores"
+};
 for (var key in packageJson.dependencies) {
     if (packageJson.dependencies.hasOwnProperty(key)) {
         externals[key] = key;
