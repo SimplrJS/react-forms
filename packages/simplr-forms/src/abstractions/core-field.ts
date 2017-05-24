@@ -46,6 +46,14 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         destroyOnUnmount: false
     };
 
+    static get DefaultModifiers(): JSX.Element[] {
+        return [];
+    }
+
+    static get DefaultNormalizers(): JSX.Element[] {
+        return [];
+    }
+
     protected get FormId(): string {
         return this.context.FormId;
     }
@@ -152,6 +160,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            CoreField.DefaultModifiers,
             value
         );
     }
@@ -164,6 +173,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         return ValueHelpers.FormatValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            CoreField.DefaultModifiers,
             value
         );
     }
@@ -176,6 +186,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         return ValueHelpers.NormalizeValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            CoreField.DefaultNormalizers,
             value
         );
     }
