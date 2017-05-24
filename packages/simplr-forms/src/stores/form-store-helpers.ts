@@ -2,7 +2,7 @@ import * as React from "react";
 import { FieldStorePropsRecord } from "../contracts/field";
 
 export class FormStoreHelpers {
-    protected static ArrayUnique<T>(array: Array<T>, concat: boolean = true): Array<T> {
+    protected static ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
         let result = concat ? array.concat() : array;
         for (var i = 0; i < result.length; ++i) {
             for (var j = i + 1; j < result.length; ++j) {
@@ -38,7 +38,7 @@ export class FormStoreHelpers {
 
         // Custom props diff, to have most efficient diffing
 
-        // Fist, check top level properties
+        // First, check top level properties
         for (const key of allKeys) {
             const newValue = newProps.get(key);
             const oldValue = oldProps.get(key);
@@ -178,7 +178,6 @@ export class FormStoreHelpers {
                 switch (typeof (x[p])) {
                     case "object":
                     case "function":
-                        console.log("function check");
                         leftChain.push(x);
                         rightChain.push(y);
 
