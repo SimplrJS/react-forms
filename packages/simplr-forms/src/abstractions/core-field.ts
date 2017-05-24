@@ -148,7 +148,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected ParseValue(value: FieldValue): FieldValue {
         if (this.props.parseValue != null) {
             const parser = this.props.parseValue as FieldParseValueCallback;
-            return parser(value);
+            value = parser(value);
         }
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
@@ -159,7 +159,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected FormatValue(value: FieldValue): FieldValue {
         if (this.props.formatValue != null) {
             const formatter = this.props.formatValue as FieldFormatValueCallback;
-            return formatter(value);
+            value = formatter(value);
         }
 
         return ValueHelpers.FormatValue(
@@ -171,7 +171,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected NormalizeValue(value: FieldValue): FieldValue {
         if (this.props.normalizeValue != null) {
             const normalizer = this.props.normalizeValue as FieldNormalizeValueCallback;
-            return normalizer(value);
+            value = normalizer(value);
         }
 
         return ValueHelpers.NormalizeValue(
