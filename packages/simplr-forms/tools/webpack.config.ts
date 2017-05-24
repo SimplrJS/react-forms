@@ -68,6 +68,16 @@ module.exports = {
     module: {
         rules: [
             {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
+                enforce: "pre",
+                test: /\.tsx?$/,
+                use: "source-map-loader"
+            },
+            {
                 test: /\.tsx?$/,
                 loader: "ts-loader",
                 options: {
@@ -78,5 +88,6 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx"]
     },
-    externals: externalsResolver
+    externals: externalsResolver,
+    devtool: "inline-source-map"
 };

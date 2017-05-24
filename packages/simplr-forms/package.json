@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms",
-  "version": "4.0.1-alpha.2",
+  "version": "4.0.1-alpha.3",
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -45,6 +45,7 @@
     "react-test-renderer": "^15.5.4",
     "simplr-mvdir": "0.0.1-beta.7",
     "sinon": "^2.2.0",
+    "source-map-loader": "^0.2.1",
     "ts-jest": "^20.0.4",
     "ts-loader": "^2.1.0",
     "tslint": "^5.2.0",
@@ -53,18 +54,19 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
-    "action-emitter": "^0.2.1",
-    "fbemitter": "^2.1.1",
-    "immutable": "^3.8.1",
-    "typed-immutable-record": "^0.0.6",
-    "react": "15.5.4",
-    "react-dom": "^15.5.4",
-    "prop-types": "^15.5.8",
     "@types/fbemitter": "^2.0.32",
     "@types/flux": "^3.0.1",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.22",
-    "@types/react-dom": "^15.5.0"
+    "@types/react-dom": "^15.5.0",
+    "action-emitter": "^0.2.1",
+    "fbemitter": "^2.1.1",
+    "immutable": "^3.8.1",
+    "prop-types": "^15.5.8",
+    "react": "15.5.4",
+    "react-dom": "^15.5.4",
+    "tslib": "^1.7.1",
+    "typed-immutable-record": "^0.0.6"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

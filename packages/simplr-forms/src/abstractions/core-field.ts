@@ -123,15 +123,13 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     /**
      * Is field currently controlled.
      */
-    protected get IsControlled(): boolean {
-        return false;
-    }
+    protected abstract get IsControlled(): boolean;
 
     /**
      * Current or default field value.
      */
     protected get Value(): FieldValue {
-        // If field is defined
+        // If state is defined
         if (this.state != null && this.state.Value != null) {
             // Return its value
             return this.state.Value;
@@ -140,6 +138,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         // Return default value
         return this.RawDefaultValue;
     }
+
+    protected abstract get ControlledValue(): FieldValue;
 
     protected ProcessValueBeforeStore(value: FieldValue): FieldValue {
         // Parse and normalize value
