@@ -4,6 +4,9 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
+import { FieldOnChangeInternalCallback } from "../contracts";
+
+export type TextAreaOnChangeCallback = FieldOnChangeCallback<HTMLTextAreaElement>;
 
 /**
  * Override the differences between extended interfaces.
@@ -12,7 +15,7 @@ export interface TextAreaProps extends DomFieldProps, React.HTMLProps<HTMLTextAr
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLTextAreaElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLTextAreaElement>>;
-    onChange?: FieldOnChangeCallback<HTMLTextAreaElement>;
+    onChange?: TextAreaOnChangeCallback & FieldOnChangeInternalCallback;
     ref?: any;
 
     defaultValue?: FieldValue;

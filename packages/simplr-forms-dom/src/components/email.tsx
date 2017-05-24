@@ -4,6 +4,9 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
+import { FieldOnChangeInternalCallback } from "../contracts";
+
+export type EmailOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
@@ -12,7 +15,7 @@ export interface EmailProps extends DomFieldProps, React.HTMLProps<HTMLInputElem
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: FieldOnChangeCallback<HTMLInputElement>;
+    onChange?: EmailOnChangeCallback & FieldOnChangeInternalCallback;
     ref?: any;
 
     defaultValue?: FieldValue;

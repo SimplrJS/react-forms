@@ -4,6 +4,9 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
+import { FieldOnChangeInternalCallback } from "../contracts";
+
+export type SearchOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
@@ -12,7 +15,7 @@ export interface SearchProps extends DomFieldProps, React.HTMLProps<HTMLInputEle
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: FieldOnChangeCallback<HTMLInputElement>;
+    onChange?: SearchOnChangeCallback & FieldOnChangeInternalCallback;
     ref?: any;
 
     defaultValue?: FieldValue;
