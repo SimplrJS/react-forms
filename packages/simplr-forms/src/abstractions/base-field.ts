@@ -29,7 +29,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
     }
 
     protected get IsControlled(): boolean {
-        return this.props.value != null;
+        return this.props.value !== undefined;
     }
 
     protected get ControlledValue(): FieldValue {
