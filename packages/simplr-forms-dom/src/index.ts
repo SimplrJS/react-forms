@@ -13,3 +13,5 @@ export * from "./components/search";
 export * from "./components/textarea";
 export * from "./components/number";
 export * from "./components/hidden";
+export * from "./components/checkbox";
+export * from "./components/select";
