@@ -16,7 +16,7 @@ export interface BaseDomFieldState extends BaseFieldState {
 export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState>
     extends BaseField<TProps, TState> {
     protected OnFocus = (event: React.FocusEvent<any>): void => {
-        const props = this.props as FieldProps;
+        const props = this.props as DomFieldProps;
         if (props.onFocus != null) {
             props.onFocus(event);
         }
@@ -25,7 +25,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
     }
 
     protected OnBlur = (event: React.FocusEvent<any>): void => {
-        const props = this.props as FieldProps;
+        const props = this.props as DomFieldProps;
         if (props.onBlur != null) {
             props.onBlur(event);
         }
