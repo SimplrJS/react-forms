@@ -4,7 +4,12 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import { FieldOnChangeInternalCallback } from "../contracts";
+import {
+    HTMLElementProps
+} from "../contracts/field";
+import {
+    FormProps
+} from "../contracts/form";
 import { NumericToStringModifier } from "simplr-forms/modifiers";
 
 export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
@@ -12,15 +17,15 @@ export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 /**
  * Override the differences between extended interfaces.
  */
-export interface NumberProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
+export interface NumberProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: NumberOnChangeCallback & FieldOnChangeInternalCallback;
-    ref?: any;
+    onChange?: NumberOnChangeCallback;
 
     defaultValue?: FieldValue;
     value?: FieldValue;
+    ref?: React.Ref<Number>;
 }
 
 export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
@@ -41,7 +46,11 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
         }
 
-        // TODO: FormProps.OnFieldChange
+        const formStoreState = this.FormStore.GetState();
+        const formProps = formStoreState.Form.Props as FormProps;
+        if (formProps.onChange != null) {
+            formProps.onChange(event, newValue, this.FieldId, this.FormId);
+        }
     }
 
     protected get RawDefaultValue(): string {
@@ -60,9 +69,6 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            inputMode="numeric"
-            pattern="[0-9]"
-            noValidate
         />;
     }
 }

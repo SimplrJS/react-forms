@@ -7,27 +7,27 @@ import {
     BaseDomFieldState
 } from "../abstractions/base-dom-field";
 import {
-    FieldOnChangeCallback,
-    FieldOnChangeInternalCallback
+    FieldOnChangeCallback
 } from "../contracts/field";
 import {
     FormProps
 } from "../contracts/form";
+import { HTMLElementProps } from "../contracts";
 
 export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
  */
-export interface TextProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
+export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
     onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: TextOnChangeCallback & FieldOnChangeInternalCallback;
-    ref?: any;
+    onChange?: TextOnChangeCallback;
 
     defaultValue?: FieldValue;
     value?: FieldValue;
+    ref?: React.Ref<Text>;
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
@@ -57,7 +57,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue() {
+    protected get RawDefaultValue(): string {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }

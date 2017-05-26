@@ -4,22 +4,27 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import { FieldOnChangeInternalCallback } from "../contracts";
+import {
+    HTMLElementProps
+} from "../contracts/field";
+import {
+    FormProps
+} from "../contracts/form";
 
 export type SearchOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
  */
-export interface SearchProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
+export interface SearchProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
-    onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: SearchOnChangeCallback & FieldOnChangeInternalCallback;
-    ref?: any;
+    onFocus?: React.FocusEventHandler<HTMLInputElement>;
+    onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    onChange?: SearchOnChangeCallback;
 
     defaultValue?: FieldValue;
     value?: FieldValue;
+    ref?: React.Ref<Search>;
 }
 
 export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
@@ -28,6 +33,7 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
     }
 
     protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+        event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
@@ -36,7 +42,11 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
         }
 
-        // TODO: FormProps.OnFieldChange
+        const formStoreState = this.FormStore.GetState();
+        const formProps = formStoreState.Form.Props as FormProps;
+        if (formProps.onChange != null) {
+            formProps.onChange(event, newValue, this.FieldId, this.FormId);
+        }
     }
 
     protected get RawDefaultValue(): string {
