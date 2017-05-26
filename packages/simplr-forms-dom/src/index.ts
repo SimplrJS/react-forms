@@ -12,3 +12,4 @@ export * from "./components/email";
 export * from "./components/search";
 export * from "./components/textarea";
 export * from "./components/number";
+export * from "./components/hidden";
