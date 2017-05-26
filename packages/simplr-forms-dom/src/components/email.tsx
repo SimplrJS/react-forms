@@ -4,22 +4,22 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import { FieldOnChangeInternalCallback } from "../contracts";
+import { FieldOnChangeInternalCallback, HTMLElementProps } from "../contracts";
 
 export type EmailOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
  */
-export interface EmailProps extends DomFieldProps, React.HTMLProps<HTMLInputElement> {
+export interface EmailProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
-    onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: EmailOnChangeCallback & FieldOnChangeInternalCallback;
-    ref?: any;
+    onFocus?: React.FocusEventHandler<HTMLInputElement>;
+    onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    onChange?: EmailOnChangeCallback;
 
     defaultValue?: FieldValue;
     value?: FieldValue;
+    ref?: React.Ref<Email>;
 }
 
 export class Email extends BaseDomField<EmailProps, BaseDomFieldState> {
@@ -39,7 +39,7 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState> {
         // TODO: FormProps.OnFieldChange
     }
 
-    protected get RawDefaultValue() {
+    protected get RawDefaultValue(): string {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }

@@ -25,7 +25,7 @@ export interface NumberProps extends DomFieldProps, React.HTMLProps<HTMLInputEle
 
 export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
     protected get DefaultModifiers(): JSX.Element[] {
-        return [<NumericToStringModifier />];
+        return [/*<NumericToStringModifier />*/];
     }
 
     protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
@@ -44,7 +44,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         // TODO: FormProps.OnFieldChange
     }
 
-    protected get RawDefaultValue() {
+    protected get RawDefaultValue(): string {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
@@ -53,7 +53,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
-            type="tel"
+            type="number"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
