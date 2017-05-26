@@ -13,7 +13,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         super.componentWillReceiveProps(nextProps);
 
         if (this.IsControlled) {
-            const newValue = this.ProcessValueBeforeStore(this.props.value);
+            const newValue = this.ProcessValueBeforeStore(nextProps.value);
             this.FormStore.UpdateFieldValue(this.FieldId, newValue);
         }
     }
