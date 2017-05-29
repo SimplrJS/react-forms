@@ -66,6 +66,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
+            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

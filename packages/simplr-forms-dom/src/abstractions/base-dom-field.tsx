@@ -44,6 +44,27 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         }
     }
 
+    protected GetHTMLProps(props: TProps) {
+        let {
+            defaultValue,
+            destroyOnUnmount,
+            disabled,
+            formatValue,
+            initialValue,
+            name,
+            normalizeValue,
+            onBlur,
+            onFocus,
+            parseValue,
+            template,
+            validationType,
+            value,
+            ...otherProps
+        } = props as DomFieldProps;
+
+        return otherProps;
+    }
+
     public abstract renderField(): JSX.Element | null;
 
     public render(): JSX.Element | null {

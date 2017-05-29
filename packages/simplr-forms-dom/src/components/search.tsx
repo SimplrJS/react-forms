@@ -65,6 +65,7 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
+            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

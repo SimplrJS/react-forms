@@ -65,6 +65,7 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
+            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

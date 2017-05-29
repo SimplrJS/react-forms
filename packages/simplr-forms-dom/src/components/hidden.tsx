@@ -3,6 +3,7 @@ import { BaseField, BaseFieldState } from "simplr-forms";
 import { FieldProps } from "simplr-forms/contracts";
 
 export interface HiddenProps extends FieldProps {
+    defaultValue: any;
     value: any;
 }
 

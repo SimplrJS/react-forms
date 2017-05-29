@@ -69,6 +69,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
+            {...this.GetHTMLProps(this.props) }
         />;
     }
 }
