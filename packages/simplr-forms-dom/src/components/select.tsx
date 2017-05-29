@@ -34,6 +34,29 @@ export interface SelectState extends BaseDomFieldState {
 }
 
 export class Select extends BaseDomField<SelectProps, SelectState> {
+    protected get RawInitialValue(): FieldValue {
+        if (this.props.multiple ||
+            this.props.initialValue != null) {
+            return this.props.initialValue;
+        }
+        // If select is not multiple, we need to get first option value.
+        const options = React
+            .Children
+            .toArray(this.props.children)
+            .filter((x: JSX.Element) => x.type != null && x.type === "option");
+
+        if (options.length === 0) {
+            throw new Error("simplr-forms-dom: Select MUST have at least one option!");
+        }
+
+        const firstOption = options[0] as JSX.Element;
+        if (firstOption.props.value != null) {
+            return firstOption.props.value;
+        }
+
+        return firstOption.props.children;
+    }
+
     protected GetValueFromEvent(event: React.FormEvent<HTMLSelectElement>): FieldValue {
         if (this.props.multiple) {
             let newValue = new Array<string>();
