@@ -17,8 +17,8 @@ export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputE
 export interface RadioGroupChildContext extends FieldChildContext {
     FieldName: string;
     RadioGroupOnChangeHandler: RadioOnChangeHandler;
-    RadioGroupOnFocus:  React.FocusEventHandler<HTMLInputElement>;
-    RadioGroupOnBlur:  React.FocusEventHandler<HTMLInputElement>;
+    RadioGroupOnFocus: React.FocusEventHandler<HTMLInputElement>;
+    RadioGroupOnBlur: React.FocusEventHandler<HTMLInputElement>;
 }
 
 export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
