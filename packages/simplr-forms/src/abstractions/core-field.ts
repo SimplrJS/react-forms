@@ -22,6 +22,7 @@ import * as FormStoreActions from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
 import { FormStoreStateRecord } from "../contracts/form-store";
+import { FieldChildContext } from "../contracts";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;
@@ -38,6 +39,16 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         FieldsGroupId: PropTypes.string,
         FieldsGroupProps: PropTypes.object
     };
+
+    static childContextTypes: PropTypes.ValidationMap<FieldChildContext> = {
+        FieldId: PropTypes.string
+    };
+
+    getChildContext(): FieldChildContext {
+        return {
+            FieldId: this.FieldId
+        };
+    }
 
     static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount

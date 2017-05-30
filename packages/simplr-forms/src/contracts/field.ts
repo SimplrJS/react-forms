@@ -54,3 +54,7 @@ export interface FieldContext {
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupContextProps;
 }
+
+export interface FieldChildContext {
+    FieldId: string;
+}
