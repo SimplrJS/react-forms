@@ -4,6 +4,7 @@ import { BaseField, BaseFieldState } from "simplr-forms";
 import { FieldProps, FieldChildContext, FieldValue } from "simplr-forms/contracts";
 import { HTMLElementProps, FormProps } from "../contracts";
 import { BaseDomField } from "../abstractions";
+import { TypedRecord } from "typed-immutable-record";
 
 export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
@@ -16,6 +17,8 @@ export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputE
 export interface RadioGroupChildContext extends FieldChildContext {
     FieldName: string;
     RadioGroupOnChangeHandler: RadioOnChangeHandler;
+    RadioGroupOnFocus:  React.FocusEventHandler<HTMLInputElement>;
+    RadioGroupOnBlur:  React.FocusEventHandler<HTMLInputElement>;
 }
 
 export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
@@ -24,7 +27,9 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
     static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
         ...BaseDomField.childContextTypes,
         FieldName: PropTypes.string,
-        RadioGroupOnChangeHandler: PropTypes.func
+        RadioGroupOnChangeHandler: PropTypes.func,
+        RadioGroupOnBlur: PropTypes.func,
+        RadioGroupOnFocus: PropTypes.func
     };
 
     getChildContext(): RadioGroupChildContext {
@@ -32,8 +37,11 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
 
         return Object.assign(
             {
+                FieldId: this.FieldId,
                 FieldName: this.props.name,
-                RadioGroupOnChangeHandler: this.OnChangeHandler
+                RadioGroupOnChangeHandler: this.OnChangeHandler,
+                RadioGroupOnBlur: this.OnBlur,
+                RadioGroupOnFocus: this.OnFocus
             } as RadioGroupChildContext,
             fieldChildContext
         );
@@ -50,7 +58,6 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
     protected OnChangeHandler: RadioOnChangeHandler = (event, value) => {
         event.persist();
         this.OnValueChange(value);
-        console.log(value);
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
 
