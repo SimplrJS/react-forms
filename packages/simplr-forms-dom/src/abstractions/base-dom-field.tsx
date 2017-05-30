@@ -59,6 +59,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
             template,
             validationType,
             value,
+            children,
             ...otherProps
         } = props as DomFieldProps;
 

@@ -10,6 +10,7 @@ export interface HTMLElementProps<TElement> extends React.HTMLProps<TElement> {
     // When extending HTMLProps interface there is Element ref and It will not be overriden by component ref.
     ref?: React.Ref<any>;
     onChange?: FieldOnChangeInternalCallback;
+    children?: React.ReactChildren;
 }
 
 export type FieldOnChangeInternalCallback = (event: React.FormEvent<any>, ...parameters: any[]) => void;
@@ -26,6 +27,7 @@ export interface DomFieldProps extends FieldProps {
     template?: DomFieldTemplateCallback;
     onFocus?: React.FocusEventHandler<any>;
     onBlur?: React.FocusEventHandler<any>;
+    children?: React.ReactChildren;
 }
 
 export interface DomFieldDetails {
