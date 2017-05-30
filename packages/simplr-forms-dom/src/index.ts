@@ -15,3 +15,5 @@ export * from "./components/number";
 export * from "./components/hidden";
 export * from "./components/checkbox";
 export * from "./components/select";
+export * from "./components/radio-group";
+export * from "./components/radio";
