@@ -31,11 +31,11 @@ export interface TextAreaProps extends DomFieldProps, HTMLElementProps<HTMLTextA
 }
 
 export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLTextAreaElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLTextAreaElement>): FieldValue {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLTextAreaElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         event.persist();
 
         let newValue: string | undefined;

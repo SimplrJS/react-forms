@@ -31,11 +31,11 @@ export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElem
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         event.persist();
 
         let newValue: string | undefined;

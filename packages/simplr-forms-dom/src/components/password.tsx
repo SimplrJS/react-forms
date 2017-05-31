@@ -28,11 +28,11 @@ export interface PasswordProps extends DomFieldProps, HTMLElementProps<HTMLInput
 }
 
 export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
 

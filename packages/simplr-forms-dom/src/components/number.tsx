@@ -33,11 +33,11 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         return [/*<NumericToStringModifier />*/];
     }
 
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;

@@ -57,7 +57,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return firstOption.props.children;
     }
 
-    protected GetValueFromEvent(event: React.FormEvent<HTMLSelectElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLSelectElement>): FieldValue {
         if (this.props.multiple) {
             let newValue = new Array<string>();
 
@@ -74,7 +74,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLSelectElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
         let newValue = this.FormStore.GetField(this.FieldId).Value;

@@ -28,11 +28,11 @@ export interface SearchProps extends DomFieldProps, HTMLElementProps<HTMLInputEl
 }
 
 export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
 

@@ -29,11 +29,11 @@ export interface CheckBoxProps extends DomFieldProps, HTMLElementProps<HTMLInput
 }
 
 export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.FormEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.checked;
     }
 
-    protected OnChangeHandler: React.FormEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
 
