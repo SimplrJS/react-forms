@@ -36,7 +36,6 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         return {
             ...super.getChildContext(),
             FieldId: this.FieldId,
-            FieldName: this.props.name,
             RadioGroupOnChangeHandler: this.OnChangeHandler,
             RadioGroupOnBlur: this.OnBlur,
             RadioGroupOnFocus: this.OnFocus

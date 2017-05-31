@@ -68,7 +68,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         return restProps;
     }
 
-    protected SetElementRef(element: TUnderlyingElement): void {
+    protected SetElementRef = (element: TUnderlyingElement): void => {
         this.Element = element;
     }
 
