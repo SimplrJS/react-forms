@@ -34,18 +34,19 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
     }
 
     protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        event.persist();
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
 
         if (this.props.onChange != null) {
+            event.persist();
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
         }
 
         const formStoreState = this.FormStore.GetState();
         const formProps = formStoreState.Form.Props as FormProps;
         if (formProps.onChange != null) {
+            event.persist();
             formProps.onChange(event, newValue, this.FieldId, this.FormId);
         }
     }

@@ -47,17 +47,14 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     }
 
     protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        event.persist();
         this.context.RadioGroupOnChangeHandler(event, this.props.value);
     }
 
     protected OnFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
-        event.persist();
         this.context.RadioGroupOnFocus(event);
     }
 
     protected OnBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
-        event.persist();
         this.context.RadioGroupOnBlur(event);
     }
 

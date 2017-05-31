@@ -22,19 +22,19 @@ export class FieldsGroup extends BaseFieldsGroup<FieldsGroupProps, FieldsGroupSt
         this.Element = element;
     }
 
-    protected HTMLProps(): {} {
+    protected GetHTMLProps(props: FieldsGroupProps): {} {
         const {
             name,
             destroyOnUnmount,
             children,
-            ...rest } = this.props;
-        return rest;
+            ...restProps } = this.props;
+        return restProps;
     }
 
     render(): JSX.Element | null {
         return <div
             ref={this.setElementRef}
-            {...this.HTMLProps() }
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </div>;

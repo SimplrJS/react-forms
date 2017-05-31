@@ -62,10 +62,10 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
             validationType,
             value,
             children,
-            ...otherProps
+            ...restProps
         } = props;
 
-        return otherProps;
+        return restProps;
     }
 
     protected SetElementRef(element: TUnderlyingElement): void {

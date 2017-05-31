@@ -22,20 +22,20 @@ export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArraySt
         this.Element = element;
     }
 
-    protected HTMLProps(): {} {
+    protected GetHTMLProps(props: FieldsArrayProps): {} {
         const {
             name,
             index,
             destroyOnUnmount,
             children,
-            ...rest } = this.props;
-        return rest;
+            ...restProps } = this.props;
+        return restProps;
     }
 
     render(): JSX.Element | null {
         return <div
             ref={this.setElementRef}
-            {...this.HTMLProps() }
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </div>;

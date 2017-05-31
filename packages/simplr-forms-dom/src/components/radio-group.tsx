@@ -27,9 +27,9 @@ export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, 
 export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
     static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
         ...BaseDomField.childContextTypes,
-        RadioGroupOnChangeHandler: PropTypes.func,
-        RadioGroupOnBlur: PropTypes.func,
-        RadioGroupOnFocus: PropTypes.func
+        RadioGroupOnChangeHandler: PropTypes.func.isRequired,
+        RadioGroupOnBlur: PropTypes.func.isRequired,
+        RadioGroupOnFocus: PropTypes.func.isRequired
     };
 
     getChildContext(): RadioGroupChildContext {
@@ -52,18 +52,19 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
     }
 
     protected OnChangeHandler: RadioOnChangeHandler = (event, value) => {
-        event.persist();
         this.OnValueChange(value);
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
 
         if (this.props.onChange != null) {
+            event.persist();
             this.props.onChange(event, newValue, this.FieldId, this.FormId);
         }
 
         const formStoreState = this.FormStore.GetState();
         const formProps = formStoreState.Form.Props as FormProps;
         if (formProps.onChange != null) {
+            event.persist();
             formProps.onChange(event, newValue, this.FieldId, this.FormId);
         }
     }
