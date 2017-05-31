@@ -17,7 +17,6 @@ export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputE
 }
 
 export interface RadioGroupChildContext extends FieldChildContext {
-    FieldName: string;
     RadioGroupOnChangeHandler: RadioOnChangeHandler;
     RadioGroupOnFocus: React.FocusEventHandler<HTMLInputElement>;
     RadioGroupOnBlur: React.FocusEventHandler<HTMLInputElement>;
@@ -28,25 +27,20 @@ export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, 
 export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
     static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
         ...BaseDomField.childContextTypes,
-        FieldName: PropTypes.string,
         RadioGroupOnChangeHandler: PropTypes.func,
         RadioGroupOnBlur: PropTypes.func,
         RadioGroupOnFocus: PropTypes.func
     };
 
     getChildContext(): RadioGroupChildContext {
-        const fieldChildContext = super.getChildContext();
-
-        return Object.assign(
-            {
-                FieldId: this.FieldId,
-                FieldName: this.props.name,
-                RadioGroupOnChangeHandler: this.OnChangeHandler,
-                RadioGroupOnBlur: this.OnBlur,
-                RadioGroupOnFocus: this.OnFocus
-            } as RadioGroupChildContext,
-            fieldChildContext
-        );
+        return {
+            ...super.getChildContext(),
+            FieldId: this.FieldId,
+            FieldName: this.props.name,
+            RadioGroupOnChangeHandler: this.OnChangeHandler,
+            RadioGroupOnBlur: this.OnBlur,
+            RadioGroupOnFocus: this.OnFocus
+        };
     }
 
     protected get RawDefaultValue() {
