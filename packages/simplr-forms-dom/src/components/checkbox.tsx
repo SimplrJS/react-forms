@@ -22,9 +22,9 @@ export interface CheckBoxProps extends DomFieldProps, HTMLElementProps<HTMLInput
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     onChange?: CheckBoxOnChangeCallback;
 
-    defaultValue?: string | FieldValue;
-    initialValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: boolean;
+    initialValue?: boolean;
+    value?: boolean;
     ref?: React.Ref<CheckBox>;
 }
 
@@ -61,7 +61,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState> {
         return <input
             type="checkbox"
             name={this.FieldId}
-            value={this.Value}
+            checked={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
