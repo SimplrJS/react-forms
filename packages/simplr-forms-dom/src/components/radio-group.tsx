@@ -6,12 +6,14 @@ import { HTMLElementProps, FormProps } from "../contracts";
 import { BaseDomField } from "../abstractions";
 import { TypedRecord } from "typed-immutable-record";
 
+export type RadioValue = string | number;
+
 export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
 
-    defaultValue?: FieldValue;
-    initialValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: RadioValue;
+    initialValue?: RadioValue;
+    value?: RadioValue;
 }
 
 export interface RadioGroupChildContext extends FieldChildContext {

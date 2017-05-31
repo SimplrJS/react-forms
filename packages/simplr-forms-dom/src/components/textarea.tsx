@@ -25,13 +25,14 @@ export interface TextAreaProps extends DomFieldProps, HTMLElementProps<HTMLTextA
     onBlur?: React.EventHandler<React.FocusEvent<HTMLTextAreaElement>>;
     onChange?: TextAreaOnChangeCallback;
 
-    defaultValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: string;
+    initialValue?: string;
+    value?: string;
     ref?: React.Ref<TextArea>;
 }
 
 export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLTextAreaElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLTextAreaElement>): string {
         return event.currentTarget.value;
     }
 

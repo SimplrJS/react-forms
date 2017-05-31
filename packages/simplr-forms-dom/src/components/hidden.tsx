@@ -1,10 +1,10 @@
 import * as React from "react";
 import { BaseField, BaseFieldState } from "simplr-forms";
-import { FieldProps } from "simplr-forms/contracts";
+import { FieldProps, FieldValue } from "simplr-forms/contracts";
 
 export interface HiddenProps extends FieldProps {
-    defaultValue: any;
-    value: any;
+    defaultValue: FieldValue;
+    value: FieldValue;
 }
 
 export class Hidden extends BaseField<HiddenProps, BaseFieldState> {
@@ -12,11 +12,11 @@ export class Hidden extends BaseField<HiddenProps, BaseFieldState> {
         return true;
     }
 
-    protected get RawDefaultValue() {
+    protected get RawDefaultValue(): FieldValue {
         return this.props.defaultValue;
     }
 
-    render() {
+    render(): null {
         return null;
     }
 }

@@ -22,13 +22,14 @@ export interface SearchProps extends DomFieldProps, HTMLElementProps<HTMLInputEl
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
     onChange?: SearchOnChangeCallback;
 
-    defaultValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: string;
+    initialValue?: string;
+    value?: string;
     ref?: React.Ref<Search>;
 }
 
 export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): string {
         return event.currentTarget.value;
     }
 

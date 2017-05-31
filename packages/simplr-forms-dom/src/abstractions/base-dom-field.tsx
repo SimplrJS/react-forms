@@ -45,7 +45,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
     }
 
     protected GetHTMLProps(props: TProps) {
-        let {
+        const {
             defaultValue,
             destroyOnUnmount,
             disabled,

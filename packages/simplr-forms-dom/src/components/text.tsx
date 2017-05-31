@@ -25,13 +25,14 @@ export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElem
     onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
     onChange?: TextOnChangeCallback;
 
-    defaultValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: string;
+    initialValue?: string;
+    value?: string;
     ref?: React.Ref<Text>;
 }
 
 export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): string {
         return event.currentTarget.value;
     }
 

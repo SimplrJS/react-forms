@@ -23,9 +23,9 @@ export interface SelectProps extends DomFieldProps, HTMLElementProps<HTMLSelectE
     onBlur?: React.FocusEventHandler<HTMLSelectElement>;
     onChange?: SelectOnChangeCallback;
 
-    defaultValue?: string | FieldValue;
-    initialValue?: FieldValue;
-    value?: FieldValue;
+    defaultValue?: SelectValue;
+    initialValue?: SelectValue;
+    value?: SelectValue;
     ref?: React.Ref<Select>;
 }
 
@@ -34,7 +34,7 @@ export interface SelectState extends BaseDomFieldState {
 }
 
 export class Select extends BaseDomField<SelectProps, SelectState> {
-    protected get RawInitialValue(): FieldValue {
+    protected get RawInitialValue(): SelectValue | undefined {
         if (this.props.multiple ||
             this.props.initialValue != null) {
             return this.props.initialValue;
@@ -57,7 +57,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return firstOption.props.children;
     }
 
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLSelectElement>): FieldValue {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLSelectElement>): SelectValue {
         if (this.props.multiple) {
             let newValue = new Array<string>();
 
@@ -108,7 +108,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return (this.props.multiple) ? [] : "";
     }
 
-    protected get Value(): FieldValue {
+    protected get Value(): SelectValue {
         if (this.state != null && this.state.RenderValue != null) {
             return this.state.RenderValue;
         }

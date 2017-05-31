@@ -9,8 +9,10 @@ import { FormStore } from "simplr-forms/stores";
 export interface HTMLElementProps<TElement> extends React.HTMLProps<TElement> {
     // When extending HTMLProps interface there is Element ref and It will not be overriden by component ref.
     ref?: React.Ref<any>;
+    value?: any;
+    defaultValue?: any;
     onChange?: FieldOnChangeInternalCallback;
-    children?: React.ReactChildren;
+    children?: React.ReactNode;
 }
 
 export type FieldOnChangeInternalCallback = (event: React.FormEvent<any>, ...parameters: any[]) => void;
@@ -27,7 +29,7 @@ export interface DomFieldProps extends FieldProps {
     template?: DomFieldTemplateCallback;
     onFocus?: React.FocusEventHandler<any>;
     onBlur?: React.FocusEventHandler<any>;
-    children?: React.ReactChildren;
+    children?: React.ReactNode;
 }
 
 export interface DomFieldDetails {

@@ -3,16 +3,18 @@ import * as PropTypes from "prop-types";
 
 import { BaseContainer, BaseContainerParentContext } from "simplr-forms";
 import { FormStoreStateRecord, FieldValue } from "simplr-forms/contracts";
-import { RadioGroupChildContext, RadioGroupProps } from "./radio-group";
+import { RadioGroupChildContext, RadioGroupProps, RadioValue } from "./radio-group";
 import { HTMLElementProps } from "../contracts";
 
 export interface RadioProps extends HTMLElementProps<HTMLInputElement> {
     value: string;
+
+    ref?: React.Ref<Radio>;
 }
 
 export interface RadioState {
     FormStoreState?: FormStoreStateRecord;
-    Value?: FieldValue;
+    Value?: RadioValue;
 }
 
 export type RadioParentContext = RadioGroupChildContext & BaseContainerParentContext;
@@ -29,7 +31,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         RadioGroupOnFocus: PropTypes.func.isRequired
     };
 
-    componentWillMount() {
+    componentWillMount(): void {
         super.componentWillMount();
 
         if (this.FieldId == null) {
@@ -100,7 +102,12 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         }
     }
 
-    renderField() {
+    protected GetHTMLProps(props: RadioProps) {
+        const { ref, ...restProps } = props;
+        return restProps;
+    }
+
+    renderField(): JSX.Element | null {
         return <input
             type="radio"
             checked={(this.state.Value === this.props.value)}
@@ -108,11 +115,11 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             disabled={this.Disabled}
-            {...this.props}
+            {...this.GetHTMLProps(this.props) }
         />;
     }
 
-    render() {
+    render(): JSX.Element | null {
         // TODO: RadioButtonTemplate
         return this.renderField();
     }
