@@ -13,8 +13,10 @@ export interface BaseDomFieldState extends BaseFieldState {
 
 }
 
-export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState>
+export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState, TUnderlyingElement = any>
     extends BaseField<TProps, TState> {
+    public Element: TUnderlyingElement | undefined;
+
     protected OnFocus = (event: React.FocusEvent<any>): void => {
         const props = this.props as DomFieldProps;
         if (props.onFocus != null) {
@@ -64,6 +66,10 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         } = props;
 
         return otherProps;
+    }
+
+    protected SetElementRef(element: TUnderlyingElement): void {
+        this.Element = element;
     }
 
     public abstract renderField(): JSX.Element | null;

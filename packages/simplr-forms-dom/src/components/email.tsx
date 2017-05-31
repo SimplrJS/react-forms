@@ -27,7 +27,7 @@ export interface EmailProps extends DomFieldProps, HTMLElementProps<HTMLInputEle
     ref?: React.Ref<Email>;
 }
 
-export class Email extends BaseDomField<EmailProps, BaseDomFieldState> {
+export class Email extends BaseDomField<EmailProps, BaseDomFieldState, HTMLInputElement> {
     protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
@@ -58,6 +58,7 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="email"
             name={this.FieldId}
             value={this.Value}

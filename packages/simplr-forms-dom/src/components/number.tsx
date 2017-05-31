@@ -62,6 +62,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="number"
             name={this.FieldId}
             value={this.Value}

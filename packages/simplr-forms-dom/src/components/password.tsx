@@ -58,6 +58,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="password"
             name={this.FieldId}
             value={this.Value}

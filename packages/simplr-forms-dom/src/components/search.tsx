@@ -59,6 +59,7 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="search"
             name={this.FieldId}
             value={this.Value}

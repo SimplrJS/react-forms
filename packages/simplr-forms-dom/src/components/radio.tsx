@@ -20,6 +20,7 @@ export interface RadioState {
 export type RadioParentContext = RadioGroupChildContext & BaseContainerParentContext;
 
 export class Radio extends BaseContainer<RadioProps, RadioState> {
+    public Element: HTMLInputElement | undefined;
     state: RadioState = {};
     public context: RadioParentContext;
 
@@ -107,8 +108,13 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         return otherProps;
     }
 
+    protected SetElementRef = (element: HTMLInputElement) => {
+        this.Element = element;
+    }
+
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="radio"
             checked={(this.state.Value === this.props.value)}
             onChange={this.OnChangeHandler}

@@ -28,7 +28,7 @@ export interface CheckBoxProps extends DomFieldProps, HTMLElementProps<HTMLInput
     ref?: React.Ref<CheckBox>;
 }
 
-export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState> {
+export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTMLInputElement> {
     protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.checked;
     }
@@ -59,6 +59,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState> {
 
     renderField(): JSX.Element | null {
         return <input
+            ref={this.SetElementRef}
             type="checkbox"
             name={this.FieldId}
             checked={this.Value}

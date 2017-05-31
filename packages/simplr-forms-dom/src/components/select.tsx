@@ -118,6 +118,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
 
     renderField(): JSX.Element | null {
         return <select
+            ref={this.SetElementRef}
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
