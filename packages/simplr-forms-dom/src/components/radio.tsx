@@ -102,9 +102,9 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         }
     }
 
-    protected GetHTMLProps(props: RadioProps) {
-        const { ref, ...restProps } = props;
-        return restProps;
+    protected GetHTMLProps(props: RadioProps): {} {
+        const { ref, ...otherProps } = props;
+        return otherProps;
     }
 
     renderField(): JSX.Element | null {
