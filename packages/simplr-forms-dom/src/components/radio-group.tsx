@@ -2,7 +2,8 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { BaseField, BaseFieldState } from "simplr-forms";
 import { FieldProps, FieldChildContext, FieldValue } from "simplr-forms/contracts";
-import { HTMLElementProps, FormProps } from "../contracts";
+import { HTMLElementProps, DomFieldTemplateCallback } from "../contracts/field";
+import { FormProps } from "../contracts/form";
 import { BaseDomField } from "../abstractions";
 import { TypedRecord } from "typed-immutable-record";
 
@@ -10,6 +11,7 @@ export type RadioValue = string | number;
 
 export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
+    radioTemplate?: DomFieldTemplateCallback;
 
     defaultValue?: RadioValue;
     initialValue?: RadioValue;

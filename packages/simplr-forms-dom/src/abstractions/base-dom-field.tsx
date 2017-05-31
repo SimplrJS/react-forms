@@ -22,7 +22,6 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         if (props.onFocus != null) {
             props.onFocus(event);
         }
-
         this.Focus();
     }
 

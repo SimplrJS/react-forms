@@ -2,13 +2,27 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import { BaseContainer, BaseContainerParentContext } from "simplr-forms";
-import { FormStoreStateRecord, FieldValue } from "simplr-forms/contracts";
-import { RadioGroupChildContext, RadioGroupProps, RadioValue } from "./radio-group";
-import { HTMLElementProps } from "../contracts";
+import {
+    FormStoreStateRecord,
+    FieldValue,
+    FieldStoreState
+} from "simplr-forms/contracts";
+import {
+    RadioGroupChildContext,
+    RadioGroupProps,
+    RadioValue
+} from "./radio-group";
+import {
+    HTMLElementProps,
+    DomFieldTemplateCallback,
+    DomFieldDetails,
+    DomComponentData
+} from "../contracts/field";
 
 export interface RadioProps extends HTMLElementProps<HTMLInputElement> {
     value: string;
 
+    template?: DomFieldTemplateCallback;
     ref?: React.Ref<Radio>;
 }
 
@@ -35,13 +49,9 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     componentWillMount(): void {
         super.componentWillMount();
 
-        if (this.FieldId == null) {
-            throw new Error("simplr-forms-dom: Radio must be in RadioGroup component.");
-        }
-
         this.setState(state => {
             state.FormStoreState = this.FormStore.GetState();
-            state.Value = this.FormStore.GetField(this.FieldId!).Value;
+            state.Value = this.FieldState.Value;
             return state;
         });
     }
@@ -58,13 +68,26 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         this.context.RadioGroupOnBlur(event);
     }
 
+    protected get FieldState(): FieldStoreState {
+        if (this.FieldId == null) {
+            throw new Error("simplr-forms-dom: Radio must be in RadioGroup component.");
+        }
+        return this.FormStore.GetField(this.FieldId);
+    }
+
+    protected get FieldsGroupId(): string | undefined {
+        if (this.FieldState.FieldsGroup != null) {
+            return this.FieldState.FieldsGroup.Id;
+        }
+    }
+
     protected get Disabled(): boolean | undefined {
         // FormStore can only enforce disabling
         if (this.FormStore.GetState().Disabled === true) {
             return true;
         }
         if (this.FieldId != null) {
-            const fieldProps = this.FormStore.GetField(this.FieldId).Props as any as RadioGroupProps;
+            const fieldProps = this.FieldState.Props as any as RadioGroupProps;
 
             if (fieldProps != null && fieldProps.disabled != null) {
                 return fieldProps.disabled;
@@ -73,6 +96,17 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
         if (this.props.disabled != null) {
             return this.props.disabled;
+        }
+    }
+
+    protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
+        const radioGroupProps = this.FieldState.Props as any as RadioGroupProps;
+        if (radioGroupProps.radioTemplate) {
+            return radioGroupProps.radioTemplate;
+        }
+
+        if (this.props.template != null) {
+            return this.props.template;
         }
     }
 
@@ -122,8 +156,21 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         />;
     }
 
-    render(): JSX.Element | null {
-        // TODO: RadioButtonTemplate
-        return this.renderField();
+    public render(): JSX.Element | null {
+        if (this.FieldTemplate == null) {
+            return this.renderField();
+        }
+        return this.FieldTemplate(
+            this.renderField.bind(this),
+            {
+                name: this.FieldState.Name,
+                fieldGroupId: this.FieldsGroupId,
+                id: this.FieldId
+            } as DomFieldDetails,
+            this.FormStore,
+            {
+                props: this.props,
+                state: this.FieldState
+            } as DomComponentData);
     }
 }
