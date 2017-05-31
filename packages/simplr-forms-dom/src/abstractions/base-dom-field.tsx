@@ -36,12 +36,12 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
 
     protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
         const formProps = this.FormStore.GetState().Form.Props as FormProps;
-        if (formProps.template) {
-            return formProps.template;
-        }
-
         if (this.props.template != null) {
             return this.props.template;
+        }
+
+        if (formProps.template) {
+            return formProps.template;
         }
     }
 

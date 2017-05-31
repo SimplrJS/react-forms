@@ -101,12 +101,12 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
     protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
         const radioGroupProps = this.FieldState.Props as any as RadioGroupProps;
-        if (radioGroupProps.radioTemplate) {
-            return radioGroupProps.radioTemplate;
-        }
-
         if (this.props.template != null) {
             return this.props.template;
+        }
+
+        if (radioGroupProps.radioTemplate) {
+            return radioGroupProps.radioTemplate;
         }
     }
 
@@ -135,7 +135,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     }
 
     protected GetHTMLProps(props: RadioProps): {} {
-        const { ref, ...otherProps } = props;
+        const { ref, template, ...otherProps } = props;
         return otherProps;
     }
 

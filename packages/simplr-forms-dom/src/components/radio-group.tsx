@@ -70,6 +70,13 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         }
     }
 
+    protected GetHTMLProps(props: RadioGroupProps): {} {
+        const cleanedProps = super.GetHTMLProps(props) as RadioGroupProps;
+        const { radioTemplate, ...restProps } = cleanedProps;
+
+        return restProps;
+    }
+
     renderField(): JSX.Element | null {
         return <div
             ref={this.SetElementRef}
