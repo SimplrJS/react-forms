@@ -59,10 +59,10 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
 
     protected GetValueFromEvent(event: React.ChangeEvent<HTMLSelectElement>): SelectValue {
         if (this.props.multiple) {
-            let newValue = new Array<string>();
+            const newValue: string[] = [];
 
             for (let i = 0; i < event.currentTarget.options.length; i++) {
-                let option = event.currentTarget.options[i] as HTMLOptionElement;
+                const option = event.currentTarget.options[i] as HTMLOptionElement;
                 if (option.selected) {
                     newValue.push(option.value);
                 }
