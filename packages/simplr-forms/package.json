@@ -13,7 +13,7 @@
     "uglifyjs": "uglifyjs ./dist/simplr-forms.js -o ./dist/simplr-forms.min.js --compress --mangle",
     "release": "npm run build && npm run uglifyjs",
     "test": "jest",
-    "test-tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "test-tslint": "tslint --config ./tslint.json --project . --exclude __tests__/* && echo TsLint test successfully passed.",
     "test-tsc": "tsc -p . --noEmit",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
