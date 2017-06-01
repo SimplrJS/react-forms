@@ -1,9 +1,10 @@
 {
   "name": "simplr-forms",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "test": "lerna exec tsc -p . --noEmit"
+  },
   "devDependencies": {
-    "lerna": "2.0.0-rc.1",
-    "typescript": "2.3.0"
+    "lerna": "2.0.0-rc.1"
   }
 }
