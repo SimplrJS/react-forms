@@ -11,13 +11,15 @@ export interface BaseContainerProps {
 
 export interface BaseContainerParentContext {
     FormId: string;
+    FieldId?: string;
 }
 
 export abstract class BaseContainer<TProps extends BaseContainerProps, TState> extends React.Component<TProps, TState> {
     context: BaseContainerParentContext;
 
     static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
-        FormId: PropTypes.string.isRequired
+        FormId: PropTypes.string.isRequired,
+        FieldId: PropTypes.string
     };
 
     protected get FormId(): string {
@@ -31,6 +33,10 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
 
         // Should never happen as componentWillMount handles this situation
         throw new Error(`simplr-forms: form id is not present neither in props, nor in context.`);
+    }
+
+    protected get FieldId(): string | undefined {
+        return this.context.FieldId;
     }
 
     protected get FormStore(): FormStore {

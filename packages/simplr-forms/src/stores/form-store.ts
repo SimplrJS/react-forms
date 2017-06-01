@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 import { recordify, TypedRecord } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
-import { FormStoreHelpers } from "./helpers";
+import { FormStoreHelpers } from "./form-store-helpers";
 
 import * as Actions from "../actions/form-store";
 import {

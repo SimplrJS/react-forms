@@ -17,6 +17,7 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         ...BaseFormButton.defaultProps,
         disableOnError: true
     };
+
     render(): JSX.Element | null {
         return <button
             type="submit"

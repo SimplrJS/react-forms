@@ -2,48 +2,40 @@ import * as React from "react";
 import { FieldValue } from "simplr-forms/contracts";
 import { DomFieldProps } from "../contracts/field";
 
+import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
+import { FieldOnChangeCallback } from "../contracts/field";
 import {
-    BaseDomField,
-    BaseDomFieldState
-} from "../abstractions/base-dom-field";
-import {
-    FieldOnChangeCallback,
     HTMLElementProps
 } from "../contracts/field";
 import {
     FormProps
 } from "../contracts/form";
 
-export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
+export type PasswordOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
 /**
  * Override the differences between extended interfaces.
  */
-export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
+export interface PasswordProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
     name: string;
-    onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: TextOnChangeCallback;
+    onFocus?: React.FocusEventHandler<HTMLInputElement>;
+    onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    onChange?: PasswordOnChangeCallback;
 
-    defaultValue?: string;
-    initialValue?: string;
-    value?: string;
-    ref?: React.Ref<Text>;
+    defaultValue?: FieldValue;
+    value?: FieldValue;
+    ref?: React.Ref<Password>;
 }
 
-export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): string {
+export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {
         return event.currentTarget.value;
     }
 
     protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        let newValue: string | undefined;
-        if (!this.IsControlled) {
-            this.OnValueChange(this.GetValueFromEvent(event));
-            newValue = this.FormStore.GetField(this.FieldId).Value;
-        } else {
-            newValue = this.GetValueFromEvent(event);
-        }
+        this.OnValueChange(this.GetValueFromEvent(event));
+
+        const newValue = this.FormStore.GetField(this.FieldId).Value;
 
         if (this.props.onChange != null) {
             event.persist();
@@ -62,14 +54,13 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
-
         return "";
     }
 
     renderField(): JSX.Element | null {
         return <input
             ref={this.SetElementRef}
-            type="text"
+            type="password"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}

@@ -18,8 +18,6 @@ export interface CoreFieldProps {
     parseValue?: FieldParseValueCallback;
     normalizeValue?: FieldNormalizeValueCallback;
     validationType?: FieldValidationType;
-    onBlur?: (event: any) => void;
-    onFocus?: (event: any) => void;
 }
 
 export interface FieldProps extends CoreFieldProps {
@@ -55,4 +53,8 @@ export interface FieldContext {
     FormProps: FormContextPropsObject;
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupContextProps;
+}
+
+export interface FieldChildContext {
+    FieldId: string;
 }

@@ -14,29 +14,29 @@ import {
     FormProps
 } from "../contracts/form";
 
-export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
+export type TextAreaOnChangeCallback = FieldOnChangeCallback<HTMLTextAreaElement>;
 
 /**
  * Override the differences between extended interfaces.
  */
-export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElement> {
+export interface TextAreaProps extends DomFieldProps, HTMLElementProps<HTMLTextAreaElement> {
     name: string;
-    onFocus?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onBlur?: React.EventHandler<React.FocusEvent<HTMLInputElement>>;
-    onChange?: TextOnChangeCallback;
+    onFocus?: React.EventHandler<React.FocusEvent<HTMLTextAreaElement>>;
+    onBlur?: React.EventHandler<React.FocusEvent<HTMLTextAreaElement>>;
+    onChange?: TextAreaOnChangeCallback;
 
     defaultValue?: string;
     initialValue?: string;
     value?: string;
-    ref?: React.Ref<Text>;
+    ref?: React.Ref<TextArea>;
 }
 
-export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
-    protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): string {
+export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
+    protected GetValueFromEvent(event: React.ChangeEvent<HTMLTextAreaElement>): string {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
         let newValue: string | undefined;
         if (!this.IsControlled) {
             this.OnValueChange(this.GetValueFromEvent(event));
@@ -62,14 +62,12 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
-
         return "";
     }
 
     renderField(): JSX.Element | null {
-        return <input
+        return <textarea
             ref={this.SetElementRef}
-            type="text"
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}

@@ -1,9 +1,13 @@
 {
   "name": "simplr-forms",
   "private": true,
-  "scripts": {},
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "tools-build": "lerna run gulp-build",
+    "source-build": "lerna run build",
+    "test": "lerna run test-tsc"
+  },
   "devDependencies": {
-    "lerna": "2.0.0-rc.1",
-    "typescript": "2.3.0"
+    "lerna": "2.0.0-rc.2"
   }
 }

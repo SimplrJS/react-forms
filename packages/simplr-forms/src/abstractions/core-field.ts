@@ -9,7 +9,8 @@ import {
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
     FieldContext,
-    FieldStoreState
+    FieldStoreState,
+    FieldChildContext
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
 import {
@@ -39,12 +40,30 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         FieldsGroupProps: PropTypes.object
     };
 
+    static childContextTypes: PropTypes.ValidationMap<FieldChildContext> = {
+        FieldId: PropTypes.string
+    };
+
+    getChildContext(): FieldChildContext {
+        return {
+            FieldId: this.FieldId
+        };
+    }
+
     static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
         // By default, fields data should be retained, even if the field is unmounted
         destroyOnUnmount: false
     };
+
+    protected get DefaultModifiers(): JSX.Element[] {
+        return [];
+    }
+
+    protected get DefaultNormalizers(): JSX.Element[] {
+        return [];
+    }
 
     protected get FormId(): string {
         return this.context.FormId;
@@ -88,10 +107,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.registerFieldInFormStore();
     }
 
-    componentWillReceiveProps(nextProps: CoreFieldProps): void {
+    componentWillReceiveProps(nextProps: TProps): void {
+        const props = this.props as CoreFieldProps;
         // Check if field name has not been changed
-        if (this.props.name !== nextProps.name) {
-            throw new Error(`simplr-forms: Field name must be constant`);
+        if (props.name !== nextProps.name) {
+            throw new Error("simplr-forms: Field name must be constant.");
         }
 
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
@@ -148,10 +168,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected ParseValue(value: FieldValue): FieldValue {
         if (this.props.parseValue != null) {
             const parser = this.props.parseValue as FieldParseValueCallback;
-            return parser(value);
+            value = parser(value);
         }
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            this.DefaultModifiers,
             value
         );
     }
@@ -159,11 +180,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected FormatValue(value: FieldValue): FieldValue {
         if (this.props.formatValue != null) {
             const formatter = this.props.formatValue as FieldFormatValueCallback;
-            return formatter(value);
+            value = formatter(value);
         }
-
         return ValueHelpers.FormatValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            this.DefaultModifiers,
             value
         );
     }
@@ -171,11 +192,12 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected NormalizeValue(value: FieldValue): FieldValue {
         if (this.props.normalizeValue != null) {
             const normalizer = this.props.normalizeValue as FieldNormalizeValueCallback;
-            return normalizer(value);
+            value = normalizer(value);
         }
 
         return ValueHelpers.NormalizeValue(
             React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            this.DefaultNormalizers,
             value
         );
     }

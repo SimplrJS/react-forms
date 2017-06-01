@@ -5,31 +5,65 @@ import { Modifier, Normalizer } from "../contracts/value";
 export const MODIFIER_FUNCTION_NAME = "SimplrFormsCoreModifier";
 export const NORMALIZER_FUNCTION_NAME = "SimplrFormsCoreNormalizer";
 
-export function FormatValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Modifier, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
+export function FormatValue(
+    components: Array<JSX.Element>,
+    defaultModifiers: JSX.Element[],
+    value: FieldValue
+) {
+    return ProcessValue<Modifier, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
         (processor, value) => processor.Format(value));
 }
 
-export function ParseValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Modifier, FieldValue>(components, value, MODIFIER_FUNCTION_NAME,
+export function ParseValue(
+    components: Array<JSX.Element>,
+    defaultModifiers: JSX.Element[],
+    value: FieldValue
+) {
+    return ProcessValue<Modifier, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
         (processor, value) => processor.Parse(value));
 }
 
-export function NormalizeValue(components: Array<JSX.Element>, value: FieldValue) {
-    return ProcessValue<Normalizer, FieldValue>(components, value, NORMALIZER_FUNCTION_NAME,
+export function NormalizeValue(
+    components: Array<JSX.Element>,
+    defaultNormalizers: JSX.Element[],
+    value: FieldValue
+) {
+    return ProcessValue<Normalizer, FieldValue>(components, defaultNormalizers, value, NORMALIZER_FUNCTION_NAME,
         (processor, value) => processor.Normalize(value));
 }
 
 export function ProcessValue<TProcessor, TProcessedResult>(
     components: Array<JSX.Element>,
+    defaultProcessors: JSX.Element[],
     value: FieldValue,
     processorTypeFunctionName: string,
     process: (processor: TProcessor, value: FieldValue) => TProcessedResult): TProcessedResult {
-    if (components == null || components.length === 0) {
+    if (components == null && defaultProcessors.length === 0 ||
+        components.length === 0 && defaultProcessors.length === 0) {
         return value;
     }
 
-    const processors = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
+    // Filter out from components (usually this.props.children) list processors.
+    let processors = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
+
+    if (processors.length === 0) {
+        if (defaultProcessors.length === 0) {
+            return value;
+        }
+
+        processors = defaultProcessors;
+    } else {
+        let dedupedProcessors: JSX.Element[] = [];
+
+        for (let i = processors.length - 1; i >= 0; i--) {
+            const processor = processors[i];
+            if (dedupedProcessors.find(x => x.type === processor.type) == null) {
+                dedupedProcessors.push(processor);
+            }
+        }
+
+        processors = dedupedProcessors;
+    }
 
     const renderedProcessors = RenderComponents<TProcessor>(processors);
 

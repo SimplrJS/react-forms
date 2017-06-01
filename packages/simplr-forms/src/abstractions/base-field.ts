@@ -9,11 +9,11 @@ export interface BaseFieldState extends CoreFieldState {
 }
 
 export abstract class BaseField<TProps extends FieldProps, TState extends BaseFieldState> extends CoreField<TProps, TState> {
-    componentWillReceiveProps(nextProps: FieldProps): void {
+    componentWillReceiveProps(nextProps: TProps): void {
         super.componentWillReceiveProps(nextProps);
 
         if (this.IsControlled) {
-            const newValue = this.ProcessValueBeforeStore(this.props.value);
+            const newValue = this.ProcessValueBeforeStore(nextProps.value);
             this.FormStore.UpdateFieldValue(this.FieldId, newValue);
         }
     }
