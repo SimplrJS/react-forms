@@ -9,7 +9,8 @@ import {
     FieldNormalizeValueCallback,
     FieldParseValueCallback,
     FieldContext,
-    FieldStoreState
+    FieldStoreState,
+    FieldChildContext
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
 import {
@@ -22,7 +23,6 @@ import * as FormStoreActions from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
 import { FormStoreStateRecord } from "../contracts/form-store";
-import { FieldChildContext } from "../contracts";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;

@@ -7,12 +7,12 @@ import {
     BaseDomFieldState
 } from "../abstractions/base-dom-field";
 import {
-    FieldOnChangeCallback
+    FieldOnChangeCallback,
+    HTMLElementProps
 } from "../contracts/field";
 import {
     FormProps
 } from "../contracts/form";
-import { HTMLElementProps } from "../contracts";
 
 export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
