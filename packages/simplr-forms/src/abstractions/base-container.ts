@@ -19,7 +19,7 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
 
     static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
         FormId: PropTypes.string.isRequired,
-        FieldId: PropTypes.string.isRequired
+        FieldId: PropTypes.string
     };
 
     protected get FormId(): string {
