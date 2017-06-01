@@ -7,7 +7,7 @@ import {
 import { FormStore } from "simplr-forms/stores";
 
 export interface HTMLElementProps<TElement> extends React.HTMLProps<TElement> {
-    // When extending HTMLProps interface there is Element ref and It will not be overriden by component ref.
+    // When extending HTMLProps interface there is an Element ref and it is not overriden by component ref.
     ref?: React.Ref<any>;
     value?: any;
     defaultValue?: any;
