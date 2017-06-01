@@ -4,7 +4,7 @@ import { BaseModifier } from "./base-modifier";
 
 export interface NumericToStringModifierProps {
     // delimiter?: string | string[];
-    defaultValue?: any;
+    defaultValue?: string | number;
 }
 
 export const DEFAULT_JS_NUMBER_DELIMITER = ".";
