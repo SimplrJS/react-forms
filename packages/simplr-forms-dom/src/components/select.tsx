@@ -39,7 +39,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             this.props.initialValue != null) {
             return this.props.initialValue;
         }
-        // If select is not multiple, we need to get first option value.
+        // If select does not have multiple options, then we need to get the first option value.
         const options = React
             .Children
             .toArray(this.props.children)
