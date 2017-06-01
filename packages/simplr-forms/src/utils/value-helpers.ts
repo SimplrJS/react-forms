@@ -38,15 +38,19 @@ export function ProcessValue<TProcessor, TProcessedResult>(
     value: FieldValue,
     processorTypeFunctionName: string,
     process: (processor: TProcessor, value: FieldValue) => TProcessedResult): TProcessedResult {
-    // TODO: Remake this.
-    // if (components == null || components.length === 0 ) {
-    //     return value;
-    // }
+    if (components == null && defaultProcessors.length === 0 ||
+        components.length === 0 && defaultProcessors.length === 0) {
+        return value;
+    }
 
     // Filter out from components (usually this.props.children) list processors.
     let processors = components.filter(x => IsComponentOfType(x, processorTypeFunctionName));
 
     if (processors.length === 0) {
+        if (defaultProcessors.length === 0) {
+            return value;
+        }
+
         processors = defaultProcessors;
     } else {
         let dedupedProcessors: JSX.Element[] = [];
