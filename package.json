@@ -5,7 +5,7 @@
     "bootstrap": "lerna bootstrap",
     "tools-build": "lerna run gulp-build",
     "source-build": "lerna run build",
-    "test": "lerna run test-tsc && lerna run test-tslint"
+    "test": "lerna run test-tsc"
   },
   "devDependencies": {
     "lerna": "2.0.0-rc.2"
