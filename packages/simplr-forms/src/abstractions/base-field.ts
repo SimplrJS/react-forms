@@ -9,7 +9,7 @@ export interface BaseFieldState extends CoreFieldState {
 }
 
 export abstract class BaseField<TProps extends FieldProps, TState extends BaseFieldState> extends CoreField<TProps, TState> {
-    componentWillReceiveProps(nextProps: FieldProps): void {
+    componentWillReceiveProps(nextProps: TProps): void {
         super.componentWillReceiveProps(nextProps);
 
         if (this.IsControlled) {

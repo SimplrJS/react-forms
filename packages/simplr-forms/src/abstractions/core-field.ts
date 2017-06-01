@@ -107,9 +107,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.registerFieldInFormStore();
     }
 
-    componentWillReceiveProps(nextProps: CoreFieldProps): void {
+    componentWillReceiveProps(nextProps: TProps): void {
+        const props = this.props as CoreFieldProps;
         // Check if field name has not been changed
-        if (this.props.name !== nextProps.name) {
+        if (props.name !== nextProps.name) {
             throw new Error(`simplr-forms: Field name must be constant`);
         }
 
