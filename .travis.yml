@@ -8,7 +8,6 @@ node_js:
 before_install:
 - "npm install -g npm@^4.6.1"
 - "npm install -g typescript@^2.3"
-- "npm install -g tslint@^5.1"
 script:
 - npm run bootstrap
 - npm run tools-build
