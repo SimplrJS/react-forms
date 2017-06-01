@@ -111,7 +111,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         const props = this.props as CoreFieldProps;
         // Check if field name has not been changed
         if (props.name !== nextProps.name) {
-            throw new Error(`simplr-forms: Field name must be constant`);
+            throw new Error("simplr-forms: Field name must be constant.");
         }
 
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
