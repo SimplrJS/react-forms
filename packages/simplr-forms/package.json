@@ -8,7 +8,7 @@
   "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
-    "build": "webpack && npm run test-tslint",
+    "build": "gulp",
     "watch": "webpack -w",
     "uglifyjs": "uglifyjs ./dist/simplr-forms.js -o ./dist/simplr-forms.min.js --compress --mangle",
     "release": "npm run build && npm run uglifyjs",

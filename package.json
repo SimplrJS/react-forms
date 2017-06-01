@@ -4,7 +4,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "tools-build": "lerna run gulp-build",
-    "source-build": "lerna exec gulp",
+    "source-build": "lerna run build",
     "test": "lerna run test-tsc && lerna run test-tslint"
   },
   "devDependencies": {

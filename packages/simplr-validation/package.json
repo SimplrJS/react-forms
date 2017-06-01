@@ -11,7 +11,7 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "build": "webpack && npm run test-tslint",
+    "build": "gulp",
     "watch": "webpack -w",
     "release": "npm run build && npm run uglifyjs",
     "test-tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
