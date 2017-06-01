@@ -43,10 +43,12 @@ export async function copyToJspm() {
         .pipe(gulp.dest(outputPath));
 }
 
-const buildTask = gulp.series(webpackTask, moveFromDistTask);
+// TODO: Fix any when proper gulp types will be available.
+const buildTask = gulp.series(webpackTask, moveFromDistTask) as any;
 
 export function watchStartTask() {
-    gulp.watch(paths.src, gulp.series(buildTask, copyToJspm));
+    // TODO: Fix any when proper gulp types will be available.
+    gulp.watch(paths.src, gulp.series(buildTask, copyToJspm) as any);
 }
 
 export const build = buildTask;

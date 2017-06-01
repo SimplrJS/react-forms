@@ -3,6 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "tools-build": "lerna run gulp-build",
+    "source-build": "lerna exec gulp",
     "test": "lerna run test-tsc && lerna run test-tslint"
   },
   "devDependencies": {

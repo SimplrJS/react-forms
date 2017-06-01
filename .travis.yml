@@ -10,4 +10,6 @@ before_install:
 - "npm install -g npm@^4.6.1"
 script:
 - npm run bootstrap
+- npm run tools-build
+- npm run source-build
 - npm test
