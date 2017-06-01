@@ -7,9 +7,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p . && npm run tslint",
+    "build": "tsc -p . && npm run test-tslint",
     "watch": "tsc -p . -w",
-    "tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "test-tslint": "tslint --config ./tslint.json --project . --exclude __tests__/**/* && echo TsLint test successfully passed.",
+    "test-tsc": "tsc -p . --noEmit",
     "prepublishOnly": "npm run build"
   },
   "license": "AGPL-3.0",

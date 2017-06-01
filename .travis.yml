@@ -1,6 +1,4 @@
 language: node_js
-before_install:
-- npm install -g typescript@2.3
 notifications:
   email:
     on_success: never
@@ -8,4 +6,5 @@ notifications:
 node_js:
 - stable
 script:
+- npm bootstrap
 - npm test
