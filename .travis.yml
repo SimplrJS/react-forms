@@ -9,5 +9,5 @@ before_install:
 - "npm install -g typescript@^2.3"
 - "npm install -g npm@^4.6.1"
 script:
-- npm bootstrap
+- npm run bootstrap
 - npm test
