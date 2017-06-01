@@ -9,7 +9,7 @@ import { TypedRecord } from "typed-immutable-record";
 
 export type RadioValue = string | number;
 
-export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLInputElement> {
+export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLDivElement> {
     name: string;
     radioTemplate?: DomFieldTemplateCallback;
 
