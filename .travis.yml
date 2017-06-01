@@ -5,6 +5,8 @@ notifications:
     on_failure: change
 node_js:
 - stable
+before_install:
+- "npm install -g npm@^4.6.1"
 script:
 - npm bootstrap
 - npm test
