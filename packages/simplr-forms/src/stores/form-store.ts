@@ -380,12 +380,13 @@ export class FormStore extends ActionEmitter {
     }
 
     public TouchFields(fieldsIds?: string[]): void {
-        this.State = this.State.withMutations(state => {
-            if (fieldsIds == null) {
-                fieldsIds = state.Fields.keySeq().toArray();
-            }
+        if (fieldsIds == null) {
+            fieldsIds = this.state.Fields.keySeq().toArray();
+        }
 
-            fieldsIds.forEach(fieldId => {
+        this.State = this.State.withMutations(state => {
+
+            fieldsIds!.forEach(fieldId => {
                 const fieldState = state.Fields.get(fieldId);
 
                 if (fieldState != null) {
@@ -396,6 +397,10 @@ export class FormStore extends ActionEmitter {
             });
 
             return this.RecalculateDependentFormStatuses(state);
+        });
+
+        fieldsIds.forEach(fieldId => {
+            this.emit(new Actions.FieldTouched(this.FormId, fieldId));
         });
     }
 
