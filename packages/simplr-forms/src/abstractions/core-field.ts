@@ -286,10 +286,6 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
      * Registers a field in FormStore or throws if the field was already registered
      */
     private registerFieldInFormStore(): void {
-        if (this.FormStore.HasField(this.FieldId)) {
-            throw new Error(`simplr-forms: Duplicate field id '${this.FieldId}'`);
-        }
-
         const defaultValue = this.ProcessValueBeforeStore(this.RawDefaultValue);
         const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
         const value = this.ProcessValueBeforeStore(this.RawValue);
