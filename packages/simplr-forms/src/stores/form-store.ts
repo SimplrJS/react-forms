@@ -159,9 +159,9 @@ export class FormStore extends ActionEmitter {
         }
 
         // Add field into form store state
-        this.State = this.State.withMutations(state => {
-            state.Fields = state.Fields.set(fieldId, recordify<FieldStoreState, FieldStoreStateRecord>(fieldState));
-        });
+        this.State = this.State.merge({
+            Fields: this.State.Fields.set(fieldId, recordify<FieldStoreState, FieldStoreStateRecord>(fieldState))
+        } as FormStoreStateRecord);
 
         this.emit(new Actions.FieldRegistered(this.FormId, fieldId));
     }
@@ -178,9 +178,11 @@ export class FormStore extends ActionEmitter {
         };
 
         const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
-        this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.set(fieldsGroupId, fgStateRecord);
-        });
+
+        // Add fields group into form store state
+        this.State = this.State.merge({
+            FieldsGroups: this.State.FieldsGroups.set(fieldsGroupId, fgStateRecord)
+        } as FormStoreStateRecord);
 
         this.emit(new Actions.FieldsGroupRegistered(this.FormId, fieldsGroupId));
     }
@@ -198,9 +200,11 @@ export class FormStore extends ActionEmitter {
         };
 
         const faStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(faState);
-        this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.set(fieldsArrayId, faStateRecord);
-        });
+
+        // Add fields array into form store state
+        this.State = this.State.merge({
+            FieldsGroups: this.State.FieldsGroups.set(fieldsArrayId, faStateRecord)
+        } as FormStoreStateRecord);
 
         this.emit(new Actions.FieldsArrayRegistered(this.FormId, fieldsArrayId));
     }
