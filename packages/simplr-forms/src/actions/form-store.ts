@@ -22,15 +22,7 @@ export abstract class FieldAction extends FormAction {
 
 export class StateChanged extends FormAction { }
 
-export class FieldRegistered extends FormAction {
-    constructor(protected formId: string, private fieldId: string) {
-        super(formId);
-    }
-
-    public get FieldId(): string {
-        return this.fieldId;
-    }
-}
+export class FieldRegistered extends FieldAction { }
 
 export class FieldsGroupRegistered extends FormAction {
     constructor(protected formId: string, private fieldsGroupId: string) {
