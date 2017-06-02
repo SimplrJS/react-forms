@@ -50,10 +50,12 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     componentWillMount() {
         const idBase = `${this.props.name}[${this.props.index}]`;
         this.FieldsArrayId = this.FormStore.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
-        if (this.FormStore.GetState().FieldsGroups.has(this.FieldsArrayId)) {
-            throw new Error(`simplr-forms: FieldsArray '${this.FieldsArrayId}' already exists in form '${this.FormId}'.`);
-        }
-
         this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.index, this.context.FieldsGroupId);
+    }
+
+    componentWillUnmount(): void {
+        if (this.FormStore != null && this.props.destroyOnUnmount) {
+            this.FormStore.UnregisterFieldsArray(this.FieldsArrayId);
+        }
     }
 }

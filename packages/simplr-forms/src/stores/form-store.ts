@@ -103,6 +103,11 @@ export class FormStore extends ActionEmitter {
         props?: FieldProps,
         fieldsGroupId?: string
     ): void {
+        if (this.State.Fields.has(fieldId) ||
+            this.State.FieldsGroups.has(fieldId)) {
+            throw new Error(`simplr-forms: Field '${fieldId}' already exists in form '${this.FormId}.`);
+        }
+
         // Construct field state
         const fieldState: FieldStoreState = {
             Name: name,
@@ -161,7 +166,12 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldRegistered(this.FormId, fieldId));
     }
 
-    public RegisterFieldsGroup(id: string, name: string, parentId?: string): void {
+    public RegisterFieldsGroup(fieldsGroupId: string, name: string, parentId?: string): void {
+        if (this.State.Fields.has(fieldsGroupId) ||
+            this.State.FieldsGroups.has(fieldsGroupId)) {
+            throw new Error(`simplr-forms: FieldsGroup '${fieldsGroupId}' already exists in form '${this.FormId}.`);
+        }
+
         const fgState: FieldsGroupStoreState = {
             Name: name,
             Parent: parentId
@@ -169,31 +179,50 @@ export class FormStore extends ActionEmitter {
 
         const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
         this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
+            state.FieldsGroups = state.FieldsGroups.set(fieldsGroupId, fgStateRecord);
         });
 
-        this.emit(new Actions.FieldsGroupRegistered(this.FormId, id));
+        this.emit(new Actions.FieldsGroupRegistered(this.FormId, fieldsGroupId));
     }
 
-    public RegisterFieldsArray(id: string, name: string, index: number, parentId?: string): void {
-        const fgState: FieldsGroupStoreState = {
+    public RegisterFieldsArray(fieldsArrayId: string, name: string, index: number, parentId?: string): void {
+        if (this.State.Fields.has(fieldsArrayId) ||
+            this.State.FieldsGroups.has(fieldsArrayId)) {
+            throw new Error(`simplr-forms: FieldsArray '${fieldsArrayId}' already exists in form '${this.FormId}.`);
+        }
+
+        const faState: FieldsGroupStoreState = {
             Name: name,
             ArrayName: name,
             Parent: parentId
         };
 
-        const fgStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(fgState);
+        const faStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(faState);
         this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.set(id, fgStateRecord);
+            state.FieldsGroups = state.FieldsGroups.set(fieldsArrayId, faStateRecord);
         });
 
-        this.emit(new Actions.FieldsArrayRegistered(this.FormId, id));
+        this.emit(new Actions.FieldsArrayRegistered(this.FormId, fieldsArrayId));
     }
 
     public UnregisterField(fieldId: string): void {
         // Remove field from form store state
         this.State = this.State.withMutations(state => {
             state.Fields = state.Fields.remove(fieldId);
+        });
+    }
+
+    public UnregisterFieldsGroup(fieldsGroupId: string): void {
+        // Remove fields group from form store state
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.remove(fieldsGroupId);
+        });
+    }
+
+    public UnregisterFieldsArray(fieldsGroupId: string): void {
+        // Remove fields array from form store state
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.remove(fieldsGroupId);
         });
     }
 

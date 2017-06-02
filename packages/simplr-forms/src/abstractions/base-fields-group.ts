@@ -49,10 +49,12 @@ export class BaseFieldsGroup<TProps extends FieldsGroupProps,
 
     componentWillMount() {
         this.FieldsGroupId = this.FormStore.GetFieldsGroupId(this.props.name, this.context.FieldsGroupId);
-        if (this.FormStore.GetState().FieldsGroups.has(this.FieldsGroupId)) {
-            throw new Error(`simplr-forms: FieldsGroup '${this.FieldsGroupId}' already exists in form '${this.FormId}'.`);
-        }
-
         this.FormStore.RegisterFieldsGroup(this.FieldsGroupId, this.props.name, this.context.FieldsGroupId);
+    }
+
+    componentWillUnmount(): void {
+        if (this.FormStore != null && this.props.destroyOnUnmount) {
+            this.FormStore.UnregisterFieldsGroup(this.FieldsGroupId);
+        }
     }
 }
