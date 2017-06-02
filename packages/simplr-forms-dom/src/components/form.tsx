@@ -27,7 +27,7 @@ export class Form extends BaseForm<FormProps, {}> {
             return;
         }
 
-        this.FormStore.SetFieldsTouched();
+        this.FormStore.TouchFields();
 
         if (this.props.onSubmit == null) {
             return;

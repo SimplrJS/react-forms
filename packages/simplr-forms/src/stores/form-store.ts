@@ -379,7 +379,7 @@ export class FormStore extends ActionEmitter {
         }
     }
 
-    public SetFieldsTouched(fieldsIds?: string[]): void {
+    public TouchFields(fieldsIds?: string[]): void {
         this.State = this.State.withMutations(state => {
             if (fieldsIds == null) {
                 fieldsIds = state.Fields.keySeq().toArray();
