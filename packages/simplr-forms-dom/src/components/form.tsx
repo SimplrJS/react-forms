@@ -27,16 +27,16 @@ export class Form extends BaseForm<FormProps, {}> {
             return;
         }
 
-        // TODO: Touch all fields to validate
+        this.FormStore.SetFieldsTouched();
 
         if (this.props.onSubmit == null) {
             return;
         }
 
-        // Persist synthetic event, because it's passed into another method
+        // Persist synthetic event, because it's passed into another method.
         event.persist();
 
-        // Pass onSubmit result to FormStore for further processing
+        // Pass onSubmit result to FormStore for further processing.
         const result = this.props.onSubmit(event, this.FormStore);
         this.FormStore.SubmitForm(result);
     }

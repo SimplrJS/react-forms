@@ -379,6 +379,26 @@ export class FormStore extends ActionEmitter {
         }
     }
 
+    public SetFieldsTouched(fieldsIds?: string[]): void {
+        this.State = this.State.withMutations(state => {
+            if (fieldsIds == null) {
+                fieldsIds = state.Fields.keySeq().toArray();
+            }
+
+            fieldsIds.forEach(fieldId => {
+                const fieldState = state.Fields.get(fieldId);
+
+                if (fieldState != null) {
+                    state.Fields = state.Fields.set(fieldId, fieldState.merge({
+                        Touched: true
+                    } as FieldStoreState));
+                }
+            });
+
+            return this.RecalculateDependentFormStatuses(state);
+        });
+    }
+
     public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
         const form = this.State.Form;
 
