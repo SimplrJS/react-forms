@@ -10,17 +10,19 @@ export abstract class FormAction {
     }
 }
 
-export class StateChanged extends FormAction { }
-
-export class FieldRegistered extends FormAction {
-    constructor(protected formId: string, private fieldId: string) {
+export abstract class FieldAction extends FormAction {
+    constructor(formId: string, protected fieldId: string) {
         super(formId);
     }
 
-    public get FieldId(): string {
+    public get FieldId() {
         return this.fieldId;
     }
 }
+
+export class StateChanged extends FormAction { }
+
+export class FieldRegistered extends FieldAction { }
 
 export class FieldsGroupRegistered extends FormAction {
     constructor(protected formId: string, private fieldsGroupId: string) {
@@ -42,36 +44,14 @@ export class FieldsArrayRegistered extends FormAction {
     }
 }
 
-export class ValueChanged extends FormAction {
-    constructor(protected formId: string, private fieldId: string) {
-        super(formId);
-    }
+export class ValueChanged extends FieldAction { }
 
-    public get FieldId(): string {
-        return this.fieldId;
-    }
-}
-
-export class FieldPropsChanged extends FormAction {
-    constructor(protected formId: string, private fieldId: string) {
-        super(formId);
-    }
-
-    public get FieldId(): string {
-        return this.fieldId;
-    }
-}
+export class FieldPropsChanged extends FieldAction { }
 
 export class FormPropsChanged extends FormAction { }
 
-export class FormDisabled extends FormAction {
-    constructor(protected formId: string) {
-        super(formId);
-    }
-}
+export class FormDisabled extends FormAction { }
 
-export class FormEnabled extends FormAction {
-    constructor(protected formId: string) {
-        super(formId);
-    }
-}
+export class FormEnabled extends FormAction { }
+
+export class FieldTouched extends FieldAction { }
