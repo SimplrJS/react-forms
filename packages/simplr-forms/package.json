@@ -17,6 +17,7 @@
     "test-tsc": "tsc -p . --noEmit",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
+    "prepublishOnly": "npm run build",
     "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
     "gulp-watch": "npm run gulp-build -- -w"
   },
@@ -42,16 +43,14 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "jest": "^20.0.3",
     "jest-enzyme": "^3.1.1",
-    "on-build-webpack": "^0.1.0",
-    "react-test-renderer": "^15.5.4",
-    "simplr-mvdir": "0.0.1-beta.7",
+    "simplr-mvdir": "0.0.1-beta.8",
     "sinon": "^2.2.0",
     "source-map-loader": "^0.2.1",
     "ts-jest": "^20.0.4",
     "ts-loader": "^2.1.0",
     "tslint": "^5.2.0",
     "typescript": "^2.3.2",
-    "uglify-js": "^3.0.10",
+    "uglify-js": "^3.0.15",
     "webpack": "^2.5.1"
   },
   "dependencies": {
