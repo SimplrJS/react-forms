@@ -32,10 +32,10 @@
   "devDependencies": {
     "@types/chokidar": "^1.6.0",
     "@types/enzyme": "^2.8.0",
-    "@types/gulp": "^4.0.3",
+    "@types/gulp": "^4.0.4",
     "@types/jest": "^19.2.3",
     "@types/sinon": "^2.2.2",
-    "@types/undertaker": "^0.12.28",
+    "@types/undertaker": "^1.1.2",
     "@types/vinyl-fs": "^2.4.5",
     "@types/webpack": "^2.2.15",
     "enzyme": "^2.8.2",
