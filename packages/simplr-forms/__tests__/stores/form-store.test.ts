@@ -33,24 +33,55 @@ describe("Form store", () => {
         expect(fieldId.indexOf(fieldGroupId)).not.toBe(-1);
     });
 
-    it("registers a field", () => {
-        const fieldId = "FIELD-ID";
-        const value = "value";
-        const defaultValue = "DEFAULT-VALUE";
+    describe("registers a field", () => {
+        it("with default value", () => {
+            const fieldId = "field-id";
+            const defaultValue = "default value";
+            formStore.RegisterField(fieldId, "field name", defaultValue);
 
-        formStore.RegisterField(fieldId, "field-name", defaultValue, undefined, value);
+            expect(formStore.HasField(fieldId)).toBe(true);
 
-        expect(formStore.HasField(fieldId)).toBe(true);
+            const fieldState = formStore.GetField(fieldId);
 
-        const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.DefaultValue).toBe(defaultValue);
+        });
 
-        expect(fieldState).not.toBeUndefined();
-        expect(fieldState.Value).toBe(value);
-        expect(fieldState.InitialValue).toBe(value);
-        expect(fieldState.DefaultValue).toBe(defaultValue);
+        it("with only initialValue", () => {
+            const fieldId = "field-id";
+            const initialValue = "initial value";
+            formStore.RegisterField(fieldId, "field name", undefined, initialValue);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(initialValue);
+            expect(fieldState.Value).toBe(initialValue);
+        });
+
+        it("with only value", () => {
+            const fieldId = "field-id";
+            const value = "value";
+            formStore.RegisterField(fieldId, "field name", undefined, undefined, value);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(value);
+            expect(fieldState.Value).toBe(value);
+        });
+
+        it("with value and initialValue", () => {
+            const fieldId = "field-id";
+            const value = "value";
+            const initialValue = "initial value";
+            formStore.RegisterField(fieldId, "field name", undefined, initialValue, value);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(initialValue);
+            expect(fieldState.Value).toBe(value);
+        });
     });
 
-    // TODO: Write test with initial value
 
     it("unregisters a field", () => {
         const fieldId = "field-id";
