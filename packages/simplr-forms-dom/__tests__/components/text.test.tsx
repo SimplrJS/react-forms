@@ -45,4 +45,12 @@ describe("Text field", () => {
 
         expect(callback.called).toBe(true);
     });
+
+    it("render is defined", () => {
+        const wrapper = mount(<Form>
+            <Text name="field" />
+        </Form>);
+
+        expect(wrapper.find(Text).getDOMNode()).toBeDefined();
+    });
 });
