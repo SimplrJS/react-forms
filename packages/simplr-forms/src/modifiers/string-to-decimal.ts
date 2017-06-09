@@ -21,7 +21,7 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
         if (value !== EMPTY_VALUE) {
             return value.toString();
         }
-        return "";
+        return EMPTY_VALUE;
     }
     Parse(modifierValue: ModifierValue): ModifierValue {
         let value = modifierValue.TransitionalValue != null ? modifierValue.TransitionalValue : modifierValue.Value;
