@@ -31,6 +31,7 @@ import {
 } from "../contracts/fields-group";
 import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
+import { ModifierValue } from "../contracts/value";
 
 export const FG_SEPARATOR = ".";
 
@@ -100,6 +101,7 @@ export class FormStore extends ActionEmitter {
         defaultValue: FieldValue,
         initialValue?: FieldValue,
         value?: FieldValue,
+        transitionalValue?: FieldValue,
         props?: FieldProps,
         fieldsGroupId?: string
     ): void {
@@ -157,6 +159,8 @@ export class FormStore extends ActionEmitter {
                 Id: fieldsGroupId
             };
         }
+
+        fieldState.TransitionalValue = transitionalValue;
 
         // Add field into form store state
         this.State = this.State.merge({
@@ -278,16 +282,18 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
     }
 
-    public UpdateFieldValue(fieldId: string, newValue: FieldValue): void {
+    public UpdateFieldValue(fieldId: string, newValue: ModifierValue): void {
         const fieldState = this.State.Fields.get(fieldId);
-        if (fieldState.Value === newValue) {
+        if (fieldState.Value === newValue.Value &&
+            fieldState.TransitionalValue === newValue.TransitionalValue) {
             return;
         }
 
         this.State = this.State.withMutations(state => {
-            const newPristine = (newValue === fieldState.InitialValue);
+            const newPristine = (newValue.Value === fieldState.InitialValue);
             state.Fields = state.Fields.set(fieldId, fieldState.merge({
-                Value: newValue,
+                Value: newValue.Value,
+                TransitionalValue: newValue.TransitionalValue,
                 Pristine: newPristine,
                 Touched: true
             } as FieldStoreState));

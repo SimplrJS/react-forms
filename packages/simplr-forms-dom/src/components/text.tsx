@@ -31,7 +31,7 @@ export interface TextProps extends DomFieldProps, HTMLElementProps<HTMLInputElem
     ref?: React.Ref<Text>;
 }
 
-export class Text extends BaseDomField<TextProps, BaseDomFieldState> {
+export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputElement> {
     protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): string {
         return event.currentTarget.value;
     }
