@@ -33,9 +33,8 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             };
         }
         if (ValueOfType<string>(modifierValue, StringToDecimalModifier.name, "object")) {
-            const firstChar = value.substr(0, 1);
             let negative = false;
-            if (firstChar === "-") {
+            if (value.substr(0, 1) === "-") {
                 negative = true;
                 value = value.substr(1);
 
@@ -57,10 +56,15 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
                 value.replace(regex, ""),
                 delimiter);
 
+            const firstCharWasZero = extractedValue.substr(0, 1) === "0";
+
             let transitionalValue = this.TrimLeft(extractedValue, "0");
 
-            // Add leading zero, if fraction is being entered
-            if (transitionalValue.substr(0, 1) === this.props.delimiter) {
+            // Add leading zero, if fraction is being entered without leading zero
+            const leadingZeroForFractionShortcut = transitionalValue.substr(0, 1) === this.props.delimiter;
+            const leadingZeroForFraction = firstCharWasZero && (transitionalValue.substr(1, 1) === this.props.delimiter || transitionalValue.length === 0);
+
+            if (leadingZeroForFractionShortcut || leadingZeroForFraction) {
                 transitionalValue = "0" + transitionalValue;
             }
 
