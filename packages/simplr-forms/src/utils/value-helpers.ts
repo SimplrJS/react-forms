@@ -75,7 +75,7 @@ export function ProcessValue<TProcessor, TValue, TProcessedValue>(
 
     const renderedProcessors = RenderComponents<TProcessor>(processors);
 
-    let processedValue: TProcessedValue | undefined = undefined;
+    let processedValue: TProcessedValue | undefined;
     for (const processor of renderedProcessors) {
         processedValue = process(processor, value);
     }
