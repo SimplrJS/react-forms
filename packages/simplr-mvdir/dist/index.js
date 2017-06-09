@@ -34,16 +34,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __values = (this && this.__values) || function (o) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
-    if (m) return m.call(o);
-    return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("mz/fs");
 var path = require("path");
@@ -123,7 +113,7 @@ function move(from, to, recursively, removeFromDirectory, rootFrom) {
                 case 2:
                     if (!(_i < files_1.length)) return [3 /*break*/, 5];
                     file = files_1[_i];
-                    return [5 /*yield**/, __values(_loop_1(file))];
+                    return [5 /*yield**/, _loop_1(file)];
                 case 3:
                     _a.sent();
                     _a.label = 4;

@@ -8,6 +8,6 @@
     "test": "lerna run test-tsc"
   },
   "devDependencies": {
-    "lerna": "2.0.0-rc.2"
+    "lerna": "2.0.0-rc.5"
   }
 }

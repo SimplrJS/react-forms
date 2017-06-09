@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Modifier } from "../contracts/value";
+import {
+    Modifier,
+    ModifierValue
+} from "../contracts/value";
 import { FieldValue } from "../contracts/field";
 import { ValueOfType } from "../utils/value-helpers";
 
@@ -7,7 +10,7 @@ export abstract class BaseModifier<TProps, TState> extends React.Component<TProp
     // Indentifier function
     static SimplrFormsCoreModifier() { }
     abstract Format(value: FieldValue): FieldValue;
-    abstract Parse(value: FieldValue): FieldValue;
+    abstract Parse(value: ModifierValue): ModifierValue;
     render() {
         return null;
     }
