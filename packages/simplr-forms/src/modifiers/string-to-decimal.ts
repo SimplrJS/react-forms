@@ -48,11 +48,14 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
                 }
             }
 
+            // Non-undefined because of defaultProps
+            const delimiter = this.props.delimiter!;
+
             const leadingMinus = negative ? "-" : "";
-            const regex = new RegExp(`[^0-9\\${this.props.delimiter}]+`, "g");
+            const regex = new RegExp(`[^0-9\\${delimiter}]+`, "g");
             const extractedValue: string = this.LeaveOnlyFirstDelimiter(
                 value.replace(regex, ""),
-                this.props.delimiter!);
+                delimiter);
 
             let transitionalValue = this.TrimLeft(extractedValue, "0");
 
@@ -62,7 +65,7 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             }
 
             if (this.props.precision != null) {
-                const delimiterIndex = transitionalValue.indexOf(this.props.delimiter!);
+                const delimiterIndex = transitionalValue.indexOf(delimiter);
                 if (delimiterIndex !== -1) {
                     transitionalValue = transitionalValue.substr(0, delimiterIndex + this.props.precision + 1);
                 }
