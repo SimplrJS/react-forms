@@ -196,9 +196,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             const formatter = this.props.formatValue as FieldFormatValueCallback;
             value = formatter(value);
         }
+
+        const modifiers = React.Children.toArray(this.props.children) as Array<JSX.Element>;
         return ValueHelpers.FormatValue(
-            React.Children.toArray(this.props.children) as Array<JSX.Element>,
-            this.DefaultModifiers,
+            modifiers.reverse(),
+            Array.from(this.DefaultModifiers).reverse(),
             value
         );
     }
