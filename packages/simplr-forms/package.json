@@ -1,6 +1,6 @@
 {
   "name": "simplr-forms",
-  "version": "4.0.1-alpha.3",
+  "version": "4.0.1-beta",
   "description": "Shared simplr-forms logic.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -60,7 +60,6 @@
     "@types/react": "^15.0.22",
     "@types/react-dom": "^15.5.0",
     "action-emitter": "^0.2.1",
-    "fbemitter": "^2.1.1",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.8",
     "react": "15.5.4",
