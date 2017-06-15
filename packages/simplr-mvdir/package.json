@@ -24,15 +24,15 @@
   "dependencies": {
     "@types/mkdirp": "^0.3.29",
     "@types/mz": "0.0.31",
-    "@types/node": "^7.0.13",
+    "@types/node": "^7.0.31",
     "@types/yargs": "^6.6.0",
-    "yargs": "^7.1.0"
+    "mz": "^2.6.0",
+    "yargs": "^8.0.2"
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
-    "mz": "^2.6.0",
-    "tslint": "^5.1.0",
-    "typescript": "^2.3.0"
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4"
   },
   "bin": {
     "simplr-mvdir": "dist/cli.js"

@@ -3,12 +3,13 @@ import { FormErrorRecord } from "./error";
 import { FieldValidationType } from "./validation";
 import { FormContextPropsObject } from "./form";
 import { FieldsGroupContextProps } from "./fields-group";
+import { ModifierValue } from "./value";
 
 // Field value can be of any type or undefined
 export type FieldValue = any | undefined;
 
 export type FieldFormatValueCallback = (value: FieldValue) => FieldValue;
-export type FieldParseValueCallback = (value: FieldValue) => FieldValue;
+export type FieldParseValueCallback = (value: ModifierValue) => ModifierValue;
 export type FieldNormalizeValueCallback = (value: FieldValue) => FieldValue;
 
 export interface CoreFieldProps {
@@ -32,6 +33,7 @@ export interface FieldStoreState {
     DefaultValue: FieldValue;
     InitialValue: FieldValue;
     Value: FieldValue;
+    TransitionalValue?: FieldValue;
     Error?: FormErrorRecord;
     Touched: boolean;
     Pristine: boolean;

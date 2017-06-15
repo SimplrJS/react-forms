@@ -1,6 +1,10 @@
 import * as ReactDOM from "react-dom";
 import { FieldValue } from "../contracts/field";
-import { Modifier, Normalizer } from "../contracts/value";
+import {
+    Modifier,
+    Normalizer,
+    ModifierValue
+} from "../contracts/value";
 
 export const MODIFIER_FUNCTION_NAME = "SimplrFormsCoreModifier";
 export const NORMALIZER_FUNCTION_NAME = "SimplrFormsCoreNormalizer";
@@ -9,18 +13,20 @@ export function FormatValue(
     components: Array<JSX.Element>,
     defaultModifiers: JSX.Element[],
     value: FieldValue
-) {
-    return ProcessValue<Modifier, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
-        (processor, value) => processor.Format(value));
+): FieldValue {
+    return ProcessValue<Modifier, FieldValue, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
+        (processor, value) => processor.Format(value),
+        value => value);
 }
 
 export function ParseValue(
     components: Array<JSX.Element>,
     defaultModifiers: JSX.Element[],
-    value: FieldValue
-) {
-    return ProcessValue<Modifier, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
-        (processor, value) => processor.Parse(value));
+    value: ModifierValue
+): ModifierValue {
+    return ProcessValue<Modifier, ModifierValue, ModifierValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
+        (processor, value) => processor.Parse(value),
+        value => value);
 }
 
 export function NormalizeValue(
@@ -28,19 +34,21 @@ export function NormalizeValue(
     defaultNormalizers: JSX.Element[],
     value: FieldValue
 ) {
-    return ProcessValue<Normalizer, FieldValue>(components, defaultNormalizers, value, NORMALIZER_FUNCTION_NAME,
-        (processor, value) => processor.Normalize(value));
+    return ProcessValue<Normalizer, FieldValue, FieldValue>(components, defaultNormalizers, value, NORMALIZER_FUNCTION_NAME,
+        (processor, value) => processor.Normalize(value),
+        value => value);
 }
 
-export function ProcessValue<TProcessor, TProcessedResult>(
+export function ProcessValue<TProcessor, TValue, TProcessedValue>(
     components: Array<JSX.Element>,
     defaultProcessors: JSX.Element[],
-    value: FieldValue,
+    value: TValue,
     processorTypeFunctionName: string,
-    process: (processor: TProcessor, value: FieldValue) => TProcessedResult): TProcessedResult {
+    process: (processor: TProcessor, value: TValue) => TProcessedValue,
+    nullProcessor: (value: TValue) => TProcessedValue): TProcessedValue {
     if (components == null && defaultProcessors.length === 0 ||
         components.length === 0 && defaultProcessors.length === 0) {
-        return value;
+        return nullProcessor(value);
     }
 
     // Filter out from components (usually this.props.children) list processors.
@@ -48,7 +56,7 @@ export function ProcessValue<TProcessor, TProcessedResult>(
 
     if (processors.length === 0) {
         if (defaultProcessors.length === 0) {
-            return value;
+            return nullProcessor(value);
         }
 
         processors = defaultProcessors;
@@ -67,10 +75,14 @@ export function ProcessValue<TProcessor, TProcessedResult>(
 
     const renderedProcessors = RenderComponents<TProcessor>(processors);
 
+    let processedValue: TProcessedValue | undefined;
     for (const processor of renderedProcessors) {
-        value = process(processor, value);
+        processedValue = process(processor, value);
     }
-    return value;
+    if (processedValue == null) {
+        return nullProcessor(value);
+    }
+    return processedValue;
 }
 
 export function IsComponentOfType(component: JSX.Element, requiredType: string) {

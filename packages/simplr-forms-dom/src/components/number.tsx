@@ -10,7 +10,7 @@ import {
 import {
     FormProps
 } from "../contracts/form";
-import { NumericToStringModifier } from "simplr-forms/modifiers";
+import { StringToDecimalModifier } from "simplr-forms/modifiers";
 
 export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -30,7 +30,7 @@ export interface NumberProps extends DomFieldProps, HTMLElementProps<HTMLInputEl
 
 export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
     protected get DefaultModifiers(): JSX.Element[] {
-        return [/*<NumericToStringModifier />*/];
+        return [<StringToDecimalModifier />];
     }
 
     protected GetValueFromEvent(event: React.ChangeEvent<HTMLInputElement>): FieldValue {

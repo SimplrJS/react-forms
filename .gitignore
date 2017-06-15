@@ -257,3 +257,6 @@ packages/simplr-forms-test
 dist
 @types
 package-lock.json
+
+# MacOS
+.DS_Store

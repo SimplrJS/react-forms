@@ -23,6 +23,7 @@ import * as FormStoreActions from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
 import { FormStoreStateRecord } from "../contracts/form-store";
+import { ModifierValue } from "../contracts/value";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;
@@ -141,7 +142,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
      * Current or default field value.
      */
     protected get Value(): FieldValue {
-        // If state is defined
+        // If state is defined and Value is set
         if (this.state != null && this.state.Value != null) {
             // Return its value
             return this.state.Value;
@@ -153,10 +154,23 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
     protected abstract get ControlledValue(): FieldValue;
 
-    protected ProcessValueBeforeStore(value: FieldValue): FieldValue {
+    protected ProcessValueBeforeStore(value: FieldValue): ModifierValue {
         // Parse and normalize value
         if (value != null) {
-            return this.NormalizeValue(this.ParseValue(value));
+            const modifierValue: ModifierValue = {
+                Value: value
+            };
+            const parsedValue = this.ParseValue(modifierValue);
+
+            const result: ModifierValue = {
+                Value: this.NormalizeValue(parsedValue.Value)
+            };
+
+            if (parsedValue.TransitionalValue != null) {
+                result.TransitionalValue = this.NormalizeValue(parsedValue.TransitionalValue);
+            }
+
+            return result;
         }
         return value;
     }
@@ -165,7 +179,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         return this.FormatValue(value);
     }
 
-    protected ParseValue(value: FieldValue): FieldValue {
+    protected ParseValue(value: ModifierValue): ModifierValue {
         if (this.props.parseValue != null) {
             const parser = this.props.parseValue as FieldParseValueCallback;
             value = parser(value);
@@ -182,9 +196,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             const formatter = this.props.formatValue as FieldFormatValueCallback;
             value = formatter(value);
         }
+
+        const modifiers = React.Children.toArray(this.props.children) as Array<JSX.Element>;
         return ValueHelpers.FormatValue(
-            React.Children.toArray(this.props.children) as Array<JSX.Element>,
-            this.DefaultModifiers,
+            modifiers.reverse(),
+            Array.from(this.DefaultModifiers).reverse(),
             value
         );
     }
@@ -222,7 +238,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
                     state.FormStoreState = newFormStoreState;
                 }
                 const newFieldState = this.FormStore.GetField(this.FieldId);
-                state.Value = this.ProcessValueFromStore(newFieldState.Value);
+                const value = newFieldState.TransitionalValue != null ? newFieldState.TransitionalValue : newFieldState.Value;
+                state.Value = this.ProcessValueFromStore(value);
                 return state;
             });
         }
@@ -282,19 +299,29 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
      * ========================
      */
 
+    private processedOrEmptyModifierValue(value: FieldValue, processor: (value: FieldValue) => ModifierValue): ModifierValue {
+        if (value != null) {
+            return processor(value);
+        }
+        return {
+            Value: value
+        };
+    }
+
     /**
      * Registers a field in FormStore or throws if the field was already registered
      */
     private registerFieldInFormStore(): void {
-        const defaultValue = this.ProcessValueBeforeStore(this.RawDefaultValue);
-        const initialValue = this.ProcessValueBeforeStore(this.RawInitialValue);
-        const value = this.ProcessValueBeforeStore(this.RawValue);
+        const defaultValue = this.processedOrEmptyModifierValue(this.RawDefaultValue, this.ProcessValueBeforeStore.bind(this));
+        const initialValue = this.processedOrEmptyModifierValue(this.RawInitialValue, this.ProcessValueBeforeStore.bind(this));
+        const value = this.processedOrEmptyModifierValue(this.RawValue, this.ProcessValueBeforeStore.bind(this));
         this.FormStore.RegisterField(
             this.FieldId,
             this.props.name,
-            defaultValue,
-            initialValue,
-            value,
+            defaultValue.Value,
+            initialValue.Value,
+            value.Value,
+            value.TransitionalValue,
             this.props,
             this.FieldsGroupId
         );
