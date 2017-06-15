@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
-import { FieldStatePropsRecord, FieldStateProps } from "../../src/contracts/field";
+import { FieldStorePropsRecord, FieldStoreProps } from "../../src/contracts/field";
 
 import { MyFieldProps } from "../test-components/test-field";
 
@@ -33,24 +33,55 @@ describe("Form store", () => {
         expect(fieldId.indexOf(fieldGroupId)).not.toBe(-1);
     });
 
-    it("registers a field", () => {
-        const fieldId = "FIELD-ID";
-        const value = "value";
-        const defaultValue = "DEFAULT-VALUE";
+    describe("registers a field", () => {
+        it("with default value", () => {
+            const fieldId = "field-id";
+            const defaultValue = "default value";
+            formStore.RegisterField(fieldId, "field name", defaultValue);
 
-        formStore.RegisterField(fieldId, defaultValue, undefined, value);
+            expect(formStore.HasField(fieldId)).toBe(true);
 
-        expect(formStore.HasField(fieldId)).toBe(true);
+            const fieldState = formStore.GetField(fieldId);
 
-        const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.DefaultValue).toBe(defaultValue);
+        });
 
-        expect(fieldState).not.toBeUndefined();
-        expect(fieldState.Value).toBe(value);
-        expect(fieldState.InitialValue).toBe(value);
-        expect(fieldState.DefaultValue).toBe(defaultValue);
+        it("with only initialValue", () => {
+            const fieldId = "field-id";
+            const initialValue = "initial value";
+            formStore.RegisterField(fieldId, "field name", undefined, initialValue);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(initialValue);
+            expect(fieldState.Value).toBe(initialValue);
+        });
+
+        it("with only value", () => {
+            const fieldId = "field-id";
+            const value = "value";
+            formStore.RegisterField(fieldId, "field name", undefined, undefined, value);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(value);
+            expect(fieldState.Value).toBe(value);
+        });
+
+        it("with value and initialValue", () => {
+            const fieldId = "field-id";
+            const value = "value";
+            const initialValue = "initial value";
+            formStore.RegisterField(fieldId, "field name", undefined, initialValue, value);
+
+            const fieldState = formStore.GetField(fieldId);
+            expect(fieldState).toBeDefined();
+            expect(fieldState.InitialValue).toBe(initialValue);
+            expect(fieldState.Value).toBe(value);
+        });
     });
 
-    // TODO: Write test with initial value
 
     it("unregisters a field", () => {
         const fieldId = "field-id";
@@ -82,17 +113,17 @@ describe("Form store", () => {
         const value = "value";
         const nextValue = "NEXT-VALUE";
 
-        formStore.RegisterField(fieldId, undefined, undefined, value);
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, value);
         expect(formStore.GetField(fieldId).Value).toBe(value);
 
-        formStore.UpdateFieldValue(fieldId, nextValue);
+        formStore.UpdateFieldValue(fieldId, { Value: nextValue });
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
     });
 
     it("validate field without error", async (done) => {
         const fieldId = "field-id";
 
-        formStore.RegisterField(fieldId, undefined, undefined, "value");
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, "value");
         const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 resolve();
@@ -119,7 +150,7 @@ describe("Form store", () => {
         const fieldId = "FIELD-ID";
         const formError: FormError = { Message: "Error Message" };
 
-        formStore.RegisterField(fieldId, undefined, undefined, "value");
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, "value");
         const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
@@ -159,7 +190,7 @@ describe("Form store", () => {
         const formError = "field error";
         const value = "text";
 
-        formStore.RegisterField(fieldId, undefined, undefined, value);
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, value);
         const validationPromise = new Promise<never>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
@@ -169,7 +200,7 @@ describe("Form store", () => {
         formStore.ValidateField(fieldId, validationPromise);
 
         // Imitate removal of last letter
-        formStore.UpdateFieldValue(fieldId, value.slice(0, value.length - 1));
+        formStore.UpdateFieldValue(fieldId, { Value: value.slice(0, value.length - 1) });
 
         try {
             expect(formStore.GetField(fieldId).Validating).toBe(true);
@@ -202,9 +233,9 @@ describe("Form store", () => {
             randomKey: "random value"
         };
 
-        formStore.RegisterField(fieldId, undefined, undefined, undefined, fieldProps);
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, undefined, undefined, fieldProps);
 
-        const fieldPropsRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldProps);
+        const fieldPropsRecord = recordify<FieldStoreProps, FieldStorePropsRecord>(fieldProps);
 
         // Deep-check the updated props
         expect(Immutable.is(formStore.GetField(fieldId).Props, fieldPropsRecord)).toBe(true);
@@ -221,9 +252,9 @@ describe("Form store", () => {
         const fieldPropsNext: MyFieldProps = {
             name: fieldProps.name,
         };
-        const fieldPropsNextRecord = recordify<FieldStateProps, FieldStatePropsRecord>(fieldPropsNext);
+        const fieldPropsNextRecord = recordify<FieldStoreProps, FieldStorePropsRecord>(fieldPropsNext);
 
-        formStore.RegisterField(fieldId, undefined, undefined, undefined, fieldProps);
+        formStore.RegisterField(fieldId, "field-name", undefined, undefined, undefined, undefined, fieldProps);
         formStore.UpdateFieldProps(fieldId, fieldPropsNext);
 
         // Deep-check the updated props
@@ -244,7 +275,7 @@ describe("Form store", () => {
         };
 
         for (const fieldId of fieldsIds) {
-            formStore.RegisterField(fieldId, fieldProps.defaultValue, undefined, fieldProps.value, fieldProps);
+            formStore.RegisterField(fieldId, "field-name", fieldProps.defaultValue, undefined, fieldProps.value, fieldProps);
         }
         formStore.ClearFields();
 
@@ -268,7 +299,7 @@ describe("Form store", () => {
         };
 
         for (const fieldId of fieldsIds) {
-            formStore.RegisterField(fieldId, fieldProps.defaultValue, undefined, fieldProps.value, fieldProps);
+            formStore.RegisterField(fieldId, "field-name", fieldProps.defaultValue, undefined, fieldProps.value, fieldProps);
         }
         formStore.ClearFields([fieldToClearId]);
 
@@ -297,8 +328,8 @@ describe("Form store", () => {
         };
 
         for (const fieldId of fieldsIds) {
-            formStore.RegisterField(fieldId, undefined, fieldProps.initialValue, fieldProps.value, fieldProps);
-            formStore.UpdateFieldValue(fieldId, nextValue);
+            formStore.RegisterField(fieldId, "field-name", undefined, fieldProps.initialValue, fieldProps.value, fieldProps);
+            formStore.UpdateFieldValue(fieldId, { Value: nextValue });
         }
         formStore.ResetFields();
 
@@ -323,8 +354,8 @@ describe("Form store", () => {
         };
 
         for (const fieldId of fieldsIds) {
-            formStore.RegisterField(fieldId, undefined, undefined, fieldProps.value, fieldProps);
-            formStore.UpdateFieldValue(fieldId, nextValue);
+            formStore.RegisterField(fieldId, "field-name", undefined, undefined, fieldProps.value, fieldProps);
+            formStore.UpdateFieldValue(fieldId, { Value: nextValue });
         }
         formStore.ResetFields([fieldToResetId]);
 
@@ -342,37 +373,37 @@ describe("Form store", () => {
         it("pristine false after field value changed", () => {
             const fieldId = "field id";
 
-            formStore.RegisterField(fieldId, "");
+            formStore.RegisterField(fieldId, "field-name", "");
             expect(formStore.GetState().Pristine).toBe(true);
 
-            formStore.UpdateFieldValue(fieldId, "next value");
+            formStore.UpdateFieldValue(fieldId, { Value: "next value" });
             expect(formStore.GetState().Pristine).toBe(false);
         });
 
         it("touched true after field value changed", () => {
             const fieldId = "field id";
 
-            formStore.RegisterField(fieldId, "");
+            formStore.RegisterField(fieldId, "field-name", "");
             expect(formStore.GetState().Touched).toBe(false);
 
-            formStore.UpdateFieldValue(fieldId, "next value");
+            formStore.UpdateFieldValue(fieldId, { Value: "next value" });
             expect(formStore.GetState().Touched).toBe(true);
         });
 
         it("touched false after value updated to identical one", () => {
             const fieldId = "field id";
 
-            formStore.RegisterField(fieldId, "");
+            formStore.RegisterField(fieldId, "field-name", "");
             expect(formStore.GetState().Touched).toBe(false);
 
-            formStore.UpdateFieldValue(fieldId, "");
+            formStore.UpdateFieldValue(fieldId, { Value: "" });
             expect(formStore.GetState().Touched).toBe(false);
         });
 
         it("error true is after field error ", async done => {
             const fieldId = "field id";
             try {
-                formStore.RegisterField(fieldId, "");
+                formStore.RegisterField(fieldId, "field-name", "");
                 expect(formStore.GetState().HasError).toBe(false);
 
                 await formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
@@ -388,7 +419,7 @@ describe("Form store", () => {
 
         it("validating true after field error ", () => {
             const fieldId = "field id";
-            formStore.RegisterField(fieldId, "");
+            formStore.RegisterField(fieldId, "field-name", "");
             expect(formStore.GetState().Validating).toBe(false);
 
             formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {

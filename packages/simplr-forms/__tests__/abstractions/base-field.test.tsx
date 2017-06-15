@@ -17,12 +17,8 @@ describe("Field Base", () => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandler(), true);
     });
 
-    afterEach(function () {
+    afterEach(() => {
         sandbox.restore();
-    });
-
-    it("works", () => {
-        expect(true).toBe(true);
     });
 
     it("is rendered outside of Form", () => {

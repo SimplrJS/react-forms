@@ -20,7 +20,7 @@ describe("Clear button", () => {
     });
 
     it("clears all fields", () => {
-        const callback = sandbox.spy(FormStore.prototype, "ClearFields");
+        const callback = sandbox.stub(FormStore.prototype, "ClearFields");
 
         const wrapper = mount(<Form>
             <Text name="field" />
@@ -33,7 +33,7 @@ describe("Clear button", () => {
     });
 
     it("clears fields by fieldsIds", () => {
-        const callback = sandbox.spy(FormStore.prototype, "ClearFields");
+        const callback = sandbox.stub(FormStore.prototype, "ClearFields");
         let fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`text-${i}`);

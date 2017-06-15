@@ -30,7 +30,7 @@ describe("Form", () => {
         mount(<Form formId={formId} onSubmit={submitCallback}></Form>);
 
         const formStore = FSHContainer.FormStoresHandler.GetStore(formId);
-        formStore.InitiateSubmit();
+        formStore.InitiateFormSubmit();
 
         expect(submitCallback.called).toBe(true);
     });
