@@ -1,0 +1,23 @@
+{
+    "rushMinimumVersion": "3.0.9",
+    "npmVersion": "5.0.3",
+    "projects": [
+        {
+            "packageName": "simplr-forms",
+            "projectFolder": "packages/simplr-forms"
+        },
+        {
+            "packageName": "simplr-forms-dom",
+            "projectFolder": "packages/simplr-forms-dom"
+        },
+        {
+            "packageName": "simplr-validation",
+            "projectFolder": "packages/simplr-validation"
+        },
+        {
+            "packageName": "simplr-mvdir",
+            "projectFolder": "packages/simplr-mvdir",
+            "shouldPublish": false
+        }
+    ]
+}

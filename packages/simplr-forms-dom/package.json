@@ -48,8 +48,8 @@
     "source-map-loader": "^0.2.1",
     "ts-jest": "^20.0.4",
     "ts-loader": "^2.1.0",
-    "tslint": "^5.2.0",
-    "typescript": "^2.3.2",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4",
     "uglify-js": "^3.0.15",
     "webpack": "^2.5.1"
   },
@@ -62,7 +62,7 @@
     "react-dom": "^15.5.4",
     "simplr-forms": "^4.0.1-beta",
     "tslib": "^1.7.1",
-    "typed-immutable-record": "0.0.6"
+    "typed-immutable-record": "^0.0.6"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",

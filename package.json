@@ -1,14 +1,21 @@
 {
-  "name": "simplr-forms",
+  "name": "simplr-forms-repo",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "tools-build": "lerna run gulp-build",
-    "source-build": "lerna run build",
-    "test": "lerna run test-tsc"
+    "generate": "rush generate",
+    "tools-build": "ts-node ./tools/rush-run.ts -s gulp-build",
+    "source-build": "ts-node ./tools/rush-run.ts -s build",
+    "test": "ts-node ./tools/rush-run.ts -s test-tsc"
   },
   "devDependencies": {
-    "lerna": "2.0.0-rc.5"
-  },
-  "dependencies": {}
+    "@microsoft/rush": "^3.0.9",
+    "@microsoft/rush-lib": "^3.0.9",
+    "@types/shelljs": "^0.7.2",
+    "@types/yargs": "^6.6.0",
+    "mz": "^2.6.0",
+    "shelljs": "^0.7.8",
+    "ts-node": "^3.0.6",
+    "typescript": "^2.3.4",
+    "yargs": "^8.0.2"
+  }
 }

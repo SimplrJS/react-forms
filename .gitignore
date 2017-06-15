@@ -260,3 +260,6 @@ package-lock.json
 
 # MacOS
 .DS_Store
+
+# Ignore Rush temporary files
+/common/temp/** 
