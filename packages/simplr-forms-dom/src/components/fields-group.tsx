@@ -18,7 +18,7 @@ interface Dictionary {
 export class FieldsGroup extends BaseFieldsGroup<FieldsGroupProps, FieldsGroupState> {
     public Element: HTMLDivElement | undefined;
 
-    protected setElementRef = (element: HTMLDivElement | undefined): void => {
+    protected SetElementRef = (element: HTMLDivElement | undefined): void => {
         this.Element = element;
     }
 
@@ -33,7 +33,7 @@ export class FieldsGroup extends BaseFieldsGroup<FieldsGroupProps, FieldsGroupSt
 
     render(): JSX.Element | null {
         return <div
-            ref={this.setElementRef}
+            ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
