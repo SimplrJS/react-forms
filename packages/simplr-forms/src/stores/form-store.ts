@@ -60,6 +60,10 @@ export class FormStore extends ActionEmitter {
         return this.State;
     }
 
+    public GetFormId(): string {
+        return this.FormId;
+    }
+
     /**
      * ========================
      *  Public API
