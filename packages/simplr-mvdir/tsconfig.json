@@ -12,6 +12,9 @@
         "strict": true,
         "lib": [
             "es6"
+        ],
+        "typeRoots": [
+            "./node_modules/@types"
         ]
     },
     "exclude": [

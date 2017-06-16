@@ -46,7 +46,7 @@
     "ts-jest": "^20.0.6",
     "ts-loader": "^2.1.0",
     "tslint": "^5.4.3",
-    "typescript": "2.3.4",
+    "typescript": "^2.3.4",
     "uglifyjs": "^2.4.11",
     "webpack": "^2.6.1"
   },
@@ -57,7 +57,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.6.1",
-    "simplr-forms": "4.0.1-beta",
+    "simplr-forms": "^4.0.1-beta",
     "validator": "^7.0.0"
   },
   "jest": {
