@@ -1,6 +1,6 @@
 {
   "name": "simplr-validation",
-  "version": "4.0.1-alpha",
+  "version": "4.0.1-beta.5",
   "description": "Validation library for simplr-forms.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -17,6 +17,7 @@
     "test-tslint": "tslint --config ./tslint.json --project . --exclude ./__tests__/* && echo TsLint test successfully passed.",
     "test-tsc": "tsc -p . --noEmit",
     "uglifyjs": "echo \"Uglify is not implemented\" && exit 1",
+    "prepublishOnly": "npm run build",
     "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
     "gulp-watch": "npm run gulp-build -- -w"
   },
@@ -57,7 +58,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.6.1",
-    "simplr-forms": "^4.0.1-beta",
+    "simplr-forms": "^4.0.1-beta.2",
     "validator": "^7.0.0"
   },
   "jest": {

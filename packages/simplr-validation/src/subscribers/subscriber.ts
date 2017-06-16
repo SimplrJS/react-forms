@@ -12,7 +12,7 @@ export class Subscriber {
 export class SubscriberContainerClass {
     private instance: Subscriber;
 
-    SetSubscriber(newHandler: Subscriber, disposeOldOne: boolean = true) {
+    SetSubscriber(newHandler: Subscriber, disposeOldOne: boolean = true): void {
         if (disposeOldOne) {
             if (this.instance != null) {
                 delete this.instance;
@@ -21,11 +21,14 @@ export class SubscriberContainerClass {
         this.instance = newHandler;
     }
 
-    get Subscriber() {
+    get Subscriber(): Subscriber {
+        return this.instance;
+    }
+
+    Initialize(): void {
         if (this.instance == null) {
             this.instance = new Subscriber();
         }
-        return this.instance;
     }
 }
 
