@@ -16,9 +16,9 @@ interface Dictionary {
 }
 
 export class FieldsGroup extends BaseFieldsGroup<FieldsGroupProps, FieldsGroupState> {
-    public Element: HTMLDivElement;
+    public Element: HTMLDivElement | undefined;
 
-    private setElementRef = (element: HTMLDivElement): void => {
+    protected setElementRef = (element: HTMLDivElement | undefined): void => {
         this.Element = element;
     }
 

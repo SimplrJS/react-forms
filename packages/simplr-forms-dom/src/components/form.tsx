@@ -4,13 +4,15 @@ import { BaseForm } from "simplr-forms";
 import { FormProps } from "../contracts/form";
 
 export class Form extends BaseForm<FormProps, {}> {
-    public Element: HTMLFormElement;
+    public Element: HTMLFormElement | undefined;
 
-    protected SetElementRef = (element: HTMLFormElement) => {
+    protected SetElementRef = (element: HTMLFormElement | undefined) => {
         this.Element = element;
-        this.FormStore.SetFormSubmitCallback(() => {
-            element.dispatchEvent(new Event("submit"));
-        });
+        if (this.FormStore != null && element != null) {
+            this.FormStore.SetFormSubmitCallback(() => {
+                element.dispatchEvent(new Event("submit"));
+            });
+        }
     }
 
     static defaultProps: FormProps = {
