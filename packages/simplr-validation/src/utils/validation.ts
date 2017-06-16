@@ -1,4 +1,4 @@
-import { FieldValue } from "simplr-forms/contracts";
+import { FieldValue, FormErrorOrigin } from "simplr-forms/contracts";
 import {
     ProcessValue,
     IsComponentOfType,
@@ -32,7 +32,7 @@ export async function ValidateValue(
             promise = validationResult;
         } else {
             promise = new Promise<void>((resolve, reject) => {
-                const error = ConstructFormError(validationResult);
+                const error = ConstructFormError(validationResult, FormErrorOrigin.Validation);
                 if (error !== undefined) {
                     reject(validationResult);
                     return;
