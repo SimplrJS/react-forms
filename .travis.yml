@@ -9,7 +9,7 @@ before_install:
 - "npm install -g npm@^4.6.1"
 - "npm install -g typescript@^2.3"
 script:
-- npm run bootstrap
+- npm run generate
 - npm run tools-build
 - npm run source-build
 - npm test
