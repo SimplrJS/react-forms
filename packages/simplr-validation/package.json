@@ -51,7 +51,7 @@
     "webpack": "^2.6.1"
   },
   "dependencies": {
-    "@types/react": "^15.0.28",
+    "@types/react": "^15.0.29",
     "@types/react-dom": "^15.5.0",
     "@types/validator": "^6.2.0",
     "action-emitter": "^0.2.1",
