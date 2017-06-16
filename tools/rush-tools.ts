@@ -122,5 +122,5 @@ const argv = yargs
     })
     .demandCommand(1, "You need run a command")
     .argv as ArgumentsValues;
-console.log(argv);
-//new RushTools(argv);
+
+new RushTools(argv);

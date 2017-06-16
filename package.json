@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "generate": "rush generate",
-    "tools-build": "ts-node ./tools/rush-run.ts -s gulp-build",
-    "source-build": "ts-node ./tools/rush-run.ts -s build",
-    "test": "ts-node ./tools/rush-run.ts -s test-tsc"
+    "tools-build": "ts-node ./tools/rush-tools.ts run gulp-build -e simplr-mvdir",
+    "source-build": "ts-node ./tools/rush-tools.ts run build -e simplr-mvdir",
+    "test": "ts-node ./tools/rush-tools.ts run test-tsc -e simplr-mvdir"
   },
   "devDependencies": {
     "@microsoft/rush": "^3.0.9",
