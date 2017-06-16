@@ -16,6 +16,9 @@
             "dom",
             "dom.iterable",
             "es6"
+        ],
+        "typeRoots": [
+            "./node_modules/@types"
         ]
     },
     "exclude": [
