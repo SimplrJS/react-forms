@@ -41,7 +41,6 @@ export class FormStoreSubscriber {
 
     protected async ValidateField(
         fieldId: string,
-        value: FieldValue,
         targetValidationType: FieldValidationType
     ) {
         const fieldState = this.formStore.GetField(fieldId);
@@ -68,7 +67,7 @@ export class FormStoreSubscriber {
         }
 
         const childrenArray = React.Children.toArray(fieldProps.children) as JSX.Element[];
-        const validationPromise = ValidateField(childrenArray, value);
+        const validationPromise = ValidateField(childrenArray, fieldState.Value);
         await this.formStore.ValidateField(fieldId, validationPromise);
     }
 
@@ -88,18 +87,17 @@ export class FormStoreSubscriber {
     }
 
     protected async OnRegistered(action: FieldRegistered) {
-        await this.ValidateField(action.FieldId, action.InitialValue, FieldValidationType.OnFieldRegistered);
+        await this.ValidateField(action.FieldId, FieldValidationType.OnFieldRegistered);
         await this.ValidateForm(FieldValidationType.OnFieldRegistered);
     }
 
     protected async OnValueChanged(action: ValueChanged) {
-        await this.ValidateField(action.FieldId, action.NewValue, FieldValidationType.OnValueChange);
+        await this.ValidateField(action.FieldId, FieldValidationType.OnValueChange);
         await this.ValidateForm(FieldValidationType.OnValueChange);
     }
 
     protected async OnPropsChanged(action: FieldPropsChanged) {
-        const fieldState = this.formStore.GetField(action.FieldId);
-        await this.ValidateField(action.FieldId, fieldState.Value, FieldValidationType.OnValueChange);
+        await this.ValidateField(action.FieldId, FieldValidationType.OnValueChange);
         await this.ValidateForm(FieldValidationType.OnValueChange);
     }
 }
