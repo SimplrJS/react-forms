@@ -8,6 +8,7 @@ import { FieldsGroupChildContext } from "../contracts/fields-group";
 import { FieldContext } from "../contracts/field";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FormStore } from "../stores/form-store";
+import { FormStoreHelpers } from "../stores/form-store-helpers";
 import * as PropTypes from "prop-types";
 
 export class BaseFieldsArray<TProps extends FieldsArrayProps,
@@ -49,7 +50,7 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
 
     componentWillMount() {
         const idBase = `${this.props.name}[${this.props.index}]`;
-        this.FieldsArrayId = this.FormStore.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
+        this.FieldsArrayId = FormStoreHelpers.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
         this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.index, this.context.FieldsGroupId);
     }
 

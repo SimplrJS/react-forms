@@ -19,11 +19,11 @@ import {
 } from "../contracts/form";
 import { FormStore } from "../stores/form-store";
 import * as FormStoreActions from "../actions/form-store";
-// import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FieldValidationType } from "../contracts/validation";
 import { FormStoreStateRecord } from "../contracts/form-store";
 import { ModifierValue } from "../contracts/value";
+import { FormStoreHelpers } from "../stores/form-store-helpers";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;
@@ -75,7 +75,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected get FieldId(): string {
-        return this.FormStore.GetFieldId(this.props.name, this.FieldsGroupId);
+        return FormStoreHelpers.GetFieldId(this.props.name, this.FieldsGroupId);
     }
 
     protected get FieldsGroupId(): string {
