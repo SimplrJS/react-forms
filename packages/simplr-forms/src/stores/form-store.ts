@@ -33,8 +33,6 @@ import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
 import { ModifierValue } from "../contracts/value";
 
-export const FG_SEPARATOR = ".";
-
 export type Dictionary<TItem = any> = { [key: string]: TItem };
 
 export class FormStore extends ActionEmitter {
@@ -69,35 +67,6 @@ export class FormStore extends ActionEmitter {
      *  Public API
      * ========================
      */
-
-    /**
-     * Constructs field id from given fieldName and an optional fieldsGroupIdkds
-     *
-     * @param {string} fieldName
-     * @param {string} [fieldsGroupId]
-     * @returns Constructed field id
-     *
-     * @memberOf FormStore
-     */
-    public GetFieldId(fieldName: string, fieldsGroupId?: string): string {
-        if (fieldsGroupId != null) {
-            return `${fieldsGroupId}${FG_SEPARATOR}${fieldName}`;
-        }
-
-        return fieldName;
-    }
-
-    public GetFieldsGroupId(name: string, parentId?: string): string {
-        if (parentId != null) {
-            return `${parentId}${FG_SEPARATOR}${name}`;
-        }
-
-        return name;
-    }
-
-    public GetFieldsArrayId(name: string, parentId?: string): string {
-        return this.GetFieldsGroupId(name, parentId);
-    }
 
     public RegisterField(
         fieldId: string,

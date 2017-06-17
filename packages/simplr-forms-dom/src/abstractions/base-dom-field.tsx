@@ -8,10 +8,7 @@ import {
 } from "../contracts/field";
 import { FormProps } from "../contracts/form";
 
-
-export interface BaseDomFieldState extends BaseFieldState {
-
-}
+export interface BaseDomFieldState extends BaseFieldState { }
 
 export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState, TUnderlyingElement = any>
     extends BaseField<TProps, TState> {

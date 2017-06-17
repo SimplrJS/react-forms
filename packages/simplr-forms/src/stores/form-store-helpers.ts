@@ -1,7 +1,38 @@
 import * as React from "react";
 import { FieldStorePropsRecord } from "../contracts/field";
 
+export const FIELDS_GROUP_SEPARATOR = ".";
+
 export class FormStoreHelpers {
+    /**
+     * Constructs field id from given fieldName and an optional fieldsGroupIdkds
+     *
+     * @param {string} fieldName
+     * @param {string} [fieldsGroupId]
+     * @returns Constructed field id
+     *
+     * @memberOf FormStore
+     */
+    public static GetFieldId(fieldName: string, fieldsGroupId?: string): string {
+        if (fieldsGroupId != null) {
+            return `${fieldsGroupId}${FIELDS_GROUP_SEPARATOR}${fieldName}`;
+        }
+
+        return fieldName;
+    }
+
+    public static GetFieldsGroupId(name: string, parentId?: string): string {
+        if (parentId != null) {
+            return `${parentId}${FIELDS_GROUP_SEPARATOR}${name}`;
+        }
+
+        return name;
+    }
+
+    public static GetFieldsArrayId(name: string, parentId?: string): string {
+        return this.GetFieldsGroupId(name, parentId);
+    }
+
     protected static ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
         let result = concat ? array.concat() : array;
         for (var i = 0; i < result.length; ++i) {
