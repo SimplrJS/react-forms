@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FieldStorePropsRecord } from "../contracts/field";
 
-export const FG_SEPARATOR = ".";
+export const FIELDS_GROUP_SEPARATOR = ".";
 
 export class FormStoreHelpers {
     /**
@@ -15,7 +15,7 @@ export class FormStoreHelpers {
      */
     public static GetFieldId(fieldName: string, fieldsGroupId?: string): string {
         if (fieldsGroupId != null) {
-            return `${fieldsGroupId}${FG_SEPARATOR}${fieldName}`;
+            return `${fieldsGroupId}${FIELDS_GROUP_SEPARATOR}${fieldName}`;
         }
 
         return fieldName;
@@ -23,7 +23,7 @@ export class FormStoreHelpers {
 
     public static GetFieldsGroupId(name: string, parentId?: string): string {
         if (parentId != null) {
-            return `${parentId}${FG_SEPARATOR}${name}`;
+            return `${parentId}${FIELDS_GROUP_SEPARATOR}${name}`;
         }
 
         return name;
