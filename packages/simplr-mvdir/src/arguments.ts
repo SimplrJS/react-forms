@@ -5,9 +5,8 @@ import * as Contracts from "./contracts";
 export let argv = yargs
     .help("h", "Show help.")
     .alias("h", "help")
-    .version(() => {
-        return `Current version: ${require("../package.json").version}.`;
-    })
+    // tslint:disable-next-line:no-require-imports
+    .version(() => `Current version: ${require("../package.json").version}.`)
     .alias("v", "version")
     .config("config")
     .alias("c", "config")
