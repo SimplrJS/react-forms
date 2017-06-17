@@ -11,6 +11,7 @@
         "declaration": true,
         "pretty": true,
         "strict": true,
+        "importHelpers": true,
         "noEmitHelpers": true,
         "lib": [
             "dom",
