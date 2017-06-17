@@ -8,7 +8,8 @@ Feel free to comment on [PRs](https://github.com/SimplrJS/simplr-forms/pulls?utf
 
 ### Development
 
-Initial development is happening in the [dev](https://github.com/SimplrJS/simplr-forms/tree/dev) branch.
+Latest published version should be in the [master](https://github.com/SimplrJS/simplr-forms/tree/master)  branch.
+Development is happening in the [dev](https://github.com/SimplrJS/simplr-forms/tree/dev) and feature branches.
 
 Development right now is being done by [SimplrJS](https://github.com/SimplrJS) team inside [QuatroDev](http://quatrodev.com):
 * [Dovydas](https://twitter.com/dovydasnav) (QuatroDev) [[GH](https://github.com/DovydasNavickas)]
