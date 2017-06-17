@@ -54,7 +54,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         const props: TProps = this.props;
         if (props.onMount != null) {
             props.onMount(this.FormStore);
