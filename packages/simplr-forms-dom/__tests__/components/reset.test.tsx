@@ -15,7 +15,7 @@ describe("Reset button", () => {
         sandbox = Sinon.sandbox.create();
     });
 
-    afterEach(function () {
+    afterEach(() => {
         sandbox.restore();
     });
 
@@ -34,11 +34,11 @@ describe("Reset button", () => {
 
     it("reset fields by fieldsIds", () => {
         const callback = sandbox.spy(FormStore.prototype, "ResetFields");
-        let fieldsIds: string[] = [];
+        const fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`text-${i}`);
         }
-        let fields: JSX.Element[] = [];
+        const fields: JSX.Element[] = [];
         fieldsIds.forEach(value => {
             fields.push(<Text name={value} key={value} />);
         });

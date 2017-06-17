@@ -33,7 +33,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
         return event.currentTarget.checked;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
@@ -58,7 +58,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
         return false;
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
             type="checkbox"

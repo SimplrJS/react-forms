@@ -1,7 +1,4 @@
 import * as React from "react";
-import { recordify, TypedRecord } from "typed-immutable-record";
-
-import { BaseContainer, BaseContainerProps } from "simplr-forms";
 
 import {
     BaseFormButton,
@@ -23,7 +20,7 @@ export class Clear extends BaseFormButton<ClearProps, BaseFormButtonStateRecord>
         }
     }
 
-    render(): JSX.Element | null {
+    public render(): JSX.Element {
         // TODO: Pass all other props.
         return <button
             type="button"

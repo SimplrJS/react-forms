@@ -24,7 +24,6 @@ export type FieldOnChangeCallback<TElement> = (
     formId: string
 ) => void;
 
-
 export interface DomFieldProps extends FieldProps {
     template?: DomFieldTemplateCallback;
     onFocus?: React.FocusEventHandler<any>;

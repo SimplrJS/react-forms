@@ -1,5 +1,4 @@
 import * as React from "react";
-import { FieldValue } from "simplr-forms/contracts";
 import { DomFieldProps } from "../contracts/field";
 
 import {
@@ -36,7 +35,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
         return event.target.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         let newValue: string | undefined;
         if (!this.IsControlled) {
             this.OnValueChange(this.GetValueFromEvent(event));
@@ -66,7 +65,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
         return "";
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element | null {
         return <input
             ref={this.SetElementRef}
             type="text"

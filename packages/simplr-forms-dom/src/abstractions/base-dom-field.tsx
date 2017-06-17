@@ -1,5 +1,4 @@
 import { BaseField, BaseFieldState } from "simplr-forms";
-import { FieldProps } from "simplr-forms/contracts";
 import {
     DomFieldProps,
     DomFieldTemplateCallback,
@@ -8,10 +7,7 @@ import {
 } from "../contracts/field";
 import { FormProps } from "../contracts/form";
 
-
-export interface BaseDomFieldState extends BaseFieldState {
-
-}
+export type BaseDomFieldState = BaseFieldState;
 
 export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState, TUnderlyingElement = any>
     extends BaseField<TProps, TState> {

@@ -3,7 +3,6 @@ import { recordify, TypedRecord } from "typed-immutable-record";
 import { Iterable } from "immutable";
 
 import { BaseContainer, BaseContainerProps } from "simplr-forms";
-import { FormError } from "simplr-forms/contracts";
 
 export interface BaseFormButtonProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
     disableOnError?: boolean;
@@ -49,12 +48,10 @@ export abstract class BaseFormButton<TProps extends BaseFormButtonProps, TState 
         // Type 'Readonly<TState>' cannot be converted to type 'Iterable<string, any>'.
         const stateIterable = this.state as any as Iterable<string, any>;
         if (!newStateRecord.equals(stateIterable)) {
-            this.setState((prevState) => {
-                // newStateRecord becomes an empty object after setState
-                // This happens because of an underlying Immutable.Record
-                // not enumerating properties in for..in
-                return newState;
-            });
+            // newStateRecord becomes an empty object after setState
+            // This happens because of an underlying Immutable.Record
+            // not enumerating properties in for..in
+            this.setState(() => newState);
         }
     }
 
@@ -120,5 +117,5 @@ export abstract class BaseFormButton<TProps extends BaseFormButtonProps, TState 
         return className.length > 0 ? className : undefined;
     }
 
-    abstract render(): JSX.Element | null;
+    public abstract render(): JSX.Element | null;
 }

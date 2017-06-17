@@ -32,7 +32,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
@@ -57,7 +57,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
         return "";
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
             type="password"

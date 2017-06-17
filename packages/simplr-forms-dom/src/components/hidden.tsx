@@ -16,7 +16,7 @@ export class Hidden extends BaseField<HiddenProps, BaseFieldState> {
         return this.props.defaultValue;
     }
 
-    render(): null {
+    public render(): null {
         return null;
     }
 }
