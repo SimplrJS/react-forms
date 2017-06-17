@@ -58,6 +58,7 @@
     "immutable": "^3.8.1",
     "react": "^15.6.1",
     "simplr-forms": "^4.0.1-beta",
+    "tslib": "^1.7.1",
     "validator": "^7.0.0"
   },
   "jest": {

@@ -12,6 +12,7 @@
         "pretty": true,
         "strict": true,
         "noEmitHelpers": true,
+        "importHelpers": true,
         "lib": [
             "dom",
             "dom.iterable",
