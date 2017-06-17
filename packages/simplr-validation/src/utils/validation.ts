@@ -12,15 +12,14 @@ import {
     FORM_VALIDATOR_FUNCTION_NAME
 } from "../contracts";
 
-
 function IsPromise<T>(value: any): value is Promise<T> {
     return value != null && value.then != null && value.catch != null;
 }
 
 export async function ValidateValue(
-    components: Array<JSX.Element>,
+    components: JSX.Element[],
     value: any,
-    validatorTypeFunctionName: string) {
+    validatorTypeFunctionName: string): Promise<void> {
     const validators = components.filter(x => IsComponentOfType(x, validatorTypeFunctionName));
     const renderedValidators = RenderComponents<Validator>(validators);
 
@@ -44,10 +43,10 @@ export async function ValidateValue(
     }
 }
 
-export function ValidateField(components: Array<JSX.Element>, value: FieldValue) {
+export function ValidateField(components: JSX.Element[], value: FieldValue): Promise<void> {
     return ValidateValue(components, value, FIELD_VALIDATOR_FUNCTION_NAME);
 }
 
-export function ValidateForm(components: Array<JSX.Element>, value: any) {
+export function ValidateForm(components: JSX.Element[], value: any): Promise<void> {
     return ValidateValue(components, value, FORM_VALIDATOR_FUNCTION_NAME);
 }

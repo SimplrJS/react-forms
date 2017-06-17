@@ -9,7 +9,7 @@ export interface AlphaValidatorProps extends BaseFieldValidatorProps {
 }
 
 export class AlphaValidator extends BaseFieldValidator<AlphaValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

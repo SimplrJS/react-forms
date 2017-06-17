@@ -4,10 +4,10 @@ import { FieldValue } from "simplr-forms/contracts";
 import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
-export interface CreditCardValidatorProps extends BaseFieldValidatorProps {}
+export type CreditCardValidatorProps = BaseFieldValidatorProps;
 
 export class CreditCardValidator extends BaseFieldValidator<CreditCardValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

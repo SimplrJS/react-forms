@@ -26,7 +26,7 @@ export class FormStoreSubscriber {
         this.fieldOnPropsChangedSubscription = this.formStore.addListener(FieldPropsChanged, this.OnPropsChanged.bind(this));
     }
 
-    public RemoveFormListeners() {
+    public RemoveFormListeners(): void {
         if (this.fieldOnRegisteredSubscription != null) {
             this.fieldOnRegisteredSubscription.remove();
         }
@@ -42,7 +42,7 @@ export class FormStoreSubscriber {
     protected async ValidateField(
         fieldId: string,
         targetValidationType: FieldValidationType
-    ) {
+    ): Promise<void> {
         const fieldState = this.formStore.GetField(fieldId);
         const formProps = this.formStore.GetState().Form.Props;
         const fieldProps = fieldState.Props;
@@ -71,7 +71,7 @@ export class FormStoreSubscriber {
         await this.formStore.ValidateField(fieldId, validationPromise);
     }
 
-    protected async ValidateForm(targetValidationType: FieldValidationType) {
+    protected async ValidateForm(targetValidationType: FieldValidationType): Promise<void> {
         const formStoreState = this.formStore.GetState();
         const formProps = formStoreState.Form.Props;
         if (formStoreState.HasError ||
@@ -86,17 +86,17 @@ export class FormStoreSubscriber {
         await this.formStore.ValidateForm(validationPromise);
     }
 
-    protected async OnRegistered(action: FieldRegistered) {
+    protected async OnRegistered(action: FieldRegistered): Promise<void> {
         await this.ValidateField(action.FieldId, FieldValidationType.OnFieldRegistered);
         await this.ValidateForm(FieldValidationType.OnFieldRegistered);
     }
 
-    protected async OnValueChanged(action: ValueChanged) {
+    protected async OnValueChanged(action: ValueChanged): Promise<void> {
         await this.ValidateField(action.FieldId, FieldValidationType.OnValueChange);
         await this.ValidateForm(FieldValidationType.OnValueChange);
     }
 
-    protected async OnPropsChanged(action: FieldPropsChanged) {
+    protected async OnPropsChanged(action: FieldPropsChanged): Promise<void> {
         await this.ValidateField(action.FieldId, FieldValidationType.OnValueChange);
         await this.ValidateForm(FieldValidationType.OnValueChange);
     }

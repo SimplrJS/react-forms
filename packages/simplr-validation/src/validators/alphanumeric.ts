@@ -9,7 +9,7 @@ export interface AlphanumericValidatorProps extends BaseFieldValidatorProps {
 }
 
 export class AlphanumericValidator extends BaseFieldValidator<AlphanumericValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }
