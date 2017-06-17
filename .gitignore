@@ -263,3 +263,5 @@ package-lock.json
 
 # Ignore Rush temporary files
 /common/temp/** 
+
+**/webpack.config.js
