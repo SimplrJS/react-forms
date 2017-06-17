@@ -47,11 +47,11 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<MyTestForm formId={formId}>
+        const form = mount(<MyTestForm formId={formId}>
             <MyTestField name="fieldName"></MyTestField>
         </MyTestForm>);
 
-        let formStore = FormStoresHandler.GetStore(formId);
+        const formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
@@ -69,11 +69,11 @@ describe("Field Base", () => {
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
-        let form = mount(<MyTestForm formId={formId}>
+        const form = mount(<MyTestForm formId={formId}>
             <MyTestField destroyOnUnmount={true} name="fieldName"></MyTestField>
         </MyTestForm>);
 
-        let formStore = FormStoresHandler.GetStore(formId);
+        const formStore = FormStoresHandler.GetStore(formId);
         const fieldId = formStore.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
@@ -123,7 +123,7 @@ describe("Field Base", () => {
 
     it("renders html without wrappers", () => {
         const formId = "FORM_ID";
-        let form = mount(<MyTestForm formId={formId}>
+        const form = mount(<MyTestForm formId={formId}>
             <MyTestField name="fieldName"></MyTestField>
         </MyTestForm>);
 

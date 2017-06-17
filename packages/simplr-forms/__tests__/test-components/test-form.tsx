@@ -7,15 +7,13 @@ export interface MyFormProps extends FormProps {
     renderChildren?: boolean;
 }
 
-export interface MyFormState { }
-
-export class MyTestForm extends BaseForm<MyFormProps, MyFormState> {
-    static defaultProps: MyFormProps = {
+export class MyTestForm extends BaseForm<MyFormProps, {}> {
+    public static defaultProps: MyFormProps = {
         ...BaseForm.defaultProps,
         renderChildren: true
     };
 
-    render(): JSX.Element {
+    public render(): JSX.Element {
         return <form>
             {this.props.renderChildren ? this.props.children : null}
         </form>;
