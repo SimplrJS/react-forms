@@ -8,11 +8,11 @@ export interface AlphanumericProps {
 }
 
 export class AlphanumericNormalizer extends BaseNormalizer<AlphanumericProps, {}> {
-    static defaultProps: AlphanumericProps = {
+    public static defaultProps: AlphanumericProps = {
         allowSpaces: true
     };
 
-    Normalize(value: FieldValue): FieldValue {
+    public Normalize(value: FieldValue): FieldValue {
         if (ValueOfType<string>(value, AlphanumericNormalizer.name, "string")) {
             const space = this.props.allowSpaces ? " " : "";
             const regex = new RegExp(`[^0-9a-zA-Z${space}]`);

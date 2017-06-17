@@ -20,7 +20,7 @@ export class BaseFieldsGroup<TProps extends FieldsGroupProps,
         return {};
     }
 
-    static contextTypes: PropTypes.ValidationMap<FieldContext> = {
+    public static contextTypes: PropTypes.ValidationMap<FieldContext> = {
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
@@ -35,24 +35,24 @@ export class BaseFieldsGroup<TProps extends FieldsGroupProps,
         return FSHContainer.FormStoresHandler.GetStore(this.FormId);
     }
 
-    static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
+    public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
         FieldsGroupId: PropTypes.string,
         FieldsGroupProps: PropTypes.object
     };
 
-    getChildContext(): FieldsGroupChildContext {
+    public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsGroupId,
             FieldsGroupProps: this.FieldsGroupPropsContext
         };
     }
 
-    componentWillMount() {
+    public componentWillMount(): void {
         this.FieldsGroupId = this.FormStore.GetFieldsGroupId(this.props.name, this.context.FieldsGroupId);
         this.FormStore.RegisterFieldsGroup(this.FieldsGroupId, this.props.name, this.context.FieldsGroupId);
     }
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         if (this.FormStore != null && this.props.destroyOnUnmount) {
             this.FormStore.UnregisterFieldsGroup(this.FieldsGroupId);
         }

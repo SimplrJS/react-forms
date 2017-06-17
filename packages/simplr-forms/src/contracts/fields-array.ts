@@ -8,6 +8,6 @@ export interface FieldsArrayProps {
     destroyOnUnmount?: boolean;
 }
 
-export interface FieldsArrayState { }
+export type FieldsArrayState = {};
 
-export interface FieldsArrayPropsObject { }
+export type FieldsArrayPropsObject = {};

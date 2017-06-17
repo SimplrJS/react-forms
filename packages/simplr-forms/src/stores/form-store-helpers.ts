@@ -3,9 +3,9 @@ import { FieldStorePropsRecord } from "../contracts/field";
 
 export class FormStoreHelpers {
     protected static ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
-        let result = concat ? array.concat() : array;
-        for (var i = 0; i < result.length; ++i) {
-            for (var j = i + 1; j < result.length; ++j) {
+        const result = concat ? array.concat() : array;
+        for (let i = 0; i < result.length; ++i) {
+            for (let j = i + 1; j < result.length; ++j) {
                 if (result[i] === result[j]) {
                     result.splice(j--, 1);
                 }
@@ -15,7 +15,7 @@ export class FormStoreHelpers {
     }
 
     protected static RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true): T[] {
-        let result = concat ? array.concat() : array;
+        const result = concat ? array.concat() : array;
         for (const value of valuesToRemove) {
             let index;
             while ((index = result.indexOf(value)) !== -1) {
@@ -106,6 +106,7 @@ export class FormStoreHelpers {
         return true;
     }
 
+    // tslint:disable
     protected static DeepCompare(...args: any[]): boolean {
         var i, l, leftChain: any, rightChain: any;
         function Compare2Objects(x: any, y: any) {
@@ -216,4 +217,5 @@ export class FormStoreHelpers {
         }
         return true;
     }
+    // tslint:enable
 }

@@ -10,37 +10,35 @@ export const MODIFIER_FUNCTION_NAME = "SimplrFormsCoreModifier";
 export const NORMALIZER_FUNCTION_NAME = "SimplrFormsCoreNormalizer";
 
 export function FormatValue(
-    components: Array<JSX.Element>,
+    components: JSX.Element[],
     defaultModifiers: JSX.Element[],
     value: FieldValue
 ): FieldValue {
     return ProcessValue<Modifier, FieldValue, FieldValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
-        (processor, value) => processor.Format(value),
-        value => value);
+        (processor, valueToProcess) => processor.Format(valueToProcess), nullValue => nullValue);
 }
 
 export function ParseValue(
-    components: Array<JSX.Element>,
+    components: JSX.Element[],
     defaultModifiers: JSX.Element[],
     value: ModifierValue
 ): ModifierValue {
     return ProcessValue<Modifier, ModifierValue, ModifierValue>(components, defaultModifiers, value, MODIFIER_FUNCTION_NAME,
-        (processor, value) => processor.Parse(value),
-        value => value);
+        (processor, valueToProcess) => processor.Parse(valueToProcess), nullValue => nullValue);
 }
 
 export function NormalizeValue(
-    components: Array<JSX.Element>,
+    components: JSX.Element[],
     defaultNormalizers: JSX.Element[],
     value: FieldValue
-) {
+): FieldValue {
     return ProcessValue<Normalizer, FieldValue, FieldValue>(components, defaultNormalizers, value, NORMALIZER_FUNCTION_NAME,
-        (processor, value) => processor.Normalize(value),
-        value => value);
+        (processor, valueToProcess) => processor.Normalize(valueToProcess),
+        nullValue => nullValue);
 }
 
 export function ProcessValue<TProcessor, TValue, TProcessedValue>(
-    components: Array<JSX.Element>,
+    components: JSX.Element[],
     defaultProcessors: JSX.Element[],
     value: TValue,
     processorTypeFunctionName: string,
@@ -61,7 +59,7 @@ export function ProcessValue<TProcessor, TValue, TProcessedValue>(
 
         processors = defaultProcessors;
     } else {
-        let dedupedProcessors: JSX.Element[] = [];
+        const dedupedProcessors: JSX.Element[] = [];
 
         for (let i = processors.length - 1; i >= 0; i--) {
             const processor = processors[i];
@@ -85,8 +83,8 @@ export function ProcessValue<TProcessor, TValue, TProcessedValue>(
     return processedValue;
 }
 
-export function IsComponentOfType(component: JSX.Element, requiredType: string) {
-    let componentType = component.type as any;
+export function IsComponentOfType(component: JSX.Element, requiredType: string): boolean {
+    const componentType = component.type as any;
     if (componentType == null && typeof component === "string") {
         console.warn("simplr-forms: text should not be rendered inside fields:", component);
         return false;
@@ -94,11 +92,10 @@ export function IsComponentOfType(component: JSX.Element, requiredType: string) 
     return (componentType[requiredType] != null);
 }
 
-export function RenderComponents<TComponent>(components: Array<JSX.Element>): Array<TComponent> {
+export function RenderComponents<TComponent>(components: JSX.Element[]): TComponent[] {
     const virtualDiv = document.createElement("div");
-    const renderedComponents = components.map(component => {
-        return ReactDOM.render(component, virtualDiv) as any as TComponent;
-    });
+    const renderedComponents = components.map(component =>
+        ReactDOM.render(component, virtualDiv) as any as TComponent);
 
     ReactDOM.unmountComponentAtNode(virtualDiv);
     return renderedComponents;
@@ -116,7 +113,7 @@ export function ValueOfType<TRequiredType>(
     requiredTypeOf: string,
     valueTypeConfirmation?: ValueTypeConfirmation): value is TRequiredType {
     if (valueTypeConfirmation == null) {
-        valueTypeConfirmation = (v) => typeof v !== requiredTypeOf;
+        valueTypeConfirmation = v => typeof v !== requiredTypeOf;
     }
     if (valueTypeConfirmation(value)) {
         let message = `${normalizerName} can only accept ${requiredTypeOf}, but received ${typeof value}. `;

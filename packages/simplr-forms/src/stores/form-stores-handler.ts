@@ -122,7 +122,7 @@ export class FormStoresHandler extends ActionEmitter {
 export class FSHContainerClass {
     private instance: FormStoresHandler;
 
-    SetFormStoresHandler(newHandler: FormStoresHandler, disposeOldOne: boolean = true) {
+    public SetFormStoresHandler(newHandler: FormStoresHandler, disposeOldOne: boolean = true): void {
         if (disposeOldOne) {
             if (this.instance != null) {
                 // Call internal method to reset stores
@@ -133,7 +133,7 @@ export class FSHContainerClass {
         this.instance = newHandler;
     }
 
-    get FormStoresHandler() {
+    public get FormStoresHandler(): FormStoresHandler {
         if (this.instance == null) {
             this.instance = new FormStoresHandler();
         }

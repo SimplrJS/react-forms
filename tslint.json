@@ -25,7 +25,6 @@
     "import-spacing": true,
     "no-default-export": true,
     "no-var-keyword": true,
-    "prefer-method-signature": true,
     "no-unnecessary-type-assertion": true,
     "space-before-function-paren": [ true, { "asyncArrow": "always", "named": "never", "anonymous": "never", "method": "never", "constructor": "never" } ],
     "no-angle-bracket-type-assertion": true,

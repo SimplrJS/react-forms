@@ -13,15 +13,10 @@ import {
     FieldChildContext
 } from "../contracts/field";
 import * as ValueHelpers from "../utils/value-helpers";
-import {
-    FormContextPropsObject,
-    FormStateProps
-} from "../contracts/form";
 import { FormStore } from "../stores/form-store";
 import * as FormStoreActions from "../actions/form-store";
 // import { FieldsGroupContextProps } from "../contracts/fields-group";
 import { FSHContainer } from "../stores/form-stores-handler";
-import { FieldValidationType } from "../contracts/validation";
 import { FormStoreStateRecord } from "../contracts/form-store";
 import { ModifierValue } from "../contracts/value";
 
@@ -34,24 +29,24 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     extends React.Component<TProps, TState> {
     public context: FieldContext;
 
-    static contextTypes: PropTypes.ValidationMap<FieldContext> = {
+    public static contextTypes: PropTypes.ValidationMap<FieldContext> = {
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
         FieldsGroupProps: PropTypes.object
     };
 
-    static childContextTypes: PropTypes.ValidationMap<FieldChildContext> = {
+    public static childContextTypes: PropTypes.ValidationMap<FieldChildContext> = {
         FieldId: PropTypes.string
     };
 
-    getChildContext(): FieldChildContext {
+    public getChildContext(): FieldChildContext {
         return {
             FieldId: this.FieldId
         };
     }
 
-    static defaultProps: CoreFieldProps = {
+    public static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
         name: "",
         // By default, fields data should be retained, even if the field is unmounted
@@ -92,7 +87,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
     protected StoreEventSubscription: ActionEmitter.EventSubscription;
 
-    componentWillMount(): void {
+    public componentWillMount(): void {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
             throw new Error("simplr-forms: A proper field name must be given (undefined and empty string are not valid).");
@@ -108,7 +103,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.registerFieldInFormStore();
     }
 
-    componentWillReceiveProps(nextProps: TProps): void {
+    public componentWillReceiveProps(nextProps: TProps): void {
         const props = this.props as CoreFieldProps;
         // Check if field name has not been changed
         if (props.name !== nextProps.name) {
@@ -118,7 +113,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
     }
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         if (this.StoreEventSubscription != null) {
             this.StoreEventSubscription.remove();
         }
@@ -185,7 +180,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             value = parser(value);
         }
         return ValueHelpers.ParseValue(
-            React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            React.Children.toArray(this.props.children) as JSX.Element[],
             this.DefaultModifiers,
             value
         );
@@ -197,7 +192,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             value = formatter(value);
         }
 
-        const modifiers = React.Children.toArray(this.props.children) as Array<JSX.Element>;
+        const modifiers = React.Children.toArray(this.props.children) as JSX.Element[];
         return ValueHelpers.FormatValue(
             modifiers.reverse(),
             Array.from(this.DefaultModifiers).reverse(),
@@ -212,7 +207,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
 
         return ValueHelpers.NormalizeValue(
-            React.Children.toArray(this.props.children) as Array<JSX.Element>,
+            React.Children.toArray(this.props.children) as JSX.Element[],
             this.DefaultNormalizers,
             value
         );
@@ -275,7 +270,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     /**
      * React Component's render method
      */
-    abstract render(): JSX.Element | null;
+    public abstract render(): JSX.Element | null;
 
     /**
      * Default field value.

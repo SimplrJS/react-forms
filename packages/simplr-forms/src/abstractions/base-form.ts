@@ -9,17 +9,17 @@ import { FSHContainer, FormStoresHandler } from "../stores/form-stores-handler";
 export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> extends React.Component<TProps, TState> {
     protected FormId: string;
 
-    static childContextTypes = {
+    public static childContextTypes: PropTypes.ValidationMap<FormContracts.FormChildContext> = {
         FormId: PropTypes.string.isRequired
     };
 
-    getChildContext(): FormContracts.FormChildContext {
+    public getChildContext(): FormContracts.FormChildContext {
         return {
             FormId: this.FormId,
         };
     }
 
-    static defaultProps: FormContracts.FormProps = {
+    public static defaultProps: FormContracts.FormProps = {
         destroyOnUnmount: true,
         fieldsValidationType: FieldValidationType.OnFieldRegistered |
         FieldValidationType.OnValueChange |
@@ -41,20 +41,20 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         return this.FormStoresHandler.GetStore(this.FormId);
     }
 
-    protected ShouldFormSubmit() {
+    protected ShouldFormSubmit(): boolean {
         if (this.props.forceSubmit === true) {
             return true;
         }
         return this.FormStore.GetState().Form.Error == null;
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         if (this.props.destroyOnUnmount) {
             this.FormStoresHandler.UnregisterForm(this.FormId);
         }
     }
 
-    abstract render(): JSX.Element | null;
+    public abstract render(): JSX.Element | null;
 
     /*
      * Local helpers
