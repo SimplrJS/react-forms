@@ -2,11 +2,11 @@ import { FSHContainer, FormStoresHandler } from "simplr-forms/stores";
 import { FormRegistered, FormUnregistered } from "simplr-forms/actions";
 import * as Sinon from "sinon";
 
-import { FormStoresHandlerSubscriber } from "../../src/subscribers/form-stores-handler-subscriber";
+import { FormStoresHandlerSubscriber, FormStoresSubscribers } from "../../src/subscribers/form-stores-handler-subscriber";
 import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber";
 
 class FormStoreHandlerSubscriberTest extends FormStoresHandlerSubscriber {
-    public get TestFormStoresSubscribers() {
+    public get TestFormStoresSubscribers(): FormStoresSubscribers {
         return this.FormStoresSubscribers;
     }
 }
@@ -18,7 +18,7 @@ describe("FormStoreHandlerSubscriber", () => {
         FSHContainer.SetFormStoresHandler(new FormStoresHandler());
     });
 
-    afterEach(function () {
+    afterEach(() => {
         sandbox.restore();
     });
 

@@ -2,8 +2,7 @@ import * as React from "react";
 import * as Sinon from "sinon";
 
 import {
-    FieldValue,
-    FieldStateProps,
+    FieldStoreProps,
     FormStateProps,
     FieldValidationType
 } from "simplr-forms/contracts";
@@ -23,13 +22,12 @@ import { FormStoreSubscriber } from "../../src/subscribers/form-store-subscriber
 class MySubscriber extends FormStoreSubscriber {
     public ValidateField(
         fieldId: string,
-        value: FieldValue,
         targetValidationType: FieldValidationType
-    ) {
-        return super.ValidateField(fieldId, value, targetValidationType);
+    ): Promise<void> {
+        return super.ValidateField(fieldId, targetValidationType);
     }
 
-    public ValidateForm(targetValidationType: FieldValidationType) {
+    public ValidateForm(targetValidationType: FieldValidationType): Promise<void> {
         return super.ValidateForm(targetValidationType);
     }
 }
@@ -42,7 +40,7 @@ interface TestFormValidatorProps extends BaseFormValidatorProps {
 }
 
 class TestFormValidator extends BaseFormValidator<TestFormValidatorProps> {
-    Validate(value: FormValueType): ValidationResult {
+    public Validate(value: FormValueType): ValidationResult {
         for (const key in value) {
             if (value.hasOwnProperty(key)) {
                 const val = value[key] as string;
@@ -109,16 +107,16 @@ describe("FormStoreSubscriber", () => {
             const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
             const subscriber = new MySubscriber(formStore);
 
-            const fieldProps: FieldStateProps = {
+            const fieldProps: FieldStoreProps = {
                 name: "field-name",
                 children: fieldChildren,
                 validationType: FieldValidationType.OnValueChange
             };
 
-            formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
+            formStore.RegisterField(fieldId, fieldProps.name, undefined, initialValue, undefined, undefined, fieldProps);
             try {
                 // Simulating OnValueChanged.
-                await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
+                await subscriber.ValidateField(fieldId, FieldValidationType.OnValueChange);
                 expect(validatorValidateCallback.called).toBe(true);
                 expect(formStoreValidateCallback.called).toBe(true);
                 expect(formStore.GetField(fieldId).Error).toBeUndefined();
@@ -129,7 +127,7 @@ describe("FormStoreSubscriber", () => {
             }
         });
 
-        it("MUST validate when specific validationType flag is present with error", async (done) => {
+        it("MUST validate when specific validationType flag is present with error", async done => {
             const fieldId = "field-id";
             const initialValue = "initial value";
             const errorMessage = "error message";
@@ -140,16 +138,16 @@ describe("FormStoreSubscriber", () => {
             const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
             const subscriber = new MySubscriber(formStore);
 
-            const fieldProps: FieldStateProps = {
+            const fieldProps: FieldStoreProps = {
                 name: "field-name",
                 children: fieldChildren,
                 validationType: FieldValidationType.OnValueChange
             };
 
-            formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
+            formStore.RegisterField(fieldId, fieldProps.name, undefined, initialValue, undefined, undefined, fieldProps);
             try {
                 // Simulating OnValueChanged.
-                await subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
+                await subscriber.ValidateField(fieldId, FieldValidationType.OnValueChange);
                 expect(formStoreValidateCallback.called).toBe(true);
                 expect(validatorValidateCallback.called).toBe(true);
                 expect(formStore.GetField(fieldId).Error).toBeDefined();
@@ -171,15 +169,15 @@ describe("FormStoreSubscriber", () => {
             const formStoreValidateCallback = sandbox.spy(FormStore.prototype, "ValidateField");
             const subscriber = new MySubscriber(formStore);
 
-            const fieldProps: FieldStateProps = {
+            const fieldProps: FieldStoreProps = {
                 name: "field-name",
                 children: fieldChildren,
                 validationType: FieldValidationType.OnPropsChange
             };
 
-            formStore.RegisterField(fieldId, undefined, initialValue, undefined, fieldProps);
+            formStore.RegisterField(fieldId, fieldProps.name, undefined, initialValue, undefined, fieldProps);
             // ValidateField should skip this validation because OnValueChange flag is missing
-            subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
+            subscriber.ValidateField(fieldId, FieldValidationType.OnValueChange);
 
             expect(formStoreValidateCallback.called).toBe(false);
             expect(validatorValidateCallback.called).toBe(false);
@@ -196,8 +194,8 @@ describe("FormStoreSubscriber", () => {
             const subscriber = new MySubscriber(formStore);
 
             // Validation is skipped because props are undefined
-            formStore.RegisterField(fieldId, undefined, initialValue);
-            subscriber.ValidateField(fieldId, initialValue, FieldValidationType.OnValueChange);
+            formStore.RegisterField(fieldId, "field-name", undefined, initialValue);
+            subscriber.ValidateField(fieldId, FieldValidationType.OnValueChange);
 
             expect(formStoreValidateCallback.called).toBe(false);
             expect(validatorValidateCallback.called).toBe(false);
@@ -228,7 +226,7 @@ describe("FormStoreSubscriber", () => {
 
             try {
                 // Validation is skipped because props are undefined
-                formStore.RegisterField(fieldId, undefined, initialValue);
+                formStore.RegisterField(fieldId, "field-name", undefined, initialValue);
                 await subscriber.ValidateForm(formValidationType);
 
                 expect(formStoreValidateCallback.called).toBe(true);
