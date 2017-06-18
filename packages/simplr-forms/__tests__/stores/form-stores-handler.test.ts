@@ -1,6 +1,6 @@
 import { FSHContainer, FormStoresHandler } from "../../src/stores/form-stores-handler";
 import * as Actions from "../../src/actions/form-stores-handler";
-import * as sinon from "Sinon";
+import * as sinon from "sinon";
 
 describe("Form stores handler", () => {
     it("returns next store unique formId", () => {
