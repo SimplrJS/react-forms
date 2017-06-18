@@ -139,7 +139,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         return otherProps;
     }
 
-    protected SetElementRef = (element: HTMLInputElement) => {
+    protected SetElementRef = (element: HTMLInputElement | undefined) => {
         this.Element = element;
     }
 

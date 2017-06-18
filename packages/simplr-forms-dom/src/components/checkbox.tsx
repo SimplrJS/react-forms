@@ -40,14 +40,14 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
 
         if (this.props.onChange != null) {
             event.persist();
-            this.props.onChange(event, newValue, this.FieldId, this.FormId);
+            this.props.onChange(event, newValue, this.FieldId, this.FormStore);
         }
 
         const formStoreState = this.FormStore.GetState();
         const formProps = formStoreState.Form.Props as FormProps;
         if (formProps.onChange != null) {
             event.persist();
-            formProps.onChange(event, newValue, this.FieldId, this.FormId);
+            formProps.onChange(event, newValue, this.FieldId, this.FormStore);
         }
     }
 

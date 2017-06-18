@@ -66,7 +66,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         const formProps = formStoreState.Form.Props as FormProps;
         if (formProps.onChange != null) {
             event.persist();
-            formProps.onChange(event, newValue, this.FieldId, this.FormId);
+            formProps.onChange(event, newValue, this.FieldId, this.FormStore);
         }
     }
 

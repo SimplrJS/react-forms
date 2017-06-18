@@ -21,7 +21,7 @@ export type FieldOnChangeCallback<TElement> = (
     event: React.FormEvent<TElement>,
     newValue: FieldValue,
     fieldId: string,
-    formId: string
+    store: FormStore
 ) => void;
 
 export interface DomFieldProps extends FieldProps {

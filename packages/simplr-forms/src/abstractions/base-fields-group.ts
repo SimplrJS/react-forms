@@ -9,6 +9,7 @@ import { FieldContext } from "../contracts/field";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { FormStore } from "../stores/form-store";
 import * as PropTypes from "prop-types";
+import { FormStoreHelpers } from "../stores/form-store-helpers";
 
 export class BaseFieldsGroup<TProps extends FieldsGroupProps,
     TState extends FieldsGroupState>
@@ -48,7 +49,7 @@ export class BaseFieldsGroup<TProps extends FieldsGroupProps,
     }
 
     public componentWillMount(): void {
-        this.FieldsGroupId = this.FormStore.GetFieldsGroupId(this.props.name, this.context.FieldsGroupId);
+        this.FieldsGroupId = FormStoreHelpers.GetFieldsGroupId(this.props.name, this.context.FieldsGroupId);
         this.FormStore.RegisterFieldsGroup(this.FieldsGroupId, this.props.name, this.context.FieldsGroupId);
     }
 
