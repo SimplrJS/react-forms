@@ -65,7 +65,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
         return "";
     }
 
-    public renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
             type="text"
