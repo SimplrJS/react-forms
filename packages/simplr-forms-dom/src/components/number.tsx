@@ -37,7 +37,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         this.OnValueChange(this.GetValueFromEvent(event));
 
         const newValue = this.FormStore.GetField(this.FieldId).Value;
@@ -62,7 +62,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         return "";
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element | null {
         return <input
             ref={this.SetElementRef}
             type="number"

@@ -15,7 +15,7 @@ export class Form extends BaseForm<FormProps, {}> {
         }
     }
 
-    static defaultProps: FormProps = {
+    public static defaultProps: FormProps = {
         ...BaseForm.defaultProps,
         preventSubmitDefaultAndPropagation: true
     };
@@ -43,7 +43,7 @@ export class Form extends BaseForm<FormProps, {}> {
         this.FormStore.SubmitForm(result);
     }
 
-    render(): JSX.Element | null {
+    public render(): JSX.Element {
         return <form
             ref={this.SetElementRef}
             onSubmit={this.FormSubmitHandler}

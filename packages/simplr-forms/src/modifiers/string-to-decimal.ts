@@ -11,19 +11,20 @@ export interface StringToDecimalProps {
 const EMPTY_VALUE = "";
 
 export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, {}> {
-    static defaultProps: StringToDecimalProps = {
+    public static defaultProps: StringToDecimalProps = {
         delimiter: "."
     };
 
     private static emptyFormattedValue: string;
 
-    Format(value: FieldValue): FieldValue {
+    public Format(value: FieldValue): FieldValue {
         if (value !== EMPTY_VALUE) {
             return value.toString();
         }
         return EMPTY_VALUE;
     }
-    Parse(modifierValue: ModifierValue): ModifierValue {
+
+    public Parse(modifierValue: ModifierValue): ModifierValue {
         let value = modifierValue.TransitionalValue != null ? modifierValue.TransitionalValue : modifierValue.Value;
 
         if (value.length === 0) {
@@ -62,7 +63,8 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
 
             // Add leading zero, if fraction is being entered without leading zero
             const leadingZeroForFractionShortcut = transitionalValue.substr(0, 1) === this.props.delimiter;
-            const leadingZeroForFraction = firstCharWasZero && (transitionalValue.substr(1, 1) === this.props.delimiter || transitionalValue.length === 0);
+            const leadingZeroForFraction = firstCharWasZero &&
+                (transitionalValue.substr(1, 1) === this.props.delimiter || transitionalValue.length === 0);
 
             if (leadingZeroForFractionShortcut || leadingZeroForFraction) {
                 transitionalValue = "0" + transitionalValue;
@@ -76,11 +78,11 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             }
 
             transitionalValue = leadingMinus + transitionalValue;
-            let numValue = Number(transitionalValue);
+            const numValue = Number(transitionalValue);
 
             return {
                 Value: numValue,
-                TransitionalValue: transitionalValue != numValue.toString() ? transitionalValue : undefined
+                TransitionalValue: transitionalValue !== numValue.toString() ? transitionalValue : undefined
             };
         }
         return {
@@ -96,7 +98,7 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
         return arr.join("");
     }
 
-    protected LeaveOnlyFirstDelimiter(value: string, delimiter: string) {
+    protected LeaveOnlyFirstDelimiter(value: string, delimiter: string): string {
         if (value.indexOf(delimiter) === -1) {
             return value;
         }

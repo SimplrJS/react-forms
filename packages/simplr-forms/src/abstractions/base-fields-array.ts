@@ -21,7 +21,7 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         return {};
     }
 
-    static contextTypes: PropTypes.ValidationMap<FieldContext> = {
+    public static contextTypes: PropTypes.ValidationMap<FieldContext> = {
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
@@ -36,25 +36,25 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         return FSHContainer.FormStoresHandler.GetStore(this.FormId);
     }
 
-    static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
+    public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
         FieldsGroupId: PropTypes.string,
         FieldsGroupProps: PropTypes.object
     };
 
-    getChildContext(): FieldsGroupChildContext {
+    public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsArrayId,
             FieldsGroupProps: this.FieldsArrayPropsContext
         };
     }
 
-    componentWillMount() {
+    public componentWillMount(): void {
         const idBase = `${this.props.name}[${this.props.index}]`;
         this.FieldsArrayId = FormStoreHelpers.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
         this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.index, this.context.FieldsGroupId);
     }
 
-    componentWillUnmount(): void {
+    public componentWillUnmount(): void {
         if (this.FormStore != null && this.props.destroyOnUnmount) {
             this.FormStore.UnregisterFieldsArray(this.FieldsArrayId);
         }

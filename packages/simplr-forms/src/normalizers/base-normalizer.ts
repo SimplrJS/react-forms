@@ -5,9 +5,10 @@ import { ValueOfType } from "../utils/value-helpers";
 
 export abstract class BaseNormalizer<TProps, TState> extends React.Component<TProps, TState> implements Normalizer {
     // Indentifier function
-    static SimplrFormsCoreNormalizer() { }
-    abstract Normalize(value: FieldValue): FieldValue;
-    render() {
+    // tslint:disable-next-line:no-empty
+    public static SimplrFormsCoreNormalizer(): void { }
+    public abstract Normalize(value: FieldValue): FieldValue;
+    public render(): null {
         return null;
     }
 }

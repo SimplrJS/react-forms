@@ -3,23 +3,23 @@ import { ValidationResult } from "../contracts";
 
 import { FieldValue } from "simplr-forms/contracts";
 
-export interface RequiredValidatorProps extends BaseFieldValidatorProps { }
+export type RequiredValidatorProps = BaseFieldValidatorProps;
 
 export class RequiredValidator extends BaseFieldValidator<RequiredValidatorProps> {
 
-    private isString(value: FieldValue) {
+    private isString(value: FieldValue): boolean {
         return typeof value === "string";
     }
 
-    private isArray(value: FieldValue) {
+    private isArray(value: FieldValue): boolean {
         return {}.toString.call(value) === "[object Array]";
     }
 
-    private isObject(value: FieldValue) {
+    private isObject(value: FieldValue): boolean {
         return value === Object(value);
     }
 
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (value == null) {
             return this.InvalidSync(this.props.error);
         }

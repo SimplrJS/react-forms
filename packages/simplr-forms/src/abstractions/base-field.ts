@@ -4,12 +4,10 @@ import {
 } from "../contracts/field";
 import { CoreField, CoreFieldState } from "./core-field";
 
-export interface BaseFieldState extends CoreFieldState {
-
-}
+export type BaseFieldState = CoreFieldState;
 
 export abstract class BaseField<TProps extends FieldProps, TState extends BaseFieldState> extends CoreField<TProps, TState> {
-    componentWillReceiveProps(nextProps: TProps): void {
+    public componentWillReceiveProps(nextProps: TProps): void {
         super.componentWillReceiveProps(nextProps);
 
         if (this.IsControlled) {

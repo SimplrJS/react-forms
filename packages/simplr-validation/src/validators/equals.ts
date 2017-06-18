@@ -9,7 +9,7 @@ export interface EqualsValidatorProps extends BaseFieldValidatorProps {
 }
 
 export class EqualsValidator extends BaseFieldValidator<EqualsValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

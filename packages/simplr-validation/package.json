@@ -8,13 +8,13 @@
   "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
-    "test": "jest",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
     "build": "gulp",
     "watch": "webpack -w",
     "release": "npm run build && npm run uglifyjs",
-    "test-tslint": "tslint --config ./tslint.json --project . --exclude ./__tests__/* && echo TsLint test successfully passed.",
+    "test": "jest && npm run test-tsc && npm run test-tslint",
+    "test-tslint": "tslint --config ./tslint.json --project tsconfig.json && echo TsLint test successfully passed.",
     "test-tsc": "tsc -p . --noEmit",
     "uglifyjs": "echo \"Uglify is not implemented\" && exit 1",
     "prepublishOnly": "npm run build",
@@ -59,6 +59,7 @@
     "immutable": "^3.8.1",
     "react": "^15.6.1",
     "simplr-forms": "^4.0.1-beta.4",
+    "tslib": "^1.7.1",
     "validator": "^7.0.0"
   },
   "jest": {

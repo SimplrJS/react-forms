@@ -1,12 +1,11 @@
 import { TypedRecord } from "typed-immutable-record";
-import { FormContextPropsObject } from "./form";
 
 export interface FieldsGroupProps {
     name: string;
     destroyOnUnmount?: boolean;
 }
 
-export interface FieldsGroupState { }
+export type FieldsGroupState = {};
 
 export interface FieldsGroupStoreState {
     Name: string;
@@ -21,6 +20,6 @@ export interface FieldsGroupChildContext {
     FieldsGroupProps: FieldsGroupPropsObject;
 }
 
-export interface FieldsGroupPropsObject { }
+export type FieldsGroupPropsObject = {};
 
-export interface FieldsGroupContextProps { }
+export type FieldsGroupContextProps = {};

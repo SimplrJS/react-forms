@@ -4,10 +4,10 @@ import { FieldValue } from "simplr-forms/contracts";
 import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
-export interface AsciiValidatorProps extends BaseFieldValidatorProps { }
+export type AsciiValidatorProps = BaseFieldValidatorProps;
 
 export class AsciiValidator extends BaseFieldValidator<AsciiValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

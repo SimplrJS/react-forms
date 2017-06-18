@@ -10,7 +10,7 @@ import {
     BaseFormButtonStateRecord
 } from "../abstractions/base-form-button";
 
-export interface SubmitProps extends BaseFormButtonProps { }
+export type SubmitProps = BaseFormButtonProps;
 
 export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecord> {
     public static defaultProps: BaseFormButtonProps = {
@@ -18,7 +18,7 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         disableOnError: true
     };
 
-    render(): JSX.Element | null {
+    public render(): JSX.Element {
         return <button
             type="submit"
             className={this.ClassName}

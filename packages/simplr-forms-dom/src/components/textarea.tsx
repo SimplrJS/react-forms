@@ -36,7 +36,7 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLTextAreaElement> = event => {
         let newValue: string | undefined;
         if (!this.IsControlled) {
             this.OnValueChange(this.GetValueFromEvent(event));
@@ -65,7 +65,7 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
         return "";
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <textarea
             ref={this.SetElementRef}
             name={this.FieldId}

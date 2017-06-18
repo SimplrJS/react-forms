@@ -18,8 +18,8 @@ describe("Form base", () => {
 
         it("formId is undefined and destroyOnUnmount prop is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
-            let form = shallow(<MyTestForm></MyTestForm>);
-            let formId = (form.instance() as any).FormId;
+            const form = shallow(<MyTestForm></MyTestForm>);
+            const formId = (form.instance() as any).FormId;
 
             expect(FormStoresHandler.Exists(formId)).toBe(true);
         });
@@ -57,8 +57,8 @@ describe("Form base", () => {
     describe("unregisters when", () => {
         it("formId is undefined and destroyOnUnmount prop is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
-            let form = shallow(<MyTestForm></MyTestForm>);
-            let formId = (form.instance() as any).FormId;
+            const form = shallow(<MyTestForm></MyTestForm>);
+            const formId = (form.instance() as any).FormId;
 
             form.unmount();
 
@@ -69,7 +69,7 @@ describe("Form base", () => {
         it("formId is present and destroyOnUnmount is true", () => {
             const FormStoresHandler = FSHContainer.FormStoresHandler;
             const formId = "custom-form-id";
-            let form = mount(
+            const form = mount(
                 <MyTestForm destroyOnUnmount={true} formId={formId}></MyTestForm>
             );
 

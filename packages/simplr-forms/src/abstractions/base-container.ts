@@ -15,9 +15,9 @@ export interface BaseContainerParentContext {
 }
 
 export abstract class BaseContainer<TProps extends BaseContainerProps, TState> extends React.Component<TProps, TState> {
-    context: BaseContainerParentContext;
+    public context: BaseContainerParentContext;
 
-    static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
+    public static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
         FormId: PropTypes.string.isRequired,
         FieldId: PropTypes.string
     };
@@ -43,11 +43,10 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
         return FSHContainer.FormStoresHandler.GetStore(this.FormId);
     }
 
-    componentWillMount() {
+    public componentWillMount(): void {
         if (this.props.formId == null && this.context.FormId == null) {
             throw new Error("simplr-forms: Container must be in a Form or have prop 'formId' set.");
         }
-
 
         if (this.props.formId != null && this.context.FormId != null) {
             const but = `but form id was defined: '${this.props.formId}'`;

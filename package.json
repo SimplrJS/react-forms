@@ -5,7 +5,7 @@
     "generate": "rush generate",
     "tools-build": "npm run rush-tools -- run gulp-build -e simplr-mvdir",
     "source-build": "npm run rush-tools -- run build -e simplr-mvdir",
-    "test": "npm run rush-tools -- run test-tsc -e simplr-mvdir",
+    "test": "npm run rush-tools -- run test -e simplr-mvdir",
     "rush-tools": "ts-node ./tools/rush-tools.ts",
     "publish": "npm run rush-tools -- publish"
   },

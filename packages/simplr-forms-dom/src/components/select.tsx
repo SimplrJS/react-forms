@@ -62,7 +62,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             const newValue: string[] = [];
 
             for (let i = 0; i < event.currentTarget.options.length; i++) {
-                const option = event.currentTarget.options[i] as HTMLOptionElement;
+                const option = event.currentTarget.options[i];
                 if (option.selected) {
                     newValue.push(option.value);
                 }
@@ -74,7 +74,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return event.currentTarget.value;
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLSelectElement> = event => {
         this.OnValueChange(this.GetValueFromEvent(event));
         let newValue = this.FormStore.GetField(this.FieldId).Value;
 
@@ -117,7 +117,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         return this.RawDefaultValue;
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <select
             ref={this.SetElementRef}
             name={this.FieldId}

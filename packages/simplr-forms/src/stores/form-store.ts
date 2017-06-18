@@ -1,6 +1,5 @@
-import * as React from "react";
 import * as Immutable from "immutable";
-import { recordify, TypedRecord } from "typed-immutable-record";
+import { recordify } from "typed-immutable-record";
 import { ActionEmitter } from "action-emitter";
 
 import { FormStoreHelpers } from "./form-store-helpers";
@@ -97,7 +96,6 @@ export class FormStore extends ActionEmitter {
             FieldsGroup: undefined,
             Props: undefined
         };
-
 
         // (initialValue) (value)
         // 0 => null
@@ -246,8 +244,8 @@ export class FormStore extends ActionEmitter {
         }
 
         this.State = this.State.withMutations(state => {
-            const fieldState = state.Fields.get(fieldId);
-            state.Fields = state.Fields.set(fieldId, fieldState.merge({
+            const field = state.Fields.get(fieldId);
+            state.Fields = state.Fields.set(fieldId, field.merge({
                 Props: propsRecord
             } as FieldStoreState));
         });
@@ -335,7 +333,7 @@ export class FormStore extends ActionEmitter {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false,
-                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                    Error: recordify<FormError, FormErrorRecord>(formError)
                 } as FieldStoreState));
 
                 return this.RecalculateDependentFormStatuses(state);
@@ -454,7 +452,7 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Validating: false,
-                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                    Error: recordify<FormError, FormErrorRecord>(formError)
                 } as FormState);
 
                 return this.RecalculateDependentFormStatuses(state);
@@ -657,24 +655,24 @@ export class FormStore extends ActionEmitter {
         });
 
         const fieldsGroups = this.State.FieldsGroups.filter(x => x != null && x.Parent === fieldsGroupId);
-        fieldsGroups.forEach((fieldsGroup, fieldsGroupId) => {
-            if (fieldsGroup == null || fieldsGroupId == null) {
+        fieldsGroups.forEach((fieldsGroup, index) => {
+            if (fieldsGroup == null || index == null) {
                 return;
             }
             if (fieldsGroup.ArrayName != null) {
                 if (result[fieldsGroup.ArrayName] == null) {
                     result[fieldsGroup.ArrayName] = [];
                 }
-                result[fieldsGroup.ArrayName].push(this.BuildFormObject(fieldsGroupId));
+                result[fieldsGroup.ArrayName].push(this.BuildFormObject(index));
             } else {
-                result[fieldsGroup.Name] = this.BuildFormObject(fieldsGroupId);
+                result[fieldsGroup.Name] = this.BuildFormObject(index);
             }
         });
         return result;
     }
 
     protected RecalculateDependentFormStatuses(formStoreState: FormStoreStateRecord): FormStoreStateRecord {
-        let updater: FormStoreStateStatus = this.GetInitialStoreStatus();
+        const updater: FormStoreStateStatus = this.GetInitialStoreStatus();
 
         // TODO: might build curried function for more efficient checking.
 

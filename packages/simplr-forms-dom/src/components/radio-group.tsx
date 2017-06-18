@@ -27,14 +27,14 @@ export interface RadioGroupChildContext extends FieldChildContext {
 export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 
 export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
-    static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
+    public static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
         ...BaseDomField.childContextTypes,
         RadioGroupOnChangeHandler: PropTypes.func.isRequired,
         RadioGroupOnBlur: PropTypes.func.isRequired,
         RadioGroupOnFocus: PropTypes.func.isRequired
     };
 
-    getChildContext(): RadioGroupChildContext {
+    public getChildContext(): RadioGroupChildContext {
         return {
             ...super.getChildContext(),
             FieldId: this.FieldId,
@@ -44,7 +44,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         };
     }
 
-    protected get RawDefaultValue() {
+    protected get RawDefaultValue(): React.ReactText {
         if (this.props.defaultValue != null) {
             return this.props.defaultValue;
         }
@@ -77,7 +77,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         return restProps;
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <div
             ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }

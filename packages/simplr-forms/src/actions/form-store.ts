@@ -1,5 +1,3 @@
-import { FieldValue } from "../contracts/field";
-
 // TODO: extract into abstractions
 // This requires tooling update, because webpack goes crazy now
 export abstract class FormAction {
@@ -15,7 +13,7 @@ export abstract class FieldAction extends FormAction {
         super(formId);
     }
 
-    public get FieldId() {
+    public get FieldId(): string {
         return this.fieldId;
     }
 }

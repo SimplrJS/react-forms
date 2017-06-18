@@ -8,7 +8,7 @@ export async function move(
     to: string,
     recursively: boolean = true,
     removeFromDirectory = true,
-    rootFrom?: string) {
+    rootFrom?: string): Promise<void> {
     try {
         from = path.resolve(from);
         to = path.resolve(to);
@@ -28,7 +28,7 @@ export async function move(
                     await mkdirpAsync(toDirectory);
                     await fs.rename(fileResolved, toFile);
                 } catch (err) {
-                    console.log(err);
+                    console.info(err);
                 }
             }
             if (await stats.isDirectory()) {
@@ -51,7 +51,7 @@ export async function move(
     }
 }
 
-async function mkdirpAsync(dir: string) {
+async function mkdirpAsync(dir: string): Promise<{}> {
     return new Promise((resolve, reject) => {
         mkdirp(dir, (err, made) => {
             if (err) {
@@ -63,7 +63,7 @@ async function mkdirpAsync(dir: string) {
     });
 }
 
-async function waitForEmptyAndRemoveDirAsync(dir: string) {
+async function waitForEmptyAndRemoveDirAsync(dir: string): Promise<void> {
     let files = fs.readdirSync(dir);
     while (files.length > 0) {
         await sleep(10);
@@ -78,17 +78,17 @@ async function waitForEmptyAndRemoveDirAsync(dir: string) {
     }
 }
 
-function sleep(milliseconds: number) {
+function sleep(milliseconds: number): Promise<void> {
     return new Promise<void>(resolve => {
         setTimeout(resolve, milliseconds);
     });
 }
 
-async function rmdir(dir: string) {
-    let list = await fs.readdir(dir);
-    for (var i = 0; i < list.length; i++) {
-        var filename = path.join(dir, list[i]);
-        var stat = await fs.stat(filename);
+async function rmdir(dir: string): Promise<void> {
+    const list = await fs.readdir(dir);
+    for (let i = 0; i < list.length; i++) {
+        const filename = path.join(dir, list[i]);
+        const stat = await fs.stat(filename);
 
         if (filename === "." || filename === "..") {
             // pass these files
@@ -104,7 +104,7 @@ async function rmdir(dir: string) {
         await fs.rmdir(dir);
     }
 }
-async function tryAndRetry(action: Function, maxTries = 5) {
+async function tryAndRetry(action: Function, maxTries = 5): Promise<void> {
     while (true) {
         try {
             action();

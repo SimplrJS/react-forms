@@ -29,7 +29,7 @@ class RushTools {
         }
     }
 
-    private runScript(command: string, excludePackageNames?: string[]) {
+    private runScript(command: string, excludePackageNames?: string[]): void {
         const { projects } = this.rushConfiguration;
 
         const failedPackages: string[] = [];
@@ -41,9 +41,9 @@ class RushTools {
                 continue;
             }
             shelljs.cd(project.projectFolder);
-            console.log("====================================");
-            console.log(`Package name: ${project.packageName}`);
-            console.log("====================================");
+            console.info("====================================");
+            console.info(`Package name: ${project.packageName}`);
+            console.info("====================================");
             const result = shelljs.exec(command);
 
             if (result.code !== 0) {
@@ -52,11 +52,11 @@ class RushTools {
         }
 
         if (failedPackages.length > 0) {
-            console.log("===================================");
-            console.log(`Failed packages: ${failedPackages.length}`);
-            console.log("===================================");
+            console.info("===================================");
+            console.info(`Failed packages: ${failedPackages.length}`);
+            console.info("===================================");
             for (const failedPackage of failedPackages) {
-                console.log(failedPackage);
+                console.info(failedPackage);
             }
 
             process.exit(1);
@@ -77,9 +77,7 @@ interface ArgumentsValues {
 const argv = yargs
     .help("h", "Show help.")
     .alias("h", "help")
-    .version(() => {
-        return `Current version: ${version}.`;
-    })
+    .version(() => `Current version: ${version}.`)
     .alias("v", "version")
     .option("c", {
         alias: "config",
@@ -96,8 +94,8 @@ const argv = yargs
     "run",
     "Run package.json script",
     yargs => yargs,
-    argv => {
-        const args: string[] = argv._;
+    argvObj => {
+        const args: string[] = argvObj._;
         const filteredArgs = args.map(arg => {
             if (arg.length > 0 && arg[0] === "-") {
                 return false;
@@ -110,15 +108,15 @@ const argv = yargs
             throw Error("rush-tools: Script name is required");
         }
 
-        argv.run = true;
-        argv.script = script;
+        argvObj.run = true;
+        argvObj.script = script;
     })
     .command(
     "publish",
     "Publish projects",
     yargs => yargs,
-    argv => {
-        argv.publish = true;
+    argvObj => {
+        argvObj.publish = true;
     })
     .demandCommand(1, "You need run a command")
     .argv as ArgumentsValues;

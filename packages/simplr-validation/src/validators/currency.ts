@@ -9,7 +9,7 @@ export interface CurrencyValidatorProps extends BaseFieldValidatorProps {
 }
 
 export class CurrencyValidator extends BaseFieldValidator<CurrencyValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

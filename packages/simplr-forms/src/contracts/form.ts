@@ -38,4 +38,4 @@ export interface FormState {
 
 export interface FormStateRecord extends TypedRecord<FormStateRecord>, FormState { }
 
-export interface FormContextPropsObject { }
+export type FormContextPropsObject = {};

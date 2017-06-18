@@ -9,7 +9,7 @@ export interface ByteLengthValidatorProps extends BaseFieldValidatorProps {
 }
 
 export class ByteLengthValidator extends BaseFieldValidator<ByteLengthValidatorProps> {
-    Validate(value: FieldValue): ValidationResult {
+    public Validate(value: FieldValue): ValidationResult {
         if (this.SkipValidation(value)) {
             return this.ValidSync();
         }

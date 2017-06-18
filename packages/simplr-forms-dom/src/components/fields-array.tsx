@@ -5,11 +5,9 @@ import {
 } from "simplr-forms/contracts";
 import { BaseFieldsArray } from "simplr-forms";
 
-export interface FieldsArrayProps extends CoreProps {
-}
+export type FieldsArrayProps = CoreProps;
 
-export interface FieldsArrayState extends CoreState {
-}
+export type FieldsArrayState = CoreState;
 
 interface Dictionary {
     [key: string]: any;
@@ -32,7 +30,7 @@ export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArraySt
         return restProps;
     }
 
-    render(): JSX.Element | null {
+    public render(): JSX.Element {
         return <div
             ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }

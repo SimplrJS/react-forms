@@ -9,7 +9,7 @@ class Cli {
         this.mvDir(argumentValues);
     }
 
-    private async mvDir(argumentValues: Contracts.ArgumentsValues) {
+    private async mvDir(argumentValues: Contracts.ArgumentsValues): Promise<void> {
         const from = argumentValues.from;
         const to = argumentValues.to;
         await mvDir.move(from, to, true, true);

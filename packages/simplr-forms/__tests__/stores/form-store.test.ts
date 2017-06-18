@@ -4,6 +4,7 @@ import * as Immutable from "immutable";
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
 import { FieldStorePropsRecord, FieldStoreProps } from "../../src/contracts/field";
+import { FormStoreHelpers } from "../../src/stores/form-store-helpers";
 
 import { MyFieldProps } from "../test-components/test-field";
 
@@ -16,9 +17,6 @@ describe("Form store", () => {
     });
 
     it("returns state", () => {
-        const formId = "FORM-ID";
-        const formStore = new FormStore(formId);
-
         expect(formStore.GetState()).not.toBeUndefined();
     });
 
@@ -26,7 +24,7 @@ describe("Form store", () => {
         const fieldName = "FIELD-NAME";
         const fieldGroupId = "FIELD-GROUP-ID";
 
-        const fieldId = formStore.GetFieldId(fieldName, fieldGroupId);
+        const fieldId = FormStoreHelpers.GetFieldId(fieldName, fieldGroupId);
 
         expect(typeof fieldId).toBe("string");
         expect(fieldId.indexOf(fieldName)).not.toBe(-1);
@@ -82,7 +80,6 @@ describe("Form store", () => {
         });
     });
 
-
     it("unregisters a field", () => {
         const fieldId = "field-id";
 
@@ -120,7 +117,7 @@ describe("Form store", () => {
         expect(formStore.GetField(fieldId).Value).toBe(nextValue);
     });
 
-    it("validate field without error", async (done) => {
+    it("validate field without error", async done => {
         const fieldId = "field-id";
 
         formStore.RegisterField(fieldId, "field-name", undefined, undefined, "value");
@@ -146,7 +143,7 @@ describe("Form store", () => {
         }
     });
 
-    it("validate field with error", async (done) => {
+    it("validate field with error", async done => {
         const fieldId = "FIELD-ID";
         const formError: FormError = { Message: "Error Message" };
 
@@ -185,7 +182,7 @@ describe("Form store", () => {
         }
     });
 
-    it("skip validation when newValue has expired", async (done) => {
+    it("skip validation when newValue has expired", async done => {
         const fieldId = "FIELD-ID";
         const formError = "field error";
         const value = "text";
@@ -262,7 +259,7 @@ describe("Form store", () => {
     });
 
     it("clears all fields values to default values", () => {
-        let fieldsIds: string[] = [];
+        const fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
@@ -286,7 +283,7 @@ describe("Form store", () => {
     });
 
     it("clears fields values by fieldsIds to default values", () => {
-        let fieldsIds: string[] = [];
+        const fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
@@ -314,7 +311,7 @@ describe("Form store", () => {
     });
 
     it("resets all fields values to initial values", () => {
-        let fieldsIds: string[] = [];
+        const fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }
@@ -340,7 +337,7 @@ describe("Form store", () => {
     });
 
     it("resets fields values by fieldsIds to initial values", () => {
-        let fieldsIds: string[] = [];
+        const fieldsIds: string[] = [];
         for (let i = 0; i < 5; i++) {
             fieldsIds.push(`field-id-${i}`);
         }

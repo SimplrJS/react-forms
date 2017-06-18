@@ -35,10 +35,10 @@ export type RadioParentContext = RadioGroupChildContext & BaseContainerParentCon
 
 export class Radio extends BaseContainer<RadioProps, RadioState> {
     public Element: HTMLInputElement | undefined;
-    state: RadioState = {};
+    public state: RadioState = {};
     public context: RadioParentContext;
 
-    static contextTypes: PropTypes.ValidationMap<RadioParentContext> = {
+    public static contextTypes: PropTypes.ValidationMap<RadioParentContext> = {
         ...BaseContainer.contextTypes,
         FieldId: PropTypes.string.isRequired,
         RadioGroupOnChangeHandler: PropTypes.func.isRequired,
@@ -46,7 +46,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         RadioGroupOnFocus: PropTypes.func.isRequired
     };
 
-    componentWillMount(): void {
+    public componentWillMount(): void {
         super.componentWillMount();
 
         this.setState(state => {
@@ -56,15 +56,15 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         });
     }
 
-    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnChangeHandler(event, this.props.value);
     }
 
-    protected OnFocus: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    protected OnFocus: React.FocusEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnFocus(event);
     }
 
-    protected OnBlur: React.FocusEventHandler<HTMLInputElement> = (event) => {
+    protected OnBlur: React.FocusEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnBlur(event);
     }
 
@@ -143,7 +143,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         this.Element = element;
     }
 
-    renderField(): JSX.Element | null {
+    public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
             type="radio"

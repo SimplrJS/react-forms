@@ -12,7 +12,7 @@ export class ValidationSubscriber {
 export class ValidationSubscriberContainerClass {
     private instance: ValidationSubscriber;
 
-    SetSubscriber(newHandler: ValidationSubscriber, disposeOldOne: boolean = true): void {
+    public SetSubscriber(newHandler: ValidationSubscriber, disposeOldOne: boolean = true): void {
         if (disposeOldOne) {
             if (this.instance != null) {
                 delete this.instance;
@@ -21,11 +21,11 @@ export class ValidationSubscriberContainerClass {
         this.instance = newHandler;
     }
 
-    get Subscriber(): ValidationSubscriber {
+    public get Subscriber(): ValidationSubscriber {
         return this.instance;
     }
 
-    Initialize(): void {
+    public Initialize(): void {
         if (this.instance == null) {
             this.instance = new ValidationSubscriber();
         }

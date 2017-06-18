@@ -10,19 +10,19 @@ export interface BaseValidatorProps {
 export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
     extends React.Component<TProps, TState> implements Validator {
 
-    abstract Validate(value: FieldValue): ValidationResult;
+    public abstract Validate(value: FieldValue): ValidationResult;
 
-    protected SkipValidation(value: any) {
+    protected SkipValidation(value: any): boolean {
         return (value == null || value === "");
     }
 
-    protected Valid(): Promise<void> {
+    protected async Valid(): Promise<void> {
         return new Promise<void>(resolve => {
             resolve();
         });
     }
 
-    protected Invalid(error: string): Promise<void> {
+    protected async Invalid(error: string): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             reject(error);
         });
@@ -36,7 +36,7 @@ export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
         return error;
     }
 
-    render() {
+    public render(): any {
         return null;
     }
 }

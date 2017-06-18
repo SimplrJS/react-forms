@@ -12,10 +12,14 @@
         "strict": true,
         "noEmit": true,
         "noUnusedLocals": true,
+        "importHelpers": true,
         "lib": [
             "dom",
             "dom.iterable",
             "es6"
+        ],
+        "typeRoots": [
+            "../node_modules/@types/"
         ]
     },
     "exclude": [
