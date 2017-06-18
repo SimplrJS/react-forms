@@ -16,13 +16,13 @@ export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
         return (value == null || value === "");
     }
 
-    protected Valid(): Promise<void> {
+    protected async Valid(): Promise<void> {
         return new Promise<void>(resolve => {
             resolve();
         });
     }
 
-    protected Invalid(error: string): Promise<void> {
+    protected async Invalid(error: string): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             reject(error);
         });

@@ -43,10 +43,10 @@ export async function ValidateValue(
     }
 }
 
-export function ValidateField(components: JSX.Element[], value: FieldValue): Promise<void> {
+export async function ValidateField(components: JSX.Element[], value: FieldValue): Promise<void> {
     return ValidateValue(components, value, FIELD_VALIDATOR_FUNCTION_NAME);
 }
 
-export function ValidateForm(components: JSX.Element[], value: any): Promise<void> {
+export async function ValidateForm(components: JSX.Element[], value: any): Promise<void> {
     return ValidateValue(components, value, FORM_VALIDATOR_FUNCTION_NAME);
 }

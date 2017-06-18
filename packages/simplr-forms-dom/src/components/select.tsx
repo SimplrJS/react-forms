@@ -62,7 +62,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             const newValue: string[] = [];
 
             for (let i = 0; i < event.currentTarget.options.length; i++) {
-                const option = event.currentTarget.options[i] as HTMLOptionElement;
+                const option = event.currentTarget.options[i];
                 if (option.selected) {
                     newValue.push(option.value);
                 }
