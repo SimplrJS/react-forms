@@ -3,7 +3,7 @@ import { FieldStorePropsRecord } from "../contracts/field";
 
 export const FIELDS_GROUP_SEPARATOR = ".";
 
-export class FormStoreHelpers {
+export namespace FormStoreHelpers {
     /**
      * Constructs field id from given fieldName and an optional fieldsGroupIdkds
      *
@@ -13,7 +13,7 @@ export class FormStoreHelpers {
      *
      * @memberOf FormStore
      */
-    public static GetFieldId(fieldName: string, fieldsGroupId?: string): string {
+    export function GetFieldId(fieldName: string, fieldsGroupId?: string): string {
         if (fieldsGroupId != null) {
             return `${fieldsGroupId}${FIELDS_GROUP_SEPARATOR}${fieldName}`;
         }
@@ -21,7 +21,7 @@ export class FormStoreHelpers {
         return fieldName;
     }
 
-    public static GetFieldsGroupId(name: string, parentId?: string): string {
+    export function GetFieldsGroupId(name: string, parentId?: string): string {
         if (parentId != null) {
             return `${parentId}${FIELDS_GROUP_SEPARATOR}${name}`;
         }
@@ -29,11 +29,11 @@ export class FormStoreHelpers {
         return name;
     }
 
-    public static GetFieldsArrayId(name: string, parentId?: string): string {
-        return this.GetFieldsGroupId(name, parentId);
+    export function GetFieldsArrayId(name: string, parentId?: string): string {
+        return GetFieldsGroupId(name, parentId);
     }
 
-    protected static ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
+    export function ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
         const result = concat ? array.concat() : array;
         for (let i = 0; i < result.length; ++i) {
             for (let j = i + 1; j < result.length; ++j) {
@@ -45,7 +45,7 @@ export class FormStoreHelpers {
         return result;
     }
 
-    protected static RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true): T[] {
+    export function RemoveValues<T>(array: T[], valuesToRemove: T[], concat: boolean = true): T[] {
         const result = concat ? array.concat() : array;
         for (const value of valuesToRemove) {
             let index;
@@ -56,7 +56,7 @@ export class FormStoreHelpers {
         return result;
     }
 
-    public static PropsEqual(newProps: FieldStorePropsRecord, oldProps: FieldStorePropsRecord): boolean {
+    export function PropsEqual(newProps: FieldStorePropsRecord, oldProps: FieldStorePropsRecord): boolean {
         const newKeys = newProps.keySeq().toArray();
         const oldKeys = oldProps.keySeq().toArray();
 
@@ -64,8 +64,8 @@ export class FormStoreHelpers {
             return false;
         }
         const childrenKey = "children";
-        let allKeys = this.ArrayUnique(newKeys.concat(oldKeys), false);
-        allKeys = this.RemoveValues(allKeys, [childrenKey], false);
+        let allKeys = ArrayUnique(newKeys.concat(oldKeys), false);
+        allKeys = RemoveValues(allKeys, [childrenKey], false);
 
         // Custom props diff, to have most efficient diffing
 
@@ -82,7 +82,7 @@ export class FormStoreHelpers {
             }
 
             if (newValueType === "object" || newValueType === "function") {
-                if (!this.DeepCompare(newValue, oldValue)) {
+                if (!DeepCompare(newValue, oldValue)) {
                     return false;
                 }
             } else if (newValue !== oldValue) {
@@ -128,7 +128,7 @@ export class FormStoreHelpers {
 
             // If oldChildElement was found and its props are different
             if (oldChildElement != null &&
-                !this.DeepCompare(newChildElement.props, oldChildElement.props)) {
+                !DeepCompare(newChildElement.props, oldChildElement.props)) {
                 // Props are not the same
                 return false;
             }
@@ -138,7 +138,7 @@ export class FormStoreHelpers {
     }
 
     // tslint:disable
-    protected static DeepCompare(...args: any[]): boolean {
+    export function DeepCompare(...args: any[]): boolean {
         var i, l, leftChain: any, rightChain: any;
         function Compare2Objects(x: any, y: any) {
             var p;

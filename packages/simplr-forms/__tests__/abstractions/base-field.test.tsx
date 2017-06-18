@@ -8,6 +8,7 @@ import { FormStore } from "../../src/stores/form-store";
 import { MyTestForm } from "../test-components/test-form";
 import { MyTestField, MyFieldProps } from "../test-components/test-field";
 import { FormChildContext } from "../../src/contracts/form";
+import { FormStoreHelpers } from "../../src/stores/form-store-helpers";
 
 describe("Field Base", () => {
     let sandbox: Sinon.SinonSandbox;
@@ -37,7 +38,7 @@ describe("Field Base", () => {
         </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
-        const fieldId = formStore.GetFieldId(fieldName);
+        const fieldId = FormStoreHelpers.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
     });
@@ -52,7 +53,7 @@ describe("Field Base", () => {
         </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
-        const fieldId = formStore.GetFieldId(fieldName);
+        const fieldId = FormStoreHelpers.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
 
@@ -74,7 +75,7 @@ describe("Field Base", () => {
         </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
-        const fieldId = formStore.GetFieldId(fieldName);
+        const fieldId = FormStoreHelpers.GetFieldId(fieldName);
 
         expect(formStore.HasField(fieldId)).toBe(true);
 

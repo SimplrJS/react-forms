@@ -333,7 +333,7 @@ export class FormStore extends ActionEmitter {
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false,
-                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                    Error: recordify<FormError, FormErrorRecord>(formError)
                 } as FieldStoreState));
 
                 return this.RecalculateDependentFormStatuses(state);
@@ -452,7 +452,7 @@ export class FormStore extends ActionEmitter {
             this.State = this.State.withMutations(state => {
                 state.Form = state.Form.merge({
                     Validating: false,
-                    Error: recordify<FormError, FormErrorRecord>(formError!)
+                    Error: recordify<FormError, FormErrorRecord>(formError)
                 } as FormState);
 
                 return this.RecalculateDependentFormStatuses(state);

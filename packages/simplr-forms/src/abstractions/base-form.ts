@@ -61,7 +61,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
-    abstract render(): JSX.Element | null;
+    public abstract render(): JSX.Element | null;
 
     /*
      * Local helpers

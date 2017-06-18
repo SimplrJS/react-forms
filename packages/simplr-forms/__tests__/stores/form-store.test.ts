@@ -4,6 +4,7 @@ import * as Immutable from "immutable";
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
 import { FieldStorePropsRecord, FieldStoreProps } from "../../src/contracts/field";
+import { FormStoreHelpers } from "../../src/stores/form-store-helpers";
 
 import { MyFieldProps } from "../test-components/test-field";
 
@@ -23,7 +24,7 @@ describe("Form store", () => {
         const fieldName = "FIELD-NAME";
         const fieldGroupId = "FIELD-GROUP-ID";
 
-        const fieldId = formStore.GetFieldId(fieldName, fieldGroupId);
+        const fieldId = FormStoreHelpers.GetFieldId(fieldName, fieldGroupId);
 
         expect(typeof fieldId).toBe("string");
         expect(fieldId.indexOf(fieldName)).not.toBe(-1);
