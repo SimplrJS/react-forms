@@ -10,6 +10,6 @@ before_install:
 - "npm install -g typescript@^2.3"
 script:
 - npm run generate
+- npm test
 - npm run tools-build
 - npm run source-build
-- npm test
