@@ -54,7 +54,14 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
-    public abstract render(): JSX.Element | null;
+    public componentDidMount(): void {
+        const props: TProps = this.props;
+        if (props.onMount != null) {
+            props.onMount(this.FormStore);
+        }
+    }
+
+    abstract render(): JSX.Element | null;
 
     /*
      * Local helpers
