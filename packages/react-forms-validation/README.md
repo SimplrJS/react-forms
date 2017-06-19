@@ -1,15 +1,18 @@
-<p align="right">
-    <a href="https://npmjs.org/package/simplr-validation">
-        <img src="https://img.shields.io/npm/v/simplr-validation.svg?style=flat-square" alt="version" />
+<div align="center">
+  <a href="https://github.com/SimplrJS">
+    <img width="200" src="https://user-images.githubusercontent.com/7989797/27303346-34a5d6fa-5543-11e7-91e8-5b34287d0bc8.png" />
+  </a>
+</div>
+<p align="center">
+    <a href="https://npmjs.org/package/@simplr/react-forms/validation">
+        <img src="https://img.shields.io/npm/v/@simplr/react-forms-validation.svg?style=flat-square" alt="version" />
     </a>
-    <a href="https://npmjs.org/package/simplr-validation">
-        <img src="https://img.shields.io/npm/l/simplr-validation.svg?style=flat-square" alt="license" />
+    <a href="https://npmjs.org/package/@simplr/react-forms/validation">
+        <img src="https://img.shields.io/npm/l/@simplr/react-forms-validation.svg?style=flat-square" alt="license" />
     </a>
 </p>
 
-<h1 align="center">simplr-validation</h1>
-
-_This readme is WIP. There may be some inconsistency._
+<h1 align="center">@simplr/react-forms-validation</h1>
 
 This package subscribes to `@simplr/react-forms` store and it will validate on emitted actions.
 
@@ -23,16 +26,16 @@ This package subscribes to `@simplr/react-forms` store and it will validate on e
 To initialise module you need to import subscriber once in your app.
 
 ```typescript
-import { Subscriber } from "simplr-validation";
+import { InitializeValidation } from "@simplr/react-forms-validation";
 
-Subscriber.SubscriberContainer;
+InitializeValidation();
 ```
 
 ## Validators example
 
 ```tsx
 import { Form, Text, Password } from "@simplr/react-forms-dom";
-import { RequiredValidator, EmailValidator } from "simplr-validation/validators";
+import { RequiredValidator, EmailValidator } from "@simplr/react-forms-validation";
 
 export function LoginForm(props: {}) {
         return <Form>
