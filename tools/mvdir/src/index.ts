@@ -18,7 +18,7 @@ export async function move(
         const files = await fs.readdir(from);
         for (const file of files) {
             const stats = await fs.stat(path.join(from, file));
-            if (await stats.isFile()) {
+            if (stats.isFile()) {
                 const fileResolved = path.resolve(from, file);
                 const fromDirectory = path.dirname(fileResolved);
                 const toDirectory = fromDirectory.replace(rootFrom, to);
@@ -31,7 +31,7 @@ export async function move(
                     console.info(err);
                 }
             }
-            if (await stats.isDirectory()) {
+            if (stats.isDirectory()) {
                 if (recursively === true) {
                     const fromDirectory = path.join(from, file);
                     await tryAndRetry(async () => {
@@ -78,7 +78,7 @@ async function waitForEmptyAndRemoveDirAsync(dir: string): Promise<void> {
     }
 }
 
-function sleep(milliseconds: number): Promise<void> {
+async function sleep(milliseconds: number): Promise<void> {
     return new Promise<void>(resolve => {
         setTimeout(resolve, milliseconds);
     });

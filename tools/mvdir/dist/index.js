@@ -61,31 +61,28 @@ function move(from, to, recursively, removeFromDirectory, rootFrom) {
                                 case 0: return [4 /*yield*/, fs.stat(path.join(from, file))];
                                 case 1:
                                     stats = _a.sent();
-                                    return [4 /*yield*/, stats.isFile()];
-                                case 2:
-                                    if (!_a.sent()) return [3 /*break*/, 7];
+                                    if (!stats.isFile()) return [3 /*break*/, 6];
                                     fileResolved = path.resolve(from, file);
                                     fromDirectory = path.dirname(fileResolved);
                                     toDirectory = fromDirectory.replace(rootFrom, to);
                                     toFile = path.join(toDirectory, fileResolved.replace(fromDirectory, ""));
-                                    _a.label = 3;
-                                case 3:
-                                    _a.trys.push([3, 6, , 7]);
+                                    _a.label = 2;
+                                case 2:
+                                    _a.trys.push([2, 5, , 6]);
                                     return [4 /*yield*/, mkdirpAsync(toDirectory)];
-                                case 4:
+                                case 3:
                                     _a.sent();
                                     return [4 /*yield*/, fs.rename(fileResolved, toFile)];
-                                case 5:
+                                case 4:
                                     _a.sent();
-                                    return [3 /*break*/, 7];
-                                case 6:
+                                    return [3 /*break*/, 6];
+                                case 5:
                                     err_2 = _a.sent();
-                                    console.log(err_2);
-                                    return [3 /*break*/, 7];
-                                case 7: return [4 /*yield*/, stats.isDirectory()];
-                                case 8:
-                                    if (!_a.sent()) return [3 /*break*/, 11];
-                                    if (!(recursively === true)) return [3 /*break*/, 11];
+                                    console.info(err_2);
+                                    return [3 /*break*/, 6];
+                                case 6:
+                                    if (!stats.isDirectory()) return [3 /*break*/, 9];
+                                    if (!(recursively === true)) return [3 /*break*/, 9];
                                     fromDirectory_1 = path.join(from, file);
                                     return [4 /*yield*/, tryAndRetry(function () { return __awaiter(_this, void 0, void 0, function () {
                                             return __generator(this, function (_a) {
@@ -97,14 +94,14 @@ function move(from, to, recursively, removeFromDirectory, rootFrom) {
                                                 }
                                             });
                                         }); })];
-                                case 9:
+                                case 7:
                                     _a.sent();
-                                    if (!(removeFromDirectory === true && fs.existsSync(fromDirectory_1))) return [3 /*break*/, 11];
+                                    if (!(removeFromDirectory === true && fs.existsSync(fromDirectory_1))) return [3 /*break*/, 9];
                                     return [4 /*yield*/, waitForEmptyAndRemoveDirAsync(fromDirectory_1)];
-                                case 10:
+                                case 8:
                                     _a.sent();
-                                    _a.label = 11;
-                                case 11: return [2 /*return*/];
+                                    _a.label = 9;
+                                case 9: return [2 /*return*/];
                             }
                         });
                     };
@@ -182,8 +179,12 @@ function waitForEmptyAndRemoveDirAsync(dir) {
     });
 }
 function sleep(milliseconds) {
-    return new Promise(function (resolve) {
-        setTimeout(resolve, milliseconds);
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve) {
+                    setTimeout(resolve, milliseconds);
+                })];
+        });
     });
 }
 function rmdir(dir) {

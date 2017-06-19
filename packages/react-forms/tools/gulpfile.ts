@@ -4,7 +4,7 @@ import * as webpack from "webpack";
 import * as webpackConfig from "./webpack.config";
 import * as process from "process";
 import * as childProcess from "child_process";
-import * as simplrMvDir from "simplr-mvdir";
+import * as simplrMvDir from "@simplr/mvdir";
 
 const packageJson = require("./package.json");
 

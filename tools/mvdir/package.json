@@ -1,6 +1,6 @@
 {
-  "name": "simplr-mvdir",
-  "version": "0.0.1-beta.8",
+  "name": "@simplr/mvdir",
+  "version": "0.0.2",
   "description": "A simple tool for moving files from one directory to another.",
   "repository": "SimplrJS/simplr-forms",
   "homepage": "https://github.com/SimplrJS/simplr-forms",
@@ -35,6 +35,6 @@
     "typescript": "^2.3.4"
   },
   "bin": {
-    "simplr-mvdir": "dist/cli.js"
+    "mvdir": "dist/cli.js"
   }
 }

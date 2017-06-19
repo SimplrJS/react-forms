@@ -4,9 +4,7 @@ var yargs = require("yargs");
 exports.argv = yargs
     .help("h", "Show help.")
     .alias("h", "help")
-    .version(function () {
-    return "Current version: " + require("../package.json").version + ".";
-})
+    .version(function () { return "Current version: " + require("../package.json").version + "."; })
     .alias("v", "version")
     .config("config")
     .alias("c", "config")
