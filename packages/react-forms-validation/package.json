@@ -1,9 +1,9 @@
 {
   "name": "@simplr/react-forms-validation",
   "version": "4.0.1-beta.7",
-  "description": "Validation library for simplr-forms.",
-  "repository": "SimplrJS/simplr-forms",
-  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "description": "Validation library for @simplr/react-forms.",
+  "repository": "SimplrJS/react-forms",
+  "homepage": "https://github.com/SimplrJS/react-forms",
   "main": "index.js",
   "types": "index.d.ts",
   "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
@@ -58,7 +58,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.6.1",
-    "simplr-forms": "^4.0.1-beta.4",
+    "@simplr/react-formsforms": "^4.0.1-beta.4",
     "tslib": "^1.7.1",
     "validator": "^7.0.0"
   },

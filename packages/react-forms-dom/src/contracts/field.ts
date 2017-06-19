@@ -3,8 +3,8 @@ import {
     FieldValue,
     FieldProps,
     FieldStoreState
-} from "simplr-forms/contracts";
-import { FormStore } from "simplr-forms/stores";
+} from "@simplr/react-forms/contracts";
+import { FormStore } from "@simplr/react-forms/stores";
 
 export interface HTMLElementProps<TElement> extends React.HTMLProps<TElement> {
     // When extending HTMLProps interface there is an Element ref and it is not overriden by component ref.

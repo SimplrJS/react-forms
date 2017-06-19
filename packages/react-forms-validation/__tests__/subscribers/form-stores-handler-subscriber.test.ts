@@ -1,5 +1,5 @@
-import { FSHContainer, FormStoresHandler } from "simplr-forms/stores";
-import { FormRegistered, FormUnregistered } from "simplr-forms/actions";
+import { FSHContainer, FormStoresHandler } from "@simplr/react-forms/stores";
+import { FormRegistered, FormUnregistered } from "@simplr/react-forms/actions";
 import * as Sinon from "sinon";
 
 import { FormStoresHandlerSubscriber, FormStoresSubscribers } from "../../src/subscribers/form-stores-handler-subscriber";

@@ -11,7 +11,7 @@
 
 _This readme is WIP. There may be some inconsistency._
 
-This package subscribes to `simplr-forms` store and it will validate on emitted actions.
+This package subscribes to `@simplr/react-forms` store and it will validate on emitted actions.
 
 ## Features
 - Validates fields on form store actions (`FieldRegistered`, `ValueChanged`, `PropsChanged`)
@@ -31,7 +31,7 @@ Subscriber.SubscriberContainer;
 ## Validators example
 
 ```tsx
-import { Form, Text, Password } from "simplr-forms-dom";
+import { Form, Text, Password } from "@simplr/react-forms-dom";
 import { RequiredValidator, EmailValidator } from "simplr-validation/validators";
 
 export function LoginForm(props: {}) {

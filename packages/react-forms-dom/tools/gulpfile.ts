@@ -37,7 +37,7 @@ export async function moveFromDistTask() {
 }
 
 export async function copyToJspm() {
-    const jspmPath = `../simplr-forms-test/dist/jspm_packages/npm/simplr-forms-dom@${packageJson.version}`;
+    const jspmPath = `../react-forms-test/dist/jspm_packages/npm/@simplr/react-forms-dom@${packageJson.version}`;
     const outputPath = path.resolve(jspmPath);
     gulp.src(packageJson.files)
         .pipe(gulp.dest(outputPath));

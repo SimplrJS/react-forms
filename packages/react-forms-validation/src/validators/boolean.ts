@@ -1,5 +1,5 @@
 import * as Validator from "validator";
-import { FieldValue } from "simplr-forms/contracts";
+import { FieldValue } from "@simplr/react-forms/contracts";
 
 import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";

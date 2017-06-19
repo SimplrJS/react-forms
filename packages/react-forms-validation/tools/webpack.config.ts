@@ -6,10 +6,10 @@ const packageJson = require("./package.json");
 let externals: {
     [key: string]: any
 } = {
-        "simplr-forms/utils": "simplr-forms/utils",
-        "simplr-forms/actions": "simplr-forms/actions",
-        "simplr-forms/contracts": "simplr-forms/contracts",
-        "simplr-forms/stores": "simplr-forms/stores"
+        "@simplr/react-forms/utils": "@simplr/react-forms/utils",
+        "@simplr/react-forms/actions": "@simplr/react-forms/actions",
+        "@simplr/react-forms/contracts": "@simplr/react-forms/contracts",
+        "@simplr/react-forms/stores": "@simplr/react-forms/stores"
     };
 
 for (const key in packageJson.dependencies) {

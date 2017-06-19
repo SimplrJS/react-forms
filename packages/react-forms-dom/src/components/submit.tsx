@@ -2,7 +2,7 @@ import * as React from "react";
 import { recordify, TypedRecord } from "typed-immutable-record";
 
 import { BaseContainer, BaseContainerProps } from "@simplr/react-forms";
-import { FormError } from "simplr-forms/contracts";
+import { FormError } from "@simplr/react-forms/contracts";
 
 import {
     BaseFormButton,

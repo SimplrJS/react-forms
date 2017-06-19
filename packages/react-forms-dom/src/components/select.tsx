@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldValue } from "simplr-forms/contracts";
+import { FieldValue } from "@simplr/react-forms/contracts";
 import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
@@ -46,7 +46,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             .filter((x: JSX.Element) => x.type != null && x.type === "option");
 
         if (options.length === 0) {
-            throw new Error("simplr-forms-dom: Select MUST have at least one option!");
+            throw new Error("@simplr/react-forms-dom: Select MUST have at least one option!");
         }
 
         const firstOption = options[0] as JSX.Element;

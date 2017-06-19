@@ -86,7 +86,7 @@ export function ProcessValue<TProcessor, TValue, TProcessedValue>(
 export function IsComponentOfType(component: JSX.Element, requiredType: string): boolean {
     const componentType = component.type as any;
     if (componentType == null && typeof component === "string") {
-        console.warn("simplr-forms: text should not be rendered inside fields:", component);
+        console.warn("@simplr/react-forms: text should not be rendered inside fields:", component);
         return false;
     }
     return (componentType[requiredType] != null);

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { FormError } from "simplr-forms/contracts";
-import { FormProps as CoreFormProps } from "simplr-forms/contracts";
-import { FormStore } from "simplr-forms/stores";
+import { FormError } from "@simplr/react-forms/contracts";
+import { FormProps as CoreFormProps } from "@simplr/react-forms/contracts";
+import { FormStore } from "@simplr/react-forms/stores";
 import {
     FieldOnChangeCallback,
     FieldOnChangeInternalCallback,

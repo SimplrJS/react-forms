@@ -2,7 +2,7 @@ import * as React from "react";
 import {
     FieldsArrayProps as CoreProps,
     FieldsArrayState as CoreState
-} from "simplr-forms/contracts";
+} from "@simplr/react-forms/contracts";
 import { BaseFieldsArray } from "@simplr/react-forms";
 
 export type FieldsArrayProps = CoreProps;

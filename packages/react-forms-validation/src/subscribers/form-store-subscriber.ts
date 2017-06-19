@@ -4,13 +4,13 @@ import * as ActionEmitter from "action-emitter";
 import {
     FieldValue,
     FieldValidationType
-} from "simplr-forms/contracts";
-import { FormStore } from "simplr-forms/stores";
+} from "@simplr/react-forms/contracts";
+import { FormStore } from "@simplr/react-forms/stores";
 import {
     FieldRegistered,
     ValueChanged,
     FieldPropsChanged
-} from "simplr-forms/actions";
+} from "@simplr/react-forms/actions";
 
 import { ValidateField, ValidateForm } from "../utils/validation";
 

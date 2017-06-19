@@ -90,11 +90,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     public componentWillMount(): void {
         // props.name MUST have a proper value
         if (this.props.name == null || this.props.name === "") {
-            throw new Error("simplr-forms: A proper field name must be given (undefined and empty string are not valid).");
+            throw new Error("@simplr/react-forms: A proper field name must be given (undefined and empty string are not valid).");
         }
 
         if (this.FormId == null) {
-            throw new Error("simplr-forms: Field must be used inside a Form component.");
+            throw new Error("@simplr/react-forms: Field must be used inside a Form component.");
         }
         this.StoreEventSubscription =
             this.FormStore.addListener<FormStoreActions.StateChanged>(
@@ -107,7 +107,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         const props = this.props as CoreFieldProps;
         // Check if field name has not been changed
         if (props.name !== nextProps.name) {
-            throw new Error("simplr-forms: Field name must be constant.");
+            throw new Error("@simplr/react-forms: Field name must be constant.");
         }
 
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
@@ -214,7 +214,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected ChildrenToRender(): void {
-        throw new Error("simplr-forms: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
+        throw new Error("@simplr/react-forms: Not implemented. Needs to filter out Validators, Modifiers and Normalizers.");
     }
 
     protected OnStoreUpdated(): void {

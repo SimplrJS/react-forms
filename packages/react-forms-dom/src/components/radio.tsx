@@ -6,7 +6,7 @@ import {
     FormStoreStateRecord,
     FieldValue,
     FieldStoreState
-} from "simplr-forms/contracts";
+} from "@simplr/react-forms/contracts";
 import {
     RadioGroupChildContext,
     RadioGroupProps,
@@ -70,7 +70,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
     protected get FieldState(): FieldStoreState {
         if (this.FieldId == null) {
-            throw new Error("simplr-forms-dom: Radio must be in RadioGroup component.");
+            throw new Error("@simplr/react-forms-dom: Radio must be in RadioGroup component.");
         }
         return this.FormStore.GetField(this.FieldId);
     }

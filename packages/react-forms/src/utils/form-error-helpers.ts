@@ -7,7 +7,7 @@ export function IsFormError(error: any): error is FormError {
 export function ConstructFormError(error: any, origin: FormErrorOrigin): FormError | undefined {
     if (IsFormError(error)) {
         if (error.Origin != null && error.Origin !== origin) {
-            console.warn(`simplr-forms: Given error contains property Origin, which is reserved and is always set by FormStore.`);
+            console.warn(`@simplr/react-forms: Given error contains property Origin, which is reserved and is always set by FormStore.`);
         }
         error.Origin = origin;
         return error;

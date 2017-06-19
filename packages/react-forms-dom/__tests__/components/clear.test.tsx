@@ -2,7 +2,7 @@ import * as React from "react";
 import { mount } from "enzyme";
 import * as Sinon from "sinon";
 
-import { FormStore } from "simplr-forms/stores";
+import { FormStore } from "@simplr/react-forms/stores";
 
 import { Form } from "../../src/components/form";
 import { Text } from "../../src/components/text";

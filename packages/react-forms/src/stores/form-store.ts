@@ -79,7 +79,7 @@ export class FormStore extends ActionEmitter {
     ): void {
         if (this.State.Fields.has(fieldId) ||
             this.State.FieldsGroups.has(fieldId)) {
-            throw new Error(`simplr-forms: Field '${fieldId}' already exists in form '${this.FormId}.`);
+            throw new Error(`@simplr/react-forms: Field '${fieldId}' already exists in form '${this.FormId}.`);
         }
 
         // Construct field state
@@ -144,7 +144,7 @@ export class FormStore extends ActionEmitter {
     public RegisterFieldsGroup(fieldsGroupId: string, name: string, parentId?: string): void {
         if (this.State.Fields.has(fieldsGroupId) ||
             this.State.FieldsGroups.has(fieldsGroupId)) {
-            throw new Error(`simplr-forms: FieldsGroup '${fieldsGroupId}' already exists in form '${this.FormId}.`);
+            throw new Error(`@simplr/react-forms: FieldsGroup '${fieldsGroupId}' already exists in form '${this.FormId}.`);
         }
 
         const fgState: FieldsGroupStoreState = {
@@ -165,7 +165,7 @@ export class FormStore extends ActionEmitter {
     public RegisterFieldsArray(fieldsArrayId: string, name: string, index: number, parentId?: string): void {
         if (this.State.Fields.has(fieldsArrayId) ||
             this.State.FieldsGroups.has(fieldsArrayId)) {
-            throw new Error(`simplr-forms: FieldsArray '${fieldsArrayId}' already exists in form '${this.FormId}.`);
+            throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' already exists in form '${this.FormId}.`);
         }
 
         const faState: FieldsGroupStoreState = {
@@ -352,7 +352,7 @@ export class FormStore extends ActionEmitter {
 
             const fieldState = this.State.Fields.get(fieldId);
             if (fieldState == null) {
-                console.warn(`simplr-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
+                console.warn(`@simplr/react-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', `
                     + `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`);
                 // Reset ActiveFieldId to an undefined
                 state.Form = state.Form.merge({
@@ -462,7 +462,7 @@ export class FormStore extends ActionEmitter {
 
     public InitiateFormSubmit(): void {
         if (this.State.Form.SubmitCallback == null) {
-            throw new Error("simplr-forms: Submit method is called before SubmitCallback is set.");
+            throw new Error("@simplr/react-forms: Submit method is called before SubmitCallback is set.");
         }
         this.State.Form.SubmitCallback();
     }
