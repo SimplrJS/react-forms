@@ -19,7 +19,7 @@
         },
         {
             "packageName": "@simplr/mvdir",
-            "projectFolder": "packages/mvdir",
+            "projectFolder": "tools/mvdir",
             "shouldPublish": false
         }
     ]
