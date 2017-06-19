@@ -1,0 +1,8 @@
+dist
+@types
+coverage
+*.js
+**/*.d.ts
+
+# Ignore Rush temporary files
+/common/temp/** 
