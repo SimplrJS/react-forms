@@ -1,0 +1,40 @@
+{
+  "name": "@simplr/mvdir",
+  "version": "0.0.2",
+  "description": "A simple tool for moving files from one directory to another.",
+  "repository": "SimplrJS/simplr-forms",
+  "homepage": "https://github.com/SimplrJS/simplr-forms",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p . && npm run test-tslint",
+    "watch": "tsc -p . -w",
+    "test-tslint": "tslint --config ./tslint.json --project tsconfig.json && echo TsLint test successfully passed.",
+    "test-tsc": "tsc -p . --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "license": "AGPL-3.0",
+  "files": [
+    "dist",
+    "@types",
+    "**/*.md",
+    "*.js",
+    "!*.config.js"
+  ],
+  "dependencies": {
+    "@types/mkdirp": "^0.3.29",
+    "@types/mz": "0.0.31",
+    "@types/node": "^7.0.31",
+    "@types/yargs": "^6.6.0",
+    "mz": "^2.6.0",
+    "yargs": "^8.0.2"
+  },
+  "devDependencies": {
+    "mkdirp": "^0.5.1",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.4"
+  },
+  "bin": {
+    "mvdir": "dist/cli.js"
+  }
+}

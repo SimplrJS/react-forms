@@ -1,15 +1,15 @@
-# simplr-forms
+# @simplr/react-forms
 Declarative forms for React.
 
 Includes declarative modifiers, normalizers and validators.
 
 At the moment library is work-in-progress. We will try to document some of the notes here, in GitHub.
-Feel free to comment on [PRs](https://github.com/SimplrJS/simplr-forms/pulls?utf8=%E2%9C%93&q=is%3Apr%20) and open [issues](https://github.com/SimplrJS/simplr-forms/issues).
+Feel free to comment on [PRs](https://github.com/SimplrJS/react-forms/pulls?utf8=%E2%9C%93&q=is%3Apr%20) and open [issues](https://github.com/SimplrJS/react-forms/issues).
 
 ### Development
 
-Latest published version should be in the [master](https://github.com/SimplrJS/simplr-forms/tree/master)  branch.
-Development is happening in the [dev](https://github.com/SimplrJS/simplr-forms/tree/dev) and feature branches.
+Latest published version should be in the [master](https://github.com/SimplrJS/react-forms/tree/master)  branch.
+Development is happening in the [dev](https://github.com/SimplrJS/react-forms/tree/dev) and feature branches.
 
 Development right now is being done by [SimplrJS](https://github.com/SimplrJS) team inside [QuatroDev](http://quatrodev.com):
 * [Dovydas](https://twitter.com/dovydasnav) (QuatroDev) [[GH](https://github.com/DovydasNavickas)]

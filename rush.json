@@ -3,23 +3,23 @@
     "npmVersion": "5.0.3",
     "projects": [
         {
-            "packageName": "simplr-forms",
-            "projectFolder": "packages/simplr-forms",
+            "packageName": "@simplr/react-forms",
+            "projectFolder": "packages/react-forms",
             "shouldPublish": true
         },
         {
-            "packageName": "simplr-forms-dom",
-            "projectFolder": "packages/simplr-forms-dom",
+            "packageName": "@simplr/react-forms-dom",
+            "projectFolder": "packages/react-forms-dom",
             "shouldPublish": true
         },
         {
-            "packageName": "simplr-validation",
-            "projectFolder": "packages/simplr-validation",
+            "packageName": "@simplr/react-forms-validation",
+            "projectFolder": "packages/react-forms-validation",
             "shouldPublish": true
         },
         {
-            "packageName": "simplr-mvdir",
-            "projectFolder": "packages/simplr-mvdir",
+            "packageName": "@simplr/mvdir",
+            "projectFolder": "tools/mvdir",
             "shouldPublish": false
         }
     ]

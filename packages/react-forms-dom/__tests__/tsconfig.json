@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "removeComments": false,
+        "jsx": "react",
+        "sourceMap": false,
+        "skipDefaultLibCheck": true,
+        "declaration": true,
+        "declarationDir": "@types",
+        "pretty": true,
+        "strict": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "importHelpers": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "es6"
+        ],
+        "typeRoots": [
+            "../node_modules/@types/"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "@types",
+        "__tests__"
+    ]
+}
