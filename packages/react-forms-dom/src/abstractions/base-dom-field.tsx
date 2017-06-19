@@ -1,4 +1,4 @@
-import { BaseField, BaseFieldState } from "simplr-forms";
+import { BaseField, BaseFieldState } from "@simplr/react-forms";
 import {
     DomFieldProps,
     DomFieldTemplateCallback,

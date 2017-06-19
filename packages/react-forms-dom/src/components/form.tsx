@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BaseForm } from "simplr-forms";
+import { BaseForm } from "@simplr/react-forms";
 
 import { FormProps } from "../contracts/form";
 

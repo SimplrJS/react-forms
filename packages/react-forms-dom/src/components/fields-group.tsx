@@ -3,7 +3,7 @@ import {
     FieldsGroupProps as CoreProps,
     FieldsGroupState as CoreState
 } from "simplr-forms/contracts";
-import { BaseFieldsGroup } from "simplr-forms";
+import { BaseFieldsGroup } from "@simplr/react-forms";
 
 export type FieldsGroupProps = CoreProps;
 

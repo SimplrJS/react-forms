@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldValue } from "simplr-forms/contracts";
+import { FieldValue } from "@simplr/react-forms/contracts";
 
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 

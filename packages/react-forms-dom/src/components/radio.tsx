@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { BaseContainer, BaseContainerParentContext } from "simplr-forms";
+import { BaseContainer, BaseContainerParentContext } from "@simplr/react-forms";
 import {
     FormStoreStateRecord,
     FieldValue,

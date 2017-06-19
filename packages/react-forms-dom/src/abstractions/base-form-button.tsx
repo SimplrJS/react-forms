@@ -2,7 +2,7 @@ import * as React from "react";
 import { recordify, TypedRecord } from "typed-immutable-record";
 import { Iterable } from "immutable";
 
-import { BaseContainer, BaseContainerProps } from "simplr-forms";
+import { BaseContainer, BaseContainerProps } from "@simplr/react-forms";
 
 export interface BaseFormButtonProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
     disableOnError?: boolean;
