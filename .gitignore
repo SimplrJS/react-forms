@@ -252,7 +252,7 @@ paket-files/
 *.sln.iml
 yarn.lock
 
-packages/simplr-forms-test
+packages/react-forms-test
 
 dist
 @types
