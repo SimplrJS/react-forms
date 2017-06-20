@@ -34,12 +34,14 @@ export class FormStoreSubscriber {
         if (this.fieldOnRegisteredSubscription != null) {
             this.fieldOnRegisteredSubscription.remove();
         }
-
         if (this.fieldOnValueChangedSubscription != null) {
             this.fieldOnValueChangedSubscription.remove();
         }
         if (this.fieldOnPropsChangedSubscription != null) {
             this.fieldOnPropsChangedSubscription.remove();
+        }
+        if (this.fieldsOnBlurSubscription != null) {
+            this.fieldsOnBlurSubscription.remove();
         }
     }
 
