@@ -12,8 +12,8 @@ import {
     FORM_VALIDATOR_FUNCTION_NAME,
     ValidationFieldErrorTemplate,
     ValidationFormErrorTemplate,
-    ValidationError,
-    ValidationResult
+    ValidationResult,
+    ValidationError
 } from "../contracts";
 
 function IsPromise<T>(value: any): value is Promise<T> {
@@ -36,21 +36,22 @@ export async function ValidateValue(
     for (const validator of renderedValidators) {
         const validationResult = validator.Validate(value);
         // Ensure that we have a promise
-        let promise: Promise<void>;
+        let validationError: ValidationError | undefined;
         if (IsPromise<void>(validationResult)) {
-            promise = validationResult;
+            try {
+                await validationResult;
+            } catch (caughtError) {
+                validationError = caughtError;
+            }
         } else {
-            promise = new Promise<void>((resolve, reject) => {
-                const buildedError = errorProccessor(validationResult);
-                const error = ConstructFormError(buildedError, FormErrorOrigin.Validation);
-                if (error !== undefined) {
-                    reject(error);
-                    return;
-                }
-                resolve();
-            });
+            validationError = validationResult;
         }
-        await promise;
+
+        const builtError = errorProccessor(validationError);
+        const error = ConstructFormError(builtError, FormErrorOrigin.Validation);
+        if (error !== undefined) {
+            throw error;
+        }
     }
 }
 
@@ -58,8 +59,8 @@ export async function ValidateField(components: JSX.Element[], value: FieldValue
     return ValidateValue(components, value, FIELD_VALIDATOR_FUNCTION_NAME, error => {
         if (IsFunction<ValidationFieldErrorTemplate>(error)) {
             const errorTemplate = error;
-            const buildedError = errorTemplate(fieldId, formStore);
-            return buildedError;
+            const builtError = errorTemplate(fieldId, formStore);
+            return builtError;
         }
 
         return error;
@@ -70,7 +71,8 @@ export async function ValidateForm(components: JSX.Element[], value: any, formSt
     return ValidateValue(components, value, FORM_VALIDATOR_FUNCTION_NAME, error => {
         if (IsFunction<ValidationFormErrorTemplate>(error)) {
             const errorTemplate = error;
-            return errorTemplate(formStore);
+            const builtError = errorTemplate(formStore);
+            return builtError;
         }
 
         return error;
