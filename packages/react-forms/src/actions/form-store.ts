@@ -65,3 +65,5 @@ export class FieldActive extends FormAction {
         return this.fieldId;
     }
 }
+
+export class FieldBlurred extends FieldAction { }
