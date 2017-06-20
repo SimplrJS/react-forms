@@ -11,6 +11,7 @@ import {
     FieldRegistered,
     FieldPropsChanged,
     ValueChanged,
+    FieldBlurred
 } from "@simplr/react-forms/actions";
 
 import { BaseFormValidator, BaseFormValidatorProps } from "../../src/abstractions/base-form-validator";
@@ -73,6 +74,7 @@ describe("FormStoreSubscriber", () => {
         expect(formStore.listeners(FieldRegistered).length).toBe(0);
         expect(formStore.listeners(FieldPropsChanged).length).toBe(0);
         expect(formStore.listeners(ValueChanged).length).toBe(0);
+        expect(formStore.listeners(FieldBlurred).length).toBe(0);
 
         new FormStoreSubscriber(formStore);
         expect(callback.called).toEqual(true);
@@ -80,6 +82,7 @@ describe("FormStoreSubscriber", () => {
         expect(formStore.listeners(FieldRegistered).length).toBe(1);
         expect(formStore.listeners(FieldPropsChanged).length).toBe(1);
         expect(formStore.listeners(ValueChanged).length).toBe(1);
+        expect(formStore.listeners(FieldBlurred).length).toBe(1);
     });
 
     it("remove listeners from form store", () => {
@@ -92,7 +95,7 @@ describe("FormStoreSubscriber", () => {
         expect(formStore.listeners(FieldRegistered).length).toBe(0);
         expect(formStore.listeners(FieldPropsChanged).length).toBe(0);
         expect(formStore.listeners(ValueChanged).length).toBe(0);
-
+        expect(formStore.listeners(FieldBlurred).length).toBe(0);
     });
 
     describe("field validation", () => {
