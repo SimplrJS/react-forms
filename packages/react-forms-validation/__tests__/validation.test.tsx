@@ -5,7 +5,7 @@ import { FormStore } from "@simplr/react-forms/stores";
 import * as Validation from "../src/utils/validation";
 import { ContainsValidator } from "../src/validators/index";
 import { ValidationFieldErrorTemplate } from "../src/contracts";
-import * as sinon from "Sinon";
+import * as Sinon from "sinon";
 import { FormError } from "@simplr/react-forms/contracts";
 
 it("Validate value without errors", async done => {
@@ -64,7 +64,7 @@ fit("Validate value with error template", async done => {
     const formStore = new FormStore("form-id");
     const errorTemplate: ValidationFieldErrorTemplate = (tFieldId, tFormStore) =>
         `${tFieldId} error template`;
-    const spyCallback = sinon.spy(errorTemplate);
+    const spyCallback = Sinon.spy(errorTemplate);
 
     const children = [
         <ContainsValidator value="ok" error={spyCallback} />,
