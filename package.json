@@ -2,6 +2,7 @@
   "name": "@simplr/react-forms-repo",
   "private": true,
   "scripts": {
+    "prepare": "npm i && rush generate && npm run tools-build",
     "generate": "rush generate",
     "tools-build": "npm run rush-tools -- run gulp-build -e @simplr/mvdir",
     "source-build": "npm run rush-tools -- run build -e @simplr/mvdir",
