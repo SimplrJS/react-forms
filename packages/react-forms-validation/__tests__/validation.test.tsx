@@ -42,7 +42,7 @@ it("Validates value with error", async done => {
         <input type="text" />
     ];
     const validationPromise = Validation.ValidateField(children, invalidValue, fieldId, formStore);
-    let validationResponse;
+    let validationResponse: FormError | undefined = undefined;
 
     try {
         await validationPromise;
@@ -51,7 +51,8 @@ it("Validates value with error", async done => {
     }
 
     try {
-        expect(validationResponse).toBe(errorMessage);
+        expect(validationResponse).toBeDefined();
+        expect(validationResponse!.Message).toBe(errorMessage);
         done();
     } catch (error) {
         done.fail(error);
