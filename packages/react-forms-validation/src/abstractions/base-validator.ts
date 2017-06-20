@@ -4,7 +4,7 @@ import { FieldValue } from "@simplr/react-forms/contracts";
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 
 export interface BaseValidatorProps {
-    error: ValidationError | Function;
+    error: ValidationError;
 }
 
 export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>

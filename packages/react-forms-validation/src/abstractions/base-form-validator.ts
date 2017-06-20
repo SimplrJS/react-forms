@@ -2,7 +2,7 @@ import { ValidationError, ValidationFormErrorTemplate } from "../contracts";
 import { BaseValidator, BaseValidatorProps } from "./base-validator";
 
 export interface BaseFormValidatorProps extends BaseValidatorProps {
-    error: ValidationError | ValidationFormErrorTemplate;
+    error: ValidationError<ValidationFormErrorTemplate>;
 }
 
 export abstract class BaseFormValidator<TProps extends BaseFormValidatorProps>
