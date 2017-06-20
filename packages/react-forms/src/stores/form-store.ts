@@ -339,6 +339,8 @@ export class FormStore extends ActionEmitter {
                 return this.RecalculateDependentFormStatuses(state);
             });
         }
+
+        this.emit(new Actions.FieldValidated(this.FormId, fieldId));
     }
 
     public SetActiveField(fieldId: string | undefined): void {
@@ -371,6 +373,8 @@ export class FormStore extends ActionEmitter {
 
             return this.RecalculateDependentFormStatuses(state);
         });
+
+        this.emit(new Actions.FieldActive(this.FormId, fieldId));
     }
 
     public SetFormDisabled(disabled: boolean): void {
