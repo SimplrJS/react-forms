@@ -9,7 +9,9 @@ import { FormStore } from "@simplr/react-forms/stores";
 import {
     FieldRegistered,
     ValueChanged,
-    FieldPropsChanged
+    FieldPropsChanged,
+    FieldActive,
+    FieldBlurred
 } from "@simplr/react-forms/actions";
 
 import { ValidateField, ValidateForm } from "../utils/validation";
@@ -19,23 +21,27 @@ export class FormStoreSubscriber {
     private fieldOnRegisteredSubscription?: ActionEmitter.EventSubscription;
     private fieldOnValueChangedSubscription?: ActionEmitter.EventSubscription;
     private fieldOnPropsChangedSubscription?: ActionEmitter.EventSubscription;
+    private fieldsOnBlurSubscription?: ActionEmitter.EventSubscription;
 
     constructor(private formStore: FormStore) {
         this.fieldOnRegisteredSubscription = this.formStore.addListener(FieldRegistered, this.OnRegistered.bind(this));
         this.fieldOnValueChangedSubscription = this.formStore.addListener(ValueChanged, this.OnValueChanged.bind(this));
         this.fieldOnPropsChangedSubscription = this.formStore.addListener(FieldPropsChanged, this.OnPropsChanged.bind(this));
+        this.fieldsOnBlurSubscription = this.formStore.addListener(FieldBlurred, this.OnBlur.bind(this));
     }
 
     public RemoveFormListeners(): void {
         if (this.fieldOnRegisteredSubscription != null) {
             this.fieldOnRegisteredSubscription.remove();
         }
-
         if (this.fieldOnValueChangedSubscription != null) {
             this.fieldOnValueChangedSubscription.remove();
         }
         if (this.fieldOnPropsChangedSubscription != null) {
             this.fieldOnPropsChangedSubscription.remove();
+        }
+        if (this.fieldsOnBlurSubscription != null) {
+            this.fieldsOnBlurSubscription.remove();
         }
     }
 
@@ -67,7 +73,7 @@ export class FormStoreSubscriber {
         }
 
         const childrenArray = React.Children.toArray(fieldProps.children) as JSX.Element[];
-        const validationPromise = ValidateField(childrenArray, fieldState.Value);
+        const validationPromise = ValidateField(childrenArray, fieldState.Value, fieldId, this.formStore);
         await this.formStore.ValidateField(fieldId, validationPromise);
     }
 
@@ -82,7 +88,7 @@ export class FormStoreSubscriber {
         }
 
         const childrenArray = React.Children.toArray(formProps.children) as JSX.Element[];
-        const validationPromise = ValidateForm(childrenArray, this.formStore.ToObject());
+        const validationPromise = ValidateForm(childrenArray, this.formStore.ToObject(), this.formStore);
         await this.formStore.ValidateForm(validationPromise);
     }
 
@@ -99,5 +105,10 @@ export class FormStoreSubscriber {
     protected async OnPropsChanged(action: FieldPropsChanged): Promise<void> {
         await this.ValidateField(action.FieldId, FieldValidationType.OnValueChange);
         await this.ValidateForm(FieldValidationType.OnValueChange);
+    }
+
+    protected async OnBlur(action: FieldBlurred): Promise<void> {
+        await this.ValidateField(action.FieldId, FieldValidationType.OnBlur);
+        await this.ValidateForm(FieldValidationType.OnBlur);
     }
 }

@@ -22,7 +22,7 @@ export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
         });
     }
 
-    protected async Invalid(error: string): Promise<void> {
+    protected async Invalid(error: ValidationError): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             reject(error);
         });

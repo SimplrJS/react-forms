@@ -1,5 +1,6 @@
 import { recordify } from "typed-immutable-record";
 import * as Immutable from "immutable";
+import * as Sinon from "sinon";
 
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
@@ -7,6 +8,7 @@ import { FieldStorePropsRecord, FieldStoreProps } from "../../src/contracts/fiel
 import { FormStoreHelpers } from "../../src/stores/form-store-helpers";
 
 import { MyFieldProps } from "../test-components/test-field";
+import { FieldBlurred } from "../../src/actions/form-store";
 
 describe("Form store", () => {
     const formId = "form-id";
@@ -424,6 +426,29 @@ describe("Form store", () => {
             }));
 
             expect(formStore.GetState().Validating).toBe(true);
+        });
+    });
+
+    describe("action tests", () => {
+        it("FieldBlurred action", async done => {
+            try {
+                const callback = Sinon.stub();
+                formStore.addListener(FieldBlurred, callback);
+                const fieldId = "field id";
+                formStore.RegisterField(fieldId, "field-name", "");
+
+                formStore.SetActiveField(fieldId);
+                expect(callback.called).toBe(false);
+                formStore.SetActiveField(undefined);
+                expect(callback.called).toBe(true);
+
+                const action = callback.args[0][0] as FieldBlurred;
+                expect(action.FieldId).toBe(fieldId);
+
+                done();
+            } catch (error) {
+                done.fail(error);
+            }
         });
     });
 });
