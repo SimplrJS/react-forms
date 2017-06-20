@@ -1,7 +1,9 @@
-import { ValidationError } from "../contracts";
+import { ValidationError, ValidationFieldErrorTemplate } from "../contracts";
 import { BaseValidator, BaseValidatorProps } from "./base-validator";
 
-export type BaseFieldValidatorProps = BaseValidatorProps;
+export interface BaseFieldValidatorProps extends BaseValidatorProps {
+    error: ValidationError<ValidationFieldErrorTemplate>;
+}
 
 export abstract class BaseFieldValidator<TProps extends BaseFieldValidatorProps>
     extends BaseValidator<TProps, {}> {
