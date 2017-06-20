@@ -1,10 +1,14 @@
 import { FormError } from "@simplr/react-forms/contracts";
+import { FormStore } from "@simplr/react-forms/stores";
 
 export interface Validator {
     Validate(value: any): ValidationResult;
 }
 
 export type ValidationError = string | FormError;
+
+export type ValidationFormErrorTemplate = (formStore: FormStore) => ValidationError;
+export type ValidationFieldErrorTemplate = (fieldId: string, formStore: FormStore) => ValidationError;
 
 export type ValidationResult = Promise<void> | ValidationError | undefined;
 

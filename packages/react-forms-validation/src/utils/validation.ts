@@ -5,21 +5,29 @@ import {
     RenderComponents,
     ConstructFormError
 } from "@simplr/react-forms/utils";
+import { FormStore } from "@simplr/react-forms/stores";
 
 import {
     Validator,
     FIELD_VALIDATOR_FUNCTION_NAME,
-    FORM_VALIDATOR_FUNCTION_NAME
+    FORM_VALIDATOR_FUNCTION_NAME,
+    ValidationFieldErrorTemplate,
+    ValidationFormErrorTemplate
 } from "../contracts";
 
 function IsPromise<T>(value: any): value is Promise<T> {
     return value != null && value.then != null && value.catch != null;
 }
 
+function IsFunction<T>(value: any): value is T {
+    return typeof value === "function";
+}
+
 export async function ValidateValue(
     components: JSX.Element[],
     value: any,
-    validatorTypeFunctionName: string): Promise<void> {
+    validatorTypeFunctionName: string
+): Promise<void> {
     const validators = components.filter(x => IsComponentOfType(x, validatorTypeFunctionName));
     const renderedValidators = RenderComponents<Validator>(validators);
 
@@ -43,10 +51,28 @@ export async function ValidateValue(
     }
 }
 
-export async function ValidateField(components: JSX.Element[], value: FieldValue): Promise<void> {
-    return ValidateValue(components, value, FIELD_VALIDATOR_FUNCTION_NAME);
+export async function ValidateField(components: JSX.Element[], value: FieldValue, fieldId: string, formStore: FormStore): Promise<void> {
+    try {
+        await ValidateValue(components, value, FIELD_VALIDATOR_FUNCTION_NAME);
+    } catch (error) {
+        if (IsFunction<ValidationFieldErrorTemplate>(error)) {
+            const errorTemplate = error;
+            throw errorTemplate(fieldId, formStore);
+        } else {
+            throw error;
+        }
+    }
 }
 
-export async function ValidateForm(components: JSX.Element[], value: any): Promise<void> {
-    return ValidateValue(components, value, FORM_VALIDATOR_FUNCTION_NAME);
+export async function ValidateForm(components: JSX.Element[], value: any, formStore: FormStore): Promise<void> {
+    try {
+        await ValidateValue(components, value, FORM_VALIDATOR_FUNCTION_NAME);
+    } catch (error) {
+        if (IsFunction<ValidationFormErrorTemplate>(error)) {
+            const errorTemplate = error;
+            throw errorTemplate(formStore);
+        } else {
+            throw error;
+        }
+    }
 }

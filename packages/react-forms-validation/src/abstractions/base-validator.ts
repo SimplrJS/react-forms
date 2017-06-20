@@ -4,7 +4,7 @@ import { FieldValue } from "@simplr/react-forms/contracts";
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 
 export interface BaseValidatorProps {
-    error: ValidationError;
+    error: ValidationError | Function;
 }
 
 export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
@@ -22,7 +22,7 @@ export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
         });
     }
 
-    protected async Invalid(error: string): Promise<void> {
+    protected async Invalid(error: ValidationError): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             reject(error);
         });
