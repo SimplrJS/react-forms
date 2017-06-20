@@ -25,7 +25,8 @@ class RushTools {
                 }
             }
 
-            this.runScript(`npm publish`, excludedPackages);
+            const access = args.access != null ? `--access ${args.access}` : "";
+            this.runScript(`npm publish ${access}`, excludedPackages);
         }
     }
 
@@ -72,6 +73,7 @@ interface ArgumentsValues {
     script: string;
 
     publish: boolean;
+    access: string;
 }
 
 const argv = yargs
@@ -96,6 +98,7 @@ const argv = yargs
     yargs => yargs,
     argvObj => {
         const args: string[] = argvObj._;
+
         const filteredArgs = args.map(arg => {
             if (arg.length > 0 && arg[0] === "-") {
                 return false;
@@ -114,7 +117,9 @@ const argv = yargs
     .command(
     "publish",
     "Publish projects",
-    yargs => yargs,
+    yargs => yargs.option("access", {
+        type: "string"
+    }),
     argvObj => {
         argvObj.publish = true;
     })
