@@ -8,7 +8,7 @@ import { ValidationFieldErrorTemplate } from "../src/contracts";
 import * as Sinon from "sinon";
 import { FormError } from "@simplr/react-forms/contracts";
 
-it("Validate value without errors", async done => {
+it("Validates value without errors", async done => {
     try {
         const errorMessage = "error message";
         const validValue = "p-ok";
@@ -31,7 +31,7 @@ it("Validate value without errors", async done => {
     }
 });
 
-it("Validate value with error", async done => {
+it("Validates value with error", async done => {
     const errorMessage = "error message";
     const invalidValue = "invalid-value";
     const fieldId = "field-id";
@@ -58,7 +58,7 @@ it("Validate value with error", async done => {
     }
 });
 
-fit("Validate value with error template", async done => {
+it("Validates value with error template", async done => {
     const invalidValue = "invalid-value";
     const fieldId = "field-id";
     const formStore = new FormStore("form-id");
