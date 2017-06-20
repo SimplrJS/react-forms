@@ -339,9 +339,16 @@ export class FormStore extends ActionEmitter {
                 return this.RecalculateDependentFormStatuses(state);
             });
         }
+
+        this.emit(new Actions.FieldValidated(this.FormId, fieldId));
     }
 
     public SetActiveField(fieldId: string | undefined): void {
+        let fieldBlurredId: string | undefined = undefined;
+        if (fieldId == null && this.state.Form.ActiveFieldId != null) {
+            fieldBlurredId = this.state.Form.ActiveFieldId;
+        }
+
         this.State = this.State.withMutations(state => {
             if (fieldId == null) {
                 state.Form = state.Form.merge({
@@ -371,6 +378,11 @@ export class FormStore extends ActionEmitter {
 
             return this.RecalculateDependentFormStatuses(state);
         });
+
+        this.emit(new Actions.FieldActive(this.FormId, fieldId));
+        if (fieldBlurredId != null) {
+            this.emit(new Actions.FieldBlurred(this.FormId, fieldBlurredId));
+        }
     }
 
     public SetFormDisabled(disabled: boolean): void {

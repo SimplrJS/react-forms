@@ -53,3 +53,17 @@ export class FormDisabled extends FormAction { }
 export class FormEnabled extends FormAction { }
 
 export class FieldTouched extends FieldAction { }
+
+export class FieldValidated extends FieldAction { }
+
+export class FieldActive extends FormAction {
+    constructor(formId: string, private fieldId: string | undefined) {
+        super(formId);
+    }
+
+    public get FieldId(): string | undefined {
+        return this.fieldId;
+    }
+}
+
+export class FieldBlurred extends FieldAction { }
