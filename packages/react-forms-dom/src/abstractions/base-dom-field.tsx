@@ -11,7 +11,7 @@ export type BaseDomFieldState = BaseFieldState;
 
 export abstract class BaseDomField<TProps extends DomFieldProps, TState extends BaseDomFieldState, TUnderlyingElement = any>
     extends BaseField<TProps, TState> {
-    public Element: TUnderlyingElement | undefined;
+    public Element: TUnderlyingElement | null;
 
     protected OnFocus = (event: React.FocusEvent<any>): void => {
         const props = this.props as DomFieldProps;
@@ -63,7 +63,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         return restProps;
     }
 
-    protected SetElementRef = (element: TUnderlyingElement | undefined): void => {
+    protected SetElementRef = (element: TUnderlyingElement | null): void => {
         this.Element = element;
     }
 

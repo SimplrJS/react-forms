@@ -4,6 +4,7 @@ export * from "./components/reset";
 export * from "./components/clear";
 export * from "./components/fields-group";
 export * from "./components/fields-array";
+export * from "./components/errors-container";
 
 // Fields
 export * from "./components/text";
