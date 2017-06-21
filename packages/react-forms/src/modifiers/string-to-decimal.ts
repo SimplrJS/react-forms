@@ -52,7 +52,13 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             const delimiter = this.props.delimiter!;
 
             const leadingMinus = negative ? "-" : "";
-            const regex = new RegExp(`[^0-9\\${delimiter}]+`, "g");
+
+            // Include delimiter in regex if precision is non-zero
+            const regexPattern = this.props.precision === 0 ?
+                `[^0-9]+` :
+                `[^0-9\\${delimiter}]+`;
+
+            const regex = new RegExp(regexPattern, "g");
             const extractedValue: string = this.LeaveOnlyFirstDelimiter(
                 value.replace(regex, ""),
                 delimiter);
