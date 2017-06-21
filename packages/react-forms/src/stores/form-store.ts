@@ -655,29 +655,38 @@ export class FormStore extends ActionEmitter {
     protected BuildFormObject(fieldsGroupId?: string): Dictionary {
         const result: Dictionary = {};
 
-        const groupFields = this.State.Fields.filter(x =>
-            x != null &&
-            (x.FieldsGroup == null || x.FieldsGroup.Id === fieldsGroupId));
+        const groupFields = this.State.Fields.filter(x => {
+            // If the field is null (never)
+            if (x == null) {
+                return false;
+            }
+
+            if (x.FieldsGroup == null) {
+                return fieldsGroupId == null;
+            } else {
+                return x.FieldsGroup.Id === fieldsGroupId;
+            }
+        });
 
         groupFields.forEach((field, fieldId) => {
-            if (field == null || field == null) {
+            if (field == null || fieldId == null) {
                 return;
             }
             result[field.Name] = field.Value;
         });
 
         const fieldsGroups = this.State.FieldsGroups.filter(x => x != null && x.Parent === fieldsGroupId);
-        fieldsGroups.forEach((fieldsGroup, index) => {
-            if (fieldsGroup == null || index == null) {
+        fieldsGroups.forEach((fieldsGroup, fieldId) => {
+            if (fieldsGroup == null || fieldId == null) {
                 return;
             }
             if (fieldsGroup.ArrayName != null) {
                 if (result[fieldsGroup.ArrayName] == null) {
                     result[fieldsGroup.ArrayName] = [];
                 }
-                result[fieldsGroup.ArrayName].push(this.BuildFormObject(index));
+                result[fieldsGroup.ArrayName].push(this.BuildFormObject(fieldId));
             } else {
-                result[fieldsGroup.Name] = this.BuildFormObject(index);
+                result[fieldsGroup.Name] = this.BuildFormObject(fieldId);
             }
         });
         return result;
