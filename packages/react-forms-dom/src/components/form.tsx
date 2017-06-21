@@ -4,9 +4,9 @@ import { BaseForm } from "@simplr/react-forms";
 import { FormProps } from "../contracts/form";
 
 export class Form extends BaseForm<FormProps, {}> {
-    public Element: HTMLFormElement | undefined;
+    public Element: HTMLFormElement | null;
 
-    protected SetElementRef = (element: HTMLFormElement | undefined) => {
+    protected SetElementRef = (element: HTMLFormElement | null) => {
         this.Element = element;
         if (this.FormStore != null && element != null) {
             this.FormStore.SetFormSubmitCallback(() => {
