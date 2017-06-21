@@ -111,9 +111,9 @@
       "integrity": "sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E="
     },
     "@types/react": {
-      "version": "15.0.29",
-      "resolved": "https://registry.npmjs.org/@types/react/-/react-15.0.29.tgz",
-      "integrity": "sha512-EL5P9r/q2gIsXJYS0yT9csyfwIMVhs2hnrtevDgSaB86sRmWPFFxIkTuP8wisKRRO6869AVR6dqmuqzFIAIWkg=="
+      "version": "15.0.30",
+      "resolved": "https://registry.npmjs.org/@types/react/-/react-15.0.30.tgz",
+      "integrity": "sha512-Az6oT3g1sep2hl37L5x1PYEJeuJ2xd3olCT7AhY2rjhXmGX+sYO0q120HJMg6EkK+GZnVNJF84puz75f4KHlGg=="
     },
     "@types/react-dom": {
       "version": "15.5.0",
@@ -525,9 +525,9 @@
       "integrity": "sha1-SOyNFt9Dd+rl+liEaCSAr02Vx3Q="
     },
     "bn.js": {
-      "version": "4.11.6",
-      "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.6.tgz",
-      "integrity": "sha1-UzRK2xRhehP26N0s4okF0cC6MhU="
+      "version": "4.11.7",
+      "resolved": "https://registry.npmjs.org/bn.js/-/bn.js-4.11.7.tgz",
+      "integrity": "sha512-LxFiV5mefv0ley0SzqkOPR1bC4EbpPx8LkOz5vMe/Yi15t5hzwgO/G+tc7wOtL4PZTYjwHu8JnEiSLumuSjSfA=="
     },
     "boolbase": {
       "version": "1.0.0",

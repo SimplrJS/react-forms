@@ -34,7 +34,7 @@ export interface RadioState {
 export type RadioParentContext = RadioGroupChildContext & BaseContainerParentContext;
 
 export class Radio extends BaseContainer<RadioProps, RadioState> {
-    public Element: HTMLInputElement | undefined;
+    public Element: HTMLInputElement | null;
     public state: RadioState = {};
     public context: RadioParentContext;
 
@@ -139,7 +139,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         return otherProps;
     }
 
-    protected SetElementRef = (element: HTMLInputElement | undefined) => {
+    protected SetElementRef = (element: HTMLInputElement | null) => {
         this.Element = element;
     }
 

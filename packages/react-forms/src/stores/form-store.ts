@@ -28,6 +28,7 @@ import {
     FieldsGroupStoreState,
     FieldsGroupStoreStateRecord
 } from "../contracts/fields-group";
+import { FieldValidationStatus } from "../contracts/validation";
 import { ConstructFormError } from "../utils/form-error-helpers";
 import { FormError, FormErrorRecord, FormErrorOrigin } from "../contracts/error";
 import { ModifierValue } from "../contracts/value";
@@ -284,18 +285,19 @@ export class FormStore extends ActionEmitter {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
-        // Skip if it's already validating
+        // If field is not validating
         if (!field.Validating) {
             this.State = this.State.withMutations(state => {
                 state.merge({
-                    Validating: true,
-                    HasError: false
+                    FieldsValidationStatuses: state.FieldsValidationStatuses.set(fieldId, FieldValidationStatus.Validating)
                 } as Partial<FormStoreState>);
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: true,
                     Error: undefined
                 } as FieldStoreState));
+
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
 
@@ -311,6 +313,9 @@ export class FormStore extends ActionEmitter {
 
             this.State = this.State.withMutations(state => {
                 const fieldState = state.Fields.get(fieldId);
+                state.merge({
+                    FieldsValidationStatuses: state.FieldsValidationStatuses.delete(fieldId)
+                } as Partial<FormStoreState>);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false
                 } as FieldStoreState));
@@ -330,6 +335,10 @@ export class FormStore extends ActionEmitter {
             }
 
             this.State = this.State.withMutations(state => {
+                state.merge({
+                    FieldsValidationStatuses: state.FieldsValidationStatuses.set(fieldId, FieldValidationStatus.HasError)
+                } as Partial<FormStoreState>);
+
                 const fieldState = state.Fields.get(fieldId);
                 state.Fields = state.Fields.set(fieldId, fieldState.merge({
                     Validating: false,
@@ -429,18 +438,15 @@ export class FormStore extends ActionEmitter {
     public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
         const form = this.State.Form;
 
-        // Skip if it's already validating
+        // If form is not validating
         if (!form.Validating) {
             this.State = this.State.withMutations(state => {
-                state.merge({
-                    Validating: true,
-                    HasError: false
-                } as Partial<FormStoreState>);
-
                 state.Form = state.Form.merge({
                     Validating: false,
                     Error: undefined
                 } as FormState);
+
+                return this.RecalculateDependentFormStatuses(state);
             });
         }
 
@@ -616,6 +622,7 @@ export class FormStore extends ActionEmitter {
     protected GetInitialFormStoreState(): FormStoreState {
         return {
             Fields: Immutable.Map<string, FieldStoreStateRecord>(),
+            FieldsValidationStatuses: Immutable.Map<string, FieldValidationStatus>(),
             FieldsGroups: Immutable.Map<string, FieldsGroupStoreStateRecord>(),
             Form: recordify<FormState, FormStateRecord>(this.GetInitialFormState()),
             // MUST be identical with GetInitialFieldState method.
