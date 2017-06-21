@@ -17,6 +17,12 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
 
     private static emptyFormattedValue: string;
 
+    public componentWillMount(): void {
+        if (this.props.delimiter == null || this.props.delimiter.length !== 1) {
+            throw new Error(`StringToDecimalModifier: delimiter prop has to be exactly one character long.`);
+        }
+    }
+
     public Format(value: FieldValue): FieldValue {
         if (value !== EMPTY_VALUE) {
             return value.toString();
@@ -52,7 +58,13 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             const delimiter = this.props.delimiter!;
 
             const leadingMinus = negative ? "-" : "";
-            const regex = new RegExp(`[^0-9\\${delimiter}]+`, "g");
+
+            // Include delimiter in regex if precision is non-zero
+            const regexPattern = this.props.precision === 0 ?
+                `[^0-9]+` :
+                `[^0-9\\${delimiter}]+`;
+
+            const regex = new RegExp(regexPattern, "g");
             const extractedValue: string = this.LeaveOnlyFirstDelimiter(
                 value.replace(regex, ""),
                 delimiter);
@@ -78,7 +90,8 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             }
 
             transitionalValue = leadingMinus + transitionalValue;
-            const numValue = Number(transitionalValue);
+            const delimiterFixed = transitionalValue.replace(delimiter, ".");
+            const numValue = Number(delimiterFixed);
 
             return {
                 Value: numValue,
