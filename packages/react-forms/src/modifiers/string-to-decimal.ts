@@ -78,7 +78,8 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             }
 
             transitionalValue = leadingMinus + transitionalValue;
-            const numValue = Number(transitionalValue);
+            const delimiterFixed = transitionalValue.replace(delimiter, ".");
+            const numValue = Number(delimiterFixed);
 
             return {
                 Value: numValue,
