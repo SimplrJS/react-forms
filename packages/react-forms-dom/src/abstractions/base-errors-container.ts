@@ -1,10 +1,11 @@
+import * as Immutable from "immutable";
 import { BaseContainer, BaseContainerParentContext } from "@simplr/react-forms";
 import { FormStore } from "@simplr/react-forms/stores";
 import { FormError, FieldValidationStatus } from "@simplr/react-forms/contracts";
 
 export type BaseErrorsContainerProps = {};
 
-export type FieldErrors = { [id: string]: FormError };
+export type FieldErrors = Immutable.Map<string, FormError>;
 
 export interface BaseErrorsContainerState {
     FieldErrors: FieldErrors;
@@ -14,7 +15,7 @@ export interface BaseErrorsContainerState {
 export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProps, TState extends BaseErrorsContainerState>
     extends BaseContainer<TProps, TState> {
     public state: TState = {
-        FieldErrors: {}
+        FieldErrors: Immutable.Map<string, FormError>()
     } as TState;
 
     protected OnStoreUpdated(): void {
@@ -22,7 +23,7 @@ export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProp
 
         if (!storeState.HasError) {
             this.setState(state => {
-                state.FieldErrors = {};
+                state.FieldErrors = Immutable.Map<string, FormError>();
                 state.FormError = undefined;
                 return state;
             });
@@ -35,7 +36,7 @@ export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProp
             .keySeq()
             .toArray();
 
-        const fieldsErrors: FieldErrors = {};
+        const fieldsErrors: { [id: string]: FormError } = {};
 
         fieldsWithError.forEach(fieldId => {
             const fieldError = storeState.Fields.get(fieldId).Error;
@@ -46,7 +47,7 @@ export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProp
 
         this.setState(state => {
             state.FormError = formError;
-            state.FieldErrors = fieldsErrors;
+            state.FieldErrors = Immutable.Map<string, FormError>(fieldsErrors);
 
             return state;
         });
