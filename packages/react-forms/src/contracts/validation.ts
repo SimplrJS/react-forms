@@ -5,3 +5,8 @@ export enum FieldValidationType {
     OnPropsChange = 1 << 3,
     OnBlur = 1 << 4
 }
+
+export enum FieldValidationStatus {
+    Validating = 8,
+    HasError = 16
+}

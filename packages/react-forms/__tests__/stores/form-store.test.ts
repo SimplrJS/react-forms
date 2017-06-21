@@ -5,6 +5,7 @@ import * as Sinon from "sinon";
 import { FormStore } from "../../src/stores/form-store";
 import { FormError } from "../../src/contracts/error";
 import { FieldStorePropsRecord, FieldStoreProps } from "../../src/contracts/field";
+import { FieldValidationStatus } from "../../src/contracts/validation";
 import { FormStoreHelpers } from "../../src/stores/form-store-helpers";
 
 import { MyFieldProps } from "../test-components/test-field";
@@ -426,6 +427,47 @@ describe("Form store", () => {
             }));
 
             expect(formStore.GetState().Validating).toBe(true);
+        });
+    });
+
+    describe("FieldValidationStatuses", () => {
+        it("add field to list if it is validating", () => {
+            const fieldId = "field id";
+            formStore.RegisterField(fieldId, "field-name", "");
+            expect(formStore.GetState().FieldsValidationStatuses.has(fieldId)).toBe(false);
+
+            formStore.ValidateField(fieldId, new Promise<void>((resolve, reject) => {
+                reject("error message");
+            }));
+
+            const validationStatuses = formStore.GetState().FieldsValidationStatuses;
+
+            expect(validationStatuses.has(fieldId)).toBe(true);
+            expect(validationStatuses.get(fieldId)).toBe(FieldValidationStatus.Validating);
+        });
+
+        it("field validation status is error", async done => {
+            const fieldId = "field id";
+            try {
+                formStore.RegisterField(fieldId, "field-name", "");
+
+                const errorPromise = new Promise<void>((resolve, reject) => {
+                    reject("error message");
+                });
+
+                formStore.ValidateField(fieldId, errorPromise);
+                try {
+                    await errorPromise;
+                    // tslint:disable-next-line:no-empty
+                } catch (validationErr) { }
+
+                const validationStatuses = formStore.GetState().FieldsValidationStatuses;
+                expect(validationStatuses.get(fieldId)).toBe(FieldValidationStatus.HasError);
+
+                done();
+            } catch (error) {
+                done.fail(error);
+            }
         });
     });
 

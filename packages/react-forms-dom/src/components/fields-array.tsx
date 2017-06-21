@@ -14,9 +14,9 @@ interface Dictionary {
 }
 
 export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArrayState> {
-    public Element: HTMLDivElement | undefined;
+    public Element: HTMLDivElement | null;
 
-    protected SetElementRef = (element: HTMLDivElement | undefined): void => {
+    protected SetElementRef = (element: HTMLDivElement | null): void => {
         this.Element = element;
     }
 
