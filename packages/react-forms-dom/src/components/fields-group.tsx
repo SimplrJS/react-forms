@@ -4,8 +4,13 @@ import {
     FieldsGroupState as CoreState
 } from "@simplr/react-forms/contracts";
 import { BaseFieldsGroup } from "@simplr/react-forms";
+import { HTMLElementProps } from "../contracts/field";
 
-export type FieldsGroupProps = CoreProps;
+export interface FieldsGroupProps extends CoreProps, HTMLElementProps<HTMLDivElement> {
+    name: string;
+
+    ref?: React.Ref<FieldsGroup>;
+}
 
 export type FieldsGroupState = CoreState;
 

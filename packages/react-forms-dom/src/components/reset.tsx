@@ -5,9 +5,12 @@ import {
     BaseFormButtonProps,
     BaseFormButtonStateRecord
 } from "../abstractions/base-form-button";
+import { HTMLElementProps } from "../contracts/field";
 
-export interface ResetProps extends BaseFormButtonProps {
+export interface ResetProps extends BaseFormButtonProps, HTMLElementProps<HTMLButtonElement> {
     fieldIds?: string[];
+
+    ref?: React.Ref<Reset>;
 }
 
 export class Reset extends BaseFormButton<ResetProps, BaseFormButtonStateRecord> {
@@ -20,14 +23,24 @@ export class Reset extends BaseFormButton<ResetProps, BaseFormButtonStateRecord>
         }
     }
 
+    protected GetHTMLProps(props: ResetProps): {} {
+        const filteredProps = super.GetHTMLProps(props) as ResetProps;
+        const {
+            fieldIds,
+            ...restProps
+        } = filteredProps;
+
+        return restProps;
+    }
+
     public render(): JSX.Element {
-        // TODO: Pass all other props.
         return <button
             type="button"
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
             onClick={this.OnButtonClick}
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;
