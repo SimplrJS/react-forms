@@ -1,4 +1,3 @@
-import * as React from "react";
 import { FieldValue } from "../contracts/field";
 import { ValueOfType } from "../utils/value-helpers";
 import { BaseNormalizer } from "./base-normalizer";
