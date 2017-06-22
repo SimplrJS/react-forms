@@ -4,8 +4,13 @@ import {
     FieldsArrayState as CoreState
 } from "@simplr/react-forms/contracts";
 import { BaseFieldsArray } from "@simplr/react-forms";
+import { HTMLElementProps } from "../contracts/field";
 
-export type FieldsArrayProps = CoreProps;
+export interface FieldsArrayProps extends CoreProps, HTMLElementProps<HTMLDivElement> {
+    name: string;
+
+    ref?: React.Ref<FieldsArray>;
+}
 
 export type FieldsArrayState = CoreState;
 
