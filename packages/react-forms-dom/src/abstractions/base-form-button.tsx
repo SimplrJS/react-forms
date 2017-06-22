@@ -4,13 +4,15 @@ import { Iterable } from "immutable";
 
 import { BaseContainer, BaseContainerProps } from "@simplr/react-forms";
 
-export interface BaseFormButtonProps extends BaseContainerProps, React.HTMLProps<HTMLButtonElement> {
+export interface BaseFormButtonProps extends BaseContainerProps {
     disableOnError?: boolean;
     disableOnBusy?: boolean;
     disableOnPristine?: boolean;
     busy?: boolean;
     disabled?: boolean;
     busyClassName?: string;
+    style?: React.CSSProperties;
+    className?: string;
 }
 
 export interface BaseFormButtonState {
@@ -115,6 +117,20 @@ export abstract class BaseFormButton<TProps extends BaseFormButtonProps, TState 
             className += this.props.busyClassName;
         }
         return className.length > 0 ? className : undefined;
+    }
+
+    protected GetHTMLProps(props: BaseFormButtonProps): {} {
+        const {
+            disableOnError,
+            disableOnBusy,
+            disableOnPristine,
+            busy,
+            busyClassName,
+            formId,
+            ...restProps
+        } = props;
+
+        return restProps;
     }
 
     public abstract render(): JSX.Element | null;
