@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { BaseContainer, BaseContainerParentContext } from "@simplr/react-forms";
+import {
+    BaseContainer,
+    BaseContainerParentContext,
+    BaseContainerProps
+} from "@simplr/react-forms";
 import {
     FormStoreStateRecord,
     FieldValue,
@@ -18,7 +22,6 @@ import {
     DomFieldDetails,
     DomComponentData
 } from "../contracts/field";
-import { BaseContainerProps } from "../../../react-forms/abstractions/base-container";
 
 export interface RadioProps extends BaseContainerProps, HTMLElementProps<HTMLInputElement> {
     value: string;
