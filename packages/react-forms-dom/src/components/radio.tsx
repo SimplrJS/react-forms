@@ -18,8 +18,9 @@ import {
     DomFieldDetails,
     DomComponentData
 } from "../contracts/field";
+import { BaseContainerProps } from "../../../react-forms/abstractions/base-container";
 
-export interface RadioProps extends HTMLElementProps<HTMLInputElement> {
+export interface RadioProps extends BaseContainerProps, HTMLElementProps<HTMLInputElement> {
     value: string;
 
     template?: DomFieldTemplateCallback;
