@@ -281,7 +281,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.ValueChanged(this.FormId, fieldId));
     }
 
-    public async ValidateField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
+    public async ValidateField(fieldId: string, validationPromise: Promise<void>): Promise<void> {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
@@ -435,7 +435,7 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
+    public async ValidateForm(validationPromise: Promise<void>): Promise<void> {
         const form = this.State.Form;
 
         // If form is not validating
