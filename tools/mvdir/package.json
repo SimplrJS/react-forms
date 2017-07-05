@@ -24,15 +24,15 @@
   "dependencies": {
     "@types/mkdirp": "^0.3.29",
     "@types/mz": "0.0.31",
-    "@types/node": "^7.0.31",
-    "@types/yargs": "^6.6.0",
+    "@types/node": "^8.0.7",
+    "@types/yargs": "^8.0.0",
     "mz": "^2.6.0",
     "yargs": "^8.0.2"
   },
   "devDependencies": {
     "mkdirp": "^0.5.1",
     "tslint": "^5.4.3",
-    "typescript": "^2.3.4"
+    "typescript": "^2.4.1"
   },
   "bin": {
     "mvdir": "dist/cli.js"
