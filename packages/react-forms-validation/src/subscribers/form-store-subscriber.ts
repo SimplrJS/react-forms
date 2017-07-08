@@ -2,7 +2,6 @@ import * as React from "react";
 import * as ActionEmitter from "action-emitter";
 
 import {
-    FieldValue,
     FieldValidationType
 } from "@simplr/react-forms/contracts";
 import { FormStore } from "@simplr/react-forms/stores";
@@ -10,7 +9,6 @@ import {
     FieldRegistered,
     ValueChanged,
     FieldPropsChanged,
-    FieldActive,
     FieldBlurred
 } from "@simplr/react-forms/actions";
 
