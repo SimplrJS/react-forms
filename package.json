@@ -2,7 +2,7 @@
   "name": "@simplr/react-forms-repo",
   "private": true,
   "scripts": {
-    "generate": "rush generate",
+    "rush-install": "rush install",
     "tools-build": "npm run rush-tools -- run gulp-build -e @simplr/mvdir -e @simplr/extractor",
     "source-build": "npm run rush-tools -- run build -e @simplr/mvdir -e @simplr/extractor",
     "test": "npm run rush-tools -- run test -e @simplr/mvdir -e @simplr/extractor",
