@@ -3,6 +3,7 @@ import { Extractor, ApiJsonGenerator, ApiErrorHandler } from "@microsoft/api-ext
 import * as ts from "typescript";
 import * as path from "path";
 import * as chalk from "chalk";
+import * as mkdirp from "mkdirp";
 
 interface ErrorsCount {
     [type: string]: number;
@@ -86,8 +87,13 @@ export class ExtractorTaskClass {
         const apiJSONGenerator = new ApiJsonGenerator();
 
         this.consoleWrite(chalk.cyan("--------------- [Log] ---------------"));
+
         const fullJSONPath = path.resolve(this.projectPath, jsonLocation);
         this.consoleWrite(chalk.green(`Writing JSON file: ${fullJSONPath}`));
+        const jsonDirname = path.dirname(jsonLocation);
+        mkdirp(jsonDirname, err => {
+            this.errorWrite(`Failed to create folder [${jsonDirname}]: ${err}`);
+        });
         apiJSONGenerator.writeJsonFile(jsonLocation, this.Extractor);
 
         // Writing errors.
@@ -111,6 +117,11 @@ export class ExtractorTaskClass {
     private warningWrite(...warning: string[]): void {
         const message = chalk.yellow(`WARN ${warning.join(" ")}`);
         console.warn(`${this.writeTag()} ${message}`);
+    }
+
+    private errorWrite(...errors: string[]): void {
+        const message = chalk.red(`ERR! ${errors.join(" ")}`);
+        console.error(`${this.writeTag()} ${message}`);
     }
 
     private writeTag(): string {
