@@ -18,11 +18,6 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@simplr/react-forms-test",
-            "projectFolder": "packages/react-forms-test",
-            "shouldPublish": true
-        },
-        {
             "packageName": "@simplr/mvdir",
             "projectFolder": "tools/mvdir",
             "shouldPublish": false
