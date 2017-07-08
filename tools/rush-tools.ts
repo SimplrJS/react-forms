@@ -65,7 +65,7 @@ class RushTools {
     }
 }
 
-interface ArgumentsValues {
+interface ArgumentsValues extends yargs.Arguments {
     config: string;
     exclude: string[];
 
