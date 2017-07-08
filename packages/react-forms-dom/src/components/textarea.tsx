@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FieldValue } from "@simplr/react-forms/contracts";
-import { DomFieldProps } from "../contracts/field";
 
 import {
     BaseDomField,
@@ -8,7 +7,8 @@ import {
 } from "../abstractions/base-dom-field";
 import {
     FieldOnChangeCallback,
-    HTMLElementProps
+    HTMLElementProps,
+    DomFieldProps
 } from "../contracts/field";
 import {
     FormProps
@@ -75,6 +75,7 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         />;
     }
 }

@@ -124,7 +124,7 @@ describe("Form store", () => {
         const fieldId = "field-id";
 
         formStore.RegisterField(fieldId, "field-name", undefined, undefined, "value");
-        const validationPromise = new Promise<never>((resolve, reject) => {
+        const validationPromise = new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 resolve();
             }, 50);
@@ -151,7 +151,7 @@ describe("Form store", () => {
         const formError: FormError = { Message: "Error Message" };
 
         formStore.RegisterField(fieldId, "field-name", undefined, undefined, "value");
-        const validationPromise = new Promise<never>((resolve, reject) => {
+        const validationPromise = new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
             }, 50);
@@ -191,7 +191,7 @@ describe("Form store", () => {
         const value = "text";
 
         formStore.RegisterField(fieldId, "field-name", undefined, undefined, value);
-        const validationPromise = new Promise<never>((resolve, reject) => {
+        const validationPromise = new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 reject(formError);
             }, 50);

@@ -68,6 +68,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         />;
     }
 }

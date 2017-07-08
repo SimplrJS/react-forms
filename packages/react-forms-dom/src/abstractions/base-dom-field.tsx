@@ -6,6 +6,7 @@ import {
     DomFieldDetails
 } from "../contracts/field";
 import { FormProps } from "../contracts/form";
+import * as classnames from "classnames";
 
 export type BaseDomFieldState = BaseFieldState;
 
@@ -57,10 +58,42 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
             validationType,
             value,
             children,
+            errorClassName,
             ...restProps
         } = props;
 
         return restProps;
+    }
+
+    protected AddErrorClassName(className?: string): string | undefined {
+        // If field has no error
+        if (this.FieldState.Error == null) {
+            return className;
+        }
+
+        const fieldProps = this.FieldState.Props as DomFieldProps | undefined;
+        // errorClassName is optional, so there is no harm in casting with `as`
+        const formProps = this.FormStore.GetState().Form.Props as FormProps;
+
+        const errorClassName = this.resolveErrorClassName(fieldProps, formProps);
+
+        // If there is no errorClassName defined on form
+        if (errorClassName == null) {
+            return className;
+        }
+
+        return classnames(className, errorClassName);
+    }
+
+    private resolveErrorClassName(fieldProps: DomFieldProps | undefined, formProps: FormProps | undefined): string | undefined {
+        if (fieldProps != null && fieldProps.errorClassName != null) {
+            return fieldProps.errorClassName;
+        }
+
+        if (formProps != null && formProps.errorClassName != null) {
+            return formProps.errorClassName;
+        }
+        return undefined;
     }
 
     protected SetElementRef = (element: TUnderlyingElement | null): void => {

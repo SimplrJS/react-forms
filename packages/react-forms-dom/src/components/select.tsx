@@ -127,6 +127,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         >
             {this.props.children}
         </select>;
