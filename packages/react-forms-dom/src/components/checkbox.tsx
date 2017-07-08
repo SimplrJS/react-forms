@@ -69,6 +69,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         />;
     }
 }

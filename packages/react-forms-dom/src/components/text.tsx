@@ -76,6 +76,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         />;
     }
 }

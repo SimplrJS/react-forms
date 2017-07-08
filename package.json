@@ -1,6 +1,7 @@
 {
   "name": "@simplr/react-forms-repo",
   "private": true,
+  "version": "0.0.0-private",
   "scripts": {
     "generate": "rush generate",
     "tools-build": "npm run rush-tools -- run gulp-build -e @simplr/mvdir",
@@ -17,6 +18,7 @@
     "mz": "^2.6.0",
     "shelljs": "^0.7.8",
     "ts-node": "^3.1.0",
+    "tslint": "^5.5.0",
     "typescript": "^2.4.1",
     "yargs": "^8.0.2"
   }

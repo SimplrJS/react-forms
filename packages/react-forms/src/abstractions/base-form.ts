@@ -30,7 +30,6 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     constructor(props: FormContracts.FormProps) {
         super();
         this.registerForm(props);
-        this.FormStore.UpdateFormProps(props);
     }
 
     protected get FormStoresHandler(): FormStoresHandler {
@@ -46,6 +45,10 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
             return true;
         }
         return this.FormStore.GetState().Form.Error == null;
+    }
+
+    public componentWillMount(): void {
+        this.FormStore.UpdateFormProps(this.props);
     }
 
     public componentWillUnmount(): void {
