@@ -1,16 +1,19 @@
 {
-  "name": "extractor",
+  "name": "@simplr/extractor",
   "private": true,
   "version": "1.0.0",
   "description": "Custom @microsoft/api-extractor implementation.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^2.2.0",
+    "@types/chalk": "^0.4.31",
     "@types/gulp": "^4.0.4",
+    "chalk": "^2.0.1",
     "gulp": "github:gulpjs/gulp#4.0",
     "typescript": "~2.2.2"
   }
