@@ -77,7 +77,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
 
         const errorClassName = this.resolveErrorClassName(fieldProps, formProps);
 
-        // If there is no errorClassName defined on form
+        // If there is no errorClassName defined
         if (errorClassName == null) {
             return className;
         }
