@@ -71,9 +71,11 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
             return className;
         }
 
-        const fieldProps = this.FieldState.Props as DomFieldProps | undefined;
+        // We know props interface and can cast safely, while using only getters
+        const fieldProps = this.FieldState.Props as Readonly<DomFieldProps> | undefined;
+
         // errorClassName is optional, so there is no harm in casting with `as`
-        const formProps = this.FormStore.GetState().Form.Props as FormProps;
+        const formProps = this.FormStore.GetState().Form.Props as Readonly<FormProps>;
 
         const errorClassName = this.resolveErrorClassName(fieldProps, formProps);
 
@@ -85,7 +87,9 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
         return classnames(className, errorClassName);
     }
 
-    private resolveErrorClassName(fieldProps: DomFieldProps | undefined, formProps: FormProps | undefined): string | undefined {
+    private resolveErrorClassName(
+        fieldProps: Readonly<DomFieldProps> | undefined,
+        formProps: Readonly<FormProps> | undefined): string | undefined {
         if (fieldProps != null && fieldProps.errorClassName != null) {
             return fieldProps.errorClassName;
         }
