@@ -17,6 +17,6 @@
     "chalk": "^2.0.1",
     "gulp": "github:gulpjs/gulp#4.0",
     "mkdirp": "^0.5.1",
-    "typescript": "~2.2.2"
+    "typescript": "^2.4.1"
   }
 }
