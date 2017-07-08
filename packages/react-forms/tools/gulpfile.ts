@@ -54,7 +54,7 @@ export function watchStartTask(): void {
 export const build = buildTask;
 export const watch = gulp.series(buildTask, copyToJspm, watchStartTask);
 
-export async function createJSON(): Promise<void> {
+export async function api(): Promise<void> {
     const config: webpack.Configuration = webpackConfig;
     const modules = config.entry as webpack.Entry;
 
