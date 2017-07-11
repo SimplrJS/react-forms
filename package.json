@@ -6,7 +6,7 @@
     "tools-build": "npm run rush-tools -- run gulp-build -e @simplr/mvdir",
     "source-build": "npm run rush-tools -- run build -e @simplr/mvdir",
     "test": "npm run rush-tools -- run test -e @simplr/mvdir",
-    "rush-tools": "ts-node ./tools/rush-tools.ts",
+    "rush-tools": "ts-node ./tools/rush-tools-new.ts",
     "publish": "npm run rush-tools -- publish --access public"
   },
   "devDependencies": {
@@ -19,5 +19,8 @@
     "ts-node": "^3.1.0",
     "typescript": "^2.4.1",
     "yargs": "^8.0.2"
+  },
+  "dependencies": {
+    "@microsoft/ts-command-line": "^2.0.2"
   }
 }
