@@ -9,8 +9,13 @@ import {
     BaseFormButtonProps,
     BaseFormButtonStateRecord
 } from "../abstractions/base-form-button";
+import { HTMLElementProps } from "../contracts/field";
 
-export type SubmitProps = BaseFormButtonProps;
+export interface SubmitProps extends BaseFormButtonProps, HTMLElementProps<HTMLButtonElement> {
+    fieldIds?: string[];
+
+    ref?: React.Ref<Submit>;
+}
 
 export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecord> {
     public static defaultProps: BaseFormButtonProps = {
@@ -22,6 +27,11 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         // If Button is outside of Form context, initiate form submit.
         if (this.props.formId !== null) {
             this.FormStore.InitiateFormSubmit();
+        }
+
+        if (this.props.onClick != null) {
+            event.persist();
+            this.props.onClick(event);
         }
     }
 
