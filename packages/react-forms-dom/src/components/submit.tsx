@@ -24,6 +24,7 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;
