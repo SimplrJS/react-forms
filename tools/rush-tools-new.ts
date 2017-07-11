@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as shelljs from "shelljs";
+import * as semver from "semver";
 
 import {
     CommandLineParser,
@@ -169,6 +170,84 @@ class RushPublicAction extends BaseAction {
     }
 }
 
+class RushVersionsAction extends BaseAction {
+    private parser: RushToolsCommandLineParser;
+    private publishOnly: CommandLineFlagParameter;
+
+    constructor(parser: RushToolsCommandLineParser) {
+        super({
+            actionVerb: "versions",
+            summary: "Prints list of projects versions",
+            documentation: "Prints list of projects versions"
+        });
+        this.parser = parser;
+    }
+
+    protected onDefineParameters(): void {
+        this.publishOnly = this.defineFlagParameter({
+            parameterLongName: "--publishOnly",
+            description: "List only for publish"
+        });
+    }
+
+    protected run(): void {
+        const { projects } = this.RushConfiguration;
+        const publishOnly = this.publishOnly.value;
+
+        console.info(`Projects: ${projects.length}`);
+        console.info("======================================");
+        for (const project of projects) {
+            if (publishOnly && !project.shouldPublish) {
+                continue;
+            }
+            console.info(`${project.packageName}@${project.packageJson.version}`);
+        }
+    }
+}
+
+class RushBumpAction extends BaseAction {
+    private parser: RushToolsCommandLineParser;
+
+    private excluded: CommandLineStringListParameter;
+    private increment: CommandLineStringParameter;
+
+    constructor(parser: RushToolsCommandLineParser) {
+        super({
+            actionVerb: "bump",
+            summary: "Bumps versions to all projects that have shouldPublish",
+            documentation: "Bumps versions to all projects that have shouldPublish"
+        });
+        this.parser = parser;
+    }
+
+    protected onDefineParameters(): void {
+        this.excluded = this.defineStringListParameter({
+            parameterShortName: "-e",
+            parameterLongName: "--exclude",
+            description: "List of excluded project names"
+        });
+
+        this.increment = this.defineStringParameter({
+            parameterShortName: "-i",
+            parameterLongName: "--inc",
+            description: "Release type: major, premajor, minor, preminor, patch, prepatch, or prerelease."
+        });
+    }
+
+    protected run(): void {
+        if (this.increment.value == null) {
+            console.error("[BUMP] Please specify bump type: major, premajor, minor, preminor, patch, prepatch, or prerelease.");
+            process.exit(1);
+        }
+
+
+
+        const excludedProjects = this.excluded.value || [];
+    }
+
+
+}
+
 // CLI
 
 class RushToolsCommandLineParser extends CommandLineParser {
@@ -188,6 +267,7 @@ class RushToolsCommandLineParser extends CommandLineParser {
     private populateActions(): void {
         this.addAction(new RushRunAction(this));
         this.addAction(new RushPublicAction(this));
+        this.addAction(new RushVersionsAction(this));
     }
 }
 
