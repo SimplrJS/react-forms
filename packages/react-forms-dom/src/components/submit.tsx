@@ -18,12 +18,21 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         disableOnError: true
     };
 
+    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = event => {
+        // If Button is outside of Form context, initiate form submit.
+        if (this.props.formId !== null) {
+            this.FormStore.InitiateFormSubmit();
+        }
+    }
+
     public render(): JSX.Element {
         return <button
             type="submit"
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
+            onClick={this.OnButtonClick}
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;
