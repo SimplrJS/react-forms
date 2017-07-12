@@ -9,8 +9,13 @@ import {
     BaseFormButtonProps,
     BaseFormButtonStateRecord
 } from "../abstractions/base-form-button";
+import { HTMLElementProps } from "../contracts/field";
 
-export type SubmitProps = BaseFormButtonProps;
+export interface SubmitProps extends BaseFormButtonProps, HTMLElementProps<HTMLButtonElement> {
+    fieldIds?: string[];
+
+    ref?: React.Ref<Submit>;
+}
 
 export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecord> {
     public static defaultProps: BaseFormButtonProps = {
@@ -18,12 +23,26 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         disableOnError: true
     };
 
+    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = event => {
+        // If Button is outside of Form context, initiate form submit.
+        if (this.props.formId !== null) {
+            this.FormStore.InitiateFormSubmit();
+        }
+
+        if (this.props.onClick != null) {
+            event.persist();
+            this.props.onClick(event);
+        }
+    }
+
     public render(): JSX.Element {
         return <button
             type="submit"
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
+            onClick={this.OnButtonClick}
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;
