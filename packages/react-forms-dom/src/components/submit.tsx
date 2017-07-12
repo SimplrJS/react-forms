@@ -12,8 +12,6 @@ import {
 import { HTMLElementProps } from "../contracts/field";
 
 export interface SubmitProps extends BaseFormButtonProps, HTMLElementProps<HTMLButtonElement> {
-    fieldIds?: string[];
-
     ref?: React.Ref<Submit>;
 }
 
@@ -23,11 +21,9 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
         disableOnError: true
     };
 
-    protected OnButtonClick: React.MouseEventHandler<HTMLButtonElement> = event => {
-        // If Button is outside of Form context, initiate form submit.
-        if (this.props.formId !== null) {
-            this.FormStore.InitiateFormSubmit();
-        }
+    protected OnClick: React.MouseEventHandler<HTMLButtonElement> = event => {
+        event.preventDefault();
+        this.FormStore.InitiateFormSubmit();
 
         if (this.props.onClick != null) {
             event.persist();
@@ -41,7 +37,7 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
-            onClick={this.OnButtonClick}
+            onClick={this.OnClick}
             {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
