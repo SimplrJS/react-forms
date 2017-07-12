@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "generate": "rush generate",
-    "tools-build": "npm run rush-tools -- run gulp-build -e @simplr/mvdir",
-    "source-build": "npm run rush-tools -- run build -e @simplr/mvdir",
-    "test": "npm run rush-tools -- run test -e @simplr/mvdir",
+    "tools-build": "npm run rush-tools -- run -s gulp-build -e @simplr/mvdir",
+    "source-build": "npm run rush-tools -- run -s build -e @simplr/mvdir",
+    "test": "npm run rush-tools -- run -s test -e @simplr/mvdir",
     "publish": "npm run rush-tools -- publish --access public",
     "rush-tools": "ts-node ./tools/rush-tools.ts"
   },
@@ -13,16 +13,13 @@
     "@microsoft/rush": "^3.0.11",
     "@microsoft/rush-lib": "^3.0.11",
     "@types/shelljs": "^0.7.2",
-    "@types/yargs": "^8.0.0",
     "mz": "^2.6.0",
     "shelljs": "^0.7.8",
     "ts-node": "^3.1.0",
     "typescript": "^2.4.1",
-    "yargs": "^8.0.2"
-  },
-  "dependencies": {
     "@microsoft/ts-command-line": "^2.0.2",
     "@types/semver": "^5.3.32",
     "semver": "^5.3.0"
-  }
+  },
+  "dependencies": {}
 }
