@@ -201,49 +201,6 @@ class RushVersionsAction extends BaseAction {
     }
 }
 
-class RushBumpAction extends BaseAction {
-    private parser: RushToolsCommandLineParser;
-
-    private excluded: CommandLineStringListParameter;
-    private increment: CommandLineStringParameter;
-
-    constructor(parser: RushToolsCommandLineParser) {
-        super({
-            actionVerb: "bump",
-            summary: "Bumps versions to all projects that have shouldPublish",
-            documentation: "Bumps versions to all projects that have shouldPublish"
-        });
-        this.parser = parser;
-    }
-
-    protected onDefineParameters(): void {
-        this.excluded = this.defineStringListParameter({
-            parameterShortName: "-e",
-            parameterLongName: "--exclude",
-            description: "List of excluded project names"
-        });
-
-        this.increment = this.defineStringParameter({
-            parameterShortName: "-i",
-            parameterLongName: "--inc",
-            description: "Release type: major, premajor, minor, preminor, patch, prepatch, or prerelease."
-        });
-    }
-
-    protected run(): void {
-        if (this.increment.value == null) {
-            console.error("[BUMP] Please specify bump type: major, premajor, minor, preminor, patch, prepatch, or prerelease.");
-            process.exit(1);
-        }
-
-
-
-        const excludedProjects = this.excluded.value || [];
-    }
-
-
-}
-
 // CLI
 
 class RushToolsCommandLineParser extends CommandLineParser {
@@ -269,4 +226,3 @@ class RushToolsCommandLineParser extends CommandLineParser {
 
 const cli = new RushToolsCommandLineParser();
 cli.execute();
-
