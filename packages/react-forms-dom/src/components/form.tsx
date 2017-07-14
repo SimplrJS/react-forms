@@ -43,10 +43,29 @@ export class Form extends BaseForm<FormProps, {}> {
         this.FormStore.SubmitForm(result);
     }
 
+    protected GetHTMLProps(props: FormProps): {} {
+        const {
+            formId,
+            preventSubmitDefaultAndPropagation,
+            template,
+            formStore,
+            destroyOnUnmount,
+            forceSubmit,
+            disabled,
+            fieldsValidationType,
+            formValidationType,
+            onMount,
+            ...restProps
+    } = props;
+
+        return restProps;
+    }
+
     public render(): JSX.Element {
         return <form
             ref={this.SetElementRef}
             onSubmit={this.FormSubmitHandler}
+            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </form>;
