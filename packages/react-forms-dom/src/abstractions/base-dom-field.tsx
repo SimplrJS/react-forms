@@ -5,7 +5,7 @@ import {
     DomComponentData,
     DomFieldDetails
 } from "../contracts/field";
-import { FormProps } from "../contracts/form";
+import { FormProps } from "../components/form";
 
 export type BaseDomFieldState = BaseFieldState;
 

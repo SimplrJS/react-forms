@@ -1,7 +1,24 @@
 import * as React from "react";
 import { BaseForm } from "@simplr/react-forms";
 
-import { FormProps } from "../contracts/form";
+import {
+    BaseFormProps,
+    FormOnSubmitCallback,
+    FormOnSubmitInternalCallback
+} from "../contracts/form";
+
+import {
+    FieldOnChangeCallback,
+    FieldOnChangeInternalCallback,
+    HTMLElementProps
+} from "../contracts/field";
+
+export interface FormProps extends BaseFormProps, HTMLElementProps<HTMLFormElement> {
+    onSubmit?: FormOnSubmitCallback & FormOnSubmitInternalCallback;
+    onChange?: FieldOnChangeCallback<any> & FieldOnChangeInternalCallback;
+
+    ref?: React.Ref<Form>;
+}
 
 export class Form extends BaseForm<FormProps, {}> {
     public Element: HTMLFormElement | null;
@@ -43,7 +60,7 @@ export class Form extends BaseForm<FormProps, {}> {
         this.FormStore.SubmitForm(result);
     }
 
-    protected GetHTMLProps(props: FormProps): {} {
+    protected GetHTMLProps(props: BaseFormProps): {} {
         const {
             formId,
             preventSubmitDefaultAndPropagation,
