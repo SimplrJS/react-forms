@@ -1,129 +1,228 @@
-import * as shelljs from "shelljs";
 import * as path from "path";
+import * as shelljs from "shelljs";
+import * as semver from "semver";
+
+import {
+    CommandLineParser,
+    CommandLineFlagParameter,
+    CommandLineAction,
+    CommandLineStringListParameter,
+    CommandLineStringParameter
+} from "@microsoft/ts-command-line";
+
 import { RushConfiguration } from "@microsoft/rush-lib";
-import * as yargs from "yargs";
 
-const version = "0.1.0";
-const defaultRushJsonFile = "rush.json";
+// Tasks
 
-class RushTools {
-    private rushConfiguration: RushConfiguration;
+class ShellTask {
+    constructor(private rushConfiguration: RushConfiguration, private projects: string[]) { }
 
-    constructor(args: ArgumentsValues) {
-        const rushConfigurationPath = path.resolve(process.cwd(), args.config);
-        this.rushConfiguration = RushConfiguration.loadFromConfigurationFile(rushConfigurationPath);
+    public Execute(command: string): void {
+        console.info(`Starting: ${command}`);
 
-        if (args.run) {
-            this.runScript(`npm run ${args.script}`, args.exclude);
-        } else if (args.publish) {
-            const excludedPackages: string[] = args.exclude != null ? args.exclude : [];
-            const { projects } = this.rushConfiguration;
+        const failedProjects: string[] = [];
+        const succeededProjects: string[] = [];
 
-            for (const project of projects) {
-                if (!project.shouldPublish) {
-                    excludedPackages.push(project.packageName);
-                }
-            }
+        for (const projectName of this.projects) {
+            const project = this.rushConfiguration.getProjectByName(projectName);
 
-            const access = args.access != null ? `--access ${args.access}` : "";
-            this.runScript(`npm publish ${access}`, excludedPackages);
-        }
-    }
-
-    private runScript(command: string, excludePackageNames?: string[]): void {
-        const { projects } = this.rushConfiguration;
-
-        const failedPackages: string[] = [];
-
-        for (const project of projects) {
-            // Skip package if it is in excluded list.
-            if (excludePackageNames != null &&
-                excludePackageNames.indexOf(project.packageName) !== -1) {
-                continue;
-            }
             shelljs.cd(project.projectFolder);
-            console.info("====================================");
-            console.info(`Package name: ${project.packageName}`);
-            console.info("====================================");
+            this.consoleBox(`Package name: ${projectName}`);
+
             const result = shelljs.exec(command);
 
-            if (result.code !== 0) {
-                failedPackages.push(project.packageName);
+            if (result.code === 0) {
+                succeededProjects.push(projectName);
+            } else {
+                failedProjects.push(projectName);
             }
         }
 
-        if (failedPackages.length > 0) {
-            console.info("===================================");
-            console.info(`Failed packages: ${failedPackages.length}`);
-            console.info("===================================");
-            for (const failedPackage of failedPackages) {
-                console.info(failedPackage);
+        if (succeededProjects.length > 0) {
+            this.consoleBox(`Succeeded projects ${succeededProjects.length}`);
+            for (const project of succeededProjects) {
+                console.info(project);
             }
+        }
 
+        if (failedProjects.length > 0) {
+            this.consoleBox(`Failed projects ${failedProjects.length}`);
+            for (const project of failedProjects) {
+                console.info(project);
+            }
             process.exit(1);
         }
     }
+
+    private consoleBox(message: string): void {
+        console.info("====================================");
+        console.info(message);
+        console.info("====================================");
+    }
 }
 
-interface ArgumentsValues extends yargs.Arguments {
-    config: string;
-    exclude: string[];
+// Actions
 
-    run: boolean;
-    script: string;
+const defaultRushJsonFile = "rush.json";
 
-    publish: boolean;
-    access: string;
+abstract class BaseAction extends CommandLineAction {
+    protected RushConfiguration: RushConfiguration;
+
+    protected onExecute(): void {
+        if (this.RushConfiguration == null) {
+            this.RushConfiguration = RushConfiguration.loadFromDefaultLocation();
+        }
+        this.run();
+    }
+
+    protected abstract run(): void;
 }
 
-const argv = yargs
-    .help("h", "Show help.")
-    .alias("h", "help")
-    .version(() => `Current version: ${version}.`)
-    .alias("v", "version")
-    .option("c", {
-        alias: "config",
-        describe: "Relative path to rush config",
-        type: "string",
-        default: path.relative(process.cwd(), defaultRushJsonFile)
-    })
-    .option("e", {
-        alias: "exclude",
-        describe: "Excluding package names list",
-        type: "array"
-    })
-    .command(
-    "run",
-    "Run package.json script",
-    yargs => yargs,
-    argvObj => {
-        const args: string[] = argvObj._;
+class RushRunAction extends BaseAction {
+    private parser: RushToolsCommandLineParser;
 
-        const filteredArgs = args.map(arg => {
-            if (arg.length > 0 && arg[0] === "-") {
-                return false;
-            }
-            return arg;
+    private excluded: CommandLineStringListParameter;
+    private script: CommandLineStringParameter;
+
+    constructor(parser: RushToolsCommandLineParser) {
+        super({
+            actionVerb: "run",
+            summary: "Runs scripts to all projects",
+            documentation: "Runs scripts to all projects"
         });
-        const script = filteredArgs.slice(1, filteredArgs.length).join(" ");
+        this.parser = parser;
+    }
 
-        if (script.length === 0) {
-            throw Error("rush-tools: Script name is required");
+    protected onDefineParameters(): void {
+        this.excluded = this.defineStringListParameter({
+            parameterShortName: "-e",
+            parameterLongName: "--exclude",
+            description: "List of excluded project names"
+        });
+
+        this.script = this.defineStringParameter({
+            parameterShortName: "-s",
+            parameterLongName: "--script",
+            description: "Name of script that will be run in projects"
+        });
+    }
+
+    protected run(): void {
+        if (this.script.value == null) {
+            console.error("[RUN] Please specify script name with --script/-s parameter.");
+            process.exit(1);
         }
 
-        argvObj.run = true;
-        argvObj.script = script;
-    })
-    .command(
-    "publish",
-    "Publish projects",
-    yargs => yargs.option("access", {
-        type: "string"
-    }),
-    argvObj => {
-        argvObj.publish = true;
-    })
-    .demandCommand(1, "You need run a command")
-    .argv as ArgumentsValues;
+        const excludedProjects = this.excluded.value;
+        const projects = this.RushConfiguration
+            .projects
+            .map(x => x.packageName)
+            .filter(x => excludedProjects.indexOf(x) === -1);
 
-new RushTools(argv);
+        const task = new ShellTask(this.RushConfiguration, projects);
+        task.Execute(`npm run ${this.script.value}`);
+    }
+}
+
+class RushPublicAction extends BaseAction {
+    private parser: RushToolsCommandLineParser;
+
+    private excluded: CommandLineStringListParameter;
+    private access: CommandLineStringParameter;
+
+    constructor(parser: RushToolsCommandLineParser) {
+        super({
+            actionVerb: "publish",
+            summary: "Runs publish script on all projects",
+            documentation: "Runs publish script on all projects"
+        });
+        this.parser = parser;
+    }
+
+    protected onDefineParameters(): void {
+        this.excluded = this.defineStringListParameter({
+            parameterShortName: "-e",
+            parameterLongName: "--exclude",
+            description: "List of excluded project names"
+        });
+
+        this.access = this.defineStringParameter({
+            parameterLongName: "--access",
+            description: "Publish package to public/private"
+        });
+    }
+
+    protected run(): void {
+        const excludedProjects = this.excluded.value || [];
+        const projects = this.RushConfiguration
+            .projects
+            .filter(x => x.shouldPublish)
+            .map(x => x.packageName)
+            .filter(x => excludedProjects.indexOf(x) === -1);
+
+        const task = new ShellTask(this.RushConfiguration, projects);
+        const access = this.access.value != null ? `--access ${this.access.value}` : "";
+        task.Execute(`npm publish ${access}`);
+    }
+}
+
+class RushVersionsAction extends BaseAction {
+    private parser: RushToolsCommandLineParser;
+    private publishOnly: CommandLineFlagParameter;
+
+    constructor(parser: RushToolsCommandLineParser) {
+        super({
+            actionVerb: "versions",
+            summary: "Prints list of projects versions",
+            documentation: "Prints list of projects versions"
+        });
+        this.parser = parser;
+    }
+
+    protected onDefineParameters(): void {
+        this.publishOnly = this.defineFlagParameter({
+            parameterLongName: "--publishOnly",
+            description: "List only for publish"
+        });
+    }
+
+    protected run(): void {
+        const { projects } = this.RushConfiguration;
+        const publishOnly = this.publishOnly.value;
+
+        console.info(`Projects: ${projects.length}`);
+        console.info("======================================");
+        for (const project of projects) {
+            if (publishOnly && !project.shouldPublish) {
+                continue;
+            }
+            console.info(`${project.packageName}@${project.packageJson.version}`);
+        }
+    }
+}
+
+// CLI
+
+class RushToolsCommandLineParser extends CommandLineParser {
+    constructor() {
+        super({
+            toolFilename: "rush-tools",
+            toolDescription: "Rush tools for rush single repo tool"
+        });
+
+        this.populateActions();
+    }
+
+    protected onDefineParameters(): void {
+        // Abstract
+    }
+
+    private populateActions(): void {
+        this.addAction(new RushRunAction(this));
+        this.addAction(new RushPublicAction(this));
+        this.addAction(new RushVersionsAction(this));
+    }
+}
+
+const cli = new RushToolsCommandLineParser();
+cli.execute();
