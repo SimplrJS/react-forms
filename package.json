@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "rush-install": "rush install",
-    "tools-build": "npm run rush-tools -- run -s gulp-build -e @simplr/mvdir",
-    "source-build": "npm run rush-tools -- run -s build -e @simplr/mvdir",
-    "test": "npm run rush-tools -- run -s test -e @simplr/mvdir",
+    "tools-build": "npm run rush-tools -- run -s gulp-build -e @simplr/mvdir -e @simplr/extractor",
+    "source-build": "npm run rush-tools -- run -s build -e @simplr/mvdir -e @simplr/extractor",
+    "test": "npm run rush-tools -- run -s test -e @simplr/mvdir -e @simplr/extractor",
     "publish": "npm run rush-tools -- publish --access public",
     "rush-tools": "ts-node ./tools/rush-tools.ts"
   },
