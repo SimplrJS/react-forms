@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\Extractor.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> Extractor.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.13% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>41/46</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">87.5% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">89.13% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>41/46</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">41×</span>
+<span class="cline-any cline-yes">41×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+var ts = require("typescript");
+var fsx = require("fs-extra");
+var path = require("path");
+var ApiPackage_1 = require("./definitions/ApiPackage");
+var DocItemLoader_1 = require("./DocItemLoader");
+var PackageJsonLookup_1 = require("./PackageJsonLookup");
+/**
+ * The main entry point for the "api-extractor" utility.  The Analyzer object invokes the
+ * TypeScript Compiler API to analyze a project, and constructs the ApiItem
+ * abstract syntax tree.
+ *
+ * @public
+ */
+var Extractor = (function () {
+    function Extractor(options) {
+        this._compilerOptions = options.compilerOptions;
+        this.docItemLoader = new DocItemLoader_1.default(options.compilerOptions.rootDir);
+        this.packageJsonLookup = new PackageJsonLookup_1.default();
+        this.errorHandler = options.errorHandler || <span class="branch-1 cbranch-no" title="branch not covered" >Extractor.defaultErrorHandler;</span>
+    }
+    /**
+     * The default implementation of ApiErrorHandler, which merely writes to console.log().
+     */
+    Extractor.defaultErrorHandler = <span class="fstat-no" title="function not covered" >function (message, fileName, lineNumber) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log("ERROR: [" + fileName + ":" + lineNumber + "] " + message);</span>
+    };
+    Object.defineProperty(Extractor.prototype, "packageFolder", {
+        /**
+         * Getter for the package folder that Extractor is analyzing.
+         */
+        get: function () {
+            return this._packageFolder;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Analyzes the specified project.
+     */
+    Extractor.prototype.analyze = function (options) {
+        var rootFiles = [options.entryPointFile].concat(options.otherFiles || []);
+        var program = ts.createProgram(rootFiles, this._compilerOptions);
+        // This runs a full type analysis, and then augments the Abstract Syntax Tree (i.e. declarations)
+        // with semantic information (i.e. symbols).  The "diagnostics" are a subset of the everyday
+        // compile errors that would result from a full compilation.
+        for (var _i = 0, _a = program.getSemanticDiagnostics(); _i &lt; _a.length; _i++) {
+<span class="cstat-no" title="statement not covered" >            var diagnostic = _a[_i];</span>
+<span class="cstat-no" title="statement not covered" >            this.reportError('TypeScript: ' + diagnostic.messageText, diagnostic.file, diagnostic.start);</span>
+        }
+        this.typeChecker = program.getTypeChecker();
+        var rootFile = program.getSourceFile(options.entryPointFile);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!rootFile) {
+<span class="cstat-no" title="statement not covered" >            throw new Error('Unable to load file: ' + options.entryPointFile);</span>
+        }
+        // Assign _packageFolder by probing upwards from entryPointFile until we find a package.json
+        var currentPath = path.resolve(options.entryPointFile);
+        // This is guaranteed to succeed since we do check prior to this point
+        this._packageFolder = this.packageJsonLookup.tryFindPackagePathUpwards(currentPath);
+        this.package = new ApiPackage_1.default(this, rootFile); // construct members
+        this.package.completeInitialization(); // creates ApiDocumentation
+        this.package.visitTypeReferencesForApiItem();
+    };
+    /**
+     * Reports an error message to the registered ApiErrorHandler.
+     */
+    Extractor.prototype.reportError = function (message, sourceFile, start) {
+        var lineNumber = sourceFile.getLineAndCharacterOfPosition(start).line;
+        this.errorHandler(message, sourceFile.fileName, lineNumber);
+    };
+    /**
+     * Scans for external package api files and loads them into the docItemLoader member before
+     * any API analysis begins.
+     *
+     * @param externalJsonCollectionPath - an absolute path to to the folder that contains all the external
+     * api json files.
+     * Ex: if externalJsonPath is './resources', then in that folder
+     * are 'es6-collections.api.json', etc.
+     */
+    Extractor.prototype.loadExternalPackages = function (externalJsonCollectionPath) {
+        var _this = this;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!externalJsonCollectionPath) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var files = fsx.readdirSync(externalJsonCollectionPath);
+        files.forEach(function (file) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (path.extname(file) === '.json') {
+                var externalJsonFilePath = path.join(externalJsonCollectionPath, file);
+                _this.docItemLoader.loadPackageIntoCache(externalJsonFilePath, path.parse(file).name.split('.').shift());
+            }
+        });
+    };
+    return Extractor;
+}());
+exports.default = Extractor;
+&nbsp;
+//# sourceMappingURL=Extractor.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

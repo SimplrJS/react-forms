@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\generators\ApiJsonFile.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/generators/</a> ApiJsonFile.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>36/45</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">62.5% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>15/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>36/45</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">26×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">76×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+var ApiItem_1 = require("../definitions/ApiItem");
+/**
+ * Supports the conversion between ApiItems that are loaded from ApiItem to JSON notation
+ * and vice versa.
+ */
+var ApiJsonFile = (function () {
+<span class="fstat-no" title="function not covered" >    function ApiJsonFile() {</span>
+    }
+    /**
+     * Uses the lowercase string that represents 'kind' in an API JSON file, and
+     * converts it to an ApiItemKind enum value.
+     * There are two cases we do not include here, (Parameter and StructuredType),
+     * this is intential as we do not expect to be loading these kind of JSON object
+     * from file.
+     */
+    ApiJsonFile.convertJsonToKind = function (jsonItemKind) {
+        switch (jsonItemKind) {
+<span class="branch-0 cbranch-no" title="branch not covered" >            case (this._KIND_CONSTRUCTOR):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.Constructor;</span>
+            case (this._KIND_CLASS):
+                return ApiItem_1.ApiItemKind.Class;
+            case (this._KIND_ENUM):
+                return ApiItem_1.ApiItemKind.Enum;
+<span class="branch-3 cbranch-no" title="branch not covered" >            case (this._KIND_ENUM_VALUE):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.EnumValue;</span>
+            case (this._KIND_INTERFACE):
+                return ApiItem_1.ApiItemKind.Interface;
+            case (this._KIND_FUNCTION):
+                return ApiItem_1.ApiItemKind.Function;
+<span class="branch-6 cbranch-no" title="branch not covered" >            case (this._KIND_PACKAGE):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.Package;</span>
+<span class="branch-7 cbranch-no" title="branch not covered" >            case (this._KIND_PROPERTY):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.Property;</span>
+<span class="branch-8 cbranch-no" title="branch not covered" >            case (this._KIND_METHOD):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.Method;</span>
+<span class="branch-9 cbranch-no" title="branch not covered" >            case (this._KIND_NAMESPACE):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.Namespace;</span>
+<span class="branch-10 cbranch-no" title="branch not covered" >            case (this._KIND_MODULEVARIABLE):</span>
+<span class="cstat-no" title="statement not covered" >                return ApiItem_1.ApiItemKind.ModuleVariable;</span>
+<span class="branch-11 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error('Unsupported kind when converting JSON item kind to API item kind.');</span>
+        }
+    };
+    /**
+     * Converts the an ApiItemKind into a lower-case string that is written to API JSON files.
+     */
+    ApiJsonFile.convertKindToJson = function (apiItemKind) {
+        switch (apiItemKind) {
+            case (ApiItem_1.ApiItemKind.Constructor):
+                return this._KIND_CONSTRUCTOR;
+            case (ApiItem_1.ApiItemKind.Class):
+                return this._KIND_CLASS;
+            case (ApiItem_1.ApiItemKind.Enum):
+                return this._KIND_ENUM;
+            case (ApiItem_1.ApiItemKind.EnumValue):
+                return this._KIND_ENUM_VALUE;
+            case (ApiItem_1.ApiItemKind.Interface):
+                return this._KIND_INTERFACE;
+            case (ApiItem_1.ApiItemKind.Function):
+                return this._KIND_FUNCTION;
+            case (ApiItem_1.ApiItemKind.Package):
+                return this._KIND_PACKAGE;
+            case (ApiItem_1.ApiItemKind.Property):
+                return this._KIND_PROPERTY;
+            case (ApiItem_1.ApiItemKind.Method):
+                return this._KIND_METHOD;
+            case (ApiItem_1.ApiItemKind.Namespace):
+                return this._KIND_NAMESPACE;
+            case (ApiItem_1.ApiItemKind.ModuleVariable):
+                return this._KIND_MODULEVARIABLE;
+<span class="branch-11 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error('Unsupported API item kind when converting to string used in API JSON file.');</span>
+        }
+    };
+    ApiJsonFile._KIND_CONSTRUCTOR = 'constructor';
+    ApiJsonFile._KIND_CLASS = 'class';
+    ApiJsonFile._KIND_ENUM = 'enum';
+    ApiJsonFile._KIND_ENUM_VALUE = 'enum value';
+    ApiJsonFile._KIND_INTERFACE = 'interface';
+    ApiJsonFile._KIND_FUNCTION = 'function';
+    ApiJsonFile._KIND_PACKAGE = 'package';
+    ApiJsonFile._KIND_PROPERTY = 'property';
+    ApiJsonFile._KIND_METHOD = 'method';
+    ApiJsonFile._KIND_NAMESPACE = 'namespace';
+    ApiJsonFile._KIND_MODULEVARIABLE = 'module variable';
+    return ApiJsonFile;
+}());
+exports.default = ApiJsonFile;
+&nbsp;
+//# sourceMappingURL=ApiJsonFile.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

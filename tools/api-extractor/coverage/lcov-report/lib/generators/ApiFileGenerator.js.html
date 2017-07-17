@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\generators\ApiFileGenerator.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/generators/</a> ApiFileGenerator.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">96.4% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>134/139</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.42% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>41/48</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.46% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>23/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">97.78% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>132/135</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">96×</span>
+<span class="cline-any cline-yes">96×</span>
+<span class="cline-any cline-yes">96×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-yes">60×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">99×</span>
+<span class="cline-any cline-yes">99×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">195×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">79×</span>
+<span class="cline-any cline-yes">79×</span>
+<span class="cline-any cline-yes">79×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        (<span class="branch-1 cbranch-no" title="branch not covered" >{ __proto__: [] } instanceof Array </span>&amp;&amp; <span class="fstat-no" title="function not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >function (d, b) {</span> <span class="cstat-no" title="statement not covered" >d.__proto__ = b; </span>})</span> ||
+<span class="fstat-no" title="function not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >        function (d, b) {</span> <span class="cstat-no" title="statement not covered" >for (var p in b) <span class="cstat-no" title="statement not covered" >if (b.hasOwnProperty(p)) <span class="cstat-no" title="statement not covered" >d[p] = b[p]; </span></span></span>};</span>
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? <span class="branch-0 cbranch-no" title="branch not covered" >Object.create(b) </span>: (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs = require("fs");
+var ApiItem_1 = require("../definitions/ApiItem");
+var ApiItemVisitor_1 = require("../ApiItemVisitor");
+var ApiPackage_1 = require("../definitions/ApiPackage");
+var IndentedWriter_1 = require("../IndentedWriter");
+var ApiDocumentation_1 = require("../definitions/ApiDocumentation");
+/**
+ * For a library such as "example-package", ApiFileGenerator generates the "example-package.api.ts"
+ * report which is used to detect API changes.  The output is pseudocode whose syntax is similar
+ * but not identical to a "*.d.ts" typings file.  The output file is designed to be committed to
+ * Git with a branch policy that will trigger an API review workflow whenever the file contents
+ * have changed.  For example, the API file indicates *whether* a class has been documented,
+ * but it does not include the documentation text (since minor text changes should not require
+ * an API review).
+ *
+ * @public
+ */
+var ApiFileGenerator = (function (_super) {
+    __extends(ApiFileGenerator, _super);
+    function ApiFileGenerator() {
+        var _this = _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+        _this._indentedWriter = new IndentedWriter_1.default();
+        return _this;
+    }
+    /**
+     * Compares the contents of two API files that were created using ApiFileGenerator,
+     * and returns true if they are equivalent.  Note that these files are not normally edited
+     * by a human; the "equivalence" comparison here is intended to ignore spurious changes that
+     * might be introduced by a tool, e.g. Git newline normalization or an editor that strips
+     * whitespace when saving.
+     */
+    ApiFileGenerator.areEquivalentApiFileContents = function (actualFileContent, expectedFileContent) {
+        // NOTE: "\s" also matches "\r" and "\n"
+        var normalizedActual = actualFileContent.replace(/[\s]+/g, ' ');
+        var normalizedExpected = expectedFileContent.replace(/[\s]+/g, ' ');
+        return normalizedActual === normalizedExpected;
+    };
+    /**
+     * Generates the report and writes it to disk.
+     *
+     * @param reportFilename - The output filename
+     * @param analyzer       - An Analyzer object representing the input project.
+     */
+    ApiFileGenerator.prototype.writeApiFile = function (reportFilename, extractor) {
+        var fileContent = this.generateApiFileContent(extractor);
+        fs.writeFileSync(reportFilename, fileContent);
+    };
+    ApiFileGenerator.prototype.generateApiFileContent = function (extractor) {
+        this._insideTypeLiteral = 0;
+        // Normalize to CRLF
+        this.visit(extractor.package);
+        var fileContent = this._indentedWriter.toString().replace(/\r?\n/g, '\r\n');
+        return fileContent;
+    };
+    ApiFileGenerator.prototype.visitApiStructuredType = function (apiStructuredType) {
+        var _this = this;
+        var declarationLine = apiStructuredType.getDeclarationLine();
+        if (apiStructuredType.documentation.preapproved) {
+            this._indentedWriter.writeLine('// @internal (preapproved)');
+            this._indentedWriter.writeLine(declarationLine + ' {');
+            this._indentedWriter.writeLine('}');
+            return;
+        }
+        if (apiStructuredType.kind !== ApiItem_1.ApiItemKind.TypeLiteral) {
+            this._writeAedocSynopsis(apiStructuredType);
+        }
+        this._indentedWriter.writeLine(declarationLine + ' {');
+        this._indentedWriter.indentScope(function () {
+            if (apiStructuredType.kind === ApiItem_1.ApiItemKind.TypeLiteral) {
+                // Type literals don't have normal JSDoc.  Write only the warnings,
+                // and put them after the '{' since the declaration is nested.
+                _this._writeWarnings(apiStructuredType);
+            }
+            for (var _i = 0, _a = apiStructuredType.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+                var member = _a[_i];
+                _this.visit(member);
+                _this._indentedWriter.writeLine();
+            }
+        });
+        this._indentedWriter.write('}');
+    };
+    ApiFileGenerator.prototype.visitApiEnum = function (apiEnum) {
+        var _this = this;
+        this._writeAedocSynopsis(apiEnum);
+        this._indentedWriter.writeLine("enum " + apiEnum.name + " {");
+        this._indentedWriter.indentScope(function () {
+            var members = apiEnum.getSortedMemberItems();
+            for (var i = 0; i &lt; members.length; ++i) {
+                _this.visit(members[i]);
+                _this._indentedWriter.writeLine(i &lt; members.length - 1 ? ',' : '');
+            }
+        });
+        this._indentedWriter.write('}');
+    };
+    ApiFileGenerator.prototype.visitApiEnumValue = function (apiEnumValue) {
+        this._writeAedocSynopsis(apiEnumValue);
+        this._indentedWriter.write(apiEnumValue.getDeclarationLine());
+    };
+    ApiFileGenerator.prototype.visitApiPackage = function (apiPackage) {
+        for (var _i = 0, _a = apiPackage.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+            var apiItem = _a[_i];
+            this.visit(apiItem);
+            this._indentedWriter.writeLine();
+            this._indentedWriter.writeLine();
+        }
+        this._writeAedocSynopsis(apiPackage);
+    };
+    ApiFileGenerator.prototype.visitApiNamespace = function (apiNamespace) {
+        var _this = this;
+        this._writeAedocSynopsis(apiNamespace);
+        // We have decided to call the apiNamespace a 'module' in our
+        // public API documentation.
+        this._indentedWriter.writeLine("module " + apiNamespace.name + " {");
+        this._indentedWriter.indentScope(function () {
+            for (var _i = 0, _a = apiNamespace.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+                var apiItem = _a[_i];
+                _this.visit(apiItem);
+                _this._indentedWriter.writeLine();
+                _this._indentedWriter.writeLine();
+            }
+        });
+        this._indentedWriter.write('}');
+    };
+    ApiFileGenerator.prototype.visitApiModuleVariable = function (apiModuleVariable) {
+        this._writeAedocSynopsis(apiModuleVariable);
+        this._indentedWriter.write(apiModuleVariable.name + ": " + apiModuleVariable.type + " = " + apiModuleVariable.value + ";");
+    };
+    ApiFileGenerator.prototype.visitApiMember = function (apiMember) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (apiMember.documentation) {
+            this._writeAedocSynopsis(apiMember);
+        }
+        this._indentedWriter.write(apiMember.getDeclarationLine());
+        if (apiMember.typeLiteral) {
+            this._insideTypeLiteral += 1;
+            this.visit(apiMember.typeLiteral);
+            this._insideTypeLiteral -= 1;
+        }
+    };
+    ApiFileGenerator.prototype.visitApiFunction = function (apiFunction) {
+        this._writeAedocSynopsis(apiFunction);
+        this._indentedWriter.write(apiFunction.getDeclarationLine());
+    };
+    ApiFileGenerator.prototype.visitApiParam = <span class="fstat-no" title="function not covered" >function (apiParam) {</span>
+<span class="cstat-no" title="statement not covered" >        throw Error('Not Implemented');</span>
+    };
+    /**
+     * Writes a synopsis of the AEDoc comments, which indicates the release tag,
+     * whether the item has been documented, and any warnings that were detected
+     * by the analysis.
+     */
+    ApiFileGenerator.prototype._writeAedocSynopsis = function (apiItem) {
+        this._writeWarnings(apiItem);
+        var lines = [];
+        if (apiItem instanceof ApiPackage_1.default &amp;&amp; !apiItem.documentation.summary.length) {
+            lines.push('(No packageDescription for this package)');
+        }
+        else {
+            var footer = '';
+            switch (apiItem.documentation.releaseTag) {
+                case ApiDocumentation_1.ReleaseTag.Internal:
+                    footer += '@internal';
+                    break;
+                case ApiDocumentation_1.ReleaseTag.Alpha:
+                    footer += '@alpha';
+                    break;
+                case ApiDocumentation_1.ReleaseTag.Beta:
+                    footer += '@beta';
+                    break;
+                case ApiDocumentation_1.ReleaseTag.Public:
+                    footer += '@public';
+                    break;
+            }
+            // deprecatedMessage is initialized by default,
+            // this ensures it has contents before adding '@deprecated'
+            if (apiItem.documentation.deprecatedMessage.length &gt; 0) {
+                if (footer) {
+                    footer += ' ';
+                }
+                footer += '@deprecated';
+            }
+            // If we are anywhere inside a TypeLiteral, _insideTypeLiteral is greater than 0
+            if (this._insideTypeLiteral === 0 &amp;&amp; apiItem.needsDocumentation) {
+                if (footer) {
+                    footer += ' ';
+                }
+                footer += '(undocumented)';
+            }
+            if (footer) {
+                lines.push(footer);
+            }
+        }
+        this._writeLinesAsComments(lines);
+    };
+    ApiFileGenerator.prototype._writeWarnings = function (apiItem) {
+        var lines = apiItem.warnings.map(function (x) { return 'WARNING: ' + x; });
+        this._writeLinesAsComments(lines);
+    };
+    ApiFileGenerator.prototype._writeLinesAsComments = function (lines) {
+        if (lines.length) {
+            // Write the lines prefixed by slashes.  If there  are multiple lines, add "//" to each line
+            this._indentedWriter.write('// ');
+            this._indentedWriter.write(lines.join('\n// '));
+            this._indentedWriter.writeLine();
+        }
+    };
+    return ApiFileGenerator;
+}(ApiItemVisitor_1.default));
+exports.default = ApiFileGenerator;
+&nbsp;
+//# sourceMappingURL=ApiFileGenerator.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

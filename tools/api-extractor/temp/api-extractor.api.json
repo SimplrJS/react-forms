@@ -1,0 +1,878 @@
+{
+  "kind": "package",
+  "summary": [
+    {
+      "kind": "textDocElement",
+      "value": "API Extractor helps you build better TypeScript library packages. It helps with validation, documentation, and reviewing of the exported API for a TypeScript library."
+    }
+  ],
+  "remarks": [],
+  "exports": {
+    "ApiFileGenerator": {
+      "kind": "class",
+      "extends": "ApiItemVisitor",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "For a library such as \"example-package\", ApiFileGenerator generates the \"example-package.api.ts\" report which is used to detect API changes. The output is pseudocode whose syntax is similar but not identical to a \"*.d.ts\" typings file. The output file is designed to be committed to Git with a branch policy that will trigger an API review workflow whenever the file contents have changed. For example, the API file indicates *whether* a class has been documented, but it does not include the documentation text (since minor text changes should not require an API review)."
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "_indentedWriter": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "IndentedWriter",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "areEquivalentApiFileContents": {
+          "kind": "method",
+          "signature": "public static areEquivalentApiFileContents(actualFileContent: string, expectedFileContent: string): boolean;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": true,
+          "returnValue": {
+            "type": "boolean",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Compares the contents of two API files that were created using ApiFileGenerator, and returns true if they are equivalent. Note that these files are not normally edited by a human; the \"equivalence\" comparison here is intended to ignore spurious changes that might be introduced by a tool, e.g. Git newline normalization or an editor that strips whitespace when saving."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "generateApiFileContent": {
+          "kind": "method",
+          "signature": "public generateApiFileContent(extractor: Extractor): string;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "string",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiEnum": {
+          "kind": "method",
+          "signature": "protected visitApiEnum(apiEnum: ApiEnum): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiEnumValue": {
+          "kind": "method",
+          "signature": "protected visitApiEnumValue(apiEnumValue: ApiEnumValue): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiFunction": {
+          "kind": "method",
+          "signature": "protected visitApiFunction(apiFunction: ApiFunction): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiMember": {
+          "kind": "method",
+          "signature": "protected visitApiMember(apiMember: ApiMember): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiModuleVariable": {
+          "kind": "method",
+          "signature": "protected visitApiModuleVariable(apiModuleVariable: ApiModuleVariable): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiNamespace": {
+          "kind": "method",
+          "signature": "protected visitApiNamespace(apiNamespace: ApiNamespace): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiPackage": {
+          "kind": "method",
+          "signature": "protected visitApiPackage(apiPackage: ApiPackage): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiParam": {
+          "kind": "method",
+          "signature": "protected visitApiParam(apiParam: ApiParameter): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiStructuredType": {
+          "kind": "method",
+          "signature": "protected visitApiStructuredType(apiStructuredType: ApiStructuredType): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "writeApiFile": {
+          "kind": "method",
+          "signature": "public writeApiFile(reportFilename: string, extractor: Extractor): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {
+            "reportFilename": {
+              "name": "reportFilename",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "The output filename"
+                }
+              ],
+              "isOptional": false,
+              "isSpread": false,
+              "type": "string"
+            },
+            "analyzer": {
+              "name": "analyzer",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "An Analyzer object representing the input project."
+                }
+              ]
+            }
+          },
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Generates the report and writes it to disk."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    },
+    "ApiJsonGenerator": {
+      "kind": "class",
+      "extends": "ApiItemVisitor",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "For a library such as \"example-package\", ApiFileGenerator generates the \"example-package.api.ts\" report which is used to detect API changes. The output is pseudocode whose syntax is similar but not identical to a \"*.d.ts\" typings file. The output file is designed to be committed to Git with a branch policy that will trigger an API review workflow whenever the file contents have changed. For example, the API file indicates *whether* a class has been documented, but it does not include the documentation text (since minor text changes should not require an API review)."
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "jsonOutput": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "Object",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visit": {
+          "kind": "method",
+          "signature": "protected visit(apiItem: ApiItem, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiEnum": {
+          "kind": "method",
+          "signature": "protected visitApiEnum(apiEnum: ApiEnum, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiEnumValue": {
+          "kind": "method",
+          "signature": "protected visitApiEnumValue(apiEnumValue: ApiEnumValue, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiFunction": {
+          "kind": "method",
+          "signature": "protected visitApiFunction(apiFunction: ApiFunction, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiMember": {
+          "kind": "method",
+          "signature": "protected visitApiMember(apiMember: ApiMember, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiMethod": {
+          "kind": "method",
+          "signature": "protected visitApiMethod(apiMethod: ApiMethod, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiModuleVariable": {
+          "kind": "method",
+          "signature": "protected visitApiModuleVariable(apiModuleVariable: ApiModuleVariable, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiNamespace": {
+          "kind": "method",
+          "signature": "protected visitApiNamespace(apiNamespace: ApiNamespace, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiPackage": {
+          "kind": "method",
+          "signature": "protected visitApiPackage(apiPackage: ApiPackage, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiParam": {
+          "kind": "method",
+          "signature": "protected visitApiParam(apiParam: ApiParameter, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiProperty": {
+          "kind": "method",
+          "signature": "protected visitApiProperty(apiProperty: ApiProperty, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "visitApiStructuredType": {
+          "kind": "method",
+          "signature": "protected visitApiStructuredType(apiStructuredType: ApiStructuredType, refObject?: Object): void;",
+          "accessModifier": "protected",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "writeJsonFile": {
+          "kind": "method",
+          "signature": "public writeJsonFile(reportFilename: string, extractor: Extractor): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    },
+    "ExternalApiHelper": {
+      "kind": "class",
+      "extends": "",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "ExternalApiHelper has the specific use case of generating an API json file from third party definition files. This class is invoked by the gulp-core-build-typescript gulpfile, where the external package names are hard wired. The job of this method is almost the same as the API Extractor task that is executed on first party packages, with the exception that all packages analyzed here are external packages with definition files."
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "generateApiJson": {
+          "kind": "method",
+          "signature": "public static generateApiJson(rootDir: string, libFolder: string, externalPackageFilePath: string): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": true,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {
+            "rootDir": {
+              "name": "rootDir",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "the absolute path containing a 'package.json' file and is also a parent of the external package file. Ex: build.absolute_build_path."
+                }
+              ],
+              "isOptional": false,
+              "isSpread": false,
+              "type": "string"
+            },
+            "libFolder": {
+              "name": "libFolder",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "the path to the lib folder relative to the rootDir, this is where 'external-api-json/external_package.api.json' file will be written. Ex: 'lib'."
+                }
+              ],
+              "isOptional": false,
+              "isSpread": false,
+              "type": "string"
+            },
+            "externalPackageFilePath": {
+              "name": "externalPackageFilePath",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "the path to the '*.d.ts' file of the external package relative to the rootDir. Ex: 'resources/external-api-json/es6-collection/index.t.ds'"
+                }
+              ],
+              "isOptional": false,
+              "isSpread": false,
+              "type": "string"
+            }
+          },
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    },
+    "Extractor": {
+      "kind": "class",
+      "extends": "",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "The main entry point for the \"api-extractor\" utility. The Analyzer object invokes the TypeScript Compiler API to analyze a project, and constructs the ApiItem abstract syntax tree."
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "__constructor": {
+          "kind": "constructor",
+          "signature": "constructor(options: IExtractorOptions);",
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Constructs a new instance of the "
+            },
+            {
+              "kind": "linkDocElement",
+              "referenceType": "code",
+              "scopeName": "@simplr",
+              "packageName": "api-extractor",
+              "exportName": "Extractor",
+              "value": "Extractor"
+            },
+            {
+              "kind": "textDocElement",
+              "value": " class"
+            }
+          ],
+          "remarks": []
+        },
+        "analyze": {
+          "kind": "method",
+          "signature": "public analyze(options: IExtractorAnalyzeOptions): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Analyzes the specified project."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "defaultErrorHandler": {
+          "kind": "method",
+          "signature": "public static defaultErrorHandler(message: string, fileName: string, lineNumber: number): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": true,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "The default implementation of ApiErrorHandler, which merely writes to console.log()."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "docItemLoader": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "DocItemLoader",
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "One DocItemLoader is needed per analyzer to look up external API members as needed."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "errorHandler": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "ApiErrorHandler",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "loadExternalPackages": {
+          "kind": "method",
+          "signature": "public loadExternalPackages(externalJsonCollectionPath: string): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {
+            "externalJsonCollectionPath": {
+              "name": "externalJsonCollectionPath",
+              "description": [
+                {
+                  "kind": "textDocElement",
+                  "value": "an absolute path to to the folder that contains all the external api json files. Ex: if externalJsonPath is './resources', then in that folder are 'es6-collections.api.json', etc."
+                }
+              ],
+              "isOptional": false,
+              "isSpread": false,
+              "type": "string"
+            }
+          },
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Scans for external package api files and loads them into the docItemLoader member before any API analysis begins."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "package": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "ApiPackage",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "packageFolder": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": true,
+          "isStatic": false,
+          "type": "string",
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Getter for the package folder that Extractor is analyzing."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "packageJsonLookup": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "PackageJsonLookup",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        },
+        "reportError": {
+          "kind": "method",
+          "signature": "public reportError(message: string, sourceFile: ts.SourceFile, start: number): void;",
+          "accessModifier": "public",
+          "isOptional": false,
+          "isStatic": false,
+          "returnValue": {
+            "type": "void",
+            "description": []
+          },
+          "parameters": {},
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Reports an error message to the registered ApiErrorHandler."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "typeChecker": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "ts.TypeChecker",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    },
+    "IExtractorAnalyzeOptions": {
+      "kind": "interface",
+      "extends": "",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "Options for Extractor.analyze()"
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "entryPointFile": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "string",
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "The entry point for the project. This should correspond to the \"main\" field from NPM's package.json file. If it is a relative path, it will be relative to the project folder described by IExtractorAnalyzeOptions.compilerOptions."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "otherFiles": {
+          "kind": "property",
+          "isOptional": true,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "string[]",
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "This can be used to specify other files that should be processed by the TypeScript compiler for some reason, e.g. a \"typings/tsd.d.ts\" file. It is NOT necessary to specify files that are explicitly imported/required by the entryPointFile, since the compiler will trace (the transitive closure of) ordinary dependencies."
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    },
+    "IExtractorOptions": {
+      "kind": "interface",
+      "extends": "",
+      "implements": "",
+      "typeParameters": [],
+      "deprecatedMessage": [],
+      "summary": [
+        {
+          "kind": "textDocElement",
+          "value": "Options for Extractor constructor."
+        }
+      ],
+      "remarks": [],
+      "isBeta": false,
+      "members": {
+        "compilerOptions": {
+          "kind": "property",
+          "isOptional": false,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "ts.CompilerOptions",
+          "deprecatedMessage": [],
+          "summary": [
+            {
+              "kind": "textDocElement",
+              "value": "Configuration for the TypeScript compiler. The most important options to set are: - target: ts.ScriptTarget.ES5 - module: ts.ModuleKind.CommonJS - moduleResolution: ts.ModuleResolutionKind.NodeJs - rootDir: inputFolder"
+            }
+          ],
+          "remarks": [],
+          "isBeta": false
+        },
+        "errorHandler": {
+          "kind": "property",
+          "isOptional": true,
+          "isReadOnly": false,
+          "isStatic": false,
+          "type": "ApiErrorHandler",
+          "deprecatedMessage": [],
+          "summary": [],
+          "remarks": [],
+          "isBeta": false
+        }
+      }
+    }
+  }
+}

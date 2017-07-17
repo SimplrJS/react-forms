@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\TypeScriptHelpers.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> TypeScriptHelpers.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.29% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>98/111</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.43% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>40/51</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.89% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.29% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>98/111</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">377×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">377×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">324×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">324×</span>
+<span class="cline-any cline-yes">324×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">198×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">324×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">193×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">193×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-yes">538×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">199×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-yes">464×</span>
+<span class="cline-any cline-yes">464×</span>
+<span class="cline-any cline-yes">249×</span>
+<span class="cline-any cline-yes">159×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">249×</span>
+<span class="cline-any cline-yes">249×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">249×</span>
+<span class="cline-any cline-yes">249×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-yes">89×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">215×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+var PrettyPrinter_1 = require("./PrettyPrinter");
+var TypeScriptHelpers = (function () {
+<span class="fstat-no" title="function not covered" >    function TypeScriptHelpers() {</span>
+    }
+    /**
+     * Returns the Symbol for the provided Declaration.  This is a workaround for a missing
+     * feature of the TypeScript Compiler API.   It is the only apparent way to reach
+     * certain data structures, and seems to always work, but is not officially documented.
+     *
+     * @returns The associated Symbol.  If there is no semantic information (e.g. if the
+     * declaration is an extra semicolon somewhere), then "undefined" is returned.
+     */
+    TypeScriptHelpers.tryGetSymbolForDeclaration = function (declaration) {
+        /* tslint:disable:no-any */
+        var symbol = declaration.symbol;
+        /* tslint:enable:no-any */
+        return symbol;
+    };
+    /**
+     * Same semantics as tryGetSymbolForDeclaration(), but throws an exception if the symbol
+     * cannot be found.
+     */
+    TypeScriptHelpers.getSymbolForDeclaration = function (declaration) {
+        var symbol = TypeScriptHelpers.tryGetSymbolForDeclaration(declaration);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!symbol) {
+<span class="cstat-no" title="statement not covered" >            PrettyPrinter_1.default.throwUnexpectedSyntaxError(declaration, 'Unable to determine the semantic information for this declaration');</span>
+        }
+        return symbol;
+    };
+    /**
+     * Returns the JSDoc comments associated with the specified node, if any.
+     *
+     * Example:
+     * "This \n is \n a comment" from "\/** This\r\n* is\r\n* a comment *\/
+     */
+    TypeScriptHelpers.getJsdocComments = function (node, errorLogger) {
+        var jsdoc = '';
+        // tslint:disable-next-line:no-any
+        var nodeJsdocObjects = node.jsDoc;
+        if (nodeJsdocObjects &amp;&amp; nodeJsdocObjects.length &gt; 0) {
+            // Use the JSDoc closest to the declaration
+            var lastJsdocIndex = nodeJsdocObjects.length - 1;
+            var jsdocFullText = nodeJsdocObjects[lastJsdocIndex].getText();
+            var jsdocLines = jsdocFullText.split(TypeScriptHelpers.newLineRegEx);
+            var jsdocStartSeqExists = TypeScriptHelpers.jsdocStartRegEx.test(jsdocLines[0].toString());
+            // Report error for each missing sequence seperately
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!jsdocStartSeqExists) {
+<span class="cstat-no" title="statement not covered" >                errorLogger('Jsdoc comment must begin with a \"/**\" sequence.');</span>
+<span class="cstat-no" title="statement not covered" >                return '';</span>
+            }
+            var jsdocEndSeqExists = TypeScriptHelpers.jsdocEndRegEx.test(jsdocLines[jsdocLines.length - 1].toString());
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!jsdocEndSeqExists) {
+<span class="cstat-no" title="statement not covered" >                errorLogger('Jsdoc comment must end with a \"*/\" sequence.');</span>
+<span class="cstat-no" title="statement not covered" >                return '';</span>
+            }
+            jsdoc = TypeScriptHelpers.removeJsdocSequences(jsdocLines);
+        }
+        return jsdoc;
+    };
+    /**
+     * Helper function to remove the comment stars ('/**'. '*', '/*) from lines of comment text.
+     *
+     * Example:
+     * ["\/**", "*This \n", "*is \n", "*a comment", "*\/"] to "This \n is \n a comment"
+     */
+    TypeScriptHelpers.removeJsdocSequences = function (textLines) {
+        // Remove '/**'
+        textLines[0] = textLines[0].replace(TypeScriptHelpers.jsdocStartRegEx, '');
+        if (textLines[0] === '') {
+            textLines.shift();
+        }
+        // Remove '*/'
+        textLines[textLines.length - 1] = textLines[textLines.length - 1].replace(TypeScriptHelpers.jsdocEndRegEx, '');
+        if (textLines[textLines.length - 1] === '') {
+            textLines.pop();
+        }
+        // Remove the leading '*' from any intermediate lines
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (textLines.length &gt; 0) {
+            for (var i = 0; i &lt; textLines.length; i++) {
+                textLines[i] = textLines[i].replace(TypeScriptHelpers.jsdocIntermediateRegEx, '');
+            }
+        }
+        return textLines.join('\n');
+    };
+    /**
+     * Similar to calling string.split() with a RegExp, except that the delimiters
+     * are included in the result.
+     *
+     * Example: _splitStringWithRegEx("ABCDaFG", /A/gi) -&gt; [ "A", "BCD", "a", "FG" ]
+     * Example: _splitStringWithRegEx("", /A/gi) -&gt; [ ]
+     * Example: _splitStringWithRegEx("", /A?/gi) -&gt; [ "" ]
+     */
+    TypeScriptHelpers.splitStringWithRegEx = function (text, regExp) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!regExp.global) {
+<span class="cstat-no" title="statement not covered" >            throw new Error('RegExp must have the /g flag');</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (text === undefined) {
+<span class="cstat-no" title="statement not covered" >            return [];</span>
+        }
+        var result = [];
+        var index = 0;
+        var match;
+        do {
+            match = regExp.exec(text);
+            if (match) {
+                if (match.index &gt; index) {
+                    result.push(text.substring(index, match.index));
+                }
+                var matchText = match[0];
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!matchText) {
+                    // It might be interesting to support matching e.g. '\b', but regExp.exec()
+                    // doesn't seem to iterate properly in this situation.
+<span class="cstat-no" title="statement not covered" >                    throw new Error('The regular expression must match a nonzero number of characters');</span>
+                }
+                result.push(matchText);
+                index = regExp.lastIndex;
+            }
+        } while (match &amp;&amp; regExp.global);
+        if (index &lt; text.length) {
+            result.push(text.substr(index));
+        }
+        return result;
+    };
+    /**
+     * Extracts the body of a TypeScript comment and returns it.
+     */
+    // Examples:
+    // "/**\n * this is\n * a test\n */\n" --&gt; "this is\na test"
+    // "/** single line comment */" --&gt; "single line comment"
+    TypeScriptHelpers.extractCommentContent = function (text) {
+        var lines = text.replace('\r', '').split('\n');
+        var State;
+        (function (State) {
+            State[State["Start"] = 0] = "Start";
+            State[State["Body"] = 1] = "Body";
+            State[State["Done"] = 2] = "Done";
+            State[State["Error"] = 3] = "Error";
+        })(State || (State = {}));
+        var state = State.Start;
+        var startRegExp = /^\s*\/\*\*+ ?/;
+        var bodyRegExp = /^\s*\* ?/;
+        var endRegExp = /^\s*\*+\/\s*$/;
+        var singleLineEndRegExp = / ?\*+\/\s*$/;
+        var content = '';
+        for (var _i = 0, lines_1 = lines; _i &lt; lines_1.length; _i++) {
+            var line = lines_1[_i];
+            if (line.trim().length === 0) {
+                continue;
+            }
+            var modified = line;
+            switch (state) {
+                case State.Start:
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (line.match(startRegExp)) {
+                        modified = line.replace(startRegExp, '');
+                        if (modified.match(singleLineEndRegExp)) {
+                            modified = modified.replace(singleLineEndRegExp, '');
+                            state = State.Done;
+                        }
+                        else {
+                            state = State.Body;
+                        }
+                    }
+                    else {
+<span class="cstat-no" title="statement not covered" >                        state = State.Error;</span>
+                    }
+                    break;
+                case State.Body:
+                    if (line.match(endRegExp)) {
+                        modified = line.replace(endRegExp, '');
+                        state = State.Done;
+                    }
+                    else <span class="missing-if-branch" title="else path not taken" >E</span>if (line.match(bodyRegExp)) {
+                        modified = line.replace(bodyRegExp, '');
+                    }
+                    else {
+<span class="cstat-no" title="statement not covered" >                        state = State.Error;</span>
+                    }
+                    break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                case State.Done:</span>
+<span class="cstat-no" title="statement not covered" >                    state = State.Error;</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+            }
+            if (modified !== '') {
+                if (content !== '') {
+                    content += '\n';
+                }
+                content += modified;
+            }
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (state !== State.Done) {
+<span class="cstat-no" title="statement not covered" >            return '[ERROR PARSING COMMENT]';</span>
+        }
+        return content;
+    };
+    /**
+     * Splits by the characters '\r\n'.
+     */
+    TypeScriptHelpers.newLineRegEx = /\r\n|\n/g;
+    /**
+     * Start sequence is '/**'.
+     */
+    TypeScriptHelpers.jsdocStartRegEx = /^\s*\/\*\*\s?/g;
+    /**
+     * End sequence is '*\/'.
+     */
+    TypeScriptHelpers.jsdocEndRegEx = /\s*\*\/\s*$/g;
+    /**
+     * Intermediate lines of JSDoc comment character.
+     */
+    TypeScriptHelpers.jsdocIntermediateRegEx = /^\s*[*]\s?/g;
+    return TypeScriptHelpers;
+}());
+exports.default = TypeScriptHelpers;
+&nbsp;
+//# sourceMappingURL=TypeScriptHelpers.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

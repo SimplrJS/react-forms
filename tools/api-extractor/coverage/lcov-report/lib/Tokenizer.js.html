@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\Tokenizer.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> Tokenizer.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">92.54% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>62/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.24% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>30/34</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">92.54% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>62/67</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">343×</span>
+<span class="cline-any cline-yes">343×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">344×</span>
+<span class="cline-any cline-yes">131×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">482×</span>
+<span class="cline-any cline-yes">482×</span>
+<span class="cline-any cline-yes">482×</span>
+<span class="cline-any cline-yes">183×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">299×</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">235×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">482×</span>
+<span class="cline-any cline-yes">473×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-yes">65×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1169×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">464×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-yes">493×</span>
+<span class="cline-any cline-yes">493×</span>
+<span class="cline-any cline-yes">493×</span>
+<span class="cline-any cline-yes">493×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">482×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">213×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+var Token_1 = require("./Token");
+var TypeScriptHelpers_1 = require("./TypeScriptHelpers");
+/**
+ * Handles the tokenization of an AEDoc comment.
+ */
+var Tokenizer = (function () {
+    function Tokenizer(docs, reportError) {
+        this._reportError = reportError;
+        this._tokenStream = this._tokenizeDocs(docs);
+    }
+    /**
+     * Converts a doc comment string into an array of Tokens. This processing is done so that docs
+     * can be processed more strictly.
+     * Example: "This is an AEDoc description with a {@link URL} and more text. \@remarks example \@public"
+     * =&gt; [
+     *  {tokenType: 'text', parameter: 'This is an AEDoc description with a'},
+     *  {tokenType: '@link', parameter: 'URL'},
+     *  {tokenType: '\@remarks', parameter: ''},
+     *  {tokenType: 'text', parameter: 'example'},
+     *  {tokenType: '\@public', parameter: ''}
+     * ]
+     */
+    Tokenizer.prototype._tokenizeDocs = function (docs) {
+        if (!docs) {
+            return;
+        }
+        var docEntries = TypeScriptHelpers_1.default.splitStringWithRegEx(docs, Tokenizer._aedocTagsRegex);
+        var sanitizedTokens = this._sanitizeDocEntries(docEntries); // remove white space and empty entries
+        // process each sanitized doc string to a Token object
+        var tokens = [];
+        var value;
+        for (var i = 0; i &lt; sanitizedTokens.length; i++) {
+            var token = void 0;
+            value = sanitizedTokens[i];
+            if (value.charAt(0) === '@') {
+                token = new Token_1.default(Token_1.TokenType.BlockTag, value);
+            }
+            else if (value.charAt(0) === '{' &amp;&amp; value.charAt(value.length - 1) === '}') {
+                token = this._tokenizeInline(value); // Can return undefined if invalid inline tag
+            }
+            else {
+                token = new Token_1.default(Token_1.TokenType.Text, '', value);
+            }
+            if (token) {
+                tokens.push(token);
+            }
+        }
+        return tokens;
+    };
+    /**
+     * Parse an inline tag and returns the Token for it if itis a valid inline tag.
+     * Example '{@link https://bing.com | Bing}' =&gt; '{type: 'Inline', tag: '@link', text: 'https://bing.com  | Bing'}'
+     */
+    Tokenizer.prototype._tokenizeInline = function (docEntry) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (docEntry.charAt(0) !== '{' || docEntry.charAt(docEntry.length - 1) !== '}') {
+            // This is a program bug, since _tokenizeDocs() checks this condition before calling
+<span class="cstat-no" title="statement not covered" >            this._reportError('The AEDoc tag is not enclosed in "{" and "}"');</span>
+        }
+        var tokenContent = docEntry.slice(1, docEntry.length - 1).trim();
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (tokenContent.charAt(0) !== '@') {
+            // This is a program bug, since it should have already been validated by the Tokenizer
+<span class="cstat-no" title="statement not covered" >            this._reportError('The AEDoc tag does not start with "@".');</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var unescapedCurlyBraces = /([^\\])({|}[^$])/gi;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (unescapedCurlyBraces.test(tokenContent)) {
+<span class="cstat-no" title="statement not covered" >            this._reportError("An unescaped \"{\" or \"}\" character was found inside an inline tag. " +</span>
+                'Use a backslash ("\\") to escape curly braces.');
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        // Split the inline tag content with whitespace
+        // Example: '@link    https://bing.com  |  Bing' =&gt; ['@link', 'https://bing.com', '|', 'Bing']
+        var tokenChunks = tokenContent.split(/\s+/gi);
+        if (tokenChunks[0] === '@link') {
+            if (tokenChunks.length &lt; 2) {
+                this._reportError('The {@link} tag must include a URL or API item reference');
+                return;
+            }
+            tokenChunks.shift(); // Gets rid of '@link'
+            var token = new Token_1.default(Token_1.TokenType.InlineTag, '@link', tokenChunks.join(' '));
+            return token;
+        }
+        else if (tokenChunks[0] === '@inheritdoc') {
+            tokenChunks.shift(); // Gets rid of '@inheritdoc'
+            var token = new Token_1.default(Token_1.TokenType.InlineTag, '@inheritdoc', tokenChunks.join(' '));
+            return token;
+        }
+        // This is a program bug
+        this._reportError('Invalid call to _tokenizeInline()');
+        return;
+    };
+    Tokenizer.prototype.peekToken = function () {
+        return (!this._tokenStream || this._tokenStream.length === 0) ? undefined : this._tokenStream[0];
+    };
+    Tokenizer.prototype.getToken = function () {
+        return (!this._tokenStream || this._tokenStream.length === 0) ? <span class="branch-0 cbranch-no" title="branch not covered" >undefined </span>: this._tokenStream.shift();
+    };
+    /**
+     * Trims whitespaces on either end of the entry (which is just a string within the doc comments),
+     * replaces \r and \n's with single whitespace, and removes empty entries.
+     *
+     * @param docEntries - Array of doc strings to be santitized
+     */
+    Tokenizer.prototype._sanitizeDocEntries = function (docEntries) {
+        var result = [];
+        for (var _i = 0, docEntries_1 = docEntries; _i &lt; docEntries_1.length; _i++) {
+            var entry = docEntries_1[_i];
+            entry = entry.replace(/\s+/g, ' ');
+            entry = entry.trim();
+            if (entry === '') {
+                continue;
+            }
+            result.push(entry);
+        }
+        return result;
+    };
+    /**
+     * Match AEDoc block tags and inline tags
+     * Example "@a @b@c d@e @f {whatever} {@link a} { @something } \@g" =&gt; ["@a", "@f", "{@link a}", "{ @something }"]
+     */
+    Tokenizer._aedocTagsRegex = /{\s*@(\\{|\\}|[^{}])*}|(?:^|\s)(\@[a-z_]+)(?=\s|$)/gi;
+    return Tokenizer;
+}());
+exports.default = Tokenizer;
+&nbsp;
+//# sourceMappingURL=Tokenizer.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

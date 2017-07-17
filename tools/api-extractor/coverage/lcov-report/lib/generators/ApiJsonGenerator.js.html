@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\generators\ApiJsonGenerator.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/generators/</a> ApiJsonGenerator.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>118/136</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>72/120</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80.95% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>17/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">87.97% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>117/133</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">88×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">77×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">77×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-yes">37×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        (<span class="branch-1 cbranch-no" title="branch not covered" >{ __proto__: [] } instanceof Array </span>&amp;&amp; <span class="fstat-no" title="function not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >function (d, b) {</span> <span class="cstat-no" title="statement not covered" >d.__proto__ = b; </span>})</span> ||
+<span class="fstat-no" title="function not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >        function (d, b) {</span> <span class="cstat-no" title="statement not covered" >for (var p in b) <span class="cstat-no" title="statement not covered" >if (b.hasOwnProperty(p)) <span class="cstat-no" title="statement not covered" >d[p] = b[p]; </span></span></span>};</span>
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? <span class="branch-0 cbranch-no" title="branch not covered" >Object.create(b) </span>: (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var os = require("os");
+var path = require("path");
+var ts = require("typescript");
+var ApiItem_1 = require("../definitions/ApiItem");
+var ApiItemVisitor_1 = require("../ApiItemVisitor");
+var ApiMember_1 = require("../definitions/ApiMember");
+var ApiDocumentation_1 = require("../definitions/ApiDocumentation");
+var JsonFile_1 = require("../JsonFile");
+var ApiJsonFile_1 = require("./ApiJsonFile");
+/**
+ * For a library such as "example-package", ApiFileGenerator generates the "example-package.api.ts"
+ * report which is used to detect API changes.  The output is pseudocode whose syntax is similar
+ * but not identical to a "*.d.ts" typings file.  The output file is designed to be committed to
+ * Git with a branch policy that will trigger an API review workflow whenever the file contents
+ * have changed.  For example, the API file indicates *whether* a class has been documented,
+ * but it does not include the documentation text (since minor text changes should not require
+ * an API review).
+ *
+ * @public
+ */
+var ApiJsonGenerator = (function (_super) {
+    __extends(ApiJsonGenerator, _super);
+    function ApiJsonGenerator() {
+        var _this = _super !== null &amp;&amp; _super.apply(this, arguments) || this;
+        _this.jsonOutput = {};
+        return _this;
+    }
+    // @override
+    ApiJsonGenerator.prototype.visit = function (apiItem, refObject) {
+        switch (apiItem.documentation.releaseTag) {
+            case ApiDocumentation_1.ReleaseTag.None:
+            case ApiDocumentation_1.ReleaseTag.Beta:
+            case ApiDocumentation_1.ReleaseTag.Public:
+                break;
+            default:
+                return; // skip @alpha and @internal definitions
+        }
+        _super.prototype.visit.call(this, apiItem, refObject);
+    };
+    ApiJsonGenerator.prototype.writeJsonFile = function (reportFilename, extractor) {
+        this.visit(extractor.package, this.jsonOutput);
+        // Write the output before validating the schema, so we can debug it
+        JsonFile_1.default.saveJsonFile(reportFilename, this.jsonOutput);
+        // Validate that the output conforms to our JSON schema
+        var apiJsonSchema = JsonFile_1.default.loadJsonFile(path.join(__dirname, '../schemas/api-json-schema.json'));
+        JsonFile_1.default.validateSchema(this.jsonOutput, apiJsonSchema, <span class="fstat-no" title="function not covered" >function (errorDetail) {</span>
+<span class="cstat-no" title="statement not covered" >            var errorMessage = "ApiJsonGenerator validation error - output does not conform to api-json-schema.json:" + os.EOL</span>
+                + reportFilename + os.EOL
+                + errorDetail;
+<span class="cstat-no" title="statement not covered" >            console.log(os.EOL + 'ERROR: ' + errorMessage + os.EOL + os.EOL);</span>
+<span class="cstat-no" title="statement not covered" >            throw new Error(errorMessage);</span>
+        });
+    };
+    ApiJsonGenerator.prototype.visitApiStructuredType = function (apiStructuredType, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiStructuredType.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var kind = apiStructuredType.kind === ApiItem_1.ApiItemKind.Class ? ApiJsonFile_1.default.convertKindToJson(ApiItem_1.ApiItemKind.Class) :
+            apiStructuredType.kind === ApiItem_1.ApiItemKind.Interface ?
+                ApiJsonFile_1.default.convertKindToJson(ApiItem_1.ApiItemKind.Interface) : <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
+        var structureNode = {
+            kind: kind,
+            extends: apiStructuredType.extends || '',
+            implements: apiStructuredType.implements || '',
+            typeParameters: apiStructuredType.typeParameters || [],
+            deprecatedMessage: apiStructuredType.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiStructuredType.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiStructuredType.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiStructuredType.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+        refObject[apiStructuredType.name] = structureNode;
+        ApiJsonGenerator._methodCounter = 0;
+        var members = apiStructuredType.getSortedMemberItems();
+        if (members &amp;&amp; members.length) {
+            var membersNode = {};
+            structureNode[ApiJsonGenerator._MEMBERS_KEY] = membersNode;
+            for (var _i = 0, members_1 = members; _i &lt; members_1.length; _i++) {
+                var apiItem = members_1[_i];
+                this.visit(apiItem, membersNode);
+            }
+        }
+    };
+    ApiJsonGenerator.prototype.visitApiEnum = function (apiEnum, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiEnum.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var valuesNode = {};
+        var enumNode = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiEnum.kind),
+            values: valuesNode,
+            deprecatedMessage: apiEnum.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiEnum.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiEnum.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiEnum.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+        refObject[apiEnum.name] = enumNode;
+        for (var _i = 0, _a = apiEnum.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+            var apiItem = _a[_i];
+            this.visit(apiItem, valuesNode);
+        }
+    };
+    ApiJsonGenerator.prototype.visitApiEnumValue = function (apiEnumValue, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiEnumValue.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var declaration = apiEnumValue.getDeclaration();
+        var firstToken = declaration ? declaration.getFirstToken() : <span class="branch-1 cbranch-no" title="branch not covered" >undefined;</span>
+        var lastToken = declaration ? declaration.getLastToken() : <span class="branch-1 cbranch-no" title="branch not covered" >undefined;</span>
+        var value = lastToken &amp;&amp; lastToken !== firstToken ? lastToken.getText() : <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
+        refObject[apiEnumValue.name] = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiEnumValue.kind),
+            value: value,
+            deprecatedMessage: apiEnumValue.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiEnumValue.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiEnumValue.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiEnumValue.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+    };
+    ApiJsonGenerator.prototype.visitApiFunction = function (apiFunction, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiFunction.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        for (var _i = 0, _a = apiFunction.params; _i &lt; _a.length; _i++) {
+            var param = _a[_i];
+            this.visitApiParam(param, apiFunction.documentation.parameters[param.name]);
+        }
+        var returnValueNode = {
+            type: apiFunction.returnType,
+            description: apiFunction.documentation.returnsMessage
+        };
+        var newNode = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiFunction.kind),
+            returnValue: returnValueNode,
+            parameters: apiFunction.documentation.parameters,
+            deprecatedMessage: apiFunction.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiFunction.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiFunction.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiFunction.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+        refObject[apiFunction.name] = newNode;
+    };
+    ApiJsonGenerator.prototype.visitApiPackage = function (apiPackage, refObject) {
+        /* tslint:disable:no-string-literal */
+        refObject['kind'] = ApiJsonFile_1.default.convertKindToJson(apiPackage.kind);
+        refObject['summary'] = apiPackage.documentation.summary;
+        refObject['remarks'] = apiPackage.documentation.remarks;
+        /* tslint:enable:no-string-literal */
+        var membersNode = {};
+        refObject[ApiJsonGenerator._EXPORTS_KEY] = membersNode;
+        for (var _i = 0, _a = apiPackage.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+            var apiItem = _a[_i];
+            this.visit(apiItem, membersNode);
+        }
+    };
+    ApiJsonGenerator.prototype.visitApiNamespace = function (apiNamespace, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiNamespace.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var membersNode = {};
+        for (var _i = 0, _a = apiNamespace.getSortedMemberItems(); _i &lt; _a.length; _i++) {
+            var apiItem = _a[_i];
+            this.visit(apiItem, membersNode);
+        }
+        var newNode = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiNamespace.kind),
+            deprecatedMessage: apiNamespace.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiNamespace.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiNamespace.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiNamespace.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta,
+            exports: membersNode
+        };
+        refObject[apiNamespace.name] = newNode;
+    };
+    ApiJsonGenerator.prototype.visitApiMember = <span class="fstat-no" title="function not covered" >function (apiMember, refObject) {</span>
+<span class="cstat-no" title="statement not covered" >        if (!apiMember.supportedName) {</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        refObject[apiMember.name] = 'apiMember-' + apiMember.getDeclaration().kind;</span>
+    };
+    ApiJsonGenerator.prototype.visitApiProperty = function (apiProperty, refObject) {
+        if (!apiProperty.supportedName) {
+            return;
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (apiProperty.getDeclaration().kind === ts.SyntaxKind.SetAccessor) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var newNode = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiProperty.kind),
+            isOptional: !!apiProperty.isOptional,
+            isReadOnly: !!apiProperty.isReadOnly,
+            isStatic: !!apiProperty.isStatic,
+            type: apiProperty.type,
+            deprecatedMessage: apiProperty.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiProperty.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiProperty.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiProperty.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+        refObject[apiProperty.name] = newNode;
+    };
+    ApiJsonGenerator.prototype.visitApiModuleVariable = function (apiModuleVariable, refObject) {
+        var newNode = {
+            kind: ApiJsonFile_1.default.convertKindToJson(apiModuleVariable.kind),
+            type: apiModuleVariable.type,
+            value: apiModuleVariable.value,
+            deprecatedMessage: apiModuleVariable.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            summary: apiModuleVariable.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            remarks: apiModuleVariable.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+            isBeta: apiModuleVariable.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+        };
+        refObject[apiModuleVariable.name] = newNode;
+    };
+    ApiJsonGenerator.prototype.visitApiMethod = function (apiMethod, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiMethod.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        for (var _i = 0, _a = apiMethod.params; _i &lt; _a.length; _i++) {
+            var param = _a[_i];
+            this.visitApiParam(param, apiMethod.documentation.parameters[param.name]);
+        }
+        var newNode;
+        if (apiMethod.name === '__constructor') {
+            newNode = {
+                kind: ApiJsonFile_1.default.convertKindToJson(ApiItem_1.ApiItemKind.Constructor),
+                signature: apiMethod.getDeclarationLine(),
+                parameters: apiMethod.documentation.parameters,
+                deprecatedMessage: apiMethod.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+                summary: apiMethod.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+                remarks: apiMethod.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[]</span>
+            };
+        }
+        else {
+            var returnValueNode = {
+                type: apiMethod.returnType,
+                description: apiMethod.documentation.returnsMessage
+            };
+            newNode = {
+                kind: ApiJsonFile_1.default.convertKindToJson(apiMethod.kind),
+                signature: apiMethod.getDeclarationLine(),
+                accessModifier: apiMethod.accessModifier ? ApiMember_1.AccessModifier[apiMethod.accessModifier].toLowerCase() : <span class="branch-1 cbranch-no" title="branch not covered" >'',</span>
+                isOptional: !!apiMethod.isOptional,
+                isStatic: !!apiMethod.isStatic,
+                returnValue: returnValueNode,
+                parameters: apiMethod.documentation.parameters,
+                deprecatedMessage: apiMethod.documentation.deprecatedMessage || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+                summary: apiMethod.documentation.summary || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+                remarks: apiMethod.documentation.remarks || <span class="branch-1 cbranch-no" title="branch not covered" >[],</span>
+                isBeta: apiMethod.documentation.releaseTag === ApiDocumentation_1.ReleaseTag.Beta
+            };
+        }
+        refObject[apiMethod.name] = newNode;
+    };
+    ApiJsonGenerator.prototype.visitApiParam = function (apiParam, refObject) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiParam.supportedName) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        if (refObject) {
+            refObject.isOptional = apiParam.isOptional;
+            refObject.isSpread = apiParam.isSpread;
+            refObject.type = apiParam.type;
+        }
+    };
+    ApiJsonGenerator._methodCounter = 0;
+    ApiJsonGenerator._MEMBERS_KEY = 'members';
+    ApiJsonGenerator._EXPORTS_KEY = 'exports';
+    return ApiJsonGenerator;
+}(ApiItemVisitor_1.default));
+exports.default = ApiJsonGenerator;
+&nbsp;
+//# sourceMappingURL=ApiJsonGenerator.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

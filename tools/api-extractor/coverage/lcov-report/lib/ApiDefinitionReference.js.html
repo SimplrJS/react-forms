@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\ApiDefinitionReference.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> ApiDefinitionReference.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">94.64% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>53/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">90.91% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>20/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">94.64% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>53/56</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">50×</span>
+<span class="cline-any cline-yes">50×</span>
+<span class="cline-any cline-yes">50×</span>
+<span class="cline-any cline-yes">50×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">50×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43×</span>
+<span class="cline-any cline-yes">43×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">34×</span>
+<span class="cline-any cline-yes">34×</span>
+<span class="cline-any cline-yes">34×</span>
+<span class="cline-any cline-yes">34×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43×</span>
+<span class="cline-any cline-yes">43×</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">44×</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * {@inheritdoc IApiDefinintionReferenceParts}
+ */
+var ApiDefinitionReference = (function () {
+    function ApiDefinitionReference(parts) {
+        this.scopeName = parts.scopeName;
+        this.packageName = parts.packageName;
+        this.exportName = parts.exportName;
+        this.memberName = parts.memberName;
+    }
+    /**
+     * Creates an ApiDefinitionReference instance given strings that symbolize the public
+     * properties of ApiDefinitionReference.
+     */
+    ApiDefinitionReference.createFromParts = function (parts) {
+        return new ApiDefinitionReference(parts);
+    };
+    /**
+     * Takes an API reference expression of the form '@scopeName/packageName:exportName.memberName'
+     * and deconstructs it into an IApiDefinitionReference interface object.
+     * @returns the ApiDefinitionReference, or undefined if an error was reported.
+     */
+    ApiDefinitionReference.createFromString = function (apiReferenceExpr, reportError) {
+        if (!apiReferenceExpr || apiReferenceExpr.split(' ').length &gt; 1) {
+            reportError('An API item reference must use the notation: "@scopeName/packageName:exportName.memberName"');
+            return undefined;
+        }
+        var apiDefRefParts = {
+            scopeName: '',
+            packageName: '',
+            exportName: '',
+            memberName: ''
+        };
+        // E.g. @microsoft/sp-core-library:Guid.equals
+        var parts = apiReferenceExpr.match(ApiDefinitionReference._packageRegEx);
+        if (parts) {
+            // parts[1] is of the form ‘@microsoft/sp-core-library’ or ‘sp-core-library’
+            var scopePackageName = ApiDefinitionReference.parseScopedPackageName(parts[1]);
+            apiDefRefParts.scopeName = scopePackageName.scope;
+            apiDefRefParts.packageName = scopePackageName.package;
+            apiReferenceExpr = parts[2]; // e.g. Guid.equals
+        }
+        // E.g. Guid.equals
+        parts = apiReferenceExpr.match(ApiDefinitionReference._memberRegEx);
+        if (parts) {
+            apiDefRefParts.exportName = parts[1]; // e.g. Guid, can never be undefined
+            apiDefRefParts.memberName = parts[2] ? parts[2] : ''; // e.g. equals
+        }
+        else {
+            // the export name is required
+            reportError("The API item reference contains an invalid \"exportName.memberName\""
+                + (" expression: \"" + apiReferenceExpr + "\""));
+            return undefined;
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiReferenceExpr.match(ApiDefinitionReference._exportRegEx)) {
+<span class="cstat-no" title="statement not covered" >            reportError("The API item reference contains invalid characters: \"" + apiReferenceExpr + "\"");</span>
+<span class="cstat-no" title="statement not covered" >            return undefined;</span>
+        }
+        return ApiDefinitionReference.createFromParts(apiDefRefParts);
+    };
+    /**
+     * For a scoped NPM package name this separates the scope and package parts.  For example:
+     * parseScopedPackageName('@my-scope/myproject') = { scope: '@my-scope', package: 'myproject' }
+     * parseScopedPackageName('myproject') = { scope: '', package: 'myproject' }
+     */
+    ApiDefinitionReference.parseScopedPackageName = function (scopedName) {
+        if (scopedName.substr(0, 1) !== '@') {
+            return { scope: '', package: scopedName };
+        }
+        var slashIndex = scopedName.indexOf('/');
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (slashIndex &gt;= 0) {
+            return { scope: scopedName.substr(0, slashIndex), package: scopedName.substr(slashIndex + 1) };
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            throw new Error('Invalid scoped name: ' + scopedName);</span>
+        }
+    };
+    /**
+     * Stringifies the ApiDefinitionReferenceOptions up and including the
+     * scope and package name.
+     *
+     * Example output: '@microsoft/Utilities'
+     */
+    ApiDefinitionReference.prototype.toScopePackageString = function () {
+        var result = '';
+        if (this.scopeName) {
+            result += this.scopeName + "/" + this.packageName;
+        }
+        else if (this.packageName) {
+            result += this.packageName;
+        }
+        return result;
+    };
+    /**
+     * Stringifies the ApiDefinitionReferenceOptions up and including the
+     * scope, package and export name.
+     *
+     * Example output: '@microsoft/Utilities.Parse'
+     */
+    ApiDefinitionReference.prototype.toExportString = function () {
+        var result = this.toScopePackageString();
+        if (result) {
+            result += ':';
+        }
+        return result + ("" + this.exportName);
+    };
+    /**
+     * Stringifies the ApiDefinitionReferenceOptions up and including the
+     * scope, package, export and member name.
+     *
+     * Example output: '@microsoft/Utilities.Parse.parseJsonToString'
+     */
+    ApiDefinitionReference.prototype.toMemberString = function () {
+        return this.toExportString() + ("." + this.memberName);
+    };
+    /**
+     * Splits an API reference expression into two parts, first part is the scopename/packageName and
+     * the second part is the exportName.memberName.
+     */
+    ApiDefinitionReference._packageRegEx = /^([^:]*)\:(.*)$/;
+    /**
+     * Splits the exportName.memberName into two respective parts.
+     */
+    ApiDefinitionReference._memberRegEx = /^([^.|:]*)(?:\.(\w+))?$/;
+    /**
+     * Used to ensure that the export name contains only text characters.
+     */
+    ApiDefinitionReference._exportRegEx = /^\w+/;
+    return ApiDefinitionReference;
+}());
+exports.default = ApiDefinitionReference;
+&nbsp;
+//# sourceMappingURL=ApiDefinitionReference.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
