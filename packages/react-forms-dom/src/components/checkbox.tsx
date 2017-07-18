@@ -7,9 +7,7 @@ import { FieldOnChangeCallback } from "../contracts/field";
 import {
     HTMLElementProps
 } from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { FormProps } from "./form";
 
 export type CheckBoxOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 

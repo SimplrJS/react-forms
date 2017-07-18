@@ -4,12 +4,8 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import {
-    HTMLElementProps
-} from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { HTMLElementProps } from "../contracts/field";
+import { FormProps } from "./form";
 
 export type PasswordOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 

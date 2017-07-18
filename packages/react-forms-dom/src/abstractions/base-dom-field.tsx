@@ -5,7 +5,7 @@ import {
     DomComponentData,
     DomFieldDetails
 } from "../contracts/field";
-import { FormProps } from "../contracts/form";
+import { BaseFormProps } from "../contracts/form";
 
 export type BaseDomFieldState = BaseFieldState;
 
@@ -31,7 +31,7 @@ export abstract class BaseDomField<TProps extends DomFieldProps, TState extends 
     }
 
     protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
-        const formProps = this.FormStore.GetState().Form.Props as FormProps;
+        const formProps = this.FormStore.GetState().Form.Props as BaseFormProps;
         if (this.props.template != null) {
             return this.props.template;
         }

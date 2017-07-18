@@ -10,9 +10,7 @@ import {
     FieldOnChangeCallback,
     HTMLElementProps
 } from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { FormProps } from "./form";
 
 export type TextAreaOnChangeCallback = FieldOnChangeCallback<HTMLTextAreaElement>;
 

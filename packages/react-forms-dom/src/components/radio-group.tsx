@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import { BaseField, BaseFieldState } from "@simplr/react-forms";
 import { FieldProps, FieldChildContext, FieldValue } from "@simplr/react-forms/contracts";
 import { HTMLElementProps, DomFieldTemplateCallback } from "../contracts/field";
-import { FormProps } from "../contracts/form";
+import { FormProps } from "./form";
 import { BaseDomField } from "../abstractions";
 import { TypedRecord } from "typed-immutable-record";
 
