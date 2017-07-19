@@ -56,6 +56,7 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState, HTMLInput
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="email"
             name={this.FieldId}
             value={this.Value}
@@ -63,7 +64,6 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState, HTMLInput
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

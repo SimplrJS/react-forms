@@ -81,8 +81,8 @@ export class Form extends BaseForm<FormProps, {}> {
     public render(): JSX.Element {
         return <form
             ref={this.SetElementRef}
-            onSubmit={this.FormSubmitHandler}
             {...this.GetHTMLProps(this.props) }
+            onSubmit={this.FormSubmitHandler}
         >
             {this.props.children}
         </form>;
