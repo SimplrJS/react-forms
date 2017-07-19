@@ -66,6 +66,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="text"
             name={this.FieldId}
             value={this.Value}
@@ -73,7 +74,6 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

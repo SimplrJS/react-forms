@@ -66,13 +66,13 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
     public renderField(): JSX.Element {
         return <textarea
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

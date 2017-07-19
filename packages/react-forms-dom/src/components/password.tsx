@@ -56,6 +56,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="password"
             name={this.FieldId}
             value={this.Value}
@@ -63,7 +64,6 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

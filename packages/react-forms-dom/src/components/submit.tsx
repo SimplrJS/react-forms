@@ -33,12 +33,12 @@ export class Submit extends BaseFormButton<SubmitProps, BaseFormButtonStateRecor
 
     public render(): JSX.Element {
         return <button
+            {...this.GetHTMLProps(this.props) }
             type="submit"
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
             onClick={this.OnClick}
-            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;

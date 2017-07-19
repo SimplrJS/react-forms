@@ -116,13 +116,13 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
     public renderField(): JSX.Element {
         return <select
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             name={this.FieldId}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </select>;

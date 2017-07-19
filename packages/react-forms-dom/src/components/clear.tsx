@@ -35,12 +35,12 @@ export class Clear extends BaseFormButton<ClearProps, BaseFormButtonStateRecord>
 
     public render(): JSX.Element {
         return <button
+            {...this.GetHTMLProps(this.props) }
             type="button"
             className={this.ClassName}
             style={this.InlineStyles}
             disabled={this.Disabled}
             onClick={this.OnButtonClick}
-            {...this.GetHTMLProps(this.props) }
         >
             {this.props.children}
         </button>;
