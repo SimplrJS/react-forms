@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 
 import { FormStore } from "../stores/form-store";
 import { StateChanged } from "../actions/form-store";
+import { FormRegistered } from "../actions/form-stores-handler";
 import { FSHContainer } from "../stores/form-stores-handler";
 import { EventSubscription } from "action-emitter";
 
@@ -56,6 +57,19 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
             throw new Error(`@simplr/react-forms: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
         }
 
+        if (this.FormStore == null) {
+            const fshContainerSubscription = FSHContainer.FormStoresHandler.addListener(FormRegistered, action => {
+                if (this.FormStore != null) {
+                    this.addFormStoreListener();
+                    fshContainerSubscription.remove();
+                }
+            });
+        } else {
+            this.addFormStoreListener();
+        }
+    }
+
+    private addFormStoreListener(): void {
         this.eventStoreSubscription = this.FormStore.addListener(StateChanged, this.OnStoreUpdated.bind(this));
     }
 
