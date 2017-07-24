@@ -157,9 +157,9 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             };
             const parsedValue = this.ParseValue(modifierValue);
 
-            const result: ModifierValue = {
-                Value: this.NormalizeValue(parsedValue.Value)
-            };
+            const result: ModifierValue = modifierValue;
+
+            result.Value = this.NormalizeValue(parsedValue.Value);
 
             if (parsedValue.TransitionalValue != null) {
                 result.TransitionalValue = this.NormalizeValue(parsedValue.TransitionalValue);
@@ -167,7 +167,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
             return result;
         }
-        return value;
+
+        return {
+            Value: value
+        };
     }
 
     protected ProcessValueFromStore(value: FieldValue): FieldValue {
