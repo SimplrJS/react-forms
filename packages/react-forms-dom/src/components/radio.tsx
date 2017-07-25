@@ -150,13 +150,13 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="radio"
             checked={(this.state.Value === this.props.value)}
             onChange={this.OnChangeHandler}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
             disabled={this.Disabled}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 
