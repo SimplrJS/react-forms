@@ -199,10 +199,30 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public UnregisterFieldsArray(fieldsGroupId: string): void {
+    public UnregisterFieldsArray(fieldsArrayId: string): void {
         // Remove fields array from form store state
         this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.remove(fieldsGroupId);
+            // Filter out fields that are in FieldArray that's being unregistered
+            state.Fields = state.Fields.filter(x => {
+                // Never...
+                if (x == null) {
+                    return false;
+                }
+                // Leave all fields that are not in a FieldsGroup
+                if (x.FieldsGroup == null) {
+                    return true;
+                }
+                console.log(`Field ${x.Name} is in ${x.FieldsGroup.Id}.`);
+                if (x.FieldsGroup.Id === fieldsArrayId) {
+                    console.log(`Removing field from ${fieldsArrayId} FieldArray.`);
+                    return false;
+                }
+                return true;
+            }).toMap();
+
+
+
+            state.FieldsGroups = state.FieldsGroups.remove(fieldsArrayId);
         });
     }
 

@@ -48,10 +48,35 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
     public static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
-        name: "",
-        // By default, fields data should be retained, even if the field is unmounted
-        destroyOnUnmount: false
+        name: ""
     };
+
+    protected get DestroyOnUnmount(): boolean {
+        // If the field is in FieldsArray
+        // It's going to be removed in FormStore.UnregisterFieldsArray method
+
+        const props: TProps = this.props;
+        // If destroyOnUnmount is not provided in props
+        if (props.destroyOnUnmount == null) {
+            // By default, fields data should be retained, even if the field is unmounted
+            return false;
+        }
+        return props.destroyOnUnmount;
+    }
+
+    protected get IsInFieldsArray(): boolean {
+        if (this.context.FieldsGroupId != null) {
+            const formState = this.FormStore.GetState();
+            const fg = formState.FieldsGroups.get(this.context.FieldsGroupId);
+            if (fg == null) {
+                throw new Error();
+            }
+            if (fg.ArrayName != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     protected get DefaultModifiers(): JSX.Element[] {
         return [];
@@ -96,6 +121,12 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (this.FormId == null) {
             throw new Error("@simplr/react-forms: Field must be used inside a Form component.");
         }
+
+        // If field is in FieldsArray and destroyOnUnmount is defined
+        if (this.IsInFieldsArray && this.props.destroyOnUnmount != null) {
+            throw new Error("@simplr/react-forms: destroyOnUnmount always defaults to false, when field is inside FieldsArray. Remove destroyOnUnmount prop.");
+        }
+
         this.StoreEventSubscription =
             this.FormStore.addListener<FormStoreActions.StateChanged>(
                 FormStoreActions.StateChanged,
@@ -117,7 +148,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (this.StoreEventSubscription != null) {
             this.StoreEventSubscription.remove();
         }
-        if (this.FormStore != null && this.props.destroyOnUnmount) {
+        if (this.FormStore != null && this.DestroyOnUnmount) {
             this.FormStore.UnregisterField(this.FieldId);
         }
     }

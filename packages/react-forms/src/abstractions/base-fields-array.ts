@@ -28,6 +28,10 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         FieldsGroupProps: PropTypes.object
     };
 
+    public static defaultProps: Partial<FieldsArrayProps> = {
+        destroyOnUnmount: true
+    };
+
     protected get FormId(): string {
         return this.context.FormId;
     }
