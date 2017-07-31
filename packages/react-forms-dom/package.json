@@ -31,6 +31,7 @@
     "!node_modules/**"
   ],
   "devDependencies": {
+    "@simplr/mvdir": "0.0.2",
     "@types/chokidar": "^1.7.0",
     "@types/enzyme": "^2.8.1",
     "@types/gulp": "^4.0.4",
@@ -44,13 +45,12 @@
     "jest": "^20.0.4",
     "jest-enzyme": "^3.4.0",
     "react-test-renderer": "^15.6.1",
-    "@simplr/mvdir": "0.0.2",
     "sinon": "^2.3.6",
     "source-map-loader": "^0.2.1",
     "ts-jest": "^20.0.6",
     "ts-loader": "^2.2.2",
     "tslint": "^5.4.3",
-    "typescript": "^2.4.1",
+    "typescript": "^2.4.2",
     "uglify-js": "^3.0.23",
     "webpack": "^3.0.0"
   },
