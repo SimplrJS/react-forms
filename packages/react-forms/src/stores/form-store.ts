@@ -174,16 +174,17 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldsGroupRegistered(this.FormId, fieldsGroupId));
     }
 
-    public RegisterFieldsArray(fieldsArrayId: string, name: string, index: number, parentId?: string): void {
+    public RegisterFieldsArray(fieldsArrayId: string, name: string, weight?: number, parentId?: string): void {
         if (this.State.Fields.has(fieldsArrayId) ||
             this.State.FieldsGroups.has(fieldsArrayId)) {
-            throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' already exists in form '${this.FormId}.`);
+            throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' name already exists in form '${this.FormId}.`);
         }
 
         const faState: FieldsGroupStoreState = {
             Name: name,
             ArrayName: name,
-            Parent: parentId
+            Parent: parentId,
+            Weight: weight
         };
 
         const faStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(faState);
@@ -283,6 +284,18 @@ export class FormStore extends ActionEmitter {
         });
 
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
+    }
+
+    public UpdateFieldsArrayWeight(fieldsArrayId: string, weight?: number): void {
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.withMutations(fieldGroups => {
+                fieldGroups.update(fieldsArrayId, faState =>
+                    faState.merge({
+                        Weight: weight
+                    } as FieldsGroupStoreState));
+            });
+            return state;
+        });
     }
 
     public UpdateFieldValue(fieldId: string, newValue: ModifierValue): void {
@@ -714,19 +727,73 @@ export class FormStore extends ActionEmitter {
         });
 
         const fieldsGroups = this.State.FieldsGroups.filter(x => x != null && x.Parent === fieldsGroupId);
+
+        interface FieldArrayItem {
+            State: FieldsGroupStoreState;
+            FieldId: string;
+        }
+
+        // Use mutable structures for better performance
+        const fieldsArrays: { [key: string]: FieldArrayItem[] } = {};
+
         fieldsGroups.forEach((fieldsGroup, fieldId) => {
             if (fieldsGroup == null || fieldId == null) {
                 return;
             }
-            if (fieldsGroup.ArrayName != null) {
-                if (result[fieldsGroup.ArrayName] == null) {
-                    result[fieldsGroup.ArrayName] = [];
-                }
-                result[fieldsGroup.ArrayName].push(this.BuildFormObject(fieldId));
-            } else {
+
+            // FieldsGroup
+            if (fieldsGroup.ArrayName == null) {
                 result[fieldsGroup.Name] = this.BuildFormObject(fieldId);
+                return;
             }
+
+            // FieldsArray, delay processing
+            if (fieldsArrays[fieldsGroup.ArrayName] == null) {
+                fieldsArrays[fieldsGroup.ArrayName] = [];
+            }
+            fieldsArrays[fieldsGroup.ArrayName].push({
+                State: fieldsGroup,
+                FieldId: fieldId
+            });
         });
+
+        for (const key in fieldsArrays) {
+            if (!fieldsArrays.hasOwnProperty(key)) {
+                continue;
+            }
+
+            const faItems = fieldsArrays[key];
+            // Sort fields by weight
+            faItems.sort((a, b) => {
+                let weightA = a.State.Weight;
+                if (weightA == null) {
+                    weightA = Number.MAX_SAFE_INTEGER;
+                }
+                let weightB = b.State.Weight;
+                if (weightB == null) {
+                    weightB = Number.MAX_SAFE_INTEGER;
+                }
+
+                if (weightA < weightB) {
+                    return -1;
+                }
+                if (weightA > weightB) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+
+            for (const faItem of faItems) {
+                // ArrayName is always defined, because only arrays were added into fieldsArrays dictionary.
+                const arrayName = faItem.State.ArrayName!;
+                if (result[arrayName] == null) {
+                    result[arrayName] = [];
+                }
+                result[arrayName].push(this.BuildFormObject(faItem.FieldId));
+            }
+        }
+
         return result;
     }
 

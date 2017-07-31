@@ -1,5 +1,4 @@
 import { TypedRecord } from "typed-immutable-record";
-import { FieldsArrayData } from "./fields-array";
 
 export interface FieldsGroupProps {
     name: string;
@@ -12,6 +11,7 @@ export interface FieldsGroupStoreState {
     Name: string;
     Parent?: string;
     ArrayName?: string;
+    Weight?: number;
 }
 
 export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStoreStateRecord>, FieldsGroupStoreState { }
