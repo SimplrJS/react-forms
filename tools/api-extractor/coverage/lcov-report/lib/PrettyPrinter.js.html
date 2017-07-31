@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\PrettyPrinter.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> PrettyPrinter.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">54.41% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>37/68</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">56% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>14/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30.77% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">55.22% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>37/67</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-yes">387×</span>
+<span class="cline-any cline-yes">387×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-yes">42×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">309×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">309×</span>
+<span class="cline-any cline-yes">309×</span>
+<span class="cline-any cline-yes">309×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">309×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">129×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">180×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">180×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">86×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">94×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:no-bitwise */
+var ts = require("typescript");
+/**
+  * Some helper functions for formatting certain TypeScript Compiler API expressions.
+  */
+var PrettyPrinter = (function () {
+<span class="fstat-no" title="function not covered" >    function PrettyPrinter() {</span>
+    }
+    /**
+      * Used for debugging only.  This dumps the TypeScript Compiler's abstract syntax tree.
+      */
+    PrettyPrinter.dumpTree = <span class="fstat-no" title="function not covered" >function (node, indent) {</span>
+<span class="cstat-no" title="statement not covered" >        if (indent === void 0) { <span class="cstat-no" title="statement not covered" >indent = ''; </span>}</span>
+<span class="cstat-no" title="statement not covered" >        var kindName = ts.SyntaxKind[node.kind];</span>
+<span class="cstat-no" title="statement not covered" >        var trimmedText;</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            trimmedText = node.getText()</span>
+                .replace(/[\r\n]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+<span class="cstat-no" title="statement not covered" >            if (trimmedText.length &gt; 100) {</span>
+<span class="cstat-no" title="statement not covered" >                trimmedText = trimmedText.substr(0, 97) + '...';</span>
+            }
+        }
+        catch (e) {
+<span class="cstat-no" title="statement not covered" >            trimmedText = '(error getting text)';</span>
+        }
+<span class="cstat-no" title="statement not covered" >        console.log("" + indent + kindName + ": [" + trimmedText + "]");</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >            for (var _i = 0, _a = node.getChildren(); _i &lt; _a.length; _i++) {</span>
+<span class="cstat-no" title="statement not covered" >                var childNode = _a[_i];</span>
+<span class="cstat-no" title="statement not covered" >                PrettyPrinter.dumpTree(childNode, indent + '  ');</span>
+            }
+        }
+        catch (e) {
+            // sometimes getChildren() throws an exception
+        }
+    };
+    /**
+     * Returns a text representation of the enum flags.
+     */
+    PrettyPrinter.getSymbolFlagsString = <span class="fstat-no" title="function not covered" >function (flags) {</span>
+<span class="cstat-no" title="statement not covered" >        return PrettyPrinter._getFlagsString(flags, PrettyPrinter._getSymbolFlagString);</span>
+    };
+    /**
+     * Returns a text representation of the enum flags.
+     */
+    PrettyPrinter.getTypeFlagsString = <span class="fstat-no" title="function not covered" >function (flags) {</span>
+<span class="cstat-no" title="statement not covered" >        return PrettyPrinter._getFlagsString(flags, PrettyPrinter._getTypeFlagString);</span>
+    };
+    /**
+      * Returns the first line of a potentially nested declaration.
+      * For example, for a class definition this might return
+      * "class Blah&lt;T&gt; extends BaseClass" without the curly braces.
+      * For example, for a function definition, this might return
+      * "test(): void;" without the curly braces.
+      */
+    PrettyPrinter.getDeclarationSummary = function (node) {
+        var result = '';
+        var previousSyntaxKind = ts.SyntaxKind.Unknown;
+        for (var _i = 0, _a = node.getChildren(); _i &lt; _a.length; _i++) {
+            var childNode = _a[_i];
+            switch (childNode.kind) {
+                case ts.SyntaxKind.JSDocComment:
+                    break;
+                case ts.SyntaxKind.Block:
+                    result += ';';
+                    break;
+                default:
+                    if (PrettyPrinter._wantSpaceAfter(previousSyntaxKind)
+                        &amp;&amp; PrettyPrinter._wantSpaceBefore(childNode.kind)) {
+                        result += ' ';
+                    }
+                    result += childNode.getText();
+                    previousSyntaxKind = childNode.kind;
+                    break;
+            }
+        }
+        return result;
+    };
+    /**
+     * Throws an exception.  Use this only for unexpected errors, as it may ungracefully terminate the process;
+     * ApiItem.reportError() is generally a better option.
+     */
+    PrettyPrinter.throwUnexpectedSyntaxError = <span class="fstat-no" title="function not covered" >function (errorNode, message) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error(PrettyPrinter.formatFileAndLineNumber(errorNode) + ': ' + message);</span>
+    };
+    /**
+     * Returns a string such as this, based on the context information in the provided node:
+     *   "[C:\Folder\File.ts#123]"
+     */
+    PrettyPrinter.formatFileAndLineNumber = <span class="fstat-no" title="function not covered" >function (node) {</span>
+<span class="cstat-no" title="statement not covered" >        var sourceFile = node.getSourceFile();</span>
+<span class="cstat-no" title="statement not covered" >        var lineAndCharacter = sourceFile.getLineAndCharacterOfPosition(node.getStart());</span>
+<span class="cstat-no" title="statement not covered" >        return "[" + sourceFile.fileName + "#" + lineAndCharacter.line + "]";</span>
+    };
+    PrettyPrinter._getSymbolFlagString = <span class="fstat-no" title="function not covered" >function (flag) {</span>
+<span class="cstat-no" title="statement not covered" >        return ts.SymbolFlags[flag];</span>
+    };
+    PrettyPrinter._getTypeFlagString = <span class="fstat-no" title="function not covered" >function (flag) {</span>
+<span class="cstat-no" title="statement not covered" >        return ts.TypeFlags[flag];</span>
+    };
+    PrettyPrinter._getFlagsString = <span class="fstat-no" title="function not covered" >function (flags, func) {</span>
+        /* tslint:disable:no-any */
+<span class="cstat-no" title="statement not covered" >        var result = '';</span>
+<span class="cstat-no" title="statement not covered" >        var flag = 1;</span>
+<span class="cstat-no" title="statement not covered" >        for (var bit = 0; bit &lt; 32; ++bit) {</span>
+<span class="cstat-no" title="statement not covered" >            if (flags &amp; flag) {</span>
+<span class="cstat-no" title="statement not covered" >                if (result !== '') {</span>
+<span class="cstat-no" title="statement not covered" >                    result += ', ';</span>
+                }
+<span class="cstat-no" title="statement not covered" >                result += func(flag);</span>
+            }
+<span class="cstat-no" title="statement not covered" >            flag &lt;&lt;= 1;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return result === '' ? '???' : result;</span>
+        /* tslint:enable:no-any */
+    };
+    PrettyPrinter._wantSpaceAfter = function (syntaxKind) {
+        switch (syntaxKind) {
+            case ts.SyntaxKind.Unknown:
+            case ts.SyntaxKind.OpenParenToken:
+            case ts.SyntaxKind.CloseParenToken:
+                return false;
+        }
+        return true;
+    };
+    PrettyPrinter._wantSpaceBefore = function (syntaxKind) {
+        switch (syntaxKind) {
+<span class="branch-0 cbranch-no" title="branch not covered" >            case ts.SyntaxKind.Unknown:</span>
+            case ts.SyntaxKind.OpenParenToken:
+            case ts.SyntaxKind.CloseParenToken:
+            case ts.SyntaxKind.ColonToken:
+            case ts.SyntaxKind.SemicolonToken:
+                return false;
+        }
+        return true;
+    };
+    return PrettyPrinter;
+}());
+exports.default = PrettyPrinter;
+&nbsp;
+//# sourceMappingURL=PrettyPrinter.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

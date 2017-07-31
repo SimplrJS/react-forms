@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\DocElementParser.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">lib/</a> DocElementParser.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.67% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>104/120</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.46% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>47/57</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.89% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.67% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>104/120</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">258×</span>
+<span class="cline-any cline-yes">258×</span>
+<span class="cline-any cline-yes">176×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">170×</span>
+<span class="cline-any cline-yes">170×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">258×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">397×</span>
+<span class="cline-any cline-yes">397×</span>
+<span class="cline-any cline-yes">397×</span>
+<span class="cline-any cline-yes">397×</span>
+<span class="cline-any cline-yes">658×</span>
+<span class="cline-any cline-yes">658×</span>
+<span class="cline-any cline-yes">227×</span>
+<span class="cline-any cline-yes">227×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">431×</span>
+<span class="cline-any cline-yes">171×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">170×</span>
+<span class="cline-any cline-yes">170×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">260×</span>
+<span class="cline-any cline-yes">55×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">205×</span>
+<span class="cline-any cline-yes">205×</span>
+<span class="cline-any cline-yes">205×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">397×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-yes">30×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+Object.defineProperty(exports, "__esModule", { value: true });
+var ApiDefinitionReference_1 = require("./ApiDefinitionReference");
+var ApiItem_1 = require("./definitions/ApiItem");
+var Token_1 = require("./Token");
+var DocElementParser = (function () {
+<span class="fstat-no" title="function not covered" >    function DocElementParser() {</span>
+    }
+    DocElementParser.getAsText = function (collection, reportError) {
+        var text = '';
+        collection.forEach(function (docElement) {
+            switch (docElement.kind) {
+                case 'textDocElement':
+                    text += docElement.value + " ";
+                    break;
+                case 'linkDocElement':
+                    // links don't count towards the summary
+                    break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                case 'seeDocElement':</span>
+                    // see doesn't count towards the summary
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+<span class="branch-3 cbranch-no" title="branch not covered" >                default:</span>
+<span class="cstat-no" title="statement not covered" >                    reportError('Unexpected item in IDocElement collection');</span>
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+            }
+        });
+        return text.trim();
+    };
+    DocElementParser.makeTextElement = function (text) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!text) {
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        return { kind: 'textDocElement', value: text };
+    };
+    DocElementParser.parse = function (documentation, tokenizer) {
+        var docElements = [];
+        var parsing = true;
+        var token;
+        while (parsing) {
+            token = tokenizer.peekToken();
+            if (!token) {
+                parsing = false; // end of stream
+                break;
+            }
+            if (token.type === Token_1.TokenType.BlockTag) {
+                switch (token.tag) {
+                    case '@see':
+                        tokenizer.getToken();
+                        docElements.push({
+                            kind: 'seeDocElement',
+                            seeElements: this.parse(documentation, tokenizer)
+                        });
+                        break;
+                    default:
+                        parsing = false; // end of summary tokens
+                        break;
+                }
+            }
+            else if (token.type === Token_1.TokenType.InlineTag) {
+                switch (token.tag) {
+                    case '@inheritdoc':
+                        tokenizer.getToken();
+                        if (docElements.length &gt; 0 || documentation.summary.length &gt; 0) {
+                            documentation.reportError('A summary block is not allowed here,'
+                                + ' because the @inheritdoc target provides the summary');
+                        }
+                        documentation.incompleteInheritdocs.push(token);
+                        documentation.isDocInherited = true;
+                        break;
+                    case '@link':
+                        var linkDocElement = this.parseLinkTag(documentation, token);
+                        if (linkDocElement) {
+                            // Push to docElements to retain position in the documentation
+                            docElements.push(linkDocElement);
+                            if (linkDocElement.referenceType === 'code') {
+                                documentation.incompleteLinks.push(linkDocElement);
+                            }
+                        }
+                        tokenizer.getToken(); // get the link token
+                        break;
+<span class="branch-2 cbranch-no" title="branch not covered" >                    default:</span>
+<span class="cstat-no" title="statement not covered" >                        parsing = false;</span>
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                }
+            }
+            else <span class="missing-if-branch" title="else path not taken" >E</span>if (token.type === Token_1.TokenType.Text) {
+                docElements.push({ kind: 'textDocElement', value: token.text });
+                tokenizer.getToken();
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                documentation.reportError("Unidentifiable Token " + token.type + " " + token.tag + " \"" + token.text + "\"");</span>
+            }
+        }
+        return docElements;
+    };
+    /**
+     * This method parses the semantic information in an \@link JSDoc tag, creates and returns a
+     * linkDocElement with the corresponding information. If the corresponding inline tag \@link is
+     * not formatted correctly an error will be reported.
+     *
+     * The format for the \@link tag is {\@link URL or API defintion reference | display text}, where
+     * the '|' is only needed if the optional display text is given.
+     *
+     * Examples:
+     * \{@link http://microsoft.com | microsoft home \}
+     * \{@link http://microsoft.com \}
+     * \{@link @microsoft/sp-core-library:Guid.newGuid | new Guid Object \}
+     * \{@link @microsoft/sp-core-library:Guid.newGuid \}
+     */
+    DocElementParser.parseLinkTag = function (documentation, tokenItem) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!tokenItem.text) {
+<span class="cstat-no" title="statement not covered" >            documentation.reportError('The {@link} tag must include a URL or API item reference');</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        // Make sure there are no extra pipes
+        var pipeSplitContent = tokenItem.text.split('|').map(function (value) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (value) {
+                return value.trim();
+            }
+        });
+        if (pipeSplitContent.length &gt; 2) {
+            documentation.reportError('The {@link} tag contains more than one pipe character ("|")');
+            return undefined;
+        }
+        var addressPart = pipeSplitContent[0];
+        var displayTextPart = pipeSplitContent.length &gt; 1 ? pipeSplitContent[1] : '';
+        // Try to guess if the tokenContent is a link or API definition reference
+        var linkDocElement;
+        if (this._hrefRegEx.test(addressPart)) {
+            // Make sure only a single URL is given
+            if (addressPart.indexOf(' ') &gt;= 0) {
+                documentation.reportError('The {@link} tag contains additional spaces after the URL;'
+                    + ' if the URL contains spaces, encode them using %20; for display text, use a pipe delimiter ("|")');
+                return undefined;
+            }
+            linkDocElement = {
+                kind: 'linkDocElement',
+                referenceType: 'href',
+                targetUrl: addressPart
+                // ("value" will be assigned below)
+            };
+        }
+        else {
+            // we are processing an API definition reference
+            var apiDefitionRef = ApiDefinitionReference_1.default.createFromString(addressPart, documentation.reportError);
+            // Once we can locate local API definitions, an error should be reported here if not found.
+            if (!apiDefitionRef) {
+                return undefined;
+            }
+            linkDocElement = {
+                kind: 'linkDocElement',
+                referenceType: 'code',
+                scopeName: apiDefitionRef.scopeName,
+                packageName: apiDefitionRef.packageName,
+                exportName: apiDefitionRef.exportName,
+                memberName: apiDefitionRef.memberName
+                // ("value" will be assigned below)
+            };
+        }
+        // If a display name is given, ensure it only contains characters for words.
+        if (displayTextPart) {
+            var match = this._displayTextBadCharacterRegEx.exec(displayTextPart);
+            if (match) {
+                documentation.reportError("The {@link} tag's display text contains an unsupported"
+                    + (" character: \"" + match[0] + "\""));
+                return undefined;
+            }
+            // Full match is valid text
+            linkDocElement.value = displayTextPart;
+        }
+        else {
+            // If the display text is not explicitly provided, then use the address as the display text
+            linkDocElement.value = addressPart;
+        }
+        return linkDocElement;
+    };
+    /**
+     * This method parses the semantic information in an \@inheritdoc JSDoc tag and sets
+     * all the relevant documenation properties from the inherited doc onto the documenation
+     * of the current api item.
+     *
+     * The format for the \@inheritdoc tag is {\@inheritdoc scopeName/packageName:exportName.memberName}.
+     * For more information on the format see IInheritdocRef.
+     */
+    DocElementParser.parseInheritDoc = function (documentation, token, warnings) {
+        // Check to make sure the API definition reference is at most one string
+        var tokenChunks = token.text.split(' ');
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (tokenChunks.length &gt; 1) {
+<span class="cstat-no" title="statement not covered" >            documentation.reportError('The {@inheritdoc} tag does not match the expected pattern' +</span>
+                ' "{@inheritdoc @scopeName/packageName:exportName}"');
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        // Create the IApiDefinitionReference object
+        // Deconstruct the API reference expression 'scopeName/packageName:exportName.memberName'
+        var apiDefinitionRef = ApiDefinitionReference_1.default.createFromString(token.text, documentation.reportError);
+        // if API reference expression is formatted incorrectly then apiDefinitionRef will be undefined
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!apiDefinitionRef) {
+<span class="cstat-no" title="statement not covered" >            documentation.reportError("Incorrectly formatted API item reference: \"" + token.text + "\"");</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        // Atempt to locate the apiDefinitionRef
+        var resolvedApiItem = documentation.referenceResolver.resolve(apiDefinitionRef, documentation.extractor.package, warnings);
+        // If no resolvedApiItem found then nothing to inherit
+        // But for the time being set the summary to a text object
+        if (!resolvedApiItem) {
+            var textDocItem = {
+                kind: 'textDocElement',
+                value: "See documentation for " + tokenChunks[0]
+            };
+            documentation.summary = [textDocItem];
+            return;
+        }
+        // We are going to copy the resolvedApiItem's documentation
+        // We must make sure it's documentation can be completed,
+        // if we cannot, an error will be reported viathe documentation error handler.
+        // This will only be the case our resolvedApiItem was created from a local
+        // ApiItem. Resolutions from JSON will have an undefined 'apiItem' property.
+        // Example: a circular reference will report an error.
+        if (resolvedApiItem.apiItem) {
+            resolvedApiItem.apiItem.completeInitialization();
+        }
+        // inheritdoc found, copy over IDocBase properties
+        documentation.summary = resolvedApiItem.summary;
+        documentation.remarks = resolvedApiItem.remarks;
+        // Copy over detailed properties if neccessary
+        // Add additional cases if needed
+        switch (resolvedApiItem.kind) {
+            case ApiItem_1.ApiItemKind.Function:
+                documentation.parameters = resolvedApiItem.params;
+                documentation.returnsMessage = resolvedApiItem.returnsMessage;
+                break;
+<span class="branch-1 cbranch-no" title="branch not covered" >            case ApiItem_1.ApiItemKind.Method:</span>
+<span class="cstat-no" title="statement not covered" >                documentation.parameters = resolvedApiItem.params;</span>
+<span class="cstat-no" title="statement not covered" >                documentation.returnsMessage = resolvedApiItem.returnsMessage;</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+        // Check if inheritdoc is depreacted
+        // We need to check if this documentation has a deprecated message
+        // but it may not appear until after this token.
+        if (resolvedApiItem.deprecatedMessage.length &gt; 0) {
+            documentation.isDocInheritedDeprecated = true;
+        }
+    };
+    /**
+     * Used to validate the display text for an \@link tag.  The display text can contain any
+     * characters except for certain AEDoc delimiters: "@", "|", "{", "}".
+     * This RegExp matches the first bad character.
+     * Example: "Microsoft's {spec}" --&gt; "{"
+     */
+    DocElementParser._displayTextBadCharacterRegEx = /[@|{}]/;
+    /**
+     * Matches a href reference. This is used to get an idea whether a given reference is for an href
+     * or an API definition reference.
+     *
+     * For example, the following would be matched:
+     * 'http://'
+     * 'https://'
+     *
+     * The following would not be matched:
+     * '@microsoft/sp-core-library:Guid.newGuid'
+     * 'Guid.newGuid'
+     * 'Guid'
+     */
+    DocElementParser._hrefRegEx = /^[a-z]+:\/\//;
+    return DocElementParser;
+}());
+exports.default = DocElementParser;
+&nbsp;
+//# sourceMappingURL=DocElementParser.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "removeComments": false,
+        "outDir": "dist",
+        "rootDir": "src",
+        "sourceMap": false,
+        "skipDefaultLibCheck": true,
+        "declaration": true,
+        "pretty": true,
+        "lib": [
+            "es5",
+            "scripthost",
+            "es2015.promise",
+            "dom"
+        ],
+        "typeRoots": [
+            "./node_modules/@types"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "@types",
+        "__tests__"
+    ]
+}

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\definitions\ApiNamespace.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/definitions/</a> ApiNamespace.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.93% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>47/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65.63% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>21/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.43% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.79% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>46/53</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        (<span class="branch-1 cbranch-no" title="branch not covered" >{ __proto__: [] } instanceof Array </span>&amp;&amp; <span class="fstat-no" title="function not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >function (d, b) {</span> <span class="cstat-no" title="statement not covered" >d.__proto__ = b; </span>})</span> ||
+<span class="fstat-no" title="function not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >        function (d, b) {</span> <span class="cstat-no" title="statement not covered" >for (var p in b) <span class="cstat-no" title="statement not covered" >if (b.hasOwnProperty(p)) <span class="cstat-no" title="statement not covered" >d[p] = b[p]; </span></span></span>};</span>
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? <span class="branch-0 cbranch-no" title="branch not covered" >Object.create(b) </span>: (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:no-bitwise */
+var ts = require("typescript");
+var ApiModuleVariable_1 = require("./ApiModuleVariable");
+var ApiItem_1 = require("./ApiItem");
+var ApiItemContainer_1 = require("./ApiItemContainer");
+var allowedTypes = ['string', 'number', 'boolean'];
+/**
+  * This class is part of the ApiItem abstract syntax tree. It represents exports of
+  * a namespace, the exports can be module variable constants of type "string", "boolean" or "number".
+  * An ApiNamespace is defined using TypeScript's "namespace" keyword.
+  *
+  * @remarks A note about terminology:
+  * - EcmaScript "namespace modules" are not conventional namespaces; their semantics are
+  * more like static classes in C# or Java.
+  * - API Extractor's support for namespaces is currently limited to representing tables of
+  * constants, and has a benefit of enabling WebPack to avoid bundling unused values.
+  * - We currently still recommend to use static classes for utility libraries, since this
+  * provides getters/setters, public/private, and some other structure missing from namespaces.
+  */
+var ApiNamespace = (function (_super) {
+    __extends(ApiNamespace, _super);
+    function ApiNamespace(options) {
+        var _this = _super.call(this, options) || <span class="branch-1 cbranch-no" title="branch not covered" >this;</span>
+        _this._exportedNormalizedSymbols = [];
+        _this.kind = ApiItem_1.ApiItemKind.Namespace;
+        _this.name = options.declarationSymbol.name;
+        var exportSymbols = _this.typeChecker.getExportsOfModule(_this.declarationSymbol);
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (exportSymbols) {
+            for (var _i = 0, exportSymbols_1 = exportSymbols; _i &lt; exportSymbols_1.length; _i++) {
+                var exportSymbol = exportSymbols_1[_i];
+                var followedSymbol = _this.followAliases(exportSymbol);
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!followedSymbol.declarations) {
+                    // This is an API Extractor bug, but it could happen e.g. if we upgrade to a new
+                    // version of the TypeScript compiler that introduces new AST variations that we
+                    // haven't tested before.
+<span class="cstat-no" title="statement not covered" >                    _this.reportWarning("The definition \"" + exportSymbol.name + "\" has no declarations");</span>
+<span class="cstat-no" title="statement not covered" >                    continue;</span>
+                }
+                if (!(followedSymbol.flags === ts.SymbolFlags.BlockScopedVariable)) {
+                    _this.reportWarning("Unsupported export \"" + exportSymbol.name + "\" " +
+                        'Currently the "namespace" block only supports constant variables.');
+                    continue;
+                }
+                // Since we are imposing that the items within a namespace be
+                // const properties we are only taking the first declaration.
+                // If we decide to add support for other types within a namespace
+                // we will have for evaluate each declaration.
+                var declaration = followedSymbol.getDeclarations()[0];
+                if (declaration.parent.flags !== ts.NodeFlags.Const) {
+                    _this.reportWarning("Export \"" + exportSymbol.name + "\" is missing the \"const\" " +
+                        'modifier. Currently the "namespace" block only supports constant variables.');
+                    continue;
+                }
+                var propertySignature = declaration;
+                if (!propertySignature.type || allowedTypes.indexOf(propertySignature.type.getText()) &lt; 0) {
+                    _this.reportWarning("Export \"" + exportSymbol.name + "\" must specify and be of type" +
+                        '"string", "number" or "boolean"');
+                    continue;
+                }
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!propertySignature.initializer) {
+<span class="cstat-no" title="statement not covered" >                    _this.reportWarning("Export \"" + exportSymbol.name + "\" must have an initialized value");</span>
+<span class="cstat-no" title="statement not covered" >                    continue;</span>
+                }
+                // Typescript's VariableDeclaration AST nodes have an VariableDeclarationList parent,
+                // and the VariableDeclarationList exists within a VariableStatement, which is where
+                // the JSDoc comment Node can be found.
+                // If there is no parent or grandparent of this VariableDeclartion then
+                // we do not know how to obtain the JSDoc comment.
+                var jsdocNode = void 0;
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (!declaration.parent || !declaration.parent.parent ||
+                    declaration.parent.parent.kind !== ts.SyntaxKind.VariableStatement) {
+<span class="cstat-no" title="statement not covered" >                    _this.reportWarning("Unable to locate the documentation node for \"" + exportSymbol.name + "\"; "</span>
+                        + "this may be an API Extractor bug");
+                }
+                else {
+                    jsdocNode = declaration.parent.parent;
+                }
+                var exportMemberOptions = {
+                    extractor: _this.extractor,
+                    declaration: declaration,
+                    declarationSymbol: followedSymbol,
+                    jsdocNode: jsdocNode,
+                    exportSymbol: exportSymbol
+                };
+                _this.addMemberItem(new ApiModuleVariable_1.default(exportMemberOptions));
+                _this._exportedNormalizedSymbols.push({
+                    exportedName: exportSymbol.name,
+                    followedSymbol: followedSymbol
+                });
+            }
+        }
+        return _this;
+    }
+    return ApiNamespace;
+}(ApiItemContainer_1.default));
+exports.default = ApiNamespace;
+&nbsp;
+//# sourceMappingURL=ApiNamespace.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

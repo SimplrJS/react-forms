@@ -52,7 +52,8 @@
     "tslint": "^5.4.3",
     "typescript": "^2.4.1",
     "uglify-js": "^3.0.23",
-    "webpack": "^3.0.0"
+    "webpack": "^3.0.0",
+    "@simplr/extractor": "1.0.0"
   },
   "dependencies": {
     "@types/prop-types": "^15.5.1",

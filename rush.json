@@ -21,6 +21,11 @@
             "packageName": "@simplr/mvdir",
             "projectFolder": "tools/mvdir",
             "shouldPublish": false
+        },
+        {
+            "packageName": "@simplr/extractor",
+            "projectFolder": "tools/extractor",
+            "shouldPublish": false
         }
     ]
 }

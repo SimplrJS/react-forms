@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for lib\definitions\ApiStructuredType.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/definitions/</a> ApiStructuredType.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">81.55% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>84/103</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.57% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>48/70</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.23% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>83/100</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">41×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">163×</span>
+<span class="cline-any cline-yes">131×</span>
+<span class="cline-any cline-yes">133×</span>
+<span class="cline-any cline-yes">133×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">151×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">147×</span>
+<span class="cline-any cline-yes">147×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">147×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">74×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">73×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">73×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// See LICENSE in the project root for license information.
+var __extends = (this &amp;&amp; this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        (<span class="branch-1 cbranch-no" title="branch not covered" >{ __proto__: [] } instanceof Array </span>&amp;&amp; <span class="fstat-no" title="function not covered" ><span class="branch-2 cbranch-no" title="branch not covered" >function (d, b) {</span> <span class="cstat-no" title="statement not covered" >d.__proto__ = b; </span>})</span> ||
+<span class="fstat-no" title="function not covered" ><span class="branch-3 cbranch-no" title="branch not covered" >        function (d, b) {</span> <span class="cstat-no" title="statement not covered" >for (var p in b) <span class="cstat-no" title="statement not covered" >if (b.hasOwnProperty(p)) <span class="cstat-no" title="statement not covered" >d[p] = b[p]; </span></span></span>};</span>
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? <span class="branch-0 cbranch-no" title="branch not covered" >Object.create(b) </span>: (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+/* tslint:disable:no-bitwise */
+var ts = require("typescript");
+var ApiMethod_1 = require("./ApiMethod");
+var ApiProperty_1 = require("./ApiProperty");
+var ApiItem_1 = require("./ApiItem");
+var ApiItemContainer_1 = require("./ApiItemContainer");
+var TypeScriptHelpers_1 = require("../TypeScriptHelpers");
+var PrettyPrinter_1 = require("../PrettyPrinter");
+/**
+  * This class is part of the ApiItem abstract syntax tree.  It represents a class,
+  * interface, or type literal expression.
+  */
+var ApiStructuredType = (function (_super) {
+    __extends(ApiStructuredType, _super);
+    function ApiStructuredType(options) {
+        var _this = _super.call(this, options) || <span class="branch-1 cbranch-no" title="branch not covered" >this;</span>
+        _this._processedMemberNames = new Set();
+        _this._setterNames = new Set();
+        _this._classLikeDeclaration = options.declaration;
+        _this.type = _this.typeChecker.getDeclaredTypeOfSymbol(_this.declarationSymbol);
+        if (_this.declarationSymbol.flags &amp; ts.SymbolFlags.Interface) {
+            _this.kind = ApiItem_1.ApiItemKind.Interface;
+        }
+        else if (_this.declarationSymbol.flags &amp; ts.SymbolFlags.TypeLiteral) {
+            _this.kind = ApiItem_1.ApiItemKind.TypeLiteral;
+        }
+        else {
+            _this.kind = ApiItem_1.ApiItemKind.Class;
+        }
+        for (var _i = 0, _a = _this._classLikeDeclaration.members; _i &lt; _a.length; _i++) {
+            var memberDeclaration = _a[_i];
+            var memberSymbol = TypeScriptHelpers_1.default.tryGetSymbolForDeclaration(memberDeclaration);
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (memberSymbol) {
+                _this._processMember(memberSymbol, memberDeclaration);
+            }
+            else {
+                // If someone put an extra semicolon after their function, we don't care about that
+<span class="cstat-no" title="statement not covered" >                if (memberDeclaration.kind !== ts.SyntaxKind.SemicolonClassElement) {</span>
+                    // If there is some other non-semantic junk, add a warning so we can investigate it
+<span class="cstat-no" title="statement not covered" >                    _this.reportWarning(PrettyPrinter_1.default.formatFileAndLineNumber(memberDeclaration)</span>
+                        + (": No semantic information for \"" + memberDeclaration.getText() + "\""));
+                }
+            }
+        }
+        // If there is a getter and no setter, mark it as readonly.
+        for (var _b = 0, _c = _this.getSortedMemberItems(); _b &lt; _c.length; _b++) {
+            var member = _c[_b];
+            var memberSymbol = TypeScriptHelpers_1.default.tryGetSymbolForDeclaration(member.getDeclaration());
+            if (memberSymbol &amp;&amp; (memberSymbol.flags === ts.SymbolFlags.GetAccessor)) {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (!_this._setterNames.has(member.name)) {
+                    member.isReadOnly = true;
+                }
+            }
+        }
+        // Check for heritage clauses (implements and extends)
+        if (_this._classLikeDeclaration.heritageClauses) {
+            for (var _d = 0, _e = _this._classLikeDeclaration.heritageClauses; _d &lt; _e.length; _d++) {
+                var heritage = _e[_d];
+                var typeText = heritage.types &amp;&amp; heritage.types.length &amp;&amp; heritage.types[0].expression ?
+                    heritage.types[0].expression.getText() : <span class="branch-1 cbranch-no" title="branch not covered" >undefined;</span>
+                if (heritage.token === ts.SyntaxKind.ExtendsKeyword) {
+                    _this.extends = typeText;
+                }
+                else <span class="missing-if-branch" title="else path not taken" >E</span>if (heritage.token === ts.SyntaxKind.ImplementsKeyword) {
+                    _this.implements = typeText;
+                }
+            }
+        }
+        // Check for type parameters
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (_this._classLikeDeclaration.typeParameters &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >_this._classLikeDeclaration.typeParameters.length)</span> {
+<span class="cstat-no" title="statement not covered" >            if (!_this.typeParameters) {</span>
+<span class="cstat-no" title="statement not covered" >                _this.typeParameters = [];</span>
+            }
+<span class="cstat-no" title="statement not covered" >            for (var _f = 0, _g = _this._classLikeDeclaration.typeParameters; _f &lt; _g.length; _f++) {</span>
+<span class="cstat-no" title="statement not covered" >                var param = _g[_f];</span>
+<span class="cstat-no" title="statement not covered" >                _this.typeParameters.push(param.getText());</span>
+            }
+        }
+        // Throw errors for setters that don't have a corresponding getter
+        _this._setterNames.forEach(<span class="fstat-no" title="function not covered" >function (setterName) {</span>
+<span class="cstat-no" title="statement not covered" >            if (!_this.getMemberItem(setterName)) {</span>
+                // Normally we treat API design changes as warnings rather than errors.  However,
+                // a missing getter is bizarre enough that it's reasonable to assume it's a mistake,
+                // not a conscious design choice.
+<span class="cstat-no" title="statement not covered" >                _this.reportError("The \"" + setterName + "\" property has a setter, but no a getter");</span>
+            }
+        });
+        return _this;
+    }
+    /**
+     * @virtual
+     */
+    ApiStructuredType.prototype.visitTypeReferencesForApiItem = function () {
+        _super.prototype.visitTypeReferencesForApiItem.call(this);
+        // Collect type references from the base classes
+        if (this._classLikeDeclaration &amp;&amp; this._classLikeDeclaration.heritageClauses) {
+            for (var _i = 0, _a = this._classLikeDeclaration.heritageClauses; _i &lt; _a.length; _i++) {
+                var clause = _a[_i];
+                this.visitTypeReferencesForNode(clause);
+            }
+        }
+    };
+    /**
+      * Returns a line of text such as "class MyClass extends MyBaseClass", excluding the
+      * curly braces and body.  The name "MyClass" will be the public name seend by external
+      * callers, not the declared name of the class; @see ApiItem.name documentation for details.
+      */
+    ApiStructuredType.prototype.getDeclarationLine = function () {
+        var result = '';
+        if (this.kind !== ApiItem_1.ApiItemKind.TypeLiteral) {
+            result += (this.declarationSymbol.flags &amp; ts.SymbolFlags.Interface)
+                ? 'interface ' : 'class ';
+            result += this.name;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (this._classLikeDeclaration.typeParameters) {
+<span class="cstat-no" title="statement not covered" >                result += '&lt;';</span>
+<span class="cstat-no" title="statement not covered" >                result += this._classLikeDeclaration.typeParameters</span>
+                    .map(<span class="fstat-no" title="function not covered" >function (param) {</span> <span class="cstat-no" title="statement not covered" >return param.getText(); </span>})
+                    .join(', ');
+<span class="cstat-no" title="statement not covered" >                result += '&gt;';</span>
+            }
+            if (this._classLikeDeclaration.heritageClauses) {
+                result += ' ';
+                result += this._classLikeDeclaration.heritageClauses
+                    .map(function (clause) { return clause.getText(); })
+                    .join(', ');
+            }
+        }
+        return result;
+    };
+    ApiStructuredType.prototype._processMember = function (memberSymbol, memberDeclaration) {
+        if (memberDeclaration.modifiers) {
+            for (var i = 0; i &lt; memberDeclaration.modifiers.length; i++) {
+                var modifier = memberDeclaration.modifiers[i];
+                if (modifier.kind === ts.SyntaxKind.PrivateKeyword) {
+                    return;
+                }
+            }
+        }
+        if (this._processedMemberNames.has(memberSymbol.name)) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (memberSymbol.flags === ts.SymbolFlags.SetAccessor) {
+                // In case of setters, just add them to a list to check later if they have a getter
+<span class="cstat-no" title="statement not covered" >                this._setterNames.add(memberSymbol.name);</span>
+            }
+            // Throw an error for duplicate names, because we use names as identifiers
+            // @todo #261549 Define an AEDoc tag to allow defining an identifier for overloaded methods eg. @overload method2
+            return;
+        }
+        // Proceed to add the member
+        this._processedMemberNames.add(memberSymbol.name);
+        var memberOptions = {
+            extractor: this.extractor,
+            declaration: memberDeclaration,
+            declarationSymbol: memberSymbol,
+            jsdocNode: memberDeclaration
+        };
+        if (memberSymbol.flags &amp; (ts.SymbolFlags.Method |
+            ts.SymbolFlags.Constructor |
+            ts.SymbolFlags.Signature |
+            ts.SymbolFlags.Function)) {
+            this.addMemberItem(new ApiMethod_1.default(memberOptions));
+        }
+        else <span class="missing-if-branch" title="else path not taken" >E</span>if (memberSymbol.flags &amp; (ts.SymbolFlags.Property |
+            ts.SymbolFlags.GetAccessor)) {
+            this.addMemberItem(new ApiProperty_1.default(memberOptions));
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            this.reportWarning("Unsupported member: " + memberSymbol.name);</span>
+        }
+    };
+    return ApiStructuredType;
+}(ApiItemContainer_1.default));
+exports.default = ApiStructuredType;
+&nbsp;
+//# sourceMappingURL=ApiStructuredType.js.map
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jul 17 2017 10:37:19 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
