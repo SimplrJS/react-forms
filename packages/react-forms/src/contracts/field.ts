@@ -4,6 +4,7 @@ import { FieldValidationType } from "./validation";
 import { FormContextPropsObject } from "./form";
 import { FieldsGroupContextProps } from "./fields-group";
 import { ModifierValue } from "./value";
+import { FieldsArrayData } from "./fields-array";
 
 // Field value can be of any type or undefined
 export type FieldValue = any | undefined;
@@ -55,6 +56,7 @@ export interface FieldContext {
     FormProps: FormContextPropsObject;
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupContextProps;
+    IsInFieldsArray: boolean;
 }
 
 export interface FieldChildContext {

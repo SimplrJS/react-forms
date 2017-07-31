@@ -1,4 +1,5 @@
 import { TypedRecord } from "typed-immutable-record";
+import { FieldsArrayData } from "./fields-array";
 
 export interface FieldsGroupProps {
     name: string;
@@ -18,6 +19,7 @@ export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStor
 export interface FieldsGroupChildContext {
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupPropsObject;
+    IsInFieldsArray: boolean;
 }
 
 export type FieldsGroupPropsObject = {};

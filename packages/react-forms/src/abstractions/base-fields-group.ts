@@ -37,14 +37,16 @@ export class BaseFieldsGroup<TProps extends FieldsGroupProps,
     }
 
     public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
-        FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupId: PropTypes.string.isRequired,
+        FieldsGroupProps: PropTypes.object.isRequired,
+        IsInFieldsArray: PropTypes.bool.isRequired
     };
 
     public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsGroupId,
-            FieldsGroupProps: this.FieldsGroupPropsContext
+            FieldsGroupProps: this.FieldsGroupPropsContext,
+            IsInFieldsArray: false
         };
     }
 

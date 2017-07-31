@@ -76,7 +76,8 @@ export class FormStore extends ActionEmitter {
         value?: FieldValue,
         transitionalValue?: FieldValue,
         props?: FieldProps,
-        fieldsGroupId?: string
+        fieldsGroupId?: string,
+        isInFieldsArray: boolean = false
     ): void {
         if (this.State.Fields.has(fieldId) ||
             this.State.FieldsGroups.has(fieldId)) {
@@ -123,6 +124,16 @@ export class FormStore extends ActionEmitter {
         }
 
         if (props != null) {
+            // If field is in FieldsArray and destroyOnUnmount is falsy
+            if (isInFieldsArray && props.destroyOnUnmount != null) {
+                // TODO: If there are more situations where it is suggested to fill issue,
+                // extract GitHub url into a global constant.
+                const githubUrl = "https://github.com/SimplrJS/react-forms";
+                const errorMessage = `@simplr/react-forms: destroyOnUnmount always defaults to true, when field is inside FieldsArray.` +
+                    `Remove destroyOnUnmount prop or fill an issue in Github (${githubUrl}) defining your scenario.`;
+                throw new Error(errorMessage);
+            }
+
             fieldState.Props = recordify<FieldProps, FieldStorePropsRecord>(props);
         }
 
@@ -202,25 +213,25 @@ export class FormStore extends ActionEmitter {
     public UnregisterFieldsArray(fieldsArrayId: string): void {
         // Remove fields array from form store state
         this.State = this.State.withMutations(state => {
-            // Filter out fields that are in FieldArray that's being unregistered
             state.Fields = state.Fields.filter(x => {
                 // Never...
                 if (x == null) {
                     return false;
                 }
-                // Leave all fields that are not in a FieldsGroup
+
+                // Take all fields not in FieldsGroup
                 if (x.FieldsGroup == null) {
                     return true;
                 }
-                console.log(`Field ${x.Name} is in ${x.FieldsGroup.Id}.`);
+
+                // Skip (remove) all fields in a given FieldsArray
                 if (x.FieldsGroup.Id === fieldsArrayId) {
-                    console.log(`Removing field from ${fieldsArrayId} FieldArray.`);
                     return false;
                 }
+
+                // Take all other fields
                 return true;
             }).toMap();
-
-
 
             state.FieldsGroups = state.FieldsGroups.remove(fieldsArrayId);
         });

@@ -25,7 +25,8 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupProps: PropTypes.object,
+        IsInFieldsArray: PropTypes.bool
     };
 
     public static defaultProps: Partial<FieldsArrayProps> = {
@@ -41,14 +42,16 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     }
 
     public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
-        FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupId: PropTypes.string.isRequired,
+        FieldsGroupProps: PropTypes.object.isRequired,
+        IsInFieldsArray: PropTypes.bool.isRequired
     };
 
     public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsArrayId,
-            FieldsGroupProps: this.FieldsArrayPropsContext
+            FieldsGroupProps: this.FieldsArrayPropsContext,
+            IsInFieldsArray: true
         };
     }
 
