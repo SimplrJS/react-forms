@@ -286,7 +286,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.SetActiveField(undefined);
     }
 
-    protected get IsInFieldsArray():boolean {
+    protected get IsInFieldsArray(): boolean {
         return this.context.IsInFieldsArray;
     }
 
