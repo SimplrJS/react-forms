@@ -265,3 +265,5 @@ package-lock.json
 /common/temp/** 
 
 **/webpack.config.js
+
+**/*.js.map

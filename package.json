@@ -12,14 +12,14 @@
   "devDependencies": {
     "@microsoft/rush": "^3.0.11",
     "@microsoft/rush-lib": "^3.0.11",
-    "@types/shelljs": "^0.7.2",
-    "mz": "^2.6.0",
-    "shelljs": "^0.7.8",
-    "ts-node": "^3.1.0",
-    "typescript": "^2.4.1",
     "@microsoft/ts-command-line": "^2.0.2",
     "@types/semver": "^5.3.32",
-    "semver": "^5.3.0"
+    "@types/shelljs": "^0.7.2",
+    "mz": "^2.6.0",
+    "semver": "^5.3.0",
+    "shelljs": "^0.7.8",
+    "ts-node": "^3.1.0",
+    "typescript": "^2.4.2"
   },
   "dependencies": {}
 }
