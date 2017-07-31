@@ -57,7 +57,6 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
 
     public componentWillMount(): void {
         this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);
-        console.log(this.FieldsArrayId, this.props.weight);
         this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.weight, this.context.FieldsGroupId);
     }
 
