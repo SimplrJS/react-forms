@@ -83,7 +83,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected get FormId(): string {
         // Check for this value is done in componentWillMount
         // to ensure that field is being used inside the form.
-        return this.context.FormId!;
+        return this.context.FormId;
     }
 
     protected get FormStore(): FormStore {
@@ -286,7 +286,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.SetActiveField(undefined);
     }
 
-    protected get IsInFieldsArray() {
+    protected get IsInFieldsArray():boolean {
         return this.context.IsInFieldsArray;
     }
 
