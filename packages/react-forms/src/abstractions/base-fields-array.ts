@@ -62,7 +62,7 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
 
     public componentWillReceiveProps(nextProps: TProps): void {
         if (this.props.indexWeight !== nextProps.indexWeight) {
-            this.FormStore.UpdateFieldsArrayIndexWeight(this.FieldsArrayId, this.props.indexWeight);
+            this.FormStore.UpdateFieldsArrayIndexWeight(this.FieldsArrayId, nextProps.indexWeight);
         }
     }
 
