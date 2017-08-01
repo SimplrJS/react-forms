@@ -174,7 +174,7 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldsGroupRegistered(this.FormId, fieldsGroupId));
     }
 
-    public RegisterFieldsArray(fieldsArrayId: string, name: string, weight?: number, parentId?: string): void {
+    public RegisterFieldsArray(fieldsArrayId: string, name: string, indexWeight?: number, parentId?: string): void {
         if (this.State.Fields.has(fieldsArrayId) ||
             this.State.FieldsGroups.has(fieldsArrayId)) {
             throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' name already exists in form '${this.FormId}.`);
@@ -184,7 +184,7 @@ export class FormStore extends ActionEmitter {
             Name: name,
             ArrayName: name,
             Parent: parentId,
-            Weight: weight
+            IndexWeight: indexWeight
         };
 
         const faStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(faState);
@@ -286,12 +286,12 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
     }
 
-    public UpdateFieldsArrayWeight(fieldsArrayId: string, weight?: number): void {
+    public UpdateFieldsArrayIndexWeight(fieldsArrayId: string, indexWeight?: number): void {
         this.State = this.State.withMutations(state => {
             state.FieldsGroups = state.FieldsGroups.withMutations(fieldGroups => {
                 fieldGroups.update(fieldsArrayId, faState =>
                     faState.merge({
-                        Weight: weight
+                        IndexWeight: indexWeight
                     } as FieldsGroupStoreState));
             });
             return state;
@@ -763,13 +763,13 @@ export class FormStore extends ActionEmitter {
             }
 
             const faItems = fieldsArrays[key];
-            // Sort fields by weight
+            // Sort fields by IndexWeight
             faItems.sort((a, b) => {
-                let weightA = a.State.Weight;
+                let weightA = a.State.IndexWeight;
                 if (weightA == null) {
                     weightA = Number.MAX_SAFE_INTEGER;
                 }
-                let weightB = b.State.Weight;
+                let weightB = b.State.IndexWeight;
                 if (weightB == null) {
                     weightB = Number.MAX_SAFE_INTEGER;
                 }

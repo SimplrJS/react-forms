@@ -4,7 +4,7 @@ import { FieldsGroupProps, FieldsGroupPropsObject } from "./fields-group";
 
 export interface FieldsArrayProps extends FieldsGroupProps {
     arrayKey: string;
-    weight?: number;
+    indexWeight?: number;
 }
 
 export type FieldsArrayState = {};

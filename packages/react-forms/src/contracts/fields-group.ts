@@ -11,7 +11,7 @@ export interface FieldsGroupStoreState {
     Name: string;
     Parent?: string;
     ArrayName?: string;
-    Weight?: number;
+    IndexWeight?: number;
 }
 
 export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStoreStateRecord>, FieldsGroupStoreState { }

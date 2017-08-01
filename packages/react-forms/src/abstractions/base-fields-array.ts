@@ -57,12 +57,12 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
 
     public componentWillMount(): void {
         this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);
-        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.weight, this.context.FieldsGroupId);
+        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.indexWeight, this.context.FieldsGroupId);
     }
 
     public componentWillReceiveProps(nextProps: TProps): void {
-        if (this.props.weight !== nextProps.weight) {
-            this.FormStore.UpdateFieldsArrayWeight(this.FieldsArrayId, this.props.weight);
+        if (this.props.indexWeight !== nextProps.indexWeight) {
+            this.FormStore.UpdateFieldsArrayIndexWeight(this.FieldsArrayId, this.props.indexWeight);
         }
     }
 
