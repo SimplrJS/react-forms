@@ -28,7 +28,7 @@ export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArraySt
     protected GetHTMLProps(props: FieldsArrayProps): {} {
         const {
             name,
-            weight,
+            indexWeight,
             arrayKey,
             destroyOnUnmount,
             children,
