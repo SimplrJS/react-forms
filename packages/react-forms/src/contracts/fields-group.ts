@@ -11,6 +11,7 @@ export interface FieldsGroupStoreState {
     Name: string;
     Parent?: string;
     ArrayName?: string;
+    IndexWeight?: number;
 }
 
 export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStoreStateRecord>, FieldsGroupStoreState { }
@@ -18,6 +19,7 @@ export interface FieldsGroupStoreStateRecord extends TypedRecord<FieldsGroupStor
 export interface FieldsGroupChildContext {
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupPropsObject;
+    IsInFieldsArray: boolean;
 }
 
 export type FieldsGroupPropsObject = {};

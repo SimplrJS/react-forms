@@ -25,7 +25,12 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupProps: PropTypes.object,
+        IsInFieldsArray: PropTypes.bool
+    };
+
+    public static defaultProps: Partial<FieldsArrayProps> = {
+        destroyOnUnmount: true
     };
 
     protected get FormId(): string {
@@ -37,21 +42,28 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     }
 
     public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
-        FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupId: PropTypes.string.isRequired,
+        FieldsGroupProps: PropTypes.object.isRequired,
+        IsInFieldsArray: PropTypes.bool.isRequired
     };
 
     public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsArrayId,
-            FieldsGroupProps: this.FieldsArrayPropsContext
+            FieldsGroupProps: this.FieldsArrayPropsContext,
+            IsInFieldsArray: true
         };
     }
 
     public componentWillMount(): void {
-        const idBase = `${this.props.name}[${this.props.index}]`;
-        this.FieldsArrayId = FormStoreHelpers.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
-        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.index, this.context.FieldsGroupId);
+        this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);
+        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.indexWeight, this.context.FieldsGroupId);
+    }
+
+    public componentWillReceiveProps(nextProps: TProps): void {
+        if (this.props.indexWeight !== nextProps.indexWeight) {
+            this.FormStore.UpdateFieldsArrayIndexWeight(this.FieldsArrayId, nextProps.indexWeight);
+        }
     }
 
     public componentWillUnmount(): void {

@@ -55,6 +55,7 @@ export interface FieldContext {
     FormProps: FormContextPropsObject;
     FieldsGroupId: string;
     FieldsGroupProps: FieldsGroupContextProps;
+    IsInFieldsArray: boolean;
 }
 
 export interface FieldChildContext {

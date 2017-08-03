@@ -33,7 +33,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupProps: PropTypes.object,
+        IsInFieldsArray: PropTypes.bool
     };
 
     public static childContextTypes: PropTypes.ValidationMap<FieldChildContext> = {
@@ -48,10 +49,28 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
     public static defaultProps: CoreFieldProps = {
         // Empty string checked to have value in componentWillMount
-        name: "",
-        // By default, fields data should be retained, even if the field is unmounted
-        destroyOnUnmount: false
+        name: ""
     };
+
+    protected get DestroyOnUnmount(): boolean {
+        const props: TProps = this.props;
+
+        // If field is in FieldsArray, it has to always be destroyed when unmounted.
+        if (this.IsInFieldsArray) {
+            return true;
+        }
+
+        // If destroyOnUnmount is not provided in props
+        if (props.destroyOnUnmount == null) {
+            // By default, field's data should be retained, even if the field is unmounted,
+            // because expectation is that fields can be unmounted ("hidden")
+            // while showing only a portion of Form at a time for better UX.
+            // And it is better to keep data either way,
+            // if it doesn't need to be explicitly destroyed.
+            return false;
+        }
+        return props.destroyOnUnmount;
+    }
 
     protected get DefaultModifiers(): JSX.Element[] {
         return [];
@@ -62,6 +81,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected get FormId(): string {
+        // Check for this value is done in componentWillMount
+        // to ensure that field is being used inside the form.
         return this.context.FormId;
     }
 
@@ -96,6 +117,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (this.FormId == null) {
             throw new Error("@simplr/react-forms: Field must be used inside a Form component.");
         }
+
         this.StoreEventSubscription =
             this.FormStore.addListener<FormStoreActions.StateChanged>(
                 FormStoreActions.StateChanged,
@@ -117,7 +139,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (this.StoreEventSubscription != null) {
             this.StoreEventSubscription.remove();
         }
-        if (this.FormStore != null && this.props.destroyOnUnmount) {
+        if (this.FormStore != null && this.DestroyOnUnmount) {
             this.FormStore.UnregisterField(this.FieldId);
         }
     }
@@ -264,6 +286,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         this.FormStore.SetActiveField(undefined);
     }
 
+    protected get IsInFieldsArray(): boolean {
+        return this.context.IsInFieldsArray;
+    }
+
     /**
      * ========================
      *  Abstract methods
@@ -321,7 +347,8 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             value.Value,
             value.TransitionalValue,
             this.props,
-            this.FieldsGroupId
+            this.FieldsGroupId,
+            this.IsInFieldsArray
         );
     }
 }
