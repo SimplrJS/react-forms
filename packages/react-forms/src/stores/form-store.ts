@@ -295,28 +295,6 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
     }
 
-    public UpdateFieldDefaultValue(
-        fieldId: string,
-        defaultValue: FieldValue): void {
-        this.State = this.State.withMutations(state => {
-            state.Fields = state.Fields.update(fieldId, field =>
-                field.merge({
-                    DefaultValue: defaultValue
-                } as FieldStoreState));
-        });
-    }
-
-    public UpdateFieldInitialValue(
-        fieldId: string,
-        initialValue: FieldValue): void {
-        this.State = this.State.withMutations(state => {
-            state.Fields = state.Fields.update(fieldId, field =>
-                field.merge({
-                    InitialValue: initialValue
-                } as FieldStoreState));
-        });
-    }
-
     public UpdateFieldsArrayIndexWeight(fieldsArrayId: string, indexWeight?: number): void {
         this.State = this.State.withMutations(state => {
             state.FieldsGroups = state.FieldsGroups.withMutations(fieldGroups => {
@@ -354,6 +332,28 @@ export class FormStore extends ActionEmitter {
         });
 
         this.emit(new Actions.ValueChanged(this.FormId, fieldId));
+    }
+
+    public UpdateFieldDefaultValue(
+        fieldId: string,
+        defaultValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    DefaultValue: defaultValue
+                } as FieldStoreState));
+        });
+    }
+
+    public UpdateFieldInitialValue(
+        fieldId: string,
+        initialValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    InitialValue: initialValue
+                } as FieldStoreState));
+        });
     }
 
     public async ValidateField(fieldId: string, validationPromise: Promise<void>): Promise<void> {
