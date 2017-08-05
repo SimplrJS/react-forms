@@ -62,12 +62,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         // If destroyOnUnmount is not provided in props
         if (props.destroyOnUnmount == null) {
-            // By default, field's data should be retained, even if the field is unmounted,
-            // because expectation is that fields can be unmounted ("hidden")
-            // while showing only a portion of Form at a time for better UX.
-            // And it is better to keep data either way,
-            // if it doesn't need to be explicitly destroyed.
-            return false;
+            // By default, field's data should not be retained when the field is unmounted,
+            // because default React mechanism unmounts components and they're gone.
+            // While showing only a portion of a Form at a time for a better UX,
+            // and wanting to keep the data, user can set destroyOnUnmount to false explicitly.
+            return true;
         }
         return props.destroyOnUnmount;
     }
@@ -342,7 +341,6 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         const formHasField = this.FormStore.HasField(this.FieldId) || this.FormStore.HasFieldsGroup(this.FieldId);
 
         const fieldValues = this.getFormStoreValuesUpdater();
-
         if (
             // If field has already been registered
             formHasField
