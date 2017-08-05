@@ -62,12 +62,11 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         // If destroyOnUnmount is not provided in props
         if (props.destroyOnUnmount == null) {
-            // By default, field's data should be retained, even if the field is unmounted,
-            // because expectation is that fields can be unmounted ("hidden")
-            // while showing only a portion of Form at a time for better UX.
-            // And it is better to keep data either way,
-            // if it doesn't need to be explicitly destroyed.
-            return false;
+            // By default, field's data should not be retained when the field is unmounted,
+            // because default React mechanism unmounts components and they're gone.
+            // While showing only a portion of a Form at a time for a better UX,
+            // and wanting to keep the data, user can set destroyOnUnmount to false explicitly.
+            return true;
         }
         return props.destroyOnUnmount;
     }
@@ -131,6 +130,9 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         if (props.name !== nextProps.name) {
             throw new Error("@simplr/react-forms: Field name must be constant.");
         }
+
+        this.getFormStoreValuesUpdater()
+            .updateFormStoreValues(this.FormStore);
 
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
     }
@@ -336,19 +338,60 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
      * Registers a field in FormStore or throws if the field was already registered
      */
     private registerFieldInFormStore(): void {
+        const formHasField = this.FormStore.HasField(this.FieldId) || this.FormStore.HasFieldsGroup(this.FieldId);
+
+        const fieldValues = this.getFormStoreValuesUpdater();
+        if (
+            // If field has already been registered
+            formHasField
+            // And DestroyOnUnmount is true
+            && this.DestroyOnUnmount) {
+            // Then throw, because it's an ambiguous situation and it's tricky to support it,
+            // because if user copies and pastes a field with a name prop already specified,
+            // and does not change the name, not throwing here would make it a frequent unintentional behavior
+            // that is not visible right away.
+            throw new Error(`@simplr/react-forms: Field '${this.FieldId}' already exists in form '${this.FormId}.`);
+        }
+
+        // If field does not exist
+        if (!formHasField) {
+            // Register the field with form store
+            this.FormStore.RegisterField(
+                this.FieldId,
+                this.props.name,
+                fieldValues.defaultValue.Value,
+                fieldValues.initialValue.Value,
+                fieldValues.value.Value,
+                fieldValues.value.TransitionalValue,
+                this.props,
+                this.FieldsGroupId,
+                this.IsInFieldsArray
+            );
+        } else {
+            // Update field values
+            fieldValues.updateFormStoreValues(this.FormStore);
+        }
+    }
+
+    private getFormStoreValuesUpdater(): {
+        defaultValue: ModifierValue,
+        initialValue: ModifierValue,
+        value: ModifierValue,
+        updateFormStoreValues: (formStore: FormStore) => void
+    } {
         const defaultValue = this.processedOrEmptyModifierValue(this.RawDefaultValue, this.ProcessValueBeforeStore.bind(this));
         const initialValue = this.processedOrEmptyModifierValue(this.RawInitialValue, this.ProcessValueBeforeStore.bind(this));
         const value = this.processedOrEmptyModifierValue(this.RawValue, this.ProcessValueBeforeStore.bind(this));
-        this.FormStore.RegisterField(
-            this.FieldId,
-            this.props.name,
-            defaultValue.Value,
-            initialValue.Value,
-            value.Value,
-            value.TransitionalValue,
-            this.props,
-            this.FieldsGroupId,
-            this.IsInFieldsArray
-        );
+
+        return {
+            defaultValue,
+            initialValue,
+            value,
+            updateFormStoreValues: formStore => {
+                formStore.UpdateFieldDefaultValue(this.FieldId, defaultValue);
+                formStore.UpdateFieldInitialValue(this.FieldId, initialValue);
+                formStore.UpdateFieldValue(this.FieldId, value);
+            }
+        };
     }
 }
