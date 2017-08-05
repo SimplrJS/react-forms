@@ -79,8 +79,8 @@ export class FormStore extends ActionEmitter {
         fieldsGroupId?: string,
         isInFieldsArray: boolean = false
     ): void {
-        if (this.State.Fields.has(fieldId) ||
-            this.State.FieldsGroups.has(fieldId)) {
+        if (this.HasField(fieldId) ||
+            this.HasFieldsGroup(fieldId)) {
             throw new Error(`@simplr/react-forms: Field '${fieldId}' already exists in form '${this.FormId}.`);
         }
 
@@ -90,6 +90,7 @@ export class FormStore extends ActionEmitter {
             // Set default value without fallbacks
             DefaultValue: defaultValue,
             InitialValue: undefined,
+            TransitionalValue: undefined,
             Value: undefined,
             Touched: false,
             Pristine: true,
@@ -105,20 +106,20 @@ export class FormStore extends ActionEmitter {
 
         // If neither initialValue, nor value is given
         // Fallback to defaultValue
-        if (initialValue == null && value == null) {
+        if (initialValue === undefined && value === undefined) {
             // 0 0
             fieldState.InitialValue = defaultValue;
             fieldState.Value = defaultValue;
-        } else if (initialValue != null && value == null) {
+        } else if (initialValue !== undefined && value === undefined) {
             // 1 0
             fieldState.InitialValue = initialValue;
             fieldState.Value = initialValue;
-        } else if (initialValue == null && value != null) {
+        } else if (initialValue === undefined && value !== undefined) {
             // 0 1
             fieldState.InitialValue = value;
             fieldState.Value = value;
         } else {
-            // 0 0
+            // 1 1
             fieldState.InitialValue = initialValue;
             fieldState.Value = value;
         }
@@ -246,6 +247,14 @@ export class FormStore extends ActionEmitter {
         return this.State.Fields.get(fieldId);
     }
 
+    public HasFieldsGroup(fieldsGroupId: string): boolean {
+        return this.State.FieldsGroups.has(fieldsGroupId);
+    }
+
+    public GetFieldsGroup(fieldsGroupId: string): FieldsGroupStoreStateRecord {
+        return this.State.FieldsGroups.get(fieldsGroupId);
+    }
+
     public SetFormSubmitCallback(submitCallback: () => void): void {
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.merge({
@@ -284,6 +293,28 @@ export class FormStore extends ActionEmitter {
         });
 
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
+    }
+
+    public UpdateFieldDefaultValue(
+        fieldId: string,
+        defaultValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    DefaultValue: defaultValue
+                } as FieldStoreState));
+        });
+    }
+
+    public UpdateFieldInitialValue(
+        fieldId: string,
+        initialValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    InitialValue: initialValue
+                } as FieldStoreState));
+        });
     }
 
     public UpdateFieldsArrayIndexWeight(fieldsArrayId: string, indexWeight?: number): void {
