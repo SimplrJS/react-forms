@@ -2,23 +2,17 @@ import * as React from "react";
 import { FormError } from "@simplr/react-forms/contracts";
 import { FormProps as CoreFormProps } from "@simplr/react-forms/contracts";
 import { FormStore } from "@simplr/react-forms/stores";
-import {
-    FieldOnChangeCallback,
-    FieldOnChangeInternalCallback,
-    DomFieldTemplateCallback
-} from "../contracts/field";
+import { DomFieldTemplateCallback } from "../contracts/field";
 
 export interface FormOnSubmitInternalCallback {
-    (event: React.FormEvent<HTMLFormElement>, ...parameters: any[]): void | Promise<never> | FormError | string;
+    (event: React.FormEvent<HTMLFormElement>, ...parameters: any[]): void | Promise<void> | FormError | string;
 }
 
 export interface FormOnSubmitCallback {
-    (event: React.FormEvent<HTMLFormElement>, store: FormStore): void | Promise<never> | FormError | string;
+    (event: React.FormEvent<HTMLFormElement>, store: FormStore): void | Promise<void> | FormError | string;
 }
 
-export interface FormProps extends CoreFormProps, React.HTMLProps<HTMLFormElement> {
-    onSubmit?: FormOnSubmitCallback & FormOnSubmitInternalCallback;
-    onChange?: FieldOnChangeCallback<any> & FieldOnChangeInternalCallback;
+export interface BaseFormProps extends CoreFormProps {
     preventSubmitDefaultAndPropagation?: boolean;
     template?: DomFieldTemplateCallback;
     // tslint:disable-next-line:max-line-length

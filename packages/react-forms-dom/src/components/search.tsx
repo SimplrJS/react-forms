@@ -4,12 +4,8 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import {
-    HTMLElementProps
-} from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { HTMLElementProps } from "../contracts/field";
+import { FormProps } from "./form";
 
 export type SearchOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -61,6 +57,7 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="search"
             name={this.FieldId}
             value={this.Value}
@@ -68,7 +65,6 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

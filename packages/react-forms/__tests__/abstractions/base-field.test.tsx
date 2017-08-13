@@ -43,7 +43,7 @@ describe("Field Base", () => {
         expect(formStore.HasField(fieldId)).toBe(true);
     });
 
-    it("does not unregister itself when component is unmounted and destroyOnUnmount is false (default)", () => {
+    it("unregisters itself when component is unmounted and destroyOnUnmount is true (default)", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const fieldName = "fieldName";
@@ -62,16 +62,16 @@ describe("Field Base", () => {
             renderChildren: false
         });
 
-        expect(formStore.HasField(fieldId)).toBe(true);
+        expect(formStore.HasField(fieldId)).toBe(false);
     });
 
-    it("unregisters when component is unmounted and destroyOnUnmount is true", () => {
+    it("does not unregister when component is unmounted and destroyOnUnmount is false", () => {
         const FormStoresHandler = FSHContainer.FormStoresHandler;
         const formId = "FORM_ID";
         const fieldName = "fieldName";
 
         const form = mount(<MyTestForm formId={formId}>
-            <MyTestField destroyOnUnmount={true} name="fieldName"></MyTestField>
+            <MyTestField destroyOnUnmount={false} name="fieldName"></MyTestField>
         </MyTestForm>);
 
         const formStore = FormStoresHandler.GetStore(formId);
@@ -84,7 +84,7 @@ describe("Field Base", () => {
             renderChildren: false
         });
 
-        expect(formStore.HasField(fieldId)).toBe(false);
+        expect(formStore.HasField(fieldId)).toBe(true);
     });
 
     it("throws when rendering duplicate fieldName", () => {
