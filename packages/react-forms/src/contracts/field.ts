@@ -14,6 +14,7 @@ export type FieldNormalizeValueCallback = (value: FieldValue) => FieldValue;
 
 export interface CoreFieldProps {
     name: string;
+    formId?: string;
     destroyOnUnmount?: boolean;
     formatValue?: FieldFormatValueCallback;
     parseValue?: FieldParseValueCallback;

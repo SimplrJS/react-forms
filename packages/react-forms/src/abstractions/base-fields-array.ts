@@ -34,7 +34,7 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     };
 
     protected get FormId(): string {
-        return this.context.FormId;
+        return this.context.FormId || this.props.formId;
     }
 
     protected get FormStore(): FormStore {
@@ -56,6 +56,10 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     }
 
     public componentWillMount(): void {
+        if (this.FormId == null) {
+            throw new Error("@simplr/react-forms: FieldsArray must be used inside a Form component or formId must be defined.");
+        }
+
         this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);
         this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.indexWeight, this.context.FieldsGroupId);
     }

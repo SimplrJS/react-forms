@@ -3,6 +3,7 @@ import { FormContextPropsObject } from "./form";
 import { FieldsGroupProps, FieldsGroupPropsObject } from "./fields-group";
 
 export interface FieldsArrayProps extends FieldsGroupProps {
+    formId?: string;
     arrayKey: string;
     indexWeight?: number;
 }
