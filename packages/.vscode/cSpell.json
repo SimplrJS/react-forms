@@ -9,6 +9,7 @@
         "Normalizers",
         "Unmount",
         "Validators",
+        "deduped",
         "recordify",
         "simplr",
         "tslib",

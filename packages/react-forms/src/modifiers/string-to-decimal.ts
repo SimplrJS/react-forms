@@ -1,7 +1,7 @@
 import { FieldValue } from "../contracts/field";
 import { ValueOfType } from "../utils/value-helpers";
 import { BaseModifier } from "./base-modifier";
-import { ModifierValue } from "../contracts/value";
+import { ModifierValueRecord } from "../contracts/value";
 
 export interface StringToDecimalProps {
     delimiter?: string;
@@ -30,14 +30,14 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
         return EMPTY_VALUE;
     }
 
-    public Parse(modifierValue: ModifierValue): ModifierValue {
+    public Parse(modifierValue: ModifierValueRecord): ModifierValueRecord {
         let value = modifierValue.TransitionalValue != null ? modifierValue.TransitionalValue : modifierValue.Value;
 
         if (value.length === 0) {
-            return {
+            return this.Recordify({
                 Value: 0,
                 TransitionalValue: ""
-            };
+            });
         }
         if (ValueOfType<string>(modifierValue, StringToDecimalModifier.name, "object")) {
             let negative = false;
@@ -47,10 +47,10 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
 
                 // If there is only a minus sign
                 if (value.length === 0) {
-                    return {
+                    return this.Recordify({
                         Value: 0,
                         TransitionalValue: "-"
-                    };
+                    });
                 }
             }
 
@@ -93,14 +93,14 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
             const delimiterFixed = transitionalValue.replace(delimiter, ".");
             const numValue = Number(delimiterFixed);
 
-            return {
+            return this.Recordify({
                 Value: numValue,
                 TransitionalValue: transitionalValue !== numValue.toString() ? transitionalValue : undefined
-            };
+            });
         }
-        return {
+        return this.Recordify({
             Value: 0
-        };
+        });
     }
 
     protected TrimLeft(value: string, symbol: string): string {

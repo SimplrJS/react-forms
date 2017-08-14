@@ -46,9 +46,9 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: PasswordProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }
