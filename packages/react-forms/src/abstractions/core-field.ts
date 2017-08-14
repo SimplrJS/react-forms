@@ -384,7 +384,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             this.GetRawInitialValue(this.props),
             this.ProcessValueBeforeStore.bind(this)
         );
-        const value = this.processedOrEmptyModifierValue(this.GetRawValue(this.props), this.ProcessValueBeforeStore.bind(this));
+        const value = this.processedOrEmptyModifierValue(
+            this.GetRawValue(this.props),
+            this.ProcessValueBeforeStore.bind(this)
+        );
 
         // If field does not exist
         if (!formHasField) {

@@ -21,6 +21,10 @@ export abstract class BaseModifier<TProps, TState> extends React.Component<TProp
         return null;
     }
 
+    /**
+     * Proxy to value helpers RecordifyModifierValue method.
+     * @param value Value to be recordified
+     */
     protected Recordify<TValue extends ModifierValue>(value: TValue): ModifierValueRecord {
         return RecordifyModifierValue(value);
     }
