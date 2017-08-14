@@ -68,6 +68,7 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
             ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

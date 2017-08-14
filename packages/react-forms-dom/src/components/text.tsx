@@ -69,6 +69,7 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
             {...this.GetHTMLProps(this.props) }
             type="text"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

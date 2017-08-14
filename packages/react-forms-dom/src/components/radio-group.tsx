@@ -86,6 +86,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         return <div
             ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         >
             {this.props.children}
         </div>;

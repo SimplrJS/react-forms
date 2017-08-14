@@ -62,6 +62,7 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
             {...this.GetHTMLProps(this.props) }
             type="checkbox"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             checked={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

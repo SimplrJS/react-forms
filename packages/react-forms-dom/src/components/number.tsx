@@ -64,6 +64,7 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
             {...this.GetHTMLProps(this.props) }
             type="number"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
