@@ -34,7 +34,22 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     };
 
     protected get FormId(): string {
-        return this.context.FormId || this.props.formId;
+        // Check for whether FieldsArray is being used inside of a form.
+        const props: FieldsArrayProps = this.props;
+
+        if (this.context.FormId != null) {
+            // If both context and props have form id defined
+            if (props.formId != null) {
+                throw new Error("@simplr/react-forms: formId prop is defined, but FieldsArray is already inside a Form.");
+            }
+
+            return this.context.FormId;
+        }
+        if (props.formId != null) {
+            return props.formId;
+        }
+
+        throw new Error("@simplr/react-forms: FieldsArray must be used inside a Form component or formId must be defined.");
     }
 
     protected get FormStore(): FormStore {
@@ -57,7 +72,7 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
 
     public componentWillMount(): void {
         if (this.FormId == null) {
-            throw new Error("@simplr/react-forms: FieldsArray must be used inside a Form component or formId must be defined.");
+            // Never goes in here, because an Error is thrown inside this.FormId if it's not valid.
         }
 
         this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);

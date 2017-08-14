@@ -5,7 +5,7 @@ export interface Validator {
     Validate(value: any): ValidationResult;
 }
 
-export type ValidationError<TTemplateFunc = Function> = string | FormError | TTemplateFunc;
+export type ValidationError<TTemplateFunc = (...args: any[]) => void> = string | FormError | TTemplateFunc;
 
 export type ValidationFormErrorTemplate = (formStore: FormStore) => ValidationError;
 export type ValidationFieldErrorTemplate = (fieldId: string, formStore: FormStore) => ValidationError;

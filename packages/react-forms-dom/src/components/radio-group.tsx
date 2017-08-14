@@ -45,9 +45,9 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         };
     }
 
-    protected get RawDefaultValue(): React.ReactText {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: RadioGroupProps): React.ReactText {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
 
         return "";

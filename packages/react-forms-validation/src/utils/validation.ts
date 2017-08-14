@@ -28,7 +28,7 @@ export async function ValidateValue(
     components: JSX.Element[],
     value: any,
     validatorTypeFunctionName: string,
-    errorProccessor: (error: ValidationResult) => ValidationResult
+    errorProcessor: (error: ValidationResult) => ValidationResult
 ): Promise<void> {
     const validators = components.filter(x => IsComponentOfType(x, validatorTypeFunctionName));
     const renderedValidators = RenderComponents<Validator>(validators);
@@ -47,7 +47,7 @@ export async function ValidateValue(
             validationError = validationResult;
         }
 
-        const builtError = errorProccessor(validationError);
+        const builtError = errorProcessor(validationError);
         const error = ConstructFormError(builtError, FormErrorOrigin.Validation);
         if (error !== undefined) {
             throw error;

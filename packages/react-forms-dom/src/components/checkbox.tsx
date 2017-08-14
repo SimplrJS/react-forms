@@ -49,9 +49,9 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
         }
     }
 
-    protected get RawDefaultValue(): boolean {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: CheckBoxProps): boolean {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return false;
     }

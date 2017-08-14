@@ -47,9 +47,9 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: SearchProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }

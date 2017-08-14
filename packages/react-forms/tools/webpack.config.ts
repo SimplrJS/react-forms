@@ -15,7 +15,7 @@ for (const key in packageJson.dependencies) {
 
 const externalsResolver = [
     externals,
-    function (context: string, request: string, callback: Function) {
+    (context: string, request: string, callback: (...args: any[]) => void): void => {
         const directoriesToTest = [
             "abstractions",
             "actions",
@@ -42,7 +42,7 @@ const externalsResolver = [
                 resolvedPath.indexOf(path.join(__dirname, `src/${passingTest.directory}`)) !== -1;
 
             if (shouldReplaceWithCustomResolve) {
-                let customResolve = `./${passingTest.directory}`;
+                const customResolve = `./${passingTest.directory}`;
                 callback(null, customResolve);
                 return;
             }
