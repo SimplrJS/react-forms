@@ -51,9 +51,9 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: NumberProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }

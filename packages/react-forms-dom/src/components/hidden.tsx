@@ -12,8 +12,8 @@ export class Hidden extends BaseField<HiddenProps, BaseFieldState> {
         return true;
     }
 
-    protected get RawDefaultValue(): FieldValue {
-        return this.props.defaultValue;
+    protected GetRawDefaultValue(props: HiddenProps): FieldValue {
+        return props.defaultValue;
     }
 
     public render(): null {

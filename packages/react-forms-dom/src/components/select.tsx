@@ -30,15 +30,15 @@ export interface SelectState extends BaseDomFieldState {
 }
 
 export class Select extends BaseDomField<SelectProps, SelectState> {
-    protected get RawInitialValue(): SelectValue | undefined {
-        if (this.props.multiple ||
-            this.props.initialValue != null) {
-            return this.props.initialValue;
+    protected GetRawInitialValue(props: SelectProps): SelectValue | undefined {
+        if (props.multiple ||
+            props.initialValue != null) {
+            return props.initialValue;
         }
         // If select does not have multiple options, then we need to get the first option value.
         const options = React
             .Children
-            .toArray(this.props.children)
+            .toArray(props.children)
             .filter((x: JSX.Element) => x.type != null && x.type === "option");
 
         if (options.length === 0) {
@@ -98,11 +98,11 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         }
     }
 
-    protected get RawDefaultValue(): SelectValue {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: SelectProps): SelectValue {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
-        return (this.props.multiple) ? [] : "";
+        return (props.multiple) ? [] : "";
     }
 
     protected get Value(): SelectValue {
@@ -110,7 +110,7 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
             return this.state.RenderValue;
         }
 
-        return this.RawDefaultValue;
+        return this.GetRawDefaultValue(this.props);
     }
 
     public renderField(): JSX.Element {

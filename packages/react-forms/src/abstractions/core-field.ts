@@ -19,6 +19,7 @@ import { FSHContainer } from "../stores/form-stores-handler";
 import { FormStoreStateRecord } from "../contracts/form-store";
 import { ModifierValue } from "../contracts/value";
 import { FormStoreHelpers } from "../stores/form-store-helpers";
+import * as Immutable from "immutable";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;
@@ -80,9 +81,21 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     }
 
     protected get FormId(): string {
-        // Check for this value is done in componentWillMount
-        // to ensure that field is being used inside the form.
-        return this.context.FormId;
+        // Check for whether the field is being used inside of a form.
+        const props: CoreFieldProps = this.props;
+
+        if (this.context.FormId != null) {
+            // If both context and props have form id defined
+            if (props.formId != null) {
+                throw new Error("@simplr/react-forms: formId prop is defined, but field is already inside a Form.");
+            }
+            return this.context.FormId;
+        }
+        if (props.formId != null) {
+            return props.formId;
+        }
+
+        throw new Error("@simplr/react-forms: Field must be used inside a Form component or formId must be defined.");
     }
 
     protected get FormStore(): FormStore {
@@ -114,7 +127,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
 
         if (this.FormId == null) {
-            throw new Error("@simplr/react-forms: Field must be used inside a Form component.");
+            // Never goes in here, because an Error is thrown inside this.FormId if it's not valid.
         }
 
         this.StoreEventSubscription =
@@ -131,9 +144,19 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             throw new Error("@simplr/react-forms: Field name must be constant.");
         }
 
-        this.getFormStoreValuesUpdater()
-            .updateFormStoreValues(this.FormStore);
+        const defaultValue = this.processedOrEmptyModifierValue(
+            this.GetRawDefaultValue(nextProps),
+            this.ProcessValueBeforeStore.bind(this)
+        );
+        const initialValue = this.processedOrEmptyModifierValue(
+            this.GetRawInitialValue(nextProps),
+            this.ProcessValueBeforeStore.bind(this));
+        const value = this.processedOrEmptyModifierValue(
+            this.GetRawValue(nextProps),
+            this.ProcessValueBeforeStore.bind(this)
+        );
 
+        this.updateFormStoreFieldValues(defaultValue, initialValue, value);
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
     }
 
@@ -168,7 +191,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
 
         // Return default value
-        return this.RawDefaultValue;
+        return this.GetRawDefaultValue(this.props);
     }
 
     protected abstract get ControlledValue(): FieldValue;
@@ -206,6 +229,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             const parser = this.props.parseValue as FieldParseValueCallback;
             value = parser(value);
         }
+
         return ValueHelpers.ParseValue(
             React.Children.toArray(this.props.children) as JSX.Element[],
             this.DefaultModifiers,
@@ -306,18 +330,18 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     /**
      * Default field value.
      */
-    protected abstract get RawDefaultValue(): FieldValue;
+    protected abstract GetRawDefaultValue(props: TProps): FieldValue;
 
     /**
      * Initial value.
      */
-    protected abstract get RawInitialValue(): FieldValue;
+    protected abstract GetRawInitialValue(props: TProps): FieldValue;
 
     /**
      * Value before render.
      * Most common usage is for getting value from field props.
      */
-    protected abstract get RawValue(): FieldValue;
+    protected abstract GetRawValue(props: TProps): FieldValue;
 
     /**
      * ========================
@@ -340,7 +364,6 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     private registerFieldInFormStore(): void {
         const formHasField = this.FormStore.HasField(this.FieldId) || this.FormStore.HasFieldsGroup(this.FieldId);
 
-        const fieldValues = this.getFormStoreValuesUpdater();
         if (
             // If field has already been registered
             formHasField
@@ -353,45 +376,57 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             throw new Error(`@simplr/react-forms: Field '${this.FieldId}' already exists in form '${this.FormId}.`);
         }
 
+        const defaultValue = this.processedOrEmptyModifierValue(
+            this.GetRawDefaultValue(this.props),
+            this.ProcessValueBeforeStore.bind(this)
+        );
+        const initialValue = this.processedOrEmptyModifierValue(
+            this.GetRawInitialValue(this.props),
+            this.ProcessValueBeforeStore.bind(this)
+        );
+        const value = this.processedOrEmptyModifierValue(
+            this.GetRawValue(this.props),
+            this.ProcessValueBeforeStore.bind(this)
+        );
+
         // If field does not exist
         if (!formHasField) {
             // Register the field with form store
             this.FormStore.RegisterField(
                 this.FieldId,
                 this.props.name,
-                fieldValues.defaultValue.Value,
-                fieldValues.initialValue.Value,
-                fieldValues.value.Value,
-                fieldValues.value.TransitionalValue,
+                defaultValue.Value,
+                initialValue.Value,
+                value.Value,
+                value.TransitionalValue,
                 this.props,
                 this.FieldsGroupId,
                 this.IsInFieldsArray
             );
         } else {
-            // Update field values
-            fieldValues.updateFormStoreValues(this.FormStore);
+            // Update field initial and default
+            this.updateFormStoreFieldValues(defaultValue, initialValue, value);
         }
     }
 
-    private getFormStoreValuesUpdater(): {
+    private updateFormStoreFieldValues(
         defaultValue: ModifierValue,
         initialValue: ModifierValue,
-        value: ModifierValue,
-        updateFormStoreValues: (formStore: FormStore) => void
-    } {
-        const defaultValue = this.processedOrEmptyModifierValue(this.RawDefaultValue, this.ProcessValueBeforeStore.bind(this));
-        const initialValue = this.processedOrEmptyModifierValue(this.RawInitialValue, this.ProcessValueBeforeStore.bind(this));
-        const value = this.processedOrEmptyModifierValue(this.RawValue, this.ProcessValueBeforeStore.bind(this));
+        value: ModifierValue): void {
+        // Update initial and default values, if they are defined
+        if (defaultValue.Value !== undefined) {
+            this.FormStore.UpdateFieldDefaultValue(this.FieldId, defaultValue.Value);
+        }
 
-        return {
-            defaultValue,
-            initialValue,
-            value,
-            updateFormStoreValues: formStore => {
-                formStore.UpdateFieldDefaultValue(this.FieldId, defaultValue);
-                formStore.UpdateFieldInitialValue(this.FieldId, initialValue);
-                formStore.UpdateFieldValue(this.FieldId, value);
-            }
-        };
+        if (initialValue.Value !== undefined) {
+            this.FormStore.UpdateFieldInitialValue(this.FieldId, initialValue.Value);
+        } else {
+            this.FormStore.UpdateFieldInitialValue(this.FieldId, defaultValue.Value);
+        }
+
+        // Update value
+        if (value.Value !== undefined) {
+            this.FormStore.UpdateFieldValue(this.FieldId, value.Value);
+        }
     }
 }
