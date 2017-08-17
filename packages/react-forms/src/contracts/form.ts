@@ -15,6 +15,7 @@ export interface FormProps {
     fieldsValidationType?: FieldValidationType;
     formValidationType?: FieldValidationType;
     onMount?: FormOnMountCallback;
+    errorClassName?: string;
 }
 
 export type FormStateProps = FormProps & React.Props<any>;
