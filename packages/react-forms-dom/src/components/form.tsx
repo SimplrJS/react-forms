@@ -73,6 +73,8 @@ export class Form extends BaseForm<FormProps, {}> {
             fieldsValidationType,
             formValidationType,
             onMount,
+            errorClassName,
+            onChange,
             ...restProps
     } = props;
 
