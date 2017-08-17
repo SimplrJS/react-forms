@@ -1,12 +1,12 @@
 {
   "name": "@simplr/react-forms-validation",
-  "version": "4.2.0",
+  "version": "4.3.1",
   "description": "Validation library for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
   "main": "index.js",
   "types": "index.d.ts",
-  "author": "simplrjs <simplr@quatrodev.com> (https://github.com/simplrjs)",
+  "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
@@ -58,7 +58,7 @@
     "action-emitter": "^0.2.1",
     "immutable": "^3.8.1",
     "react": "^15.6.1",
-    "@simplr/react-forms": "^4.2.0",
+    "@simplr/react-forms": "^4.3.1",
     "tslib": "^1.7.1",
     "validator": "^7.2.0"
   },

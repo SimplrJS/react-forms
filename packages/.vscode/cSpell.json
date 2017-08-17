@@ -6,14 +6,19 @@
     "language": "en",
     // words - list of words to be always considered correct
     "words": [
+        "AGPL",
         "Normalizers",
         "Unmount",
         "Validators",
         "deduped",
+        "gulpfile",
+        "gulpjs",
+        "quatrodev",
         "recordified",
         "recordify",
         "simplr",
         "tslib",
+        "uglifyjs",
         "unmounts",
         "unregisters"
     ],

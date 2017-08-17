@@ -33,6 +33,12 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
     public Parse(modifierValue: ModifierValueRecord): ModifierValueRecord {
         let value = modifierValue.TransitionalValue != null ? modifierValue.TransitionalValue : modifierValue.Value;
 
+        if (typeof value === "number") {
+            return this.Recordify({
+                Value: value
+            });
+        }
+
         if (value.length === 0) {
             return this.Recordify({
                 Value: 0,
