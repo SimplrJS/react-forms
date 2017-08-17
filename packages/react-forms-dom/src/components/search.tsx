@@ -60,6 +60,7 @@ export class Search extends BaseDomField<SearchProps, BaseDomFieldState> {
             {...this.GetHTMLProps(this.props) }
             type="search"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

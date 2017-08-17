@@ -59,6 +59,7 @@ export class Password extends BaseDomField<PasswordProps, BaseDomFieldState> {
             {...this.GetHTMLProps(this.props) }
             type="password"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

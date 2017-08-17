@@ -59,6 +59,7 @@ export class Email extends BaseDomField<EmailProps, BaseDomFieldState, HTMLInput
             {...this.GetHTMLProps(this.props) }
             type="email"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}

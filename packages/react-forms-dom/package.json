@@ -55,13 +55,15 @@
     "webpack": "^3.0.0"
   },
   "dependencies": {
+    "@simplr/react-forms": "^4.2.0",
+    "@types/classnames": "^2.2.0",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.34",
+    "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "@simplr/react-forms": "^4.2.0",
     "tslib": "^1.7.1",
     "typed-immutable-record": "^0.0.6"
   },
