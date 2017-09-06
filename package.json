@@ -1,6 +1,6 @@
 {
-  "name": "@simplr/react-forms-repo",
   "private": true,
+  "name": "@simplr/react-forms-repo",
   "scripts": {
     "rush-install": "rush install",
     "tools-build": "npm run rush-tools -- run -s gulp-build -e @simplr/mvdir",
@@ -10,8 +10,8 @@
     "rush-tools": "ts-node ./tools/rush-tools.ts"
   },
   "devDependencies": {
-    "@microsoft/rush": "^3.0.11",
-    "@microsoft/rush-lib": "^3.0.11",
+    "@microsoft/rush": "3.0.11",
+    "@microsoft/rush-lib": "3.0.11",
     "@microsoft/ts-command-line": "^2.0.2",
     "@types/semver": "^5.3.32",
     "@types/shelljs": "^0.7.2",
