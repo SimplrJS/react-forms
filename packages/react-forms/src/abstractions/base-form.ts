@@ -48,12 +48,6 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         return this.FormStore.GetState().Form.Error == null;
     }
 
-    public componentWillUnmount(): void {
-        if (this.props.destroyOnUnmount) {
-            this.FormStoresHandler.UnregisterForm(this.FormId);
-        }
-    }
-
     public componentDidMount(): void {
         const props: TProps = this.props;
         if (props.onMount != null) {
@@ -61,6 +55,15 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
         }
     }
 
+    public componentWillReceiveProps(nextProps: FormContracts.FormProps): void {
+        this.FormStore.UpdateFormProps(nextProps);
+    }
+
+    public componentWillUnmount(): void {
+        if (this.props.destroyOnUnmount) {
+            this.FormStoresHandler.UnregisterForm(this.FormId);
+        }
+    }
     public abstract render(): JSX.Element | null;
 
     /*

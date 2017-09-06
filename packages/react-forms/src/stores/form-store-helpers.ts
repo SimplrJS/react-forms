@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FieldStorePropsRecord } from "../contracts/field";
+import { FormPropsRecord } from "../contracts";
 
 export const FIELDS_GROUP_SEPARATOR = ".";
 
@@ -56,7 +57,10 @@ export namespace FormStoreHelpers {
         return result;
     }
 
-    export function PropsEqual(newProps: FieldStorePropsRecord, oldProps: FieldStorePropsRecord): boolean {
+    export function PropsEqual(
+        newProps: FieldStorePropsRecord | FormPropsRecord,
+        oldProps: FieldStorePropsRecord | FormPropsRecord
+    ): boolean {
         const newKeys = newProps.keySeq().toArray();
         const oldKeys = oldProps.keySeq().toArray();
 
