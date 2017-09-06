@@ -264,11 +264,18 @@ export class FormStore extends ActionEmitter {
     }
 
     public UpdateFormProps(props: FormProps): void {
+        const propsRecord = recordify<FormProps, FormPropsRecord>(props);
+
+        if (this.State.Form.Props == null ||
+            FormStoreHelpers.PropsEqual(propsRecord, this.State.Form.Props)) {
+            return;
+        }
+
         this.State = this.State.withMutations(state => {
             state.Form = state.Form.withMutations(formState => {
-                formState.Props = recordify<FormProps, FormPropsRecord>(props);
-                if (props != null && props.disabled === true) {
-                    formState.Disabled = true;
+                formState.Props = propsRecord;
+                if (props != null && props.disabled != null) {
+                    formState.Disabled = props.disabled;
                 }
             });
             return this.RecalculateDependentFormStatuses(state);
