@@ -10,9 +10,9 @@
     "rush-tools": "ts-node ./tools/rush-tools.ts"
   },
   "devDependencies": {
-    "@microsoft/rush": "^3.0.15",
-    "@microsoft/rush-lib": "^3.0.15",
-    "@microsoft/ts-command-line": "^2.0.6",
+    "@microsoft/rush": "3.0.11",
+    "@microsoft/rush-lib": "3.0.11",
+    "@microsoft/ts-command-line": "2.0.6",
     "@types/semver": "^5.4.0",
     "@types/shelljs": "^0.7.4",
     "mz": "^2.6.0",
