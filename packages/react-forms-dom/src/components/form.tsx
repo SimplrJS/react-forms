@@ -27,7 +27,11 @@ export class Form extends BaseForm<FormProps, {}> {
         this.Element = element;
         if (this.FormStore != null && element != null) {
             this.FormStore.SetFormSubmitCallback(() => {
-                element.dispatchEvent(new Event("submit"));
+                const eventSubmit = document.createEvent("Event");
+                eventSubmit.initEvent("submit", true, true);
+                eventSubmit.preventDefault();
+
+                element.dispatchEvent(eventSubmit);
             });
         }
     }
@@ -38,8 +42,8 @@ export class Form extends BaseForm<FormProps, {}> {
     };
 
     protected FormSubmitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
         if (this.props.preventSubmitDefaultAndPropagation) {
-            event.preventDefault();
             event.stopPropagation();
         }
         if (!this.ShouldFormSubmit()) {
