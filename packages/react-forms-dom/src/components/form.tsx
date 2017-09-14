@@ -27,19 +27,23 @@ export class Form extends BaseForm<FormProps, {}> {
         this.Element = element;
         if (this.FormStore != null && element != null) {
             this.FormStore.SetFormSubmitCallback(() => {
-                element.dispatchEvent(new Event("submit"));
+                const eventSubmit = document.createEvent("Event");
+                eventSubmit.initEvent("submit", true, true);
+                eventSubmit.preventDefault();
+
+                element.dispatchEvent(eventSubmit);
             });
         }
     }
 
     public static defaultProps: FormProps = {
         ...BaseForm.defaultProps,
-        preventSubmitDefaultAndPropagation: true
+        preventSubmitPropagation: true
     };
 
     protected FormSubmitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
-        if (this.props.preventSubmitDefaultAndPropagation) {
-            event.preventDefault();
+        event.preventDefault();
+        if (this.props.preventSubmitPropagation) {
             event.stopPropagation();
         }
         if (!this.ShouldFormSubmit()) {
@@ -64,7 +68,7 @@ export class Form extends BaseForm<FormProps, {}> {
     protected GetHTMLProps(props: BaseFormProps): {} {
         const {
             formId,
-            preventSubmitDefaultAndPropagation,
+            preventSubmitPropagation,
             template,
             formStore,
             destroyOnUnmount,

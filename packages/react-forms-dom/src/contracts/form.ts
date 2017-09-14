@@ -21,7 +21,7 @@ export type FormOnChangeInternalCallback = FieldOnChangeInternalCallback;
 
 export interface BaseFormProps extends CoreFormProps {
     onChange?: FormOnChangeCallback & FormOnChangeInternalCallback;
-    preventSubmitDefaultAndPropagation?: boolean;
+    preventSubmitPropagation?: boolean;
     template?: DomFieldTemplateCallback;
     errorClassName?: string;
     // tslint:disable-next-line:max-line-length
