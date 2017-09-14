@@ -38,12 +38,12 @@ export class Form extends BaseForm<FormProps, {}> {
 
     public static defaultProps: FormProps = {
         ...BaseForm.defaultProps,
-        preventSubmitDefaultAndPropagation: true
+        preventSubmitPropagation: true
     };
 
     protected FormSubmitHandler = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        if (this.props.preventSubmitDefaultAndPropagation) {
+        if (this.props.preventSubmitPropagation) {
             event.stopPropagation();
         }
         if (!this.ShouldFormSubmit()) {
@@ -68,7 +68,7 @@ export class Form extends BaseForm<FormProps, {}> {
     protected GetHTMLProps(props: BaseFormProps): {} {
         const {
             formId,
-            preventSubmitDefaultAndPropagation,
+            preventSubmitPropagation,
             template,
             formStore,
             destroyOnUnmount,
