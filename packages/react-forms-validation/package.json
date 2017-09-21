@@ -47,7 +47,7 @@
     "ts-jest": "^20.0.6",
     "ts-loader": "^2.2.2",
     "tslint": "^5.4.3",
-    "typescript": "^2.4.2",
+    "typescript": "^2.5.2",
     "uglifyjs": "^2.4.11",
     "webpack": "^3.0.0"
   },

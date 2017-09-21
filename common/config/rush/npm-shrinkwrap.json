@@ -31,9 +31,9 @@
       "integrity": "sha512-NxpHT+d/H1WX7DiAVJtlOqxj7l80tvIjusbFuPoJ+m/mdpH4sM8ngYG9nxz5ffx1ZvTSFeLd5sp7KoqpkX2jMw=="
     },
     "@types/enzyme": {
-      "version": "2.8.6",
-      "resolved": "https://registry.npmjs.org/@types/enzyme/-/enzyme-2.8.6.tgz",
-      "integrity": "sha512-nE5lOWlmTaE+of9Ze3en7T/UdlJvhcBVHAH7wc7E0Er09RG/R9g8nAfTpQnJ4hrBvlHxwBkHfe8bewMCD3idDw=="
+      "version": "2.8.7",
+      "resolved": "https://registry.npmjs.org/@types/enzyme/-/enzyme-2.8.7.tgz",
+      "integrity": "sha512-/N2tCT2RIJwpPuC+98stnUXQmQ1w6dSJKW0hXYfk+xyVPyapAh4WqS2ZT0/MbX0pjkOg8qdax/u/yXdsGp/BeQ=="
     },
     "@types/fbemitter": {
       "version": "2.0.32",
@@ -4394,9 +4394,9 @@
       "integrity": "sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg=="
     },
     "webpack": {
-      "version": "3.5.5",
-      "resolved": "https://registry.npmjs.org/webpack/-/webpack-3.5.5.tgz",
-      "integrity": "sha512-qeUx4nIbeLL53qqNTs3kObPBMkUVDrOjEfp/hTvMlx21qL2MsGNr8/tXCoX/lS12dLl9qtZaXv2qfBEctPScDg==",
+      "version": "3.5.6",
+      "resolved": "https://registry.npmjs.org/webpack/-/webpack-3.5.6.tgz",
+      "integrity": "sha512-sXnxfx6KoZVrFAGLjdhCCwDtDwkYMfwm8mJjkQv3thr5pjTlbxopVlr/kJwc9Bz317gL+gNjvz++ir9TgG1MDg==",
       "dependencies": {
         "acorn": {
           "version": "5.1.1",
