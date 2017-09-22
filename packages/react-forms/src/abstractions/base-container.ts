@@ -25,6 +25,7 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
     };
 
     private eventStoreSubscription: EventSubscription | undefined;
+    private fshContainerSubscription: EventSubscription | undefined;
 
     protected get FormId(): string {
         const propFormId: string | undefined = this.props.formId;
@@ -53,15 +54,19 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
         }
 
         if (this.props.formId != null && this.context.FormId != null) {
-            const but = `but form id was defined: '${this.props.formId}'`;
-            throw new Error(`@simplr/react-forms: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
+            throw new Error(`@simplr/react-forms: Container is already in a Form '${this.context.FormId}' context, `
+                + `but form id was defined: '${this.props.formId}'.`);
         }
 
         if (this.FormStore == null) {
-            const fshContainerSubscription = FSHContainer.FormStoresHandler.addListener(FormRegistered, action => {
+            this.fshContainerSubscription = FSHContainer.FormStoresHandler.addListener(FormRegistered, action => {
                 if (this.FormStore != null) {
-                    this.addFormStoreListener();
-                    fshContainerSubscription.remove();
+                    if (this.fshContainerSubscription != null) {
+                        this.fshContainerSubscription.remove();
+                        delete this.fshContainerSubscription;
+                    }
+                    // TODO: What?.. Why?.. But... It's 3:29am. I'm not dealing with this today.
+                    setTimeout(() => this.addFormStoreListener());
                 }
             });
         } else {
@@ -74,6 +79,9 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
     }
 
     public componentWillUnmount(): void {
+        if (this.fshContainerSubscription != null) {
+            this.fshContainerSubscription.remove();
+        }
         if (this.eventStoreSubscription != null) {
             this.eventStoreSubscription.remove();
         }
