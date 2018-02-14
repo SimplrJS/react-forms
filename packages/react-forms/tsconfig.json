@@ -18,6 +18,9 @@
             "dom.iterable",
             "es6"
         ],
+        "types": [
+            "jest"
+        ],
         "typeRoots": [
             "./node_modules/@types"
         ]

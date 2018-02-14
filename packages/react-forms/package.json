@@ -8,7 +8,8 @@
     "types": "./dist/index.d.ts",
     "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
     "scripts": {
-        "build": "tsc -p ." 
+        "build": "tsc -p .",
+        "test": "jest"
     },
     "license": "AGPL-3.0",
     "files": [
@@ -20,9 +21,16 @@
         "!node_modules/**"
     ],
     "devDependencies": {
+        "@types/enzyme": "^3.1.9",
         "@types/jest": "^22.1.2",
+        "@types/react-dom": "^16.0.4",
+        "enzyme": "^3.3.0",
+        "enzyme-adapter-react-16": "^1.1.1",
         "jest": "^22.3.0",
+        "jest-enzyme": "^4.2.0",
+        "react-dom": "^16.2.0",
         "simplr-tslint": "^1.0.0-alpha.4",
+        "ts-jest": "^22.0.4",
         "tslint": "^5.9.1",
         "typescript": "^2.7.1"
     },
@@ -32,7 +40,7 @@
         "tslib": "^1.9.0"
     },
     "jest": {
-        "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+        "setupTestFrameworkScriptFile": "./__tests__/tests-configuration.ts",
         "transform": {
             ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
         },
