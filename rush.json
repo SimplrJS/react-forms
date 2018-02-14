@@ -7,16 +7,16 @@
             "packageName": "@simplr/react-forms",
             "projectFolder": "packages/react-forms",
             "shouldPublish": true
-        },
-        {
-            "packageName": "@simplr/react-forms-dom",
-            "projectFolder": "packages/react-forms-dom",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@simplr/react-forms-validation",
-            "projectFolder": "packages/react-forms-validation",
-            "shouldPublish": true
         }
+        // {
+        //     "packageName": "@simplr/react-forms-dom",
+        //     "projectFolder": "packages/react-forms-dom",
+        //     "shouldPublish": true
+        // },
+        // {
+        //     "packageName": "@simplr/react-forms-validation",
+        //     "projectFolder": "packages/react-forms-validation",
+        //     "shouldPublish": true
+        // }
     ]
 }
