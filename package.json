@@ -3,7 +3,6 @@
     "private": true,
     "scripts": {},
     "devDependencies": {
-        "@microsoft/rush": "3.0.11"
-    },
-    "dependencies": {}
+        "@microsoft/rush": "^4.2.5"
+    }
 }

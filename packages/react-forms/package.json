@@ -9,15 +9,34 @@
     "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
     "scripts": {},
     "license": "AGPL-3.0",
-    "files": ["**/*.md", "*.js", "**/*.d.ts", "!*.config.js", "!gulpfile.js", "!node_modules/**"],
-    "devDependencies": {},
-    "dependencies": {},
+    "files": [
+        "**/*.md",
+        "*.js",
+        "**/*.d.ts",
+        "!*.config.js",
+        "!gulpfile.js",
+        "!node_modules/**"
+    ],
+    "devDependencies": {
+        "@types/jest": "^22.1.2",
+        "jest": "^22.3.0",
+        "simplr-tslint": "^1.0.0-alpha.2",
+        "typescript": "^2.7.1"
+    },
+    "dependencies": {
+        "@types/react": "^16.0.38",
+        "react": "^16.2.0"
+    },
     "jest": {
         "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
         "transform": {
             ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
         },
         "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx|js)$",
-        "moduleFileExtensions": ["ts", "tsx", "js"]
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js"
+        ]
     }
 }
