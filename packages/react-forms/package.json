@@ -4,10 +4,12 @@
     "description": "Shared @simplr/react-forms logic.",
     "repository": "SimplrJS/react-forms",
     "homepage": "https://github.com/SimplrJS/react-forms",
-    "main": "index.js",
-    "types": "index.d.ts",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
-    "scripts": {},
+    "scripts": {
+        "build": "tsc -p ." 
+    },
     "license": "AGPL-3.0",
     "files": [
         "**/*.md",
@@ -20,12 +22,14 @@
     "devDependencies": {
         "@types/jest": "^22.1.2",
         "jest": "^22.3.0",
-        "simplr-tslint": "^1.0.0-alpha.2",
+        "simplr-tslint": "^1.0.0-alpha.4",
+        "tslint": "^5.9.1",
         "typescript": "^2.7.1"
     },
     "dependencies": {
         "@types/react": "^16.0.38",
-        "react": "^16.2.0"
+        "react": "^16.2.0",
+        "tslib": "^1.9.0"
     },
     "jest": {
         "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
