@@ -16,6 +16,9 @@ export abstract class BaseStore<TState, THydrate> extends ActionEmitter implemen
         this.emit(action);
         // this.emit(new StateChangedAction());
     }
+    protected getState(): TState {
+        return this.state;
+    }
 
     public abstract hydrate(data: THydrate): void;
     public abstract dehydrate(): THydrate;
