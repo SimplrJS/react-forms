@@ -1,11 +1,15 @@
 import { BaseStore } from "../abstractions/base-store";
+import { FieldStore, FieldStoreData } from "./field-store";
+
+import { StoreHydrated } from "../actions/store-actions";
+import { FieldRegistered, FieldUnregistered } from "../actions/field-actions";
 
 export interface FormStoreState {
-    Fields: { [key: string]: any };
+    fields: { [key: string]: FieldStore };
 }
 
 export interface FormStoreData {
-    Fields: { [key: string]: any };
+    fields: { [key: string]: FieldStoreData };
 }
 
 export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
@@ -15,15 +19,76 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
 
     protected getInitialState(): FormStoreState {
         return {
-            Fields: {}
+            fields: {}
         };
     }
 
+    public registerField(fieldId: string): void {
+        if (this.getState().fields[fieldId] != null) {
+            throw Error(`@simplr/react-forms: Field '${fieldId}' in '${this.formId}' already exists.`);
+        }
+
+        const storeInstance: FieldStore = new FieldStore(fieldId);
+
+        this.setState(new FieldRegistered(fieldId), state => ({
+            fields: {
+                ...state.fields,
+                [`${fieldId}`]: storeInstance
+            }
+        }));
+    }
+
+    public unregisterField(fieldId: string): void {
+        this.setState(new FieldUnregistered(fieldId), state => {
+            const form = this.getState().fields[fieldId];
+            if (form == null) {
+                return state;
+            }
+
+            const { [`${fieldId}`]: deletedField, ...restFields } = state.fields;
+
+            return {
+                ...state,
+                fields: restFields
+            };
+        });
+    }
+
+    public getField(fieldId: string): FieldStore | undefined {
+        return this.getState().fields[fieldId];
+    }
+
+    public getFields(): { [key: string]: FieldStore | undefined } {
+        return this.getState().fields;
+    }
+
     public hydrate(data: FormStoreData): void {
-        throw new Error("Method not implemented.");
+        const state = this.getInitialState();
+
+        for (const formId in data.fields) {
+            if (data.fields.hasOwnProperty(formId)) {
+                const field = new FieldStore(formId);
+                field.hydrate(data.fields[formId]);
+
+                state.fields[formId] = field;
+            }
+        }
+
+        this.emit(new StoreHydrated());
     }
 
     public dehydrate(): FormStoreData {
-        throw new Error("Method not implemented.");
+        const state = this.getState();
+        const data: FormStoreData = {
+            fields: {}
+        };
+
+        for (const fieldId in state.fields) {
+            if (data.fields.hasOwnProperty(fieldId)) {
+                data.fields[fieldId] = state.fields[fieldId].dehydrate();
+            }
+        }
+
+        return data;
     }
 }

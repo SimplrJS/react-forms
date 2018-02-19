@@ -5,11 +5,11 @@ import { StoreHydrated } from "../actions/store-actions";
 import { FormRegistered, FormUnregistered } from "../actions/form-list-actions";
 
 export interface FormListStoreState {
-    Forms: { [key: string]: FormStore };
+    forms: { [key: string]: FormStore };
 }
 
 export interface FormListStoreData {
-    Forms: { [key: string]: FormStoreData };
+    forms: { [key: string]: FormStoreData };
 }
 
 export class FormListStore extends BaseStore<FormListStoreState, FormListStoreData> {
@@ -17,7 +17,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
 
     protected getInitialState(): FormListStoreState {
         return {
-            Forms: {}
+            forms: {}
         };
     }
 
@@ -40,15 +40,15 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
 
         const formId = customFormId || this.getNextStoreId();
 
-        if (this.getState().Forms[formId] != null) {
+        if (this.getState().forms[formId] != null) {
             throw Error(`@simplr/react-forms: Form '${customFormId}' already exists.`);
         }
 
         const storeInstance: FormStore = new FormStore(formId);
 
         this.setState(new FormRegistered(formId), state => ({
-            Forms: {
-                ...state.Forms,
+            forms: {
+                ...state.forms,
                 [`${formId}`]: storeInstance
             }
         }));
@@ -57,37 +57,38 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
     }
 
     public unregisterForm(formId: string): void {
-        const form = this.getState().Forms[formId];
-        if (form == null) {
-            return;
-        }
-
         this.setState(new FormUnregistered(formId), state => {
-            const { [`FormId`]: deletedForm, ...restForms } = state.Forms;
+            const form = this.getState().forms[formId];
+            if (form == null) {
+                return state;
+            }
+
+            const { [`${formId}`]: deletedForm, ...restForms } = state.forms;
 
             return {
-                Forms: restForms
+                ...state,
+                forms: restForms
             };
         });
     }
 
     public getForm(formId: string): FormStore | undefined {
-        return this.getState().Forms[formId];
+        return this.getState().forms[formId];
     }
 
     public getForms(): { [key: string]: FormStore | undefined } {
-        return this.getState().Forms;
+        return this.getState().forms;
     }
 
     public hydrate(data: FormListStoreData): void {
         const state = this.getInitialState();
 
-        for (const formId in data.Forms) {
-            if (data.Forms.hasOwnProperty(formId)) {
+        for (const formId in data.forms) {
+            if (data.forms.hasOwnProperty(formId)) {
                 const form = new FormStore(formId);
-                form.hydrate(data.Forms[formId]);
+                form.hydrate(data.forms[formId]);
 
-                state.Forms[formId] = form;
+                state.forms[formId] = form;
             }
         }
 
@@ -97,12 +98,12 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
     public dehydrate(): FormListStoreData {
         const state = this.getState();
         const data: FormListStoreData = {
-            Forms: {}
+            forms: {}
         };
 
-        for (const formId in state.Forms) {
-            if (data.Forms.hasOwnProperty(formId)) {
-                data.Forms[formId] = state.Forms[formId].dehydrate();
+        for (const formId in state.forms) {
+            if (data.forms.hasOwnProperty(formId)) {
+                data.forms[formId] = state.forms[formId].dehydrate();
             }
         }
 
