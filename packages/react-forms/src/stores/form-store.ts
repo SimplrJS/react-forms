@@ -63,18 +63,20 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
     }
 
     public hydrate(data: FormStoreData): void {
-        const state = this.getInitialState();
+        this.setState(new StoreHydrated(), () => {
+            const nextState = this.getInitialState();
 
-        for (const fieldId in data.fields) {
-            if (data.fields.hasOwnProperty(fieldId)) {
-                const field = new FieldStore(this.formId, fieldId);
-                field.hydrate(data.fields[fieldId]);
+            for (const fieldId in data.fields) {
+                if (data.fields.hasOwnProperty(fieldId)) {
+                    const field = new FieldStore(this.formId, fieldId);
+                    field.hydrate(data.fields[fieldId]);
 
-                state.fields[fieldId] = field;
+                    nextState.fields[fieldId] = field;
+                }
             }
-        }
 
-        this.emit(new StoreHydrated());
+            return nextState;
+        });
     }
 
     public dehydrate(): FormStoreData {

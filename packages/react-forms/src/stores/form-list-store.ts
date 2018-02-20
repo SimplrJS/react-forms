@@ -96,7 +96,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
     }
 
     public hydrate(data: FormListStoreData): void {
-        this.setState(new StoreHydrated(), state => {
+        this.setState(new StoreHydrated(), () => {
             const nextState = this.getInitialState();
 
             for (const formId in data.forms) {

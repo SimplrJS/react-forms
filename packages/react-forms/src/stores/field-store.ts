@@ -33,7 +33,7 @@ export class FieldStore extends BaseStore<FieldStoreState, FieldStoreData> {
     }
 
     public hydrate(data: FieldStoreData): void {
-        this.setState(new StoreHydrated(), state => data);
+        this.setState(new StoreHydrated(), () => data);
     }
 
     public dehydrate(): FieldStoreData {
