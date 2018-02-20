@@ -11,7 +11,7 @@ export interface FieldStoreData {
 }
 
 export class FieldStore extends BaseStore<FieldStoreState, FieldStoreData> {
-    constructor(private formId: string) {
+    constructor(protected readonly formId: string, protected readonly fieldId: string) {
         super();
     }
 

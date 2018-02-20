@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register a field 1`] = `
+Object {
+  "fake-field-id": FieldStore {
+    "actionsList": Array [],
+    "fbEmmiter": BaseEventEmitter {
+      "_currentSubscription": null,
+      "_subscriber": EventSubscriptionVendor {
+        "_currentSubscription": null,
+        "_subscriptionsForType": Object {},
+      },
+    },
+    "fieldId": "fake-field-id",
+    "formId": "fake-form-id",
+    "state": Object {
+      "value": "",
+    },
+    "uniqueEventTypeNumber": 0,
+  },
+}
+`;

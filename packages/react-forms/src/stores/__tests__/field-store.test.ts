@@ -1,9 +1,9 @@
 import { FieldStore } from "../field-store";
 
-const FAKE_FORMID = "fake-id";
+const FAKE_FORM_ID = "fake-id";
 
 it("Update value", () => {
-    const store = new FieldStore(FAKE_FORMID);
+    const store = new FieldStore(FAKE_FORM_ID);
     expect(store.getValue()).toMatchSnapshot();
 
     const nextValue = "Hello World!";

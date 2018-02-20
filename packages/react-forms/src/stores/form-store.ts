@@ -13,7 +13,7 @@ export interface FormStoreData {
 }
 
 export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
-    constructor(private formId: string) {
+    constructor(protected readonly formId: string) {
         super();
     }
 
@@ -28,7 +28,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
             throw Error(`@simplr/react-forms: Field '${fieldId}' in '${this.formId}' already exists.`);
         }
 
-        const storeInstance: FieldStore = new FieldStore(fieldId);
+        const storeInstance: FieldStore = new FieldStore(this.formId, fieldId);
 
         this.setState(new FieldRegistered(fieldId), state => ({
             fields: {
@@ -65,12 +65,12 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
     public hydrate(data: FormStoreData): void {
         const state = this.getInitialState();
 
-        for (const formId in data.fields) {
-            if (data.fields.hasOwnProperty(formId)) {
-                const field = new FieldStore(formId);
-                field.hydrate(data.fields[formId]);
+        for (const fieldId in data.fields) {
+            if (data.fields.hasOwnProperty(fieldId)) {
+                const field = new FieldStore(this.formId, fieldId);
+                field.hydrate(data.fields[fieldId]);
 
-                state.fields[formId] = field;
+                state.fields[fieldId] = field;
             }
         }
 
