@@ -34,7 +34,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
 
     public registerForm(customFormId?: string): string {
         if (customFormId != null) {
-            // To keep store count present nomatter the customFormId was given
+            // To keep store count present no matter whether the customFormId was given or not.
             ++this.storesCount;
         }
 
