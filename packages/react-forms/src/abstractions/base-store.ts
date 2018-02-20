@@ -29,7 +29,7 @@ export abstract class BaseStore<TState, THydrate> implements HydratableStore<THy
 
     //#region State
     /**
-     * State is private so it only get updated throught `setState` method.
+     * State object is private so it's only being updated through `setState` method.
      */
     private state: TState = this.getInitialState();
 
@@ -40,8 +40,8 @@ export abstract class BaseStore<TState, THydrate> implements HydratableStore<THy
     protected abstract getInitialState(): TState;
 
     /**
-     * Updates store state and emits specific given action and `StoreStateChanged` action.
-     * @param action Specific given action that will be emitted.
+     * Updates store state and emits given action and `StoreStateChanged` action.
+     * @param action Given action that will be emitted.
      * @param handler State update handler.
      */
     protected setState<TPayload>(action: TPayload, handler: StoreSetStateHandler<TState>): void {

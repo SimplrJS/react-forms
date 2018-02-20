@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dehydration 1`] = `
+exports[`dehydrates 1`] = `
 Object {
   "fields": Object {
     "fake-field-id": Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`Hydration 1`] = `
+exports[`hydrates 1`] = `
 Object {
   "fields": Object {
     "field-1": FieldStore {
@@ -35,7 +35,7 @@ Object {
 }
 `;
 
-exports[`Register a field 1`] = `
+exports[`registers a field 1`] = `
 Object {
   "fake-field-id": FieldStore {
     "emitter": ActionEmitter {
@@ -58,7 +58,7 @@ Object {
 }
 `;
 
-exports[`Unregister a field 1`] = `
+exports[`unregisters a field 1`] = `
 Object {
   "fake-field-id": FieldStore {
     "emitter": ActionEmitter {
@@ -81,4 +81,4 @@ Object {
 }
 `;
 
-exports[`Unregister a field 2`] = `Object {}`;
+exports[`unregisters a field 2`] = `Object {}`;
