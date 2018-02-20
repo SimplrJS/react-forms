@@ -10,6 +10,31 @@ Object {
 }
 `;
 
+exports[`Hydration 1`] = `
+Object {
+  "fields": Object {
+    "field-1": FieldStore {
+      "emitter": ActionEmitter {
+        "actionsList": Array [],
+        "fbEmmiter": BaseEventEmitter {
+          "_currentSubscription": null,
+          "_subscriber": EventSubscriptionVendor {
+            "_currentSubscription": null,
+            "_subscriptionsForType": Object {},
+          },
+        },
+        "uniqueEventTypeNumber": 0,
+      },
+      "fieldId": "field-1",
+      "formId": "fake-form-id",
+      "state": Object {
+        "value": "field value 1",
+      },
+    },
+  },
+}
+`;
+
 exports[`Register a field 1`] = `
 Object {
   "fake-field-id": FieldStore {
@@ -32,3 +57,28 @@ Object {
   },
 }
 `;
+
+exports[`Unregister a field 1`] = `
+Object {
+  "fake-field-id": FieldStore {
+    "emitter": ActionEmitter {
+      "actionsList": Array [],
+      "fbEmmiter": BaseEventEmitter {
+        "_currentSubscription": null,
+        "_subscriber": EventSubscriptionVendor {
+          "_currentSubscription": null,
+          "_subscriptionsForType": Object {},
+        },
+      },
+      "uniqueEventTypeNumber": 0,
+    },
+    "fieldId": "fake-field-id",
+    "formId": "fake-form-id",
+    "state": Object {
+      "value": "",
+    },
+  },
+}
+`;
+
+exports[`Unregister a field 2`] = `Object {}`;
