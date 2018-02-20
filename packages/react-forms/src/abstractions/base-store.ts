@@ -2,12 +2,12 @@ import { ActionEmitter } from "action-emitter";
 import { EventSubscription } from "fbemitter";
 import { ListenerFunction } from "action-emitter/@types/action-emitter";
 
-import { StoreHydration } from "../contracts/store";
+import { HydratableStore } from "../contracts/store";
 import { StoreStateChanged } from "../actions/store-actions";
 
 export type StoreSetStateHandler<TState> = (state: TState) => TState;
 
-export abstract class BaseStore<TState, THydrate> implements StoreHydration<THydrate> {
+export abstract class BaseStore<TState, THydrate> implements HydratableStore<THydrate> {
     //#region Emitter
     private emitter: ActionEmitter = new ActionEmitter();
 
