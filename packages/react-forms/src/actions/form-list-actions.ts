@@ -13,3 +13,11 @@ export class FormUnregistered {
         return this.formId;
     }
 }
+
+export class FormStoreHydrated {
+    constructor(private formId: string) {}
+
+    public get FormId(): string {
+        return this.formId;
+    }
+}

@@ -2,7 +2,7 @@ import { BaseStore } from "../abstractions/base-store";
 import { FormStore, FormStoreData } from "./form-store";
 
 import { StoreHydrated } from "../actions/store-actions";
-import { FormRegistered, FormUnregistered } from "../actions/form-list-actions";
+import { FormRegistered, FormUnregistered, FormStoreHydrated } from "../actions/form-list-actions";
 
 export interface FormListStoreState {
     forms: { [key: string]: FormStore };
@@ -80,20 +80,35 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
         return this.getState().forms;
     }
 
+    public hydrateForm(formId: string, data: FormStoreData): void {
+        this.setState(new FormStoreHydrated(formId), state => {
+            const formStore = state.forms[formId] || new FormStore(formId);
+            formStore.hydrate(data);
+
+            return {
+                ...state,
+                forms: {
+                    ...state.forms,
+                    [`${formId}`]: formStore
+                }
+            };
+        });
+    }
+
     public hydrate(data: FormListStoreData): void {
         this.setState(new StoreHydrated(), state => {
-            state = this.getInitialState();
+            const nextState = this.getInitialState();
 
             for (const formId in data.forms) {
                 if (data.forms.hasOwnProperty(formId)) {
                     const form = new FormStore(formId);
                     form.hydrate(data.forms[formId]);
 
-                    state.forms[formId] = form;
+                    nextState.forms[formId] = form;
                 }
             }
 
-            return state;
+            return nextState;
         });
     }
 
