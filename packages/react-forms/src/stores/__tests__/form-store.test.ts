@@ -9,3 +9,10 @@ it("Register a field", () => {
 
     expect(store.getFields()).toMatchSnapshot();
 });
+
+it("Dehydration", () => {
+    const store = new FormStore(FAKE_FORM_ID);
+    store.registerField(FAKE_FIELD_ID);
+
+    expect(store.dehydrate()).toMatchSnapshot();
+});

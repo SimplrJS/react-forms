@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Dehydration 1`] = `
+Object {
+  "fields": Object {
+    "fake-field-id": Object {
+      "value": "",
+    },
+  },
+}
+`;
+
 exports[`Register a field 1`] = `
 Object {
   "fake-field-id": FieldStore {

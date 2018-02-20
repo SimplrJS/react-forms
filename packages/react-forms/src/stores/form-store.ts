@@ -84,7 +84,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
         };
 
         for (const fieldId in state.fields) {
-            if (data.fields.hasOwnProperty(fieldId)) {
+            if (state.fields.hasOwnProperty(fieldId)) {
                 data.fields[fieldId] = state.fields[fieldId].dehydrate();
             }
         }
