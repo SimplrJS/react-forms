@@ -1,12 +1,14 @@
 dependencies:
   '@rush-temp/react-forms': 'file:projects/react-forms.tgz'
   '@types/enzyme': 3.1.9
+  '@types/fbemitter': 2.0.32
   '@types/jest': 22.1.3
   '@types/react': 16.0.38
   '@types/react-dom': 16.0.4
   action-emitter: 0.2.1
   enzyme: 3.3.0
   enzyme-adapter-react-16: 1.1.1
+  fbemitter: 2.1.1
   jest: 22.4.0
   jest-environment-jsdom: 22.4.0
   jest-enzyme: 4.2.0
@@ -4036,12 +4038,14 @@ packages:
   'file:projects/react-forms.tgz':
     dependencies:
       '@types/enzyme': 3.1.9
+      '@types/fbemitter': 2.0.32
       '@types/jest': 22.1.3
       '@types/react': 16.0.38
       '@types/react-dom': 16.0.4
       action-emitter: 0.2.1
       enzyme: 3.3.0
       enzyme-adapter-react-16: /enzyme-adapter-react-16/1.1.1/7e2a3a34d462cb34578cdf6056c95e63
+      fbemitter: 2.1.1
       jest: 22.4.0
       jest-environment-jsdom: 22.4.0
       jest-enzyme: /jest-enzyme/4.2.0/enzyme@3.3.0+jest@22.4.0
@@ -4064,12 +4068,14 @@ shrinkwrapVersion: 3
 specifiers:
   '@rush-temp/react-forms': 'file:./projects/react-forms.tgz'
   '@types/enzyme': ^3.1.9
+  '@types/fbemitter': ^2.0.32
   '@types/jest': ^22.1.2
   '@types/react': ^16.0.38
   '@types/react-dom': ^16.0.4
   action-emitter: ^0.2.1
   enzyme: ^3.3.0
   enzyme-adapter-react-16: ^1.1.1
+  fbemitter: ^2.1.1
   jest: ^22.3.0
   jest-environment-jsdom: ^22.4.0
   jest-enzyme: ^4.2.0
