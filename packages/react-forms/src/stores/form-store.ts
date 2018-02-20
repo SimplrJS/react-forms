@@ -31,6 +31,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
         const storeInstance: FieldStore = new FieldStore(this.formId, fieldId);
 
         this.setState(new FieldRegistered(fieldId), state => ({
+            ...state,
             fields: {
                 ...state.fields,
                 [`${fieldId}`]: storeInstance
