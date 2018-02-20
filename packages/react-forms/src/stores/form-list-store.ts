@@ -81,18 +81,20 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
     }
 
     public hydrate(data: FormListStoreData): void {
-        const state = this.getInitialState();
+        this.setState(new StoreHydrated(), state => {
+            state = this.getInitialState();
 
-        for (const formId in data.forms) {
-            if (data.forms.hasOwnProperty(formId)) {
-                const form = new FormStore(formId);
-                form.hydrate(data.forms[formId]);
+            for (const formId in data.forms) {
+                if (data.forms.hasOwnProperty(formId)) {
+                    const form = new FormStore(formId);
+                    form.hydrate(data.forms[formId]);
 
-                state.forms[formId] = form;
+                    state.forms[formId] = form;
+                }
             }
-        }
 
-        this.emit(new StoreHydrated());
+            return state;
+        });
     }
 
     public dehydrate(): FormListStoreData {
