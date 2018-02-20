@@ -1,7 +1,10 @@
 {
     "name": "@simplr/react-forms-repo",
     "private": true,
-    "scripts": {},
+    "scripts": {
+        "rush-install": "rush install",
+        "test": "rush test-ci"
+    },
     "devDependencies": {
         "@microsoft/rush": "^4.2.5"
     }
