@@ -34,7 +34,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
             ...state,
             fields: {
                 ...state.fields,
-                [`${fieldId}`]: storeInstance
+                [fieldId]: storeInstance
             }
         }));
     }
@@ -46,7 +46,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
                 return state;
             }
 
-            const { [`${fieldId}`]: deletedField, ...restFields } = state.fields;
+            const { [fieldId]: deletedField, ...restFields } = state.fields;
 
             return {
                 ...state,

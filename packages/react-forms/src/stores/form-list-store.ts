@@ -49,7 +49,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
         this.setState(new FormRegistered(formId), state => ({
             forms: {
                 ...state.forms,
-                [`${formId}`]: storeInstance
+                [formId]: storeInstance
             }
         }));
 
@@ -63,7 +63,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
                 return state;
             }
 
-            const { [`${formId}`]: deletedForm, ...restForms } = state.forms;
+            const { [formId]: deletedForm, ...restForms } = state.forms;
 
             return {
                 ...state,
@@ -89,7 +89,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
                 ...state,
                 forms: {
                     ...state.forms,
-                    [`${formId}`]: formStore
+                    [formId]: formStore
                 }
             };
         });
