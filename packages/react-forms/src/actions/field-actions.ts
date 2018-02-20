@@ -13,3 +13,11 @@ export class FieldUnregistered {
         return this.formId;
     }
 }
+
+export class FieldValueChanged {
+    constructor(private value: string) {}
+
+    public get Value(): string {
+        return this.value;
+    }
+}

@@ -12,6 +12,7 @@ export abstract class BaseStore<TState, THydrate> extends ActionEmitter implemen
         if (nextState === this.state) {
             return;
         }
+        this.state = nextState;
 
         this.emit(action);
         // this.emit(new StateChangedAction());
