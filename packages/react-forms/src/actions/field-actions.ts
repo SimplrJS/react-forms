@@ -1,23 +1,33 @@
-export class FieldRegistered {
-    constructor(private formId: string) {}
+import { StoreHydrated } from "./store-actions";
+
+export abstract class FieldBaseAction {
+    constructor(private fieldId: string) {}
 
     public get FieldId(): string {
-        return this.formId;
+        return this.fieldId;
     }
 }
 
-export class FieldUnregistered {
-    constructor(private formId: string) {}
+export class FieldRegistered extends FieldBaseAction {}
 
-    public get FieldId(): string {
-        return this.formId;
+export class FieldUnregistered extends FieldBaseAction {}
+
+export class FieldValueChanged extends FieldBaseAction {
+    constructor(fieldId: string, private value: string) {
+        super(fieldId);
     }
-}
-
-export class FieldValueChanged {
-    constructor(private value: string) {}
 
     public get Value(): string {
         return this.value;
+    }
+}
+
+export class FieldStoreHydrated extends StoreHydrated {
+    constructor(private fieldId: string) {
+        super();
+    }
+
+    public get FieldId(): string {
+        return this.fieldId;
     }
 }

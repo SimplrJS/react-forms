@@ -30,17 +30,17 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
 
         const storeInstance: FieldStore = new FieldStore(this.formId, fieldId);
 
-        this.setState(new FieldRegistered(fieldId), state => ({
+        this.setState(state => ({
             ...state,
             fields: {
                 ...state.fields,
                 [fieldId]: storeInstance
             }
-        }));
+        }), new FieldRegistered(fieldId));
     }
 
     public unregisterField(fieldId: string): void {
-        this.setState(new FieldUnregistered(fieldId), state => {
+        this.setState(state => {
             const form = this.getState().fields[fieldId];
             if (form == null) {
                 return state;
@@ -52,7 +52,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
                 ...state,
                 fields: restFields
             };
-        });
+        }, new FieldUnregistered(fieldId));
     }
 
     public getField(fieldId: string): FieldStore | undefined {
@@ -64,7 +64,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
     }
 
     public hydrate(data: FormStoreData): void {
-        this.setState(new StoreHydrated(), () => {
+        this.setState(() => {
             const nextState = this.getInitialState();
 
             for (const fieldId in data.fields) {
@@ -77,7 +77,7 @@ export class FormStore extends BaseStore<FormStoreState, FormStoreData> {
             }
 
             return nextState;
-        });
+        }, new StoreHydrated());
     }
 
     public dehydrate(): FormStoreData {

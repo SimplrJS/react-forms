@@ -1,6 +1,6 @@
 import { BaseStore } from "../abstractions/base-store";
 import { StoreHydrated } from "../actions/store-actions";
-import { FieldValueChanged } from "../actions/field-actions";
+import { FieldValueChanged, FieldStoreHydrated } from "../actions/field-actions";
 
 export interface FieldStoreState {
     value: string;
@@ -22,10 +22,10 @@ export class FieldStore extends BaseStore<FieldStoreState, FieldStoreData> {
     }
 
     public updateValue(value: string): void {
-        this.setState(new FieldValueChanged(value), state => ({
+        this.setState(state => ({
             ...state,
             value: value
-        }));
+        }), new FieldValueChanged(this.fieldId, value));
     }
 
     public getValue(): string {
@@ -33,7 +33,7 @@ export class FieldStore extends BaseStore<FieldStoreState, FieldStoreData> {
     }
 
     public hydrate(data: FieldStoreData): void {
-        this.setState(new StoreHydrated(), () => data);
+        this.setState(() => data, new FieldStoreHydrated(this.fieldId));
     }
 
     public dehydrate(): FieldStoreData {

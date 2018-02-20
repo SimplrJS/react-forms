@@ -44,14 +44,16 @@ export abstract class BaseStore<TState, THydrate> implements HydratableStore<THy
      * @param action Given action that will be emitted.
      * @param handler State update handler.
      */
-    protected setState<TPayload>(action: TPayload, handler: StoreSetStateHandler<TState>): void {
+    protected setState(handler: StoreSetStateHandler<TState>, ...actions: any[]): void {
         const nextState = handler(this.state);
         if (nextState === this.state) {
             return;
         }
         this.state = nextState;
 
-        this.emitter.emit(action);
+        for (const action of actions) {
+            this.emitter.emit(action);
+        }
         this.emitter.emit(new StoreStateChanged());
     }
 

@@ -1,23 +1,3 @@
-export class FormRegistered {
-    constructor(private formId: string) {}
+import { StoreHydrated } from "./store-actions";
 
-    public get FormId(): string {
-        return this.formId;
-    }
-}
-
-export class FormUnregistered {
-    constructor(private formId: string) {}
-
-    public get FormId(): string {
-        return this.formId;
-    }
-}
-
-export class FormStoreHydrated {
-    constructor(private formId: string) {}
-
-    public get FormId(): string {
-        return this.formId;
-    }
-}
+export class FormListStoreHydrated extends StoreHydrated {}

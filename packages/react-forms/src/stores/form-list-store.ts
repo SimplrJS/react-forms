@@ -1,8 +1,8 @@
 import { BaseStore } from "../abstractions/base-store";
 import { FormStore, FormStoreData } from "./form-store";
 
-import { StoreHydrated } from "../actions/store-actions";
-import { FormRegistered, FormUnregistered, FormStoreHydrated } from "../actions/form-list-actions";
+import { FormListStoreHydrated } from "../actions/form-list-actions";
+import { FormRegistered, FormUnregistered, FormStoreHydrated } from "../actions/form-actions";
 
 export interface FormListStoreState {
     forms: { [key: string]: FormStore };
@@ -46,18 +46,18 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
 
         const storeInstance: FormStore = new FormStore(formId);
 
-        this.setState(new FormRegistered(formId), state => ({
+        this.setState(state => ({
             forms: {
                 ...state.forms,
                 [formId]: storeInstance
             }
-        }));
+        }), new FormRegistered(formId));
 
         return formId;
     }
 
     public unregisterForm(formId: string): void {
-        this.setState(new FormUnregistered(formId), state => {
+        this.setState(state => {
             const form = this.getState().forms[formId];
             if (form == null) {
                 return state;
@@ -69,7 +69,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
                 ...state,
                 forms: restForms
             };
-        });
+        }, new FormUnregistered(formId));
     }
 
     public getForm(formId: string): FormStore | undefined {
@@ -81,7 +81,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
     }
 
     public hydrateForm(formId: string, data: FormStoreData): void {
-        this.setState(new FormStoreHydrated(formId), state => {
+        this.setState(state => {
             const formStore = state.forms[formId] || new FormStore(formId);
             formStore.hydrate(data);
 
@@ -92,11 +92,11 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
                     [formId]: formStore
                 }
             };
-        });
+        }, new FormStoreHydrated(formId));
     }
 
     public hydrate(data: FormListStoreData): void {
-        this.setState(new StoreHydrated(), () => {
+        this.setState(() => {
             const nextState = this.getInitialState();
 
             for (const formId in data.forms) {
@@ -109,7 +109,7 @@ export class FormListStore extends BaseStore<FormListStoreState, FormListStoreDa
             }
 
             return nextState;
-        });
+        }, new FormListStoreHydrated());
     }
 
     public dehydrate(): FormListStoreData {
