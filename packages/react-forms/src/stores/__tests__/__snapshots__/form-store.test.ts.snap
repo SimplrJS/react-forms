@@ -13,20 +13,22 @@ Object {
 exports[`Register a field 1`] = `
 Object {
   "fake-field-id": FieldStore {
-    "actionsList": Array [],
-    "fbEmmiter": BaseEventEmitter {
-      "_currentSubscription": null,
-      "_subscriber": EventSubscriptionVendor {
+    "emitter": ActionEmitter {
+      "actionsList": Array [],
+      "fbEmmiter": BaseEventEmitter {
         "_currentSubscription": null,
-        "_subscriptionsForType": Object {},
+        "_subscriber": EventSubscriptionVendor {
+          "_currentSubscription": null,
+          "_subscriptionsForType": Object {},
+        },
       },
+      "uniqueEventTypeNumber": 0,
     },
     "fieldId": "fake-field-id",
     "formId": "fake-form-id",
     "state": Object {
       "value": "",
     },
-    "uniqueEventTypeNumber": 0,
   },
 }
 `;

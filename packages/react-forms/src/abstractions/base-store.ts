@@ -1,10 +1,33 @@
 import { ActionEmitter } from "action-emitter";
+import { EventSubscription } from "fbemitter";
+import { ListenerFunction } from "action-emitter/@types/action-emitter";
+
 import { StoreHydration } from "../contracts/store";
 import { StoreStateChanged } from "../actions/store-actions";
 
 export type StoreSetStateHandler<TState> = (state: TState) => TState;
 
-export abstract class BaseStore<TState, THydrate> extends ActionEmitter implements StoreHydration<THydrate> {
+export abstract class BaseStore<TState, THydrate> implements StoreHydration<THydrate> {
+    //#region Emitter
+    private emitter: ActionEmitter = new ActionEmitter();
+
+    protected getEmitter(): ActionEmitter {
+        return this.emitter;
+    }
+
+    /**
+     * Register a specific callback to be called on a particular action event.
+     * A subscription is returned that can be called to remove the listener.
+     *
+     * @param actionClass Action class function.
+     * @param listener Listener callback function.
+     */
+    public addListener<TAction>(actionClass: Function, listener: ListenerFunction<TAction>): EventSubscription {
+        return this.emitter.addListener(actionClass, listener);
+    }
+    //#endregion
+
+    //#region State
     /**
      * State is private so it only get updated throught `setState` method.
      */
@@ -28,8 +51,8 @@ export abstract class BaseStore<TState, THydrate> extends ActionEmitter implemen
         }
         this.state = nextState;
 
-        this.emit(action);
-        this.emit(new StoreStateChanged());
+        this.emitter.emit(action);
+        this.emitter.emit(new StoreStateChanged());
     }
 
     protected getState(): TState {
@@ -38,4 +61,5 @@ export abstract class BaseStore<TState, THydrate> extends ActionEmitter implemen
 
     public abstract hydrate(data: THydrate): void;
     public abstract dehydrate(): THydrate;
+    //#endregion
 }
