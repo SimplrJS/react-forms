@@ -1,4 +1,5 @@
 import { BaseStore } from "../abstractions/base-store";
+import { StoreHydrated } from "../actions/store-actions";
 
 export interface FieldStoreState {
     value: string;
@@ -20,10 +21,10 @@ export class FieldStore extends BaseStore<FieldStoreState, FieldStoreData> {
     }
 
     public hydrate(data: FieldStoreData): void {
-        throw new Error("Method not implemented.");
+        this.setState(new StoreHydrated(), state => data);
     }
 
     public dehydrate(): FieldStoreData {
-        throw new Error("Method not implemented.");
+        return this.getState();
     }
 }
