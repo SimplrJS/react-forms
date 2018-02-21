@@ -9,7 +9,9 @@
     "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
     "scripts": {
         "build": "tsc -p .",
+        "pretest": "tsc -p . --noEmit",
         "test": "jest",
+        "test-ci": "jest --maxWorkers=4",
         "docs-gen": "ts-docs-gen --entryFile ./src/index.ts"
     },
     "license": "AGPL-3.0",
@@ -28,6 +30,7 @@
         "enzyme": "^3.3.0",
         "enzyme-adapter-react-16": "^1.1.1",
         "jest": "^22.3.0",
+        "jest-environment-jsdom": "^22.4.0",
         "jest-enzyme": "^4.2.0",
         "react-dom": "^16.2.0",
         "simplr-tslint": "^1.0.0-alpha.4",
@@ -37,7 +40,10 @@
         "typescript": "^2.7.1"
     },
     "dependencies": {
+        "@types/fbemitter": "^2.0.32",
         "@types/react": "^16.0.38",
+        "action-emitter": "^0.2.1",
+        "fbemitter": "^2.1.1",
         "react": "^16.2.0",
         "tslib": "^1.9.0"
     },

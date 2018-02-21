@@ -7,6 +7,4 @@ node_js:
 - stable
 script:
 - npm run rush-install
-- npm run tools-build
-- npm run source-build
 - npm test
