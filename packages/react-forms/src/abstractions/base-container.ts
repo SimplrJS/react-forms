@@ -3,7 +3,9 @@ import * as PropTypes from "prop-types";
 
 import { FormStore } from "../stores/form-store";
 import { StateChanged } from "../actions/form-store";
+import { FormRegistered } from "../actions/form-stores-handler";
 import { FSHContainer } from "../stores/form-stores-handler";
+import { EventSubscription } from "action-emitter";
 
 export interface BaseContainerProps {
     formId?: string;
@@ -18,9 +20,12 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
     public context: BaseContainerParentContext;
 
     public static contextTypes: PropTypes.ValidationMap<BaseContainerParentContext> = {
-        FormId: PropTypes.string.isRequired,
+        FormId: PropTypes.string,
         FieldId: PropTypes.string
     };
+
+    private eventStoreSubscription: EventSubscription | undefined;
+    private fshContainerSubscription: EventSubscription | undefined;
 
     protected get FormId(): string {
         const propFormId: string | undefined = this.props.formId;
@@ -49,11 +54,37 @@ export abstract class BaseContainer<TProps extends BaseContainerProps, TState> e
         }
 
         if (this.props.formId != null && this.context.FormId != null) {
-            const but = `but form id was defined: '${this.props.formId}'`;
-            throw new Error(`@simplr/react-forms: Container is already in a Form '${this.context.FormId}' context, ${but}.`);
+            throw new Error(`@simplr/react-forms: Container is already in a Form '${this.context.FormId}' context, `
+                + `but form id was defined: '${this.props.formId}'.`);
         }
 
-        this.FormStore.addListener(StateChanged, this.OnStoreUpdated.bind(this));
+        if (this.FormStore == null) {
+            this.fshContainerSubscription = FSHContainer.FormStoresHandler.addListener(FormRegistered, action => {
+                if (this.FormStore != null) {
+                    if (this.fshContainerSubscription != null) {
+                        this.fshContainerSubscription.remove();
+                        delete this.fshContainerSubscription;
+                    }
+                    // TODO: What?.. Why?.. But... It's 3:29am. I'm not dealing with this today.
+                    setTimeout(() => this.addFormStoreListener());
+                }
+            });
+        } else {
+            this.addFormStoreListener();
+        }
+    }
+
+    private addFormStoreListener(): void {
+        this.eventStoreSubscription = this.FormStore.addListener(StateChanged, this.OnStoreUpdated.bind(this));
+    }
+
+    public componentWillUnmount(): void {
+        if (this.fshContainerSubscription != null) {
+            this.fshContainerSubscription.remove();
+        }
+        if (this.eventStoreSubscription != null) {
+            this.eventStoreSubscription.remove();
+        }
     }
 
     protected abstract OnStoreUpdated(): void;

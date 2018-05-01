@@ -9,9 +9,7 @@ import {
     FieldOnChangeCallback,
     HTMLElementProps
 } from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { FormProps } from "./form";
 
 export type TextOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -57,9 +55,9 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: TextProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
 
         return "";
@@ -68,14 +66,15 @@ export class Text extends BaseDomField<TextProps, BaseDomFieldState, HTMLInputEl
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="text"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

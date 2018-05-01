@@ -1,17 +1,18 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import { TypedRecord } from "typed-immutable-record";
 import { BaseField, BaseFieldState } from "@simplr/react-forms";
 import { FieldProps, FieldChildContext, FieldValue } from "@simplr/react-forms/contracts";
-import { HTMLElementProps, DomFieldTemplateCallback } from "../contracts/field";
-import { FormProps } from "../contracts/form";
+import { HTMLElementProps, DomFieldTemplateCallback, FieldOnChangeCallback } from "../contracts/field";
+import { FormProps } from "./form";
 import { BaseDomField } from "../abstractions";
-import { TypedRecord } from "typed-immutable-record";
 
 export type RadioValue = string | number;
 
 export interface RadioGroupProps extends FieldProps, HTMLElementProps<HTMLDivElement> {
     name: string;
     radioTemplate?: DomFieldTemplateCallback;
+    onChange?: FieldOnChangeCallback<HTMLInputElement>;
 
     defaultValue?: RadioValue;
     initialValue?: RadioValue;
@@ -44,9 +45,9 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         };
     }
 
-    protected get RawDefaultValue(): React.ReactText {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: RadioGroupProps): React.ReactText {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
 
         return "";
@@ -59,7 +60,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
 
         if (this.props.onChange != null) {
             event.persist();
-            this.props.onChange(event, newValue, this.FieldId, this.FormId);
+            this.props.onChange(event, newValue, this.FieldId, this.FormStore);
         }
 
         const formStoreState = this.FormStore.GetState();
@@ -72,7 +73,11 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
 
     protected GetHTMLProps(props: RadioGroupProps): {} {
         const cleanedProps = super.GetHTMLProps(props) as RadioGroupProps;
-        const { radioTemplate, ...restProps } = cleanedProps;
+        const {
+            radioTemplate,
+            onChange,
+            ...restProps
+        } = cleanedProps;
 
         return restProps;
     }
@@ -81,6 +86,7 @@ export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
         return <div
             ref={this.SetElementRef}
             {...this.GetHTMLProps(this.props) }
+            className={this.AddErrorClassName(this.props.className)}
         >
             {this.props.children}
         </div>;

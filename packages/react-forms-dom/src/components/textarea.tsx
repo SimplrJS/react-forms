@@ -10,9 +10,7 @@ import {
     FieldOnChangeCallback,
     HTMLElementProps
 } from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { FormProps } from "./form";
 
 export type TextAreaOnChangeCallback = FieldOnChangeCallback<HTMLTextAreaElement>;
 
@@ -58,9 +56,9 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: TextAreaProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }
@@ -68,13 +66,14 @@ export class TextArea extends BaseDomField<TextAreaProps, BaseDomFieldState> {
     public renderField(): JSX.Element {
         return <textarea
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

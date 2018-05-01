@@ -25,11 +25,31 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
         FormId: PropTypes.string,
         FormProps: PropTypes.object,
         FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupProps: PropTypes.object,
+        IsInFieldsArray: PropTypes.bool
+    };
+
+    public static defaultProps: Partial<FieldsArrayProps> = {
+        destroyOnUnmount: true
     };
 
     protected get FormId(): string {
-        return this.context.FormId;
+        // Check for whether FieldsArray is being used inside of a form.
+        const props: FieldsArrayProps = this.props;
+
+        if (this.context.FormId != null) {
+            // If both context and props have form id defined
+            if (props.formId != null) {
+                throw new Error("@simplr/react-forms: formId prop is defined, but FieldsArray is already inside a Form.");
+            }
+
+            return this.context.FormId;
+        }
+        if (props.formId != null) {
+            return props.formId;
+        }
+
+        throw new Error("@simplr/react-forms: FieldsArray must be used inside a Form component or formId must be defined.");
     }
 
     protected get FormStore(): FormStore {
@@ -37,21 +57,32 @@ export class BaseFieldsArray<TProps extends FieldsArrayProps,
     }
 
     public static childContextTypes: PropTypes.ValidationMap<FieldsGroupChildContext> = {
-        FieldsGroupId: PropTypes.string,
-        FieldsGroupProps: PropTypes.object
+        FieldsGroupId: PropTypes.string.isRequired,
+        FieldsGroupProps: PropTypes.object.isRequired,
+        IsInFieldsArray: PropTypes.bool.isRequired
     };
 
     public getChildContext(): FieldsGroupChildContext {
         return {
             FieldsGroupId: this.FieldsArrayId,
-            FieldsGroupProps: this.FieldsArrayPropsContext
+            FieldsGroupProps: this.FieldsArrayPropsContext,
+            IsInFieldsArray: true
         };
     }
 
     public componentWillMount(): void {
-        const idBase = `${this.props.name}[${this.props.index}]`;
-        this.FieldsArrayId = FormStoreHelpers.GetFieldsGroupId(idBase, this.context.FieldsGroupId);
-        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.index, this.context.FieldsGroupId);
+        if (this.FormId == null) {
+            // Never goes in here, because an Error is thrown inside this.FormId if it's not valid.
+        }
+
+        this.FieldsArrayId = FormStoreHelpers.GetFieldsArrayId(this.props.name, this.props.arrayKey, this.context.FieldsGroupId);
+        this.FormStore.RegisterFieldsArray(this.FieldsArrayId, this.props.name, this.props.indexWeight, this.context.FieldsGroupId);
+    }
+
+    public componentWillReceiveProps(nextProps: TProps): void {
+        if (this.props.indexWeight !== nextProps.indexWeight) {
+            this.FormStore.UpdateFieldsArrayIndexWeight(this.FieldsArrayId, nextProps.indexWeight);
+        }
     }
 
     public componentWillUnmount(): void {

@@ -21,17 +21,17 @@ export class MyTestField extends BaseField<MyFieldProps, BaseFieldState> {
         this.OnValueChange(target.value);
     }
 
-    protected get RawInitialValue(): FieldValue {
+    protected GetRawInitialValue(props: MyFieldProps): FieldValue {
         return "";
     }
 
-    protected get RawValue(): FieldValue {
+    protected GetRawValue(props: MyFieldProps): FieldValue {
         return "";
     }
 
-    protected get RawDefaultValue(): FieldValue {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: MyFieldProps): FieldValue {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }

@@ -4,12 +4,8 @@ import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
-import {
-    HTMLElementProps
-} from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { HTMLElementProps } from "../contracts/field";
+import { FormProps } from "./form";
 import { StringToDecimalModifier } from "@simplr/react-forms/modifiers";
 
 export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
@@ -55,9 +51,9 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
         }
     }
 
-    protected get RawDefaultValue(): string {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: NumberProps): string {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return "";
     }
@@ -65,14 +61,15 @@ export class Number extends BaseDomField<NumberProps, BaseDomFieldState> {
     public renderField(): JSX.Element | null {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="number"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             value={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

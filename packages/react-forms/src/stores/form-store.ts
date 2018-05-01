@@ -76,10 +76,11 @@ export class FormStore extends ActionEmitter {
         value?: FieldValue,
         transitionalValue?: FieldValue,
         props?: FieldProps,
-        fieldsGroupId?: string
+        fieldsGroupId?: string,
+        isInFieldsArray: boolean = false
     ): void {
-        if (this.State.Fields.has(fieldId) ||
-            this.State.FieldsGroups.has(fieldId)) {
+        if (this.HasField(fieldId) ||
+            this.HasFieldsGroup(fieldId)) {
             throw new Error(`@simplr/react-forms: Field '${fieldId}' already exists in form '${this.FormId}.`);
         }
 
@@ -89,6 +90,7 @@ export class FormStore extends ActionEmitter {
             // Set default value without fallbacks
             DefaultValue: defaultValue,
             InitialValue: undefined,
+            TransitionalValue: undefined,
             Value: undefined,
             Touched: false,
             Pristine: true,
@@ -104,25 +106,35 @@ export class FormStore extends ActionEmitter {
 
         // If neither initialValue, nor value is given
         // Fallback to defaultValue
-        if (initialValue == null && value == null) {
+        if (initialValue === undefined && value === undefined) {
             // 0 0
             fieldState.InitialValue = defaultValue;
             fieldState.Value = defaultValue;
-        } else if (initialValue != null && value == null) {
+        } else if (initialValue !== undefined && value === undefined) {
             // 1 0
             fieldState.InitialValue = initialValue;
             fieldState.Value = initialValue;
-        } else if (initialValue == null && value != null) {
+        } else if (initialValue === undefined && value !== undefined) {
             // 0 1
             fieldState.InitialValue = value;
             fieldState.Value = value;
         } else {
-            // 0 0
+            // 1 1
             fieldState.InitialValue = initialValue;
             fieldState.Value = value;
         }
 
         if (props != null) {
+            // If field is in FieldsArray and destroyOnUnmount is falsy
+            if (isInFieldsArray && props.destroyOnUnmount != null) {
+                // TODO: If there are more situations where it is suggested to fill issue,
+                // extract GitHub url into a global constant.
+                const githubUrl = "https://github.com/SimplrJS/react-forms";
+                const errorMessage = `@simplr/react-forms: destroyOnUnmount always defaults to true, when field is inside FieldsArray.` +
+                    `Remove destroyOnUnmount prop or fill an issue in Github (${githubUrl}) defining your scenario.`;
+                throw new Error(errorMessage);
+            }
+
             fieldState.Props = recordify<FieldProps, FieldStorePropsRecord>(props);
         }
 
@@ -163,16 +175,17 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldsGroupRegistered(this.FormId, fieldsGroupId));
     }
 
-    public RegisterFieldsArray(fieldsArrayId: string, name: string, index: number, parentId?: string): void {
+    public RegisterFieldsArray(fieldsArrayId: string, name: string, indexWeight?: number, parentId?: string): void {
         if (this.State.Fields.has(fieldsArrayId) ||
             this.State.FieldsGroups.has(fieldsArrayId)) {
-            throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' already exists in form '${this.FormId}.`);
+            throw new Error(`@simplr/react-forms: FieldsArray '${fieldsArrayId}' name already exists in form '${this.FormId}.`);
         }
 
         const faState: FieldsGroupStoreState = {
             Name: name,
             ArrayName: name,
-            Parent: parentId
+            Parent: parentId,
+            IndexWeight: indexWeight
         };
 
         const faStateRecord = recordify<FieldsGroupStoreState, FieldsGroupStoreStateRecord>(faState);
@@ -199,10 +212,30 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public UnregisterFieldsArray(fieldsGroupId: string): void {
+    public UnregisterFieldsArray(fieldsArrayId: string): void {
         // Remove fields array from form store state
         this.State = this.State.withMutations(state => {
-            state.FieldsGroups = state.FieldsGroups.remove(fieldsGroupId);
+            state.Fields = state.Fields.filter(x => {
+                // Never...
+                if (x == null) {
+                    return false;
+                }
+
+                // Take all fields not in FieldsGroup
+                if (x.FieldsGroup == null) {
+                    return true;
+                }
+
+                // Skip (remove) all fields in a given FieldsArray
+                if (x.FieldsGroup.Id === fieldsArrayId) {
+                    return false;
+                }
+
+                // Take all other fields
+                return true;
+            }).toMap();
+
+            state.FieldsGroups = state.FieldsGroups.remove(fieldsArrayId);
         });
     }
 
@@ -212,6 +245,14 @@ export class FormStore extends ActionEmitter {
 
     public GetField(fieldId: string): FieldStoreStateRecord {
         return this.State.Fields.get(fieldId);
+    }
+
+    public HasFieldsGroup(fieldsGroupId: string): boolean {
+        return this.State.FieldsGroups.has(fieldsGroupId);
+    }
+
+    public GetFieldsGroup(fieldsGroupId: string): FieldsGroupStoreStateRecord {
+        return this.State.FieldsGroups.get(fieldsGroupId);
     }
 
     public SetFormSubmitCallback(submitCallback: () => void): void {
@@ -254,6 +295,18 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.FieldPropsChanged(this.FormId, fieldId));
     }
 
+    public UpdateFieldsArrayIndexWeight(fieldsArrayId: string, indexWeight?: number): void {
+        this.State = this.State.withMutations(state => {
+            state.FieldsGroups = state.FieldsGroups.withMutations(fieldGroups => {
+                fieldGroups.update(fieldsArrayId, faState =>
+                    faState.merge({
+                        IndexWeight: indexWeight
+                    } as FieldsGroupStoreState));
+            });
+            return state;
+        });
+    }
+
     public UpdateFieldValue(fieldId: string, newValue: ModifierValue): void {
         const fieldState = this.State.Fields.get(fieldId);
         if (fieldState.Value === newValue.Value &&
@@ -281,7 +334,29 @@ export class FormStore extends ActionEmitter {
         this.emit(new Actions.ValueChanged(this.FormId, fieldId));
     }
 
-    public async ValidateField(fieldId: string, validationPromise: Promise<never>): Promise<void> {
+    public UpdateFieldDefaultValue(
+        fieldId: string,
+        defaultValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    DefaultValue: defaultValue
+                } as FieldStoreState));
+        });
+    }
+
+    public UpdateFieldInitialValue(
+        fieldId: string,
+        initialValue: FieldValue): void {
+        this.State = this.State.withMutations(state => {
+            state.Fields = state.Fields.update(fieldId, field =>
+                field.merge({
+                    InitialValue: initialValue
+                } as FieldStoreState));
+        });
+    }
+
+    public async ValidateField(fieldId: string, validationPromise: Promise<void>): Promise<void> {
         const field = this.State.Fields.get(fieldId);
         const fieldValue = field.Value;
 
@@ -435,7 +510,7 @@ export class FormStore extends ActionEmitter {
         });
     }
 
-    public async ValidateForm(validationPromise: Promise<never>): Promise<void> {
+    public async ValidateForm(validationPromise: Promise<void>): Promise<void> {
         const form = this.State.Form;
 
         // If form is not validating
@@ -683,19 +758,73 @@ export class FormStore extends ActionEmitter {
         });
 
         const fieldsGroups = this.State.FieldsGroups.filter(x => x != null && x.Parent === fieldsGroupId);
+
+        interface FieldArrayItem {
+            State: FieldsGroupStoreState;
+            FieldId: string;
+        }
+
+        // Use mutable structures for better performance
+        const fieldsArrays: { [key: string]: FieldArrayItem[] } = {};
+
         fieldsGroups.forEach((fieldsGroup, fieldId) => {
             if (fieldsGroup == null || fieldId == null) {
                 return;
             }
-            if (fieldsGroup.ArrayName != null) {
-                if (result[fieldsGroup.ArrayName] == null) {
-                    result[fieldsGroup.ArrayName] = [];
-                }
-                result[fieldsGroup.ArrayName].push(this.BuildFormObject(fieldId));
-            } else {
+
+            // FieldsGroup
+            if (fieldsGroup.ArrayName == null) {
                 result[fieldsGroup.Name] = this.BuildFormObject(fieldId);
+                return;
             }
+
+            // FieldsArray, delay processing
+            if (fieldsArrays[fieldsGroup.ArrayName] == null) {
+                fieldsArrays[fieldsGroup.ArrayName] = [];
+            }
+            fieldsArrays[fieldsGroup.ArrayName].push({
+                State: fieldsGroup,
+                FieldId: fieldId
+            });
         });
+
+        for (const key in fieldsArrays) {
+            if (!fieldsArrays.hasOwnProperty(key)) {
+                continue;
+            }
+
+            const faItems = fieldsArrays[key];
+            // Sort fields by IndexWeight
+            faItems.sort((a, b) => {
+                let weightA = a.State.IndexWeight;
+                if (weightA == null) {
+                    weightA = Number.MAX_SAFE_INTEGER;
+                }
+                let weightB = b.State.IndexWeight;
+                if (weightB == null) {
+                    weightB = Number.MAX_SAFE_INTEGER;
+                }
+
+                if (weightA < weightB) {
+                    return -1;
+                }
+                if (weightA > weightB) {
+                    return 1;
+                }
+                // a must be equal to b
+                return 0;
+            });
+
+            for (const faItem of faItems) {
+                // ArrayName is always defined, because only arrays were added into fieldsArrays dictionary.
+                const arrayName = faItem.State.ArrayName!;
+                if (result[arrayName] == null) {
+                    result[arrayName] = [];
+                }
+                result[arrayName].push(this.BuildFormObject(faItem.FieldId));
+            }
+        }
+
         return result;
     }
 

@@ -16,14 +16,14 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
     }
 
-    protected abstract get RawDefaultValue(): FieldValue;
+    protected abstract GetRawDefaultValue(props: TProps): FieldValue;
 
-    protected get RawInitialValue(): FieldValue {
-        return this.props.initialValue;
+    protected GetRawInitialValue(props: TProps): FieldValue {
+        return props.initialValue;
     }
 
-    protected get RawValue(): FieldValue {
-        return this.props.value;
+    protected GetRawValue(props: TProps): FieldValue {
+        return props.value;
     }
 
     protected get IsControlled(): boolean {
@@ -46,7 +46,7 @@ export abstract class BaseField<TProps extends FieldProps, TState extends BaseFi
         }
 
         // Return default value
-        return this.RawDefaultValue;
+        return this.GetRawDefaultValue(this.props);
     }
 
     protected get Disabled(): boolean | undefined {

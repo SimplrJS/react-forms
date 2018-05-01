@@ -7,9 +7,7 @@ import { FieldOnChangeCallback } from "../contracts/field";
 import {
     HTMLElementProps
 } from "../contracts/field";
-import {
-    FormProps
-} from "../contracts/form";
+import { FormProps } from "./form";
 
 export type CheckBoxOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 
@@ -51,9 +49,9 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
         }
     }
 
-    protected get RawDefaultValue(): boolean {
-        if (this.props.defaultValue != null) {
-            return this.props.defaultValue;
+    protected GetRawDefaultValue(props: CheckBoxProps): boolean {
+        if (props.defaultValue != null) {
+            return props.defaultValue;
         }
         return false;
     }
@@ -61,14 +59,15 @@ export class CheckBox extends BaseDomField<CheckBoxProps, BaseDomFieldState, HTM
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
+            {...this.GetHTMLProps(this.props) }
             type="checkbox"
             name={this.FieldId}
+            className={this.AddErrorClassName(this.props.className)}
             checked={this.Value}
             onChange={this.OnChangeHandler}
             disabled={this.Disabled}
             onFocus={this.OnFocus}
             onBlur={this.OnBlur}
-            {...this.GetHTMLProps(this.props) }
         />;
     }
 }

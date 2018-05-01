@@ -29,8 +29,8 @@ export namespace FormStoreHelpers {
         return name;
     }
 
-    export function GetFieldsArrayId(name: string, parentId?: string): string {
-        return GetFieldsGroupId(name, parentId);
+    export function GetFieldsArrayId(name: string, arrayKey: string, parentId?: string): string {
+        return GetFieldsGroupId(`${name}${arrayKey}`, parentId);
     }
 
     export function ArrayUnique<T>(array: T[], concat: boolean = true): T[] {
