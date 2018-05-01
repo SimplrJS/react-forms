@@ -1,6 +1,6 @@
 {
   "name": "@simplr/react-forms-dom",
-  "version": "4.3.3",
+  "version": "4.4.0-alpha",
   "description": "DOM components for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
@@ -55,16 +55,16 @@
     "webpack": "^3.0.0"
   },
   "dependencies": {
-    "@simplr/react-forms": "^4.3.3",
-    "@types/classnames": "^2.2.0",
-    "@types/prop-types": "^15.5.1",
-    "@types/react": "^15.0.34",
+    "@simplr/react-forms": "4.4.0-alpha",
+    "@types/classnames": "^2.2.3",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.3.13",
     "classnames": "^2.2.5",
-    "immutable": "^3.8.1",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "tslib": "^1.7.1",
+    "immutable": "^3.8.2",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "tslib": "^1.9.0",
     "typed-immutable-record": "^0.0.6"
   },
   "jest": {
