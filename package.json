@@ -3,10 +3,9 @@
   "private": true,
   "scripts": {
     "rush-install": "rush install",
-    "tools-build": "npm run rush-tools -- run -s gulp-build -e @simplr/mvdir",
-    "source-build": "npm run rush-tools -- run -s build -e @simplr/mvdir",
-    "test": "npm run rush-tools -- run -s test -e @simplr/mvdir",
-    "publish": "npm run rush-tools -- publish --access public"
+    "tools-build": "rush tools-build",
+    "source-build": "npm run build",
+    "test": "npm run test-ci"
   },
   "devDependencies": {
     "@microsoft/rush": "^4.2.5"
