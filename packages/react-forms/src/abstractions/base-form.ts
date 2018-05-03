@@ -28,7 +28,7 @@ export abstract class BaseForm<TProps extends FormContracts.FormProps, TState> e
     };
 
     constructor(props: FormContracts.FormProps) {
-        super();
+        super(props as TProps);
         this.registerForm(props);
         this.FormStore.UpdateFormProps(props);
     }

@@ -13,6 +13,7 @@
         "strict": true,
         "noEmitHelpers": true,
         "importHelpers": true,
+        "strictPropertyInitialization": false,        
         "lib": [
             "dom",
             "dom.iterable",

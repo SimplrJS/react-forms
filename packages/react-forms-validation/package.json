@@ -8,6 +8,7 @@
   "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
+    "prebuild": "tsc -p .",    
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
     "build": "gulp",

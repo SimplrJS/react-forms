@@ -8,6 +8,7 @@
   "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
+    "prebuild": "tsc -p .",    
     "build": "gulp",
     "watch": "webpack -w",
     "uglifyjs": "uglifyjs ./dist/react-forms-dom.js -o ./dist/react-forms-dom.min.js --compress --mangle",
