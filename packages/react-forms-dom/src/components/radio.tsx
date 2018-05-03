@@ -35,14 +35,18 @@ export interface RadioState {
     Value?: RadioValue;
 }
 
-export type RadioParentContext = RadioGroupChildContext & BaseContainerParentContext;
+export interface RadioParentContext extends RadioGroupChildContext, BaseContainerParentContext {
+    FieldId: string;
+    FormId: string;
+}
 
 export class Radio extends BaseContainer<RadioProps, RadioState> {
     public Element: HTMLInputElement | null;
     public state: RadioState = {};
     public context: RadioParentContext;
 
-    public static contextTypes: PropTypes.ValidationMap<RadioParentContext> = {
+    // TODO: Fix me. PropTypes.ValidationMap<RadioParentContext>
+    public static contextTypes: any = {
         ...BaseContainer.contextTypes,
         FieldId: PropTypes.string.isRequired,
         RadioGroupOnChangeHandler: PropTypes.func.isRequired,
@@ -54,9 +58,10 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
         super.componentWillMount();
 
         this.setState(state => {
-            state.FormStoreState = this.FormStore.GetState();
-            state.Value = this.FieldState.Value;
-            return state;
+            return {
+                FormStoreState: this.FormStore.GetState(),
+                Value: this.FieldState.Value
+            };
         });
     }
 
@@ -121,19 +126,21 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
         if (isStateDifferent) {
             this.setState(state => {
+                const nextState: RadioState = {};
                 if (state == null) {
-                    state = {
+                    return {
                         FormStoreState: newFormStoreState
                     };
                 } else {
-                    state.FormStoreState = newFormStoreState;
+                    nextState.FormStoreState = newFormStoreState;
                 }
 
                 if (this.FieldId != null) {
                     const newFieldState = this.FormStore.GetField(this.FieldId);
-                    state.Value = newFieldState.Value;
+                    nextState.Value = newFieldState.Value;
                 }
-                return state;
+
+                return nextState;
             });
         }
     }
@@ -150,7 +157,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     public renderField(): JSX.Element {
         return <input
             ref={this.SetElementRef}
-            {...this.GetHTMLProps(this.props) }
+            {...this.GetHTMLProps(this.props)}
             type="radio"
             checked={(this.state.Value === this.props.value)}
             onChange={this.OnChangeHandler}

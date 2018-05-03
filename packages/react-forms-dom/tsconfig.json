@@ -9,7 +9,6 @@
         "sourceMap": true,
         "skipDefaultLibCheck": true,
         "declaration": true,
-        "pretty": true,
         "strict": true,
         "importHelpers": true,
         "noEmitHelpers": true,
@@ -28,6 +27,10 @@
         "dist",
         "@types",
         "__tests__",
+        "tools",
+        "abstractions",
+        "components",
+        "contracts",
         "tools"
     ]
 }

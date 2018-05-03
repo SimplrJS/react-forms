@@ -28,7 +28,7 @@ export interface RadioGroupChildContext extends FieldChildContext {
 export type RadioOnChangeHandler = (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 
 export class RadioGroup extends BaseDomField<RadioGroupProps, BaseFieldState> {
-    public static childContextTypes: PropTypes.ValidationMap<RadioGroupChildContext> = {
+    public static childContextTypes = {
         ...BaseDomField.childContextTypes,
         RadioGroupOnChangeHandler: PropTypes.func.isRequired,
         RadioGroupOnBlur: PropTypes.func.isRequired,

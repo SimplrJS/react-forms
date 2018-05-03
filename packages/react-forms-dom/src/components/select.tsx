@@ -30,16 +30,21 @@ export interface SelectState extends BaseDomFieldState {
 }
 
 export class Select extends BaseDomField<SelectProps, SelectState> {
+    private isReactElement(child: React.ReactChild): child is React.ReactElement<any> {
+        return typeof child !== "string" && typeof child !== "number";
+    }
+
     protected GetRawInitialValue(props: SelectProps): SelectValue | undefined {
         if (props.multiple ||
             props.initialValue != null) {
             return props.initialValue;
         }
         // If select does not have multiple options, then we need to get the first option value.
-        const options = React
-            .Children
-            .toArray(props.children)
-            .filter((x: JSX.Element) => x.type != null && x.type === "option");
+        const children = React
+        .Children
+        .toArray(props.children)
+        .filter(x => this.isReactElement(x)) as Array<React.ReactElement<any>>;
+        const options = children.filter(x => x.type != null && x.type === "option");
 
         if (options.length === 0) {
             throw new Error("@simplr/react-forms-dom: Select MUST have at least one option!");
@@ -81,8 +86,10 @@ export class Select extends BaseDomField<SelectProps, SelectState> {
         }
 
         this.setState(state => {
-            state.RenderValue = newValue;
-            return state;
+            return {
+                ...state,
+                RenderValue: newValue
+            };
         });
 
         if (this.props.onChange != null) {

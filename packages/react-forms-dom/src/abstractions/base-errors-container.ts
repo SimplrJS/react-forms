@@ -23,9 +23,12 @@ export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProp
 
         if (!storeState.HasError) {
             this.setState(state => {
-                state.FieldErrors = Immutable.Map<string, FormError>();
-                state.FormError = undefined;
-                return state;
+                return {
+                    // TODO: Fix any.
+                    ...(state as any),
+                    FieldErrors: Immutable.Map<string, FormError>(),
+                    FormError: undefined
+                };
             });
             return;
         }
@@ -46,10 +49,12 @@ export abstract class BaseErrorsContainer<TProps extends BaseErrorsContainerProp
         });
 
         this.setState(state => {
-            state.FormError = formError;
-            state.FieldErrors = Immutable.Map<string, FormError>(fieldsErrors);
-
-            return state;
+            return {
+                // TODO: Fix any.
+                ...(state as any),
+                FieldErrors: Immutable.Map<string, FormError>(fieldsErrors),
+                FormError: formError
+            };
         });
     }
 
