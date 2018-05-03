@@ -10,16 +10,16 @@
     "rush-tools": "ts-node ./tools/rush-tools.ts"
   },
   "devDependencies": {
-    "@microsoft/rush": "3.0.11",
-    "@microsoft/rush-lib": "3.0.11",
-    "@microsoft/ts-command-line": "^2.0.2",
-    "@types/semver": "^5.3.32",
-    "@types/shelljs": "^0.7.2",
-    "mz": "^2.6.0",
-    "semver": "^5.3.0",
-    "shelljs": "^0.7.8",
-    "ts-node": "^3.1.0",
-    "typescript": "^2.4.2"
+    "@microsoft/rush": "4.3.2",
+    "@microsoft/rush-lib": "4.3.2",
+    "@microsoft/ts-command-line": "^4.1.0",
+    "@types/semver": "^5.5.0",
+    "@types/shelljs": "^0.7.9",
+    "mz": "^2.7.0",
+    "semver": "^5.5.0",
+    "shelljs": "^0.8.1",
+    "ts-node": "^6.0.2",
+    "typescript": "^2.8.3"
   },
   "dependencies": {}
 }
