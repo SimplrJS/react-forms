@@ -39,8 +39,8 @@ dependencies:
   ts-jest: 20.0.14
   ts-loader: 2.3.7
   tslib: 1.9.0
-  tslint: 5.9.1
   typed-immutable-record: 0.0.6
+  typescript: 2.8.3
   uglify-js: 3.3.23
   uglifyjs: 2.4.11
   validator: 9.4.1
@@ -1621,7 +1621,7 @@ packages:
     dependencies:
       deep-equal-ident: 1.1.1
     dev: false
-    peerDependencies: &ref_4
+    peerDependencies: &ref_2
       enzyme: 1.x || 2.x
     resolution:
       integrity: sha1-YmnUew2B1SInRdpQPyesADuiCNI=
@@ -1631,7 +1631,7 @@ packages:
       enzyme: /enzyme/2.9.1/react@16.3.2
     dev: false
     id: registry.npmjs.org/enzyme-matchers/3.8.3
-    peerDependencies: *ref_4
+    peerDependencies: *ref_2
     resolution:
       integrity: sha1-YmnUew2B1SInRdpQPyesADuiCNI=
   /enzyme-to-json/1.6.0:
@@ -1646,7 +1646,7 @@ packages:
     dev: false
     engines:
       node: '>=5.0.0'
-    peerDependencies: &ref_5
+    peerDependencies: &ref_3
       enzyme: ^2.7.1
     resolution:
       integrity: sha512-izMrbriQySEiWDUR0NeAyzCiRBncgDjfX5bt3xobkyUinEA79q8UuBNUfWFyjX2ahhP2G8k1GN4kG9NAUF405g==
@@ -1664,7 +1664,7 @@ packages:
     engines:
       node: '>=5.0.0'
     id: registry.npmjs.org/enzyme-to-json/1.6.0
-    peerDependencies: *ref_5
+    peerDependencies: *ref_3
     resolution:
       integrity: sha512-izMrbriQySEiWDUR0NeAyzCiRBncgDjfX5bt3xobkyUinEA79q8UuBNUfWFyjX2ahhP2G8k1GN4kG9NAUF405g==
   /enzyme/2.9.1:
@@ -1680,7 +1680,7 @@ packages:
       prop-types: 15.6.1
       uuid: 3.2.1
     dev: false
-    peerDependencies: &ref_2
+    peerDependencies: &ref_0
       react: 0.13.x || 0.14.x || ^15.0.0-0 || 15.x
     resolution:
       integrity: sha1-B9XOaRJBJA+4F78sSxjW5TAkDfY=
@@ -1699,7 +1699,7 @@ packages:
       uuid: 3.2.1
     dev: false
     id: registry.npmjs.org/enzyme/2.9.1
-    peerDependencies: *ref_2
+    peerDependencies: *ref_0
     resolution:
       integrity: sha1-B9XOaRJBJA+4F78sSxjW5TAkDfY=
   /errno/0.1.7:
@@ -3156,7 +3156,7 @@ packages:
       enzyme-matchers: 3.8.3
       enzyme-to-json: 1.6.0
     dev: false
-    peerDependencies: &ref_3
+    peerDependencies: &ref_1
       enzyme: 1.x || 2.x
       jest: '>=19.0.0'
     resolution:
@@ -3170,7 +3170,7 @@ packages:
       jest: 20.0.4
     dev: false
     id: registry.npmjs.org/jest-enzyme/3.8.3
-    peerDependencies: *ref_3
+    peerDependencies: *ref_1
     resolution:
       integrity: sha1-URL8x30Sy3XD4mwJcz8YMfXkW7c=
   /jest-haste-map/20.0.5:
@@ -4602,7 +4602,7 @@ packages:
       fbjs: 0.8.16
       object-assign: 4.1.1
     dev: false
-    peerDependencies: &ref_6
+    peerDependencies: &ref_4
       react: ^15.6.2
     resolution:
       integrity: sha1-0DM0NPwsQ4CSaWyncNpe1IA376g=
@@ -4613,7 +4613,7 @@ packages:
       react: 16.3.2
     dev: false
     id: registry.npmjs.org/react-test-renderer/15.6.2
-    peerDependencies: *ref_6
+    peerDependencies: *ref_4
     resolution:
       integrity: sha1-0DM0NPwsQ4CSaWyncNpe1IA376g=
   /react/16.3.2:
@@ -5464,7 +5464,7 @@ packages:
       source-map-support: 0.4.18
       yargs: 8.0.2
     dev: false
-    peerDependencies: &ref_7
+    peerDependencies: &ref_5
       jest: ^20.0.0 || ^20.1.0-alpha.1 || ^21.0.0-alpha.1
       typescript: 2.x
     resolution:
@@ -5485,7 +5485,7 @@ packages:
       yargs: 8.0.2
     dev: false
     id: registry.npmjs.org/ts-jest/20.0.14
-    peerDependencies: *ref_7
+    peerDependencies: *ref_5
     resolution:
       integrity: sha512-aygKypLeCKVCpAqxEjpE5j4y4lBbh14UU+puQk/LcH3yBT0nRFQs0NzQoE6vgxhg6p1kl4Q5BkfiJdnuGwzqIg==
   /ts-loader/2.3.7:
@@ -5503,27 +5503,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==
-  /tslint/5.9.1:
-    dependencies:
-      babel-code-frame: 6.26.0
-      builtin-modules: 1.1.1
-      chalk: 2.4.1
-      commander: 2.15.1
-      diff: 3.5.0
-      glob: 7.1.2
-      js-yaml: 3.11.0
-      minimatch: 3.0.4
-      resolve: 1.7.1
-      semver: 5.5.0
-      tslib: 1.9.0
-      tsutils: 2.26.2
-    dev: false
-    engines:
-      node: '>=4.8.0'
-    peerDependencies: &ref_0
-      typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev'
-    resolution:
-      integrity: sha1-ElX4ej/1frCw4fDmEKi0dIBGya4=
   /tslint/5.9.1/typescript@2.8.3:
     dependencies:
       babel-code-frame: 6.26.0
@@ -5543,24 +5522,18 @@ packages:
     engines:
       node: '>=4.8.0'
     id: registry.npmjs.org/tslint/5.9.1
-    peerDependencies: *ref_0
+    peerDependencies:
+      typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev'
     resolution:
       integrity: sha1-ElX4ej/1frCw4fDmEKi0dIBGya4=
-  /tsutils/2.26.2:
-    dependencies:
-      tslib: 1.9.0
-    dev: false
-    peerDependencies: &ref_1
-      typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 2.10.0-dev'
-    resolution:
-      integrity: sha512-uzwnhmrSbyinPCiwfzGsOY3IulBTwoky7r83HmZdz9QNCjhSCzavkh47KLWuU0zF2F2WbpmmzoJUIEiYyd+jEQ==
   /tsutils/2.26.2/typescript@2.8.3:
     dependencies:
       tslib: 1.9.0
       typescript: 2.8.3
     dev: false
     id: registry.npmjs.org/tsutils/2.26.2
-    peerDependencies: *ref_1
+    peerDependencies:
+      typescript: '>=2.1.0 || >=2.1.0-dev || >=2.2.0-dev || >=2.3.0-dev || >=2.4.0-dev || >=2.5.0-dev || >=2.6.0-dev || >=2.7.0-dev || >=2.8.0-dev || >=2.9.0-dev || >= 2.10.0-dev'
     resolution:
       integrity: sha512-uzwnhmrSbyinPCiwfzGsOY3IulBTwoky7r83HmZdz9QNCjhSCzavkh47KLWuU0zF2F2WbpmmzoJUIEiYyd+jEQ==
   /tty-browserify/0.0.0:
@@ -5594,7 +5567,7 @@ packages:
       integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==
   /typed-immutable-record/0.0.6:
     dev: false
-    peerDependencies: &ref_8
+    peerDependencies: &ref_6
       immutable: ^3.8.1
     resolution:
       integrity: sha1-A6wGNqNIGRRPvL4K4u2av2wZqQg=
@@ -5603,7 +5576,7 @@ packages:
       immutable: 3.8.2
     dev: false
     id: registry.npmjs.org/typed-immutable-record/0.0.6
-    peerDependencies: *ref_8
+    peerDependencies: *ref_6
     resolution:
       integrity: sha1-A6wGNqNIGRRPvL4K4u2av2wZqQg=
   /typedarray/0.0.6:
@@ -6255,8 +6228,8 @@ specifiers:
   ts-jest: ^20.0.6
   ts-loader: ^2.2.2
   tslib: ^1.9.0
-  tslint: ^5.4.3
   typed-immutable-record: ^0.0.6
+  typescript: ^2.8.3
   uglify-js: ^3.0.23
   uglifyjs: ^2.4.11
   validator: ^9.4.1
