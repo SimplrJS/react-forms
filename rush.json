@@ -1,6 +1,7 @@
 {
     "$schema": "./common/schemas/rush.schema.json",
-    "npmVersion": "5.6.0",
+    "pnpmVersion": "1.33.2",
+    "rushVersion": "4.2.5",
     "projects": [
         {
             "packageName": "@simplr/react-forms",

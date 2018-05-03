@@ -38,7 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var arguments_1 = require("./arguments");
 var mvDir = require("./index");
-var Cli = (function () {
+var Cli = /** @class */ (function () {
     function Cli(argumentValues) {
         this.mvDir(argumentValues);
     }

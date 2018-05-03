@@ -9,6 +9,6 @@
     "publish": "npm run rush-tools -- publish --access public"
   },
   "devDependencies": {
-    "@microsoft/rush": "4.3.2"
+    "@microsoft/rush": "^4.2.5"
   }
 }
