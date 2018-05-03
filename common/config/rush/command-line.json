@@ -3,9 +3,21 @@
     "customCommands": [
         {
             "name": "test-ci",
-            "documentation": "Testing packages",
+            "documentation": "Testing packages for CI.",
+            "parallelized": false,
+            "summary": "Testing packages for CI"
+        },
+        {
+            "name": "test",
+            "documentation": "Testing packages.",
             "parallelized": false,
             "summary": "Testing packages"
+        },
+        {
+            "name": "tools-build",
+            "documentation": "Build tools for building packages.",
+            "parallelized": false,
+            "summary": "Tools building"
         }
     ],
     "customOptions": {}
