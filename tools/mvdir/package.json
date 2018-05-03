@@ -10,7 +10,9 @@
     "build": "tsc -p . && npm run test-tslint",
     "watch": "tsc -p . -w",
     "test-tslint": "tslint --config ./tslint.json --project tsconfig.json && echo TsLint test successfully passed.",
-    "test-tsc": "tsc -p . --noEmit",
+    "test": "tsc -p . --noEmit",
+    "test-ci": "npm run test",
+    "tools-build": "echo 'No tools build. Skipping...';",
     "prepublishOnly": "npm run build"
   },
   "license": "AGPL-3.0",
