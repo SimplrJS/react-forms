@@ -60,7 +60,8 @@ const externalsResolver = [
 module.exports = {
     entry: {
         index: "./src/index.ts",
-        abstractions: "./src/abstractions/index.ts"
+        abstractions: "./src/abstractions.ts",
+        contracts: "./src/contracts.ts"
     },
     output: {
         filename: "./dist/[name].js",
