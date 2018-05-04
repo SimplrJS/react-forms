@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BaseField, BaseFieldState } from "@simplr/react-forms";
 import { FormProps } from "@simplr/react-forms/contracts";
-import * as classnames from "classnames";
+import classnames from "classnames";
 import {
     DomFieldProps,
     DomFieldTemplateCallback,

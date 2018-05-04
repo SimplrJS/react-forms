@@ -15,6 +15,7 @@
         "jsx": "react",
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
         "lib": [
             "dom",
             "es6",
