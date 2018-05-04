@@ -1,6 +1,6 @@
 {
   "name": "@simplr/react-forms-validation",
-  "version": "4.4.0-alpha",
+  "version": "4.4.0-alpha.2",
   "description": "Validation library for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",

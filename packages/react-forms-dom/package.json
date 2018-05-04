@@ -1,6 +1,6 @@
 {
   "name": "@simplr/react-forms-dom",
-  "version": "4.4.0-alpha",
+  "version": "4.4.0-alpha.2",
   "description": "DOM components for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
