@@ -1,11 +1,11 @@
 {
   "name": "@simplr/react-forms-dom",
-  "version": "4.4.0-alpha.4",
+  "version": "4.4.0-alpha.5",
   "description": "DOM components for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
-  "main": "./dist/react-forms-dom.js",
-  "types": "./dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "rollup -c",
@@ -51,7 +51,7 @@
     "typescript": "^2.8.3"
   },
   "dependencies": {
-    "@simplr/react-forms": "4.4.0-alpha.4",
+    "@simplr/react-forms": "4.4.0-alpha.5",
     "@types/classnames": "^2.2.3",
     "@types/prop-types": "^15.5.2",
     "@types/react": "^16.3.13",
