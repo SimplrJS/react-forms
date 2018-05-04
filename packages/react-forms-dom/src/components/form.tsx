@@ -21,7 +21,7 @@ export interface FormProps extends BaseFormProps, HTMLElementProps<HTMLFormEleme
 }
 
 export class Form extends BaseForm<FormProps, {}> {
-    public Element: HTMLFormElement | null;
+    public Element: HTMLFormElement | null = null;
 
     protected SetElementRef = (element: HTMLFormElement | null) => {
         this.Element = element;

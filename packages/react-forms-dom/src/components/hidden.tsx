@@ -1,4 +1,3 @@
-import * as React from "react";
 import { BaseField, BaseFieldState } from "@simplr/react-forms";
 import { FieldProps, FieldValue } from "@simplr/react-forms/contracts";
 

@@ -1,6 +1,5 @@
-import * as React from "react";
 import { FormStore } from "@simplr/react-forms/stores";
-import { FormError, FieldValidationStatus } from "@simplr/react-forms/contracts";
+import { FormError } from "@simplr/react-forms/contracts";
 
 import {
     BaseErrorsContainer,

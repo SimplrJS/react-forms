@@ -1,6 +1,5 @@
 import * as Immutable from "immutable";
-import { BaseContainer, BaseContainerParentContext } from "@simplr/react-forms";
-import { FormStore } from "@simplr/react-forms/stores";
+import { BaseContainer } from "@simplr/react-forms";
 import { FormError, FieldValidationStatus } from "@simplr/react-forms/contracts";
 
 export type BaseErrorsContainerProps = {};

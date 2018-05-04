@@ -8,7 +8,6 @@ import {
 } from "@simplr/react-forms";
 import {
     FormStoreStateRecord,
-    FieldValue,
     FieldStoreState
 } from "@simplr/react-forms/contracts";
 import {
@@ -41,9 +40,9 @@ export interface RadioParentContext extends RadioGroupChildContext, BaseContaine
 }
 
 export class Radio extends BaseContainer<RadioProps, RadioState> {
-    public Element: HTMLInputElement | null;
+    public Element: HTMLInputElement | null = null;
     public state: RadioState = {};
-    public context: RadioParentContext;
+    public context!: RadioParentContext;
 
     // TODO: Fix me. PropTypes.ValidationMap<RadioParentContext>
     public static contextTypes: any = {

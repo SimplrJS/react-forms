@@ -14,12 +14,8 @@ export interface FieldsGroupProps extends CoreProps, HTMLElementProps<HTMLDivEle
 
 export type FieldsGroupState = CoreState;
 
-interface Dictionary {
-    [key: string]: any;
-}
-
 export class FieldsGroup extends BaseFieldsGroup<FieldsGroupProps, FieldsGroupState> {
-    public Element: HTMLDivElement | null;
+    public Element: HTMLDivElement | null = null;
 
     protected SetElementRef = (element: HTMLDivElement | null): void => {
         this.Element = element;

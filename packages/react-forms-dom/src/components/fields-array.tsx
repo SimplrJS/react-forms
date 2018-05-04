@@ -14,12 +14,8 @@ export interface FieldsArrayProps extends CoreProps, HTMLElementProps<HTMLDivEle
 
 export type FieldsArrayState = CoreState;
 
-interface Dictionary {
-    [key: string]: any;
-}
-
 export class FieldsArray extends BaseFieldsArray<FieldsArrayProps, FieldsArrayState> {
-    public Element: HTMLDivElement | null;
+    public Element: HTMLDivElement | null = null;
 
     protected SetElementRef = (element: HTMLDivElement | null): void => {
         this.Element = element;
