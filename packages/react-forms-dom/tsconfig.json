@@ -9,6 +9,7 @@
         "inlineSourceMap": true,
         "inlineSources": true,
         "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
         "declaration": true,
         "strict": true,
         "moduleResolution": "node",
