@@ -1,21 +1,11 @@
 import * as React from "react";
 import * as ActionEmitter from "action-emitter";
 
-import {
-    FieldValidationType
-} from "@simplr/react-forms/contracts";
-import { FormStore } from "@simplr/react-forms/stores";
-import {
-    FieldRegistered,
-    ValueChanged,
-    FieldPropsChanged,
-    FieldBlurred
-} from "@simplr/react-forms/actions";
+import { FieldValidationType, FormStore, FieldRegistered, ValueChanged, FieldPropsChanged, FieldBlurred } from "@simplr/react-forms";
 
 import { ValidateField, ValidateForm } from "../utils/validation";
 
 export class FormStoreSubscriber {
-
     private fieldOnRegisteredSubscription?: ActionEmitter.EventSubscription;
     private fieldOnValueChangedSubscription?: ActionEmitter.EventSubscription;
     private fieldOnPropsChangedSubscription?: ActionEmitter.EventSubscription;
@@ -43,17 +33,13 @@ export class FormStoreSubscriber {
         }
     }
 
-    protected async ValidateField(
-        fieldId: string,
-        targetValidationType: FieldValidationType
-    ): Promise<void> {
+    protected async ValidateField(fieldId: string, targetValidationType: FieldValidationType): Promise<void> {
         const fieldState = this.formStore.GetField(fieldId);
         const formProps = this.formStore.GetState().Form.Props;
         const fieldProps = fieldState.Props;
         let validationType: FieldValidationType = FieldValidationType.None;
 
-        if (formProps == null && fieldProps == null ||
-            fieldProps == null) {
+        if ((formProps == null && fieldProps == null) || fieldProps == null) {
             return;
         }
 
@@ -65,8 +51,7 @@ export class FormStoreSubscriber {
             validationType = fieldProps.validationType;
         }
 
-        if (validationType == null ||
-            !(validationType & targetValidationType)) {
+        if (validationType == null || !(validationType & targetValidationType)) {
             return;
         }
 
@@ -78,10 +63,11 @@ export class FormStoreSubscriber {
     protected async ValidateForm(targetValidationType: FieldValidationType): Promise<void> {
         const formStoreState = this.formStore.GetState();
         const formProps = formStoreState.Form.Props;
-        if (formStoreState.HasError ||
+        if (
+            formStoreState.HasError ||
             formStoreState.Validating ||
-            formProps.formValidationType != null &&
-            !(formProps.formValidationType & targetValidationType)) {
+            (formProps.formValidationType != null && !(formProps.formValidationType & targetValidationType))
+        ) {
             return;
         }
 

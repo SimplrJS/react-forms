@@ -1,7 +1,7 @@
 import { BaseFieldValidator, BaseFieldValidatorProps } from "../abstractions/base-field-validator";
 import { ValidationResult } from "../contracts";
 
-import { FieldValue } from "@simplr/react-forms/contracts";
+import { FieldValue } from "@simplr/react-forms";
 
 export type RequiredValidatorProps = BaseFieldValidatorProps;
 

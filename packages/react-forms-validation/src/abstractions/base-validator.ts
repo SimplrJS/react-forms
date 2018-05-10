@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldValue } from "@simplr/react-forms/contracts";
+import { FieldValue } from "@simplr/react-forms";
 
 import { Validator, ValidationResult, ValidationError } from "../contracts";
 
@@ -7,13 +7,12 @@ export interface BaseValidatorProps {
     error: ValidationError;
 }
 
-export abstract class BaseValidator<TProps extends BaseValidatorProps, TState>
-    extends React.Component<TProps, TState> implements Validator {
-
+export abstract class BaseValidator<TProps extends BaseValidatorProps, TState> extends React.Component<TProps, TState>
+    implements Validator {
     public abstract Validate(value: FieldValue): ValidationResult;
 
     protected SkipValidation(value: any): boolean {
-        return (value == null || value === "");
+        return value == null || value === "";
     }
 
     protected async Valid(): Promise<void> {

@@ -1,5 +1,4 @@
-import { FormError } from "@simplr/react-forms/contracts";
-import { FormStore } from "@simplr/react-forms/stores";
+import { FormStore, FormError } from "@simplr/react-forms";
 
 export interface Validator {
     Validate(value: any): ValidationResult;

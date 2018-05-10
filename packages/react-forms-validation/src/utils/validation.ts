@@ -1,10 +1,4 @@
-import { FieldValue, FormErrorOrigin } from "@simplr/react-forms/contracts";
-import {
-    IsComponentOfType,
-    RenderComponents,
-    ConstructFormError
-} from "@simplr/react-forms/utils";
-import { FormStore } from "@simplr/react-forms/stores";
+import { FieldValue, FormErrorOrigin, IsComponentOfType, RenderComponents, ConstructFormError, FormStore } from "@simplr/react-forms";
 
 import {
     Validator,

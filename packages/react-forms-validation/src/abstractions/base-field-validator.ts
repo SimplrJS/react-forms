@@ -5,8 +5,7 @@ export interface BaseFieldValidatorProps extends BaseValidatorProps {
     error: ValidationError<ValidationFieldErrorTemplate>;
 }
 
-export abstract class BaseFieldValidator<TProps extends BaseFieldValidatorProps>
-    extends BaseValidator<TProps, {}> {
+export abstract class BaseFieldValidator<TProps extends BaseFieldValidatorProps> extends BaseValidator<TProps, {}> {
     // tslint:disable-next-line:no-empty
-    public static SimplrValidationFieldValidatorComponent(): void { }
+    public static SimplrValidationFieldValidatorComponent(): void {}
 }

@@ -6,3 +6,6 @@ coverage
 
 # Ignore Rush temporary files
 /common/temp/** 
+
+.rpt2_cache
+!rollup.config.js

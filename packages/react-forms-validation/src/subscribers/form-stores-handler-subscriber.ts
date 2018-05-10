@@ -1,9 +1,4 @@
-import {
-    FSHContainerClass,
-    FSHContainer,
-    FormStoresHandler
-} from "@simplr/react-forms/stores";
-import { FormRegistered, FormUnregistered } from "@simplr/react-forms/actions";
+import { FSHContainerClass, FSHContainer, FormStoresHandler, FormRegistered, FormUnregistered } from "@simplr/react-forms";
 import * as ActionEmitter from "action-emitter";
 import * as Immutable from "immutable";
 import { FormStoreSubscriber } from "./form-store-subscriber";
@@ -25,17 +20,14 @@ export class FormStoresHandlerSubscriber {
     }
 
     constructor(private fshContainer: FSHContainerClass = FSHContainer) {
-        this.formRegisterSubscription = this.formStoresHandler
-            .addListener(FormRegistered, this.onFormRegistered.bind(this));
-        this.formUnregisterSubscription = this.formStoresHandler
-            .addListener(FormUnregistered, this.onFormUnregistered.bind(this));
+        this.formRegisterSubscription = this.formStoresHandler.addListener(FormRegistered, this.onFormRegistered.bind(this));
+        this.formUnregisterSubscription = this.formStoresHandler.addListener(FormUnregistered, this.onFormUnregistered.bind(this));
     }
 
     private onFormRegistered(action: FormRegistered): void {
         const formStore = this.fshContainer.FormStoresHandler.GetStore(action.FormId);
 
-        this.formStoresSubscribers = this.formStoresSubscribers
-            .set(action.FormId, new FormStoreSubscriber(formStore));
+        this.formStoresSubscribers = this.formStoresSubscribers.set(action.FormId, new FormStoreSubscriber(formStore));
     }
 
     private onFormUnregistered(action: FormUnregistered): void {
