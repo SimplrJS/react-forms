@@ -18,9 +18,9 @@ if (production) {
 export default {
     input: "./src/index.ts",
     output: {
-        file: "./dist/index.js",
+        file: "index.js",
         format: "cjs",
-        name: "react-forms-dom"
+        name: "react-forms-validation"
     },
     plugins: [
         typescript(),

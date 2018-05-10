@@ -1,11 +1,11 @@
 {
   "name": "@simplr/react-forms",
-  "version": "4.4.0-alpha.7",
+  "version": "4.4.0-alpha.8",
   "description": "Shared @simplr/react-forms logic.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "rollup -c",

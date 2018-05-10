@@ -1,11 +1,11 @@
 {
   "name": "@simplr/react-forms-validation",
-  "version": "4.4.0-alpha.7",
+  "version": "4.4.0-alpha.8",
   "description": "Validation library for @simplr/react-forms.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main":  "index.js",
+  "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "rollup -c",
@@ -49,7 +49,7 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "@simplr/react-forms": "4.4.0-alpha.7",
+    "@simplr/react-forms": "4.4.0-alpha.8",
     "@types/react": "^16.3.13",
     "@types/react-dom": "^16.0.5",
     "@types/validator": "^9.4.1",
