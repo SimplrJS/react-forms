@@ -4,8 +4,8 @@
   "description": "Shared @simplr/react-forms logic.",
   "repository": "SimplrJS/react-forms",
   "homepage": "https://github.com/SimplrJS/react-forms",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
     "build": "rollup -c",
