@@ -4,3 +4,4 @@ coverage
 *.js
 **/*.d.ts
 .rpt2_cache
+!rollup.config.js
