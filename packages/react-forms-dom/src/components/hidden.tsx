@@ -1,5 +1,4 @@
-import { BaseField, BaseFieldState } from "@simplr/react-forms";
-import { FieldProps, FieldValue } from "@simplr/react-forms/contracts";
+import { BaseField, BaseFieldState, FieldProps, FieldValue } from "@simplr/react-forms";
 
 export interface HiddenProps extends FieldProps {
     defaultValue: FieldValue;

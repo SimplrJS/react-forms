@@ -4,12 +4,10 @@ import * as PropTypes from "prop-types";
 import {
     BaseContainer,
     BaseContainerParentContext,
-    BaseContainerProps
-} from "@simplr/react-forms";
-import {
+    BaseContainerProps,
     FormStoreStateRecord,
     FieldStoreState
-} from "@simplr/react-forms/contracts";
+} from "@simplr/react-forms";
 import {
     RadioGroupChildContext,
     RadioGroupProps,

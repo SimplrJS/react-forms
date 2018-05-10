@@ -2,9 +2,9 @@ import * as React from "react";
 import {
     FieldValue,
     FieldProps,
-    FieldStoreState
-} from "@simplr/react-forms/contracts";
-import { FormStore } from "@simplr/react-forms/stores";
+    FieldStoreState,
+    FormStore
+} from "@simplr/react-forms";
 
 /**
  * Base HTML element props with proper onChange.

@@ -1,9 +1,9 @@
 import * as React from "react";
 import {
     FieldsArrayProps as CoreProps,
-    FieldsArrayState as CoreState
-} from "@simplr/react-forms/contracts";
-import { BaseFieldsArray } from "@simplr/react-forms";
+    FieldsArrayState as CoreState,
+    BaseFieldsArray
+} from "@simplr/react-forms";
 import { HTMLElementProps } from "../contracts/field";
 
 export interface FieldsArrayProps extends CoreProps, HTMLElementProps<HTMLDivElement> {

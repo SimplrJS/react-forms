@@ -1,12 +1,11 @@
 import * as React from "react";
-import { FieldValue } from "@simplr/react-forms/contracts";
+import { FieldValue, StringToDecimalModifier } from "@simplr/react-forms";
 import { DomFieldProps } from "../contracts/field";
 
 import { BaseDomField, BaseDomFieldState } from "../abstractions/base-dom-field";
 import { FieldOnChangeCallback } from "../contracts/field";
 import { HTMLElementProps } from "../contracts/field";
 import { FormProps } from "./form";
-import { StringToDecimalModifier } from "@simplr/react-forms/modifiers";
 
 export type NumberOnChangeCallback = FieldOnChangeCallback<HTMLInputElement>;
 

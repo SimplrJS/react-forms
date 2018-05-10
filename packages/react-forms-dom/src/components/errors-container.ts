@@ -1,5 +1,4 @@
-import { FormStore } from "@simplr/react-forms/stores";
-import { FormError } from "@simplr/react-forms/contracts";
+import { FormError, FormStore } from "@simplr/react-forms";
 
 import {
     BaseErrorsContainer,

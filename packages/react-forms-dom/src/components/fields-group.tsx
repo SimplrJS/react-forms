@@ -1,9 +1,9 @@
 import * as React from "react";
 import {
     FieldsGroupProps as CoreProps,
-    FieldsGroupState as CoreState
-} from "@simplr/react-forms/contracts";
-import { BaseFieldsGroup } from "@simplr/react-forms";
+    FieldsGroupState as CoreState,
+    BaseFieldsGroup
+} from "@simplr/react-forms";
 import { HTMLElementProps } from "../contracts/field";
 
 export interface FieldsGroupProps extends CoreProps, HTMLElementProps<HTMLDivElement> {

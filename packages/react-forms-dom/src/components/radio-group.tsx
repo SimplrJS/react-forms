@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { BaseFieldState } from "@simplr/react-forms";
-import { FieldProps, FieldChildContext } from "@simplr/react-forms/contracts";
+import { BaseFieldState, FieldProps, FieldChildContext } from "@simplr/react-forms";
 import { HTMLElementProps, DomFieldTemplateCallback, FieldOnChangeCallback } from "../contracts/field";
 import { FormProps } from "./form";
 import { BaseDomField } from "../abstractions";
