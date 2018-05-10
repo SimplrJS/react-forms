@@ -18,12 +18,14 @@ if (production) {
 export default {
     input: "./src/index.ts",
     output: {
-        file: "index.js",
+        file: "./dist/index.js",
         format: "cjs",
         name: "react-forms-dom"
     },
     plugins: [
-        typescript(),
+        typescript({
+            verbosity: 2
+        }),
         autoExternal(),
         ...plugins
     ]

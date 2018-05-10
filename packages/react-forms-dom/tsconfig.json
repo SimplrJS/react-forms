@@ -6,8 +6,6 @@
         "outDir": "dist",
         "rootDir": "src",
         "noUnusedLocals": true,
-        "inlineSourceMap": true,
-        "inlineSources": true,
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "declaration": true,
@@ -17,6 +15,7 @@
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false,
         "lib": [
             "dom",
             "es6",
