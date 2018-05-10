@@ -6,10 +6,15 @@ import { FormStoreSubscriber } from "./form-store-subscriber";
 export type FormStoresSubscribers = Immutable.Map<string, FormStoreSubscriber>;
 
 export class FormStoresHandlerSubscriber {
+    constructor(private fshContainer: FSHContainerClass = FSHContainer) {
+        this.formRegisterSubscription = this.formStoresHandler.addListener(FormRegistered, this.onFormRegistered.bind(this));
+        this.formUnregisterSubscription = this.formStoresHandler.addListener(FormUnregistered, this.onFormUnregistered.bind(this));
+    }
+
     private formStoresSubscribers: FormStoresSubscribers = Immutable.Map<string, FormStoreSubscriber>();
 
-    private formRegisterSubscription: ActionEmitter.EventSubscription;
-    private formUnregisterSubscription: ActionEmitter.EventSubscription;
+    protected readonly formRegisterSubscription: ActionEmitter.EventSubscription;
+    protected readonly formUnregisterSubscription: ActionEmitter.EventSubscription;
 
     protected get FormStoresSubscribers(): FormStoresSubscribers {
         return this.formStoresSubscribers;
@@ -17,11 +22,6 @@ export class FormStoresHandlerSubscriber {
 
     private get formStoresHandler(): FormStoresHandler {
         return this.fshContainer.FormStoresHandler;
-    }
-
-    constructor(private fshContainer: FSHContainerClass = FSHContainer) {
-        this.formRegisterSubscription = this.formStoresHandler.addListener(FormRegistered, this.onFormRegistered.bind(this));
-        this.formUnregisterSubscription = this.formStoresHandler.addListener(FormUnregistered, this.onFormUnregistered.bind(this));
     }
 
     private onFormRegistered(action: FormRegistered): void {

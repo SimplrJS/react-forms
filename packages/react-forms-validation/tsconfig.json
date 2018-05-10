@@ -1,33 +1,47 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "es2015",
         "target": "es5",
         "removeComments": false,
         "outDir": "dist",
         "rootDir": "src",
-        "jsx": "react",
-        "sourceMap": false,
+        "noUnusedLocals": true,
         "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
         "declaration": true,
-        "pretty": true,
         "strict": true,
-        "noEmitHelpers": true,
-        "importHelpers": true,
-        "strictPropertyInitialization": false,        
+        "moduleResolution": "node",
+        "jsx": "react",
+        "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false,
         "lib": [
             "dom",
-            "dom.iterable",
-            "es6"
+            "es6",
+            "es2017.object"
+        ],
+        "types": [
+            "node"
         ],
         "typeRoots": [
             "./node_modules/@types"
+        ],
+        "plugins": [
+            {
+                "name": "tslint-language-service",
+                "alwaysShowRuleFailuresAsWarnings": true,
+                "ignoreDefinitionFiles": true
+            }
         ]
     },
     "exclude": [
         "node_modules",
         "dist",
         "@types",
-        "__tests__",
-        "tools"
+        "tests",
+        "examples",
+        "tools",
+        "__tests__"
     ]
 }

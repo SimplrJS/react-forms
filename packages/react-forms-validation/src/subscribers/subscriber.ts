@@ -2,11 +2,11 @@ import { FormStoresHandlerSubscriber } from "./form-stores-handler-subscriber";
 import { SubscriberType } from "../contracts";
 
 export class ValidationSubscriber {
-    private formStoreHandlerSubscriber: FormStoresHandlerSubscriber;
-
-    constructor(private type: SubscriberType = SubscriberType.Automatically) {
+    constructor(protected readonly type: SubscriberType = SubscriberType.Automatically) {
         this.formStoreHandlerSubscriber = new FormStoresHandlerSubscriber();
     }
+
+    protected readonly formStoreHandlerSubscriber: FormStoresHandlerSubscriber;
 }
 
 export class ValidationSubscriberContainerClass {
