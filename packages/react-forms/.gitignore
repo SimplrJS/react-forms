@@ -3,3 +3,4 @@ dist
 coverage
 *.js
 **/*.d.ts
+.rpt2_cache

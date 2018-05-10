@@ -8,21 +8,15 @@
   "types": "index.d.ts",
   "author": "SimplrJS <simplr@quatrodev.com> (https://github.com/simplrjs)",
   "scripts": {
-    "prebuild": "tsc -p .",
-    "build": "gulp",
-    "watch": "webpack -w",
-    "uglifyjs": "uglifyjs ./dist/react-forms.js -o ./dist/react-forms.min.js --compress --mangle",
-    "release": "npm run build && npm run uglifyjs",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
     "test": "jest && npm run test-tsc && npm run test-tslint",
     "test-ci": "npm run test",
     "test-tslint": "tslint --config ./tslint.json --project tsconfig.json && echo TsLint test successfully passed.",
     "test-tsc": "tsc -p . --noEmit",
     "test-watch": "jest --watchAll",
     "test-coverage": "npm test -- --coverage",
-    "prepublishOnly": "npm run build",
-    "gulp-build": "tsc -p ./tools/tsconfig.gulp.json",
-    "tools-build": "npm run gulp-build",
-    "gulp-watch": "npm run gulp-build -- -w"
+    "prepublishOnly": "npm run build"
   },
   "license": "AGPL-3.0",
   "files": [
@@ -48,14 +42,16 @@
     "jest": "^20.0.4",
     "jest-enzyme": "^3.4.0",
     "react-test-renderer": "^16.3.2",
+    "rollup": "^0.58.2",
+    "rollup-plugin-auto-external": "^1.2.0",
+    "rollup-plugin-typescript2": "^0.13.0",
+    "rollup-plugin-uglify": "^3.0.0",
     "sinon": "^2.3.6",
     "source-map-loader": "^0.2.1",
     "ts-jest": "^20.0.6",
     "ts-loader": "^2.2.2",
     "tslint": "^5.9.1",
-    "typescript": "^2.8.3",
-    "uglify-js": "^3.0.23",
-    "webpack": "^3.0.0"
+    "typescript": "^2.8.3"
   },
   "dependencies": {
     "@types/fbemitter": "^2.0.32",

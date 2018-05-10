@@ -287,3 +287,5 @@ package-lock.json
 /common/rush-link.json
 /common/rush-recycler
 package-deps.json
+
+!rollup.config.js

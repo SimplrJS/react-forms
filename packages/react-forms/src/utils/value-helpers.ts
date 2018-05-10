@@ -1,7 +1,7 @@
 import * as ReactDOM from "react-dom";
 import { FieldValue } from "../contracts/field";
 import * as Immutable from "immutable";
-import { recordify, TypedRecord } from "typed-immutable-record";
+import { recordify } from "typed-immutable-record";
 import {
     Modifier,
     Normalizer,
@@ -195,16 +195,16 @@ function isRecord(maybeRecord: any): boolean {
     return !!(maybeRecord && maybeRecord[IS_RECORD_SENTINEL]);
 }
 
-function ensureModifierValueImmutability(value: ModifierValue): ModifierValue {
-    if (value == null || isImmutable(value)) {
-        return value;
-    }
+// function ensureModifierValueImmutability(value: ModifierValue): ModifierValue {
+//     if (value == null || isImmutable(value)) {
+//         return value;
+//     }
 
-    return {
-        Value: ensureImmutability(value.Value),
-        TransitionalValue: ensureImmutability(value.TransitionalValue)
-    };
-}
+//     return {
+//         Value: ensureImmutability(value.Value),
+//         TransitionalValue: ensureImmutability(value.TransitionalValue)
+//     };
+// }
 
 function ensureImmutability(value: any): any {
     if (value == null || typeof value !== "object" || isImmutable(value)) {

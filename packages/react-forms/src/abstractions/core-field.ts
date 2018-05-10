@@ -19,7 +19,6 @@ import { FSHContainer } from "../stores/form-stores-handler";
 import { FormStoreStateRecord } from "../contracts/form-store";
 import { ModifierValue } from "../contracts/value";
 import { FormStoreHelpers } from "../stores/form-store-helpers";
-import * as Immutable from "immutable";
 
 export interface CoreFieldState {
     FormStoreState: FormStoreStateRecord;

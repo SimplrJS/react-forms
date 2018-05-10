@@ -15,7 +15,7 @@ export class StringToDecimalModifier extends BaseModifier<StringToDecimalProps, 
         delimiter: "."
     };
 
-    private static emptyFormattedValue: string;
+    protected static emptyFormattedValue: string;
 
     public componentWillMount(): void {
         if (this.props.delimiter == null || this.props.delimiter.length !== 1) {

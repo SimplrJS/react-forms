@@ -1,12 +1,11 @@
 import * as React from "react";
-import { recordify, TypedRecord } from "typed-immutable-record";
 import {
     Modifier,
     ModifierValue
 } from "../contracts/value";
 import { FieldValue } from "../contracts/field";
 import { ModifierValueRecord } from "../contracts/value";
-import { ValueOfType, RecordifyModifierValue } from "../utils/value-helpers";
+import { RecordifyModifierValue } from "../utils/value-helpers";
 
 export abstract class BaseModifier<TProps, TState> extends React.Component<TProps, TState> implements Modifier {
     // Identifier function
