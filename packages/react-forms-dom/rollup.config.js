@@ -23,9 +23,7 @@ export default {
         name: "react-forms-dom"
     },
     plugins: [
-        typescript({
-            verbosity: 2
-        }),
+        typescript(),
         autoExternal(),
         ...plugins
     ]
