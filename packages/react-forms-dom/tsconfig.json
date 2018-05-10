@@ -16,17 +16,9 @@
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "strictPropertyInitialization": false,
-        "lib": [
-            "dom",
-            "es6",
-            "es2017.object"
-        ],
-        "types": [
-            "node"
-        ],
-        "typeRoots": [
-            "./node_modules/@types"
-        ],
+        "lib": ["dom", "es6", "es2017.object"],
+        "types": ["node"],
+        "typeRoots": ["./node_modules/@types"],
         "plugins": [
             {
                 "name": "tslint-language-service",
@@ -35,13 +27,5 @@
             }
         ]
     },
-    "exclude": [
-        "node_modules",
-        "dist",
-        "@types",
-        "tests",
-        "examples",
-        "tools",
-        "__tests__"
-    ]
+    "exclude": ["index.js", "**/*.d.ts", "!./src/**/*.d.ts", "node_modules", "dist", "@types", "tests", "examples", "tools", "__tests__"]
 }
