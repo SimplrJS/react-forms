@@ -411,11 +411,12 @@ export class FormStore extends ActionEmitter {
             }));
 
             nextState.Form = { ...nextState.Form, ActiveFieldId: fieldId };
-        } else {
+        } else if (fieldId != null) {
             console.warn(
                 `@simplr/react-forms: Given field '${fieldId}' does not exist in form '${this.FormId}', ` +
                     `therefore field cannot be focused. Form.ActiveFieldId was reset to an undefined.`
             );
+        } else {
             nextState.Form = { ...nextState.Form, ActiveFieldId: undefined };
         }
 

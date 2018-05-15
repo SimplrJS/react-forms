@@ -93,8 +93,8 @@ export namespace FormStoreHelpers {
             }
         }
 
-        const newChildrenValue = newProps.get(childrenKey) as React.ReactNode | undefined;
-        const oldChildrenValue = oldProps.get(childrenKey) as React.ReactNode | undefined;
+        const newChildrenValue = newProps[childrenKey] as React.ReactNode | undefined;
+        const oldChildrenValue = oldProps[childrenKey] as React.ReactNode | undefined;
 
         const newChildren = React.Children.toArray(newChildrenValue);
         const oldChildren = React.Children.toArray(oldChildrenValue);

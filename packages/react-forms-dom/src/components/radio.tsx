@@ -1,24 +1,9 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import {
-    BaseContainer,
-    BaseContainerParentContext,
-    BaseContainerProps,
-    FormStoreStateRecord,
-    FieldStoreState
-} from "@simplr/react-forms";
-import {
-    RadioGroupChildContext,
-    RadioGroupProps,
-    RadioValue
-} from "./radio-group";
-import {
-    HTMLElementProps,
-    DomFieldTemplateCallback,
-    DomFieldDetails,
-    DomComponentData
-} from "../contracts/field";
+import { BaseContainer, BaseContainerParentContext, BaseContainerProps, FormStoreState, FieldStoreState } from "@simplr/react-forms";
+import { RadioGroupChildContext, RadioGroupProps, RadioValue } from "./radio-group";
+import { HTMLElementProps, DomFieldTemplateCallback, DomFieldDetails, DomComponentData } from "../contracts/field";
 
 export interface RadioProps extends BaseContainerProps, HTMLElementProps<HTMLInputElement> {
     value: string;
@@ -28,7 +13,7 @@ export interface RadioProps extends BaseContainerProps, HTMLElementProps<HTMLInp
 }
 
 export interface RadioState {
-    FormStoreState?: FormStoreStateRecord;
+    FormStoreState?: FormStoreState;
     Value?: RadioValue;
 }
 
@@ -64,15 +49,15 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
     protected OnChangeHandler: React.ChangeEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnChangeHandler(event, this.props.value);
-    }
+    };
 
     protected OnFocus: React.FocusEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnFocus(event);
-    }
+    };
 
     protected OnBlur: React.FocusEventHandler<HTMLInputElement> = event => {
         this.context.RadioGroupOnBlur(event);
-    }
+    };
 
     protected get FieldState(): FieldStoreState {
         if (this.FieldId == null) {
@@ -93,7 +78,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
             return true;
         }
         if (this.FieldId != null) {
-            const fieldProps = this.FieldState.Props as any as RadioGroupProps;
+            const fieldProps = (this.FieldState.Props as any) as RadioGroupProps;
 
             if (fieldProps != null && fieldProps.disabled != null) {
                 return fieldProps.disabled;
@@ -106,7 +91,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     }
 
     protected get FieldTemplate(): DomFieldTemplateCallback | undefined {
-        const radioGroupProps = this.FieldState.Props as any as RadioGroupProps;
+        const radioGroupProps = (this.FieldState.Props as any) as RadioGroupProps;
         if (this.props.template != null) {
             return this.props.template;
         }
@@ -118,8 +103,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
     protected OnStoreUpdated(): void {
         const newFormStoreState = this.FormStore.GetState();
-        const isStateDifferent = this.state == null ||
-            this.state.FormStoreState !== newFormStoreState;
+        const isStateDifferent = this.state == null || this.state.FormStoreState !== newFormStoreState;
 
         if (isStateDifferent) {
             this.setState(state => {
@@ -149,19 +133,21 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
 
     protected SetElementRef = (element: HTMLInputElement | null) => {
         this.Element = element;
-    }
+    };
 
     public renderField(): JSX.Element {
-        return <input
-            ref={this.SetElementRef}
-            {...this.GetHTMLProps(this.props)}
-            type="radio"
-            checked={(this.state.Value === this.props.value)}
-            onChange={this.OnChangeHandler}
-            onFocus={this.OnFocus}
-            onBlur={this.OnBlur}
-            disabled={this.Disabled}
-        />;
+        return (
+            <input
+                ref={this.SetElementRef}
+                {...this.GetHTMLProps(this.props)}
+                type="radio"
+                checked={this.state.Value === this.props.value}
+                onChange={this.OnChangeHandler}
+                onFocus={this.OnFocus}
+                onBlur={this.OnBlur}
+                disabled={this.Disabled}
+            />
+        );
     }
 
     public render(): JSX.Element | null {
@@ -179,6 +165,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
             {
                 props: this.props,
                 state: this.FieldState
-            } as DomComponentData);
+            } as DomComponentData
+        );
     }
 }
