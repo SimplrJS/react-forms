@@ -1,5 +1,5 @@
 import { FormStore } from "../stores/form-store";
-import { FormErrorRecord } from "./error";
+import { FormError } from "./error";
 import { FieldValidationType } from "./validation";
 
 export type FormOnMountCallback = (store: FormStore) => void;
@@ -26,7 +26,7 @@ export interface FormState {
     Props: FormStateProps;
     Validating: boolean;
     Disabled: boolean;
-    Error?: FormErrorRecord;
+    Error?: FormError;
     SubmitCallback?: () => void;
     Submitting: boolean;
     SuccessfullySubmitted: boolean;
