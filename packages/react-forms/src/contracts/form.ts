@@ -1,5 +1,3 @@
-import { TypedRecord } from "typed-immutable-record";
-
 import { FormStore } from "../stores/form-store";
 import { FormErrorRecord } from "./error";
 import { FieldValidationType } from "./validation";
@@ -20,8 +18,6 @@ export interface FormProps {
 
 export type FormStateProps = FormProps & React.Props<any>;
 
-export interface FormPropsRecord extends TypedRecord<FormPropsRecord>, FormStateProps { }
-
 export interface FormChildContext {
     FormId: string;
 }
@@ -36,7 +32,5 @@ export interface FormState {
     SuccessfullySubmitted: boolean;
     ActiveFieldId?: string;
 }
-
-export interface FormStateRecord extends TypedRecord<FormStateRecord>, FormState { }
 
 export type FormContextPropsObject = {};

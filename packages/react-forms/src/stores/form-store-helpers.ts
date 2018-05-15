@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FieldStorePropsRecord } from "../contracts/field";
+import { FieldStoreProps } from "../contracts/field";
 
 export const FIELDS_GROUP_SEPARATOR = ".";
 
@@ -56,9 +56,12 @@ export namespace FormStoreHelpers {
         return result;
     }
 
-    export function PropsEqual(newProps: FieldStorePropsRecord, oldProps: FieldStorePropsRecord): boolean {
-        const newKeys = newProps.keySeq().toArray();
-        const oldKeys = oldProps.keySeq().toArray();
+    export function PropsEqual(
+        newProps: FieldStoreProps & { [key: string]: any },
+        oldProps: FieldStoreProps & { [key: string]: any }
+    ): boolean {
+        const newKeys = Object.keys(newProps);
+        const oldKeys = Object.keys(oldProps);
 
         if (newKeys.length !== oldKeys.length) {
             return false;
@@ -71,8 +74,8 @@ export namespace FormStoreHelpers {
 
         // First, check top level properties
         for (const key of allKeys) {
-            const newValue = newProps.get(key);
-            const oldValue = oldProps.get(key);
+            const newValue = newProps[key];
+            const oldValue = oldProps[key];
 
             const newValueType = typeof newValue;
             const oldValueType = typeof oldValue;
@@ -117,8 +120,7 @@ export namespace FormStoreHelpers {
                     const element = oldChild as React.ReactElement<any>;
                     // If type and key properties match
                     // Children should be the same
-                    if (element.type === newChildElement.type &&
-                        element.key === newChildElement.key) {
+                    if (element.type === newChildElement.type && element.key === newChildElement.key) {
                         return true;
                     }
                 }
@@ -127,8 +129,7 @@ export namespace FormStoreHelpers {
             }) as React.ReactElement<any> | undefined;
 
             // If oldChildElement was found and its props are different
-            if (oldChildElement != null &&
-                !DeepCompare(newChildElement.props, oldChildElement.props)) {
+            if (oldChildElement != null && !DeepCompare(newChildElement.props, oldChildElement.props)) {
                 // Props are not the same
                 return false;
             }
@@ -159,11 +160,13 @@ export namespace FormStoreHelpers {
             // Works in case when functions are created in constructor.
             // Comparing dates is a common scenario. Another built-ins?
             // We can even handle functions passed across iframes
-            if ((typeof x === "function" && typeof y === "function") ||
+            if (
+                (typeof x === "function" && typeof y === "function") ||
                 (x instanceof Date && y instanceof Date) ||
                 (x instanceof RegExp && y instanceof RegExp) ||
                 (x instanceof String && y instanceof String) ||
-                (x instanceof Number && y instanceof Number)) {
+                (x instanceof Number && y instanceof Number)
+            ) {
                 return x.toString() === y.toString();
             }
 
@@ -207,7 +210,7 @@ export namespace FormStoreHelpers {
                     return false;
                 }
 
-                switch (typeof (x[p])) {
+                switch (typeof x[p]) {
                     case "object":
                     case "function":
                         leftChain.push(x);

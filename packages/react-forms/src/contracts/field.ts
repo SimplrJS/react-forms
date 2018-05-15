@@ -1,5 +1,4 @@
-import { TypedRecord } from "typed-immutable-record";
-import { FormErrorRecord } from "./error";
+import { FormError } from "./error";
 import { FieldValidationType } from "./validation";
 import { FormContextPropsObject } from "./form";
 import { FieldsGroupContextProps } from "./fields-group";
@@ -35,21 +34,17 @@ export interface FieldStoreState {
     InitialValue: FieldValue;
     Value: FieldValue;
     TransitionalValue?: FieldValue;
-    Error?: FormErrorRecord;
+    Error?: FormError;
     Touched: boolean;
     Pristine: boolean;
     Validating: boolean;
     FieldsGroup?: {
         Id: string;
     };
-    Props?: FieldStorePropsRecord;
+    Props?: FieldStoreProps;
 }
 
 export type FieldStoreProps = CoreFieldProps & React.Props<any>;
-
-export interface FieldStoreStateRecord extends TypedRecord<FieldStoreStateRecord>, FieldStoreState { }
-
-export interface FieldStorePropsRecord extends TypedRecord<FieldStorePropsRecord>, FieldStoreProps { }
 
 export interface FieldContext {
     FormId: string;

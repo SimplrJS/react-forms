@@ -1,16 +1,15 @@
 import * as Immutable from "immutable";
-import { TypedRecord } from "typed-immutable-record";
 
-import { FieldStoreStateRecord } from "../contracts/field";
-import { FieldsGroupStoreStateRecord } from "../contracts/fields-group";
-import { FormStateRecord } from "../contracts/form";
 import { FieldValidationStatus } from "./validation";
+import { FieldStoreState } from "./field";
+import { FormState } from "./form";
+import { FieldsGroupStoreState } from "./fields-group";
 
 export interface FormStoreState extends FormStoreStateStatus {
-    Fields: Immutable.Map<string, FieldStoreStateRecord>;
-    FieldsGroups: Immutable.Map<string, FieldsGroupStoreStateRecord>;
+    Fields: Immutable.Map<string, FieldStoreState>;
+    FieldsGroups: Immutable.Map<string, FieldsGroupStoreState>;
     FieldsValidationStatuses: Immutable.Map<string, FieldValidationStatus>;
-    Form: FormStateRecord;
+    Form: FormState;
 }
 
 export interface FormStoreStateStatus {
@@ -22,9 +21,7 @@ export interface FormStoreStateStatus {
     Touched: boolean;
 }
 
-export interface FormStoreStateRecord extends TypedRecord<FormStoreStateRecord>, FormStoreState { }
-
 export interface BuiltFormObject {
-    Fields: Immutable.Map<string, FieldStoreStateRecord>;
+    Fields: Immutable.Map<string, FieldStoreState>;
     Object: any;
 }

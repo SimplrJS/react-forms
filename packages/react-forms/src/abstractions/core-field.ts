@@ -16,17 +16,16 @@ import * as ValueHelpers from "../utils/value-helpers";
 import { FormStore } from "../stores/form-store";
 import * as FormStoreActions from "../actions/form-store";
 import { FSHContainer } from "../stores/form-stores-handler";
-import { FormStoreStateRecord } from "../contracts/form-store";
 import { ModifierValue } from "../contracts/value";
 import { FormStoreHelpers } from "../stores/form-store-helpers";
+import { FormStoreState } from "../contracts/form-store";
 
 export interface CoreFieldState {
-    FormStoreState: FormStoreStateRecord;
+    FormStoreState: FormStoreState;
     Value?: FieldValue;
 }
 
-export abstract class CoreField<TProps extends CoreFieldProps, TState extends CoreFieldState>
-    extends React.Component<TProps, TState> {
+export abstract class CoreField<TProps extends CoreFieldProps, TState extends CoreFieldState> extends React.Component<TProps, TState> {
     public context: FieldContext;
 
     public static contextTypes: PropTypes.ValidationMap<FieldContext> = {
@@ -129,10 +128,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             // Never goes in here, because an Error is thrown inside this.FormId if it's not valid.
         }
 
-        this.StoreEventSubscription =
-            this.FormStore.addListener<FormStoreActions.StateChanged>(
-                FormStoreActions.StateChanged,
-                this.OnStoreUpdated.bind(this));
+        this.StoreEventSubscription = this.FormStore.addListener<FormStoreActions.StateChanged>(
+            FormStoreActions.StateChanged,
+            this.OnStoreUpdated.bind(this)
+        );
         this.registerFieldInFormStore();
     }
 
@@ -149,11 +148,9 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         );
         const initialValue = this.processedOrEmptyModifierValue(
             this.GetRawInitialValue(nextProps),
-            this.ProcessValueBeforeStore.bind(this));
-        const value = this.processedOrEmptyModifierValue(
-            this.GetRawValue(nextProps),
             this.ProcessValueBeforeStore.bind(this)
         );
+        const value = this.processedOrEmptyModifierValue(this.GetRawValue(nextProps), this.ProcessValueBeforeStore.bind(this));
 
         this.updateFormStoreFieldValues(defaultValue, initialValue, value);
         this.FormStore.UpdateFieldProps(this.FieldId, nextProps);
@@ -229,11 +226,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             value = parser(value);
         }
 
-        return ValueHelpers.ParseValue(
-            React.Children.toArray(this.props.children) as JSX.Element[],
-            this.DefaultModifiers,
-            value
-        );
+        return ValueHelpers.ParseValue(React.Children.toArray(this.props.children) as JSX.Element[], this.DefaultModifiers, value);
     }
 
     protected FormatValue(value: FieldValue): FieldValue {
@@ -243,11 +236,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
 
         const modifiers = React.Children.toArray(this.props.children) as JSX.Element[];
-        return ValueHelpers.FormatValue(
-            modifiers.reverse(),
-            Array.from(this.DefaultModifiers).reverse(),
-            value
-        );
+        return ValueHelpers.FormatValue(modifiers.reverse(), Array.from(this.DefaultModifiers).reverse(), value);
     }
 
     protected NormalizeValue(value: FieldValue): FieldValue {
@@ -256,11 +245,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             value = normalizer(value);
         }
 
-        return ValueHelpers.NormalizeValue(
-            React.Children.toArray(this.props.children) as JSX.Element[],
-            this.DefaultNormalizers,
-            value
-        );
+        return ValueHelpers.NormalizeValue(React.Children.toArray(this.props.children) as JSX.Element[], this.DefaultNormalizers, value);
     }
 
     protected ChildrenToRender(): void {
@@ -270,8 +255,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
     protected OnStoreUpdated(): void {
         const newFormStoreState = this.FormStore.GetState();
 
-        const isStateDifferent = this.state == null ||
-            this.state.FormStoreState !== newFormStoreState;
+        const isStateDifferent = this.state == null || this.state.FormStoreState !== newFormStoreState;
 
         if (isStateDifferent) {
             this.setState((state: TState) => {
@@ -365,9 +349,10 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
 
         if (
             // If field has already been registered
-            formHasField
+            formHasField &&
             // And DestroyOnUnmount is true
-            && this.DestroyOnUnmount) {
+            this.DestroyOnUnmount
+        ) {
             // Then throw, because it's an ambiguous situation and it's tricky to support it,
             // because if user copies and pastes a field with a name prop already specified,
             // and does not change the name, not throwing here would make it a frequent unintentional behavior
@@ -383,10 +368,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
             this.GetRawInitialValue(this.props),
             this.ProcessValueBeforeStore.bind(this)
         );
-        const value = this.processedOrEmptyModifierValue(
-            this.GetRawValue(this.props),
-            this.ProcessValueBeforeStore.bind(this)
-        );
+        const value = this.processedOrEmptyModifierValue(this.GetRawValue(this.props), this.ProcessValueBeforeStore.bind(this));
 
         // If field does not exist
         if (!formHasField) {
@@ -408,10 +390,7 @@ export abstract class CoreField<TProps extends CoreFieldProps, TState extends Co
         }
     }
 
-    private updateFormStoreFieldValues(
-        defaultValue: ModifierValue,
-        initialValue: ModifierValue,
-        value: ModifierValue): void {
+    private updateFormStoreFieldValues(defaultValue: ModifierValue, initialValue: ModifierValue, value: ModifierValue): void {
         // Update initial and default values, if they are defined
         if (defaultValue.Value !== undefined) {
             this.FormStore.UpdateFieldDefaultValue(this.FieldId, defaultValue.Value);
