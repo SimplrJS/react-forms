@@ -28,7 +28,7 @@ export class Radio extends BaseContainer<RadioProps, RadioState> {
     public context!: RadioParentContext;
 
     // TODO: Fix me. PropTypes.ValidationMap<RadioParentContext>
-    public static contextTypes: any = {
+    public static contextTypes = {
         ...BaseContainer.contextTypes,
         FieldId: PropTypes.string.isRequired,
         RadioGroupOnChangeHandler: PropTypes.func.isRequired,
