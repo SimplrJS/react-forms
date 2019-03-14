@@ -1,0 +1,12 @@
+# Don't allow people to merge changes to these generated files, because the result
+# may be invalid.  You need to run "rush update" again.
+shrinkwrap.yaml              merge=binary linguist-generated=true
+npm-shrinkwrap.json          merge=binary linguist-generated=true
+yarn.lock                    merge=binary linguist-generated=true
+
+**/__snapshots__/*           linguist-generated=true
+
+rush.json                    linguist-language=jsonc
+command-line.json            linguist-language=jsonc  
+version-policies.json        linguist-language=jsonc 
+common-versions.json         linguist-language=jsonc 
