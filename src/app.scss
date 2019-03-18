@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro");
+
+html,
+body,
+#root {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+.error {
+    background: lighten($color: red, $amount: 45);
+    padding: 15px;
+    margin: 10px;
+    margin-right: 12px;
+    border: 1px solid lighten($color: red, $amount: 25);
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    width: 100%;
+
+    > * {
+        padding-top: 5px;
+    }
+
+    .disclaimer {
+        font-style: italic;
+        font-size: 16px;
+    }
+
+    .message {
+        font-weight: bold;
+    }
+
+    .component-stack {
+        font-size: 16px;
+
+        pre {
+            padding-top: 3px;
+        }
+    }
+}
+
+.forms,
+.store,
+.store-result {
+    padding: 10px;
+    border-left: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+.forms {
+    flex: 1 0 auto;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    width: 15%;
+
+    label,
+    label > * {
+        display: block;
+    }
+
+    input {
+        font-size: 16px;
+        font-family: "Open Sans", sans-serif;
+        padding-left: 4px;
+        width: 98%;
+    }
+
+    button {
+        font-size: 16px;
+        background: lightgrey;
+        border: 1px solid #ccc;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 5px;
+
+        &:hover {
+            background: lighten($color: lightgrey, $amount: 5);
+        }
+    }
+}
+
+.store {
+    width: 35%;
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+}
+
+.store-result {
+    width: 40%;
+    font-family: "Source Code Pro", monospace;
+    font-size: 14px;
+}

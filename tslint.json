@@ -1,0 +1,6 @@
+{
+    "extends": "simplr-tslint",
+    "rules": {
+        "no-console": false
+    }
+}

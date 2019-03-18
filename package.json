@@ -1,0 +1,47 @@
+{
+    "name": "@reactway/forms",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "npm run build:tools && cross-env NODE_ENV=development webpack-dev-server",
+        "build": "npm run build:tools && cross-env NODE_ENV=development webpack",
+        "build:tools": "tsc -p ./tools"
+    },
+    "keywords": [],
+    "author": "ReactWay",
+    "license": "AGPLv3",
+    "devDependencies": {
+        "@reactway/webpack-builder": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-clean": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-html": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-images": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-styles": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-typescript": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-web-dev": "^1.0.0-alpha.6",
+        "@reactway/webpack-builder-plugin-write-file": "^1.0.0-alpha.6",
+        "@types/copy-webpack-plugin": "^4.4.3",
+        "@types/node": "11.11.3",
+        "@types/react": "16.8.8",
+        "@types/react-dom": "16.8.2",
+        "@types/webpack": "4.4.25",
+        "babel-preset-react-app": "7.0.2",
+        "copy-webpack-plugin": "^5.0.2",
+        "cross-env": "5.2.0",
+        "node-sass": "^4.11.0",
+        "simplr-tslint": "^1.0.0-alpha.14",
+        "tslint": "^5.14.0",
+        "tslint-language-service": "^0.9.9",
+        "typescript": "3.4.0-rc",
+        "webpack": "^4.29.6",
+        "webpack-cli": "3.3.0",
+        "webpack-dev-server": "3.2.1"
+    },
+    "dependencies": {
+        "babel-loader": "8.0.5",
+        "immer": "^2.1.4",
+        "react": "16.8.4",
+        "react-dom": "16.8.4",
+        "saga": "^4.0.0-alpha"
+    }
+}
