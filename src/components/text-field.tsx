@@ -34,10 +34,6 @@ function useField(props: TextFieldProps): FieldResult {
 
     const fieldId = store.generateFieldId(props.name, groupId);
 
-    const onChange: React.ChangeEventHandler<HTMLInputElement> = event => {
-        store.updateValue(fieldId, event.target.value);
-    };
-
     useEffect(() => {
         if (defaultValue == null) {
             defaultValue = "";
@@ -54,6 +50,9 @@ function useField(props: TextFieldProps): FieldResult {
             if (field == null) {
                 return;
             }
+
+            // Initial update is skipped, because field is registered during first render and
+            // store listener is added asynchronously. The change action is emitted in-between.
             setCurrentValue(field.currentValue);
         };
         storeUpdated();
@@ -66,13 +65,22 @@ function useField(props: TextFieldProps): FieldResult {
             // Then, unregister field.
             store.unregisterField(fieldId);
         };
-    }, []);
+    }, [props.name, groupId, defaultValue, initialValue]);
+
     return {
         fieldId: fieldId,
         store: store,
         fieldProps: {
             value: currentValue,
-            onChange: onChange
+            onChange: event => store.updateValue(fieldId, event.target.value),
+            onFocus: () => {
+                console.log(`Field '${fieldId}' has been focused.`);
+                store.focus(fieldId);
+            },
+            onBlur: () => {
+                console.log(`Field '${fieldId}' has been blurred.`);
+                store.blur(fieldId);
+            }
         }
     };
 }

@@ -1,14 +1,18 @@
 import { TinyEmitter, Callback } from "../helpers/emitter";
-import produce from "immer";
+import { produce } from "immer";
 
 export const SEPARATOR = ".";
 
 interface Field {
     id: string;
     name: string;
+
     defaultValue?: string;
     initialValue?: string;
     currentValue: string;
+
+    isFocused: boolean;
+    isTouched: boolean;
 }
 
 type Fields = {
@@ -47,7 +51,9 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
             name: name,
             defaultValue: defaultValue,
             initialValue: initialValue,
-            currentValue: initialValue || defaultValue
+            currentValue: initialValue || defaultValue,
+            isFocused: false,
+            isTouched: false
         };
 
         this.fields = produce(this.fields, fields => {
@@ -82,6 +88,37 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
         });
 
         this.emit();
+    }
+
+    public focus(fieldId: string): void {
+        this.setFocused(fieldId, true);
+        this.emit();
+    }
+
+    public blur(fieldId: string): void {
+        this.setFocused(fieldId, false);
+        this.emit();
+    }
+
+    private setFocused(fieldId: string, isFocused: boolean): void {
+        console.log(`Setting focus for field '${fieldId}' to ${isFocused}`);
+        if (this.fields[fieldId] == null) {
+            throw new Error(
+                `Cannot update non-existent field value. (field id '${fieldId}').`
+            );
+        }
+        this.fields = produce(this.fields, fields => {
+            const field = fields[fieldId];
+            if (field == null) {
+                return;
+            }
+            field.isFocused = isFocused;
+
+            // If the field is not touched yet and got focused, make it touched.
+            if (!field.isTouched && isFocused) {
+                field.isTouched = true;
+            }
+        });
     }
 
     public toObject(): unknown {
