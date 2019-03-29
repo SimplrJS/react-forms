@@ -49,9 +49,9 @@ const Test = () => {
                     )}
                 </pre>
             </div>
-            <div className="store-result">
+            <pre className="store-result">
                 {JSON.stringify(store.toObject(), null, 4)}
-            </div>
+            </pre>
         </>
     );
 };
