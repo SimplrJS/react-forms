@@ -39,10 +39,6 @@ function useField(props: TextFieldProps): FieldResult {
             defaultValue = "";
         }
 
-        if (initialValue == null) {
-            initialValue = defaultValue;
-        }
-
         store.registerField(props.name, groupId, defaultValue, initialValue);
 
         const storeUpdated = () => {

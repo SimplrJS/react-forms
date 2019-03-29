@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField } from "../components/text-field";
+import { ResetButton } from "../components/reset";
 
 export const Test1 = () => {
     const [show, setShow] = useState(true);
@@ -19,6 +20,11 @@ export const Test1 = () => {
                         <TextField name="lastName" initialValue="Smith" />
                     ) : null}
                 </label>
+                <div>
+                    <ResetButton>
+                        Reset
+                    </ResetButton>
+                </div>
             </div>
         </>
     );
