@@ -84,6 +84,11 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
             if (field == null) {
                 return;
             }
+
+            // Value equality check should be abstracted for particular component and value type
+            if (field.currentValue !== value) {
+                field.isTouched = true;
+            }
             field.currentValue = value;
         });
 

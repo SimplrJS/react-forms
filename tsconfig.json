@@ -4,6 +4,7 @@
         "jsx": "react",
         "strict": true,
         "esModuleInterop": true,
+        "strictNullChecks": true,
         "plugins": [
             {
                 "name": "tslint-language-service",

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, ErrorInfo } from "react";
 import ReactDOM from "react-dom";
-import { TextField } from "./components/text-field";
 import { GroupStoreMutable } from "./stores/group-store";
 import { GroupContext, GroupContextObject } from "./contexts/group-context";
 import { useForceUpdate } from "./force-update";

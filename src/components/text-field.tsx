@@ -51,10 +51,12 @@ function useField(props: TextFieldProps): FieldResult {
                 return;
             }
 
-            // Initial update is skipped, because field is registered during first render and
-            // store listener is added asynchronously. The change action is emitted in-between.
             setCurrentValue(field.currentValue);
         };
+
+        // Initial update is skipped, because field is registered during first render and
+        // store listener is added asynchronously. The change action is emitted in-between.
+        // Thus, a manual update is needed.
         storeUpdated();
 
         store.addListener(storeUpdated);
@@ -73,14 +75,8 @@ function useField(props: TextFieldProps): FieldResult {
         fieldProps: {
             value: currentValue,
             onChange: event => store.updateValue(fieldId, event.target.value),
-            onFocus: () => {
-                console.log(`Field '${fieldId}' has been focused.`);
-                store.focus(fieldId);
-            },
-            onBlur: () => {
-                console.log(`Field '${fieldId}' has been blurred.`);
-                store.blur(fieldId);
-            }
+            onFocus: () => store.focus(fieldId),
+            onBlur: () => store.blur(fieldId)
         }
     };
 }
