@@ -4,7 +4,7 @@
     "description": "",
     "main": "dist/index.js",
     "scripts": {
-        "start": "npm run build:tools && cross-env NODE_ENV=development webpack-dev-server",
+        "start": "npm run build:tools && cross-env NODE_ENV=development webpack-dev-server --host 127.0.0.1",
         "build": "npm run build:tools && cross-env NODE_ENV=development webpack",
         "build:tools": "tsc -p ./tools"
     },
