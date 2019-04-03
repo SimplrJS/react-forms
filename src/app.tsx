@@ -1,31 +1,72 @@
 import "@babel/polyfill";
 
-import React, { useState, useEffect, ErrorInfo } from "react";
+import React, { useState, useEffect, ErrorInfo, useMemo, useCallback } from "react";
 import ReactDOM from "react-dom";
+import { MD5 } from "object-hash";
 import { GroupStoreMutable } from "./stores/group-store";
 import { GroupContext, GroupContextObject } from "./contexts/group-context";
-import { useForceUpdate } from "./force-update";
+// import { useForceUpdate } from "./force-update";
+import { Test1 } from "./tests/test1";
 
 import "./reset.scss";
 import "./app.scss";
-import { Test1 } from "./tests/test1";
 
 const store = new GroupStoreMutable();
+
+// tslint:disable-next-line:no-any
+(window as any).store = store;
+
+function useStoreHash(): [TestState, () => void] {
+    const [state, setState] = useState<TestState>({
+        storeObject: undefined,
+        store: {},
+        hash: ""
+    });
+
+    const updateStoreHash = useCallback(() => {
+        const storeObject = store.toObject();
+        const hash = MD5({
+            storeHash: MD5(store),
+            storeObjectHash: MD5(storeObject)
+        });
+        if (state.hash === hash) {
+            return;
+        }
+        setState({
+            storeObject: storeObject,
+            store: store,
+            hash: hash
+        });
+    }, [store]);
+
+    return [state, updateStoreHash];
+}
+
+interface TestState {
+    storeObject?: unknown;
+    store: unknown;
+    hash: string;
+}
+
 const Test = () => {
-    const forceUpdate = useForceUpdate();
+    const [state, updateStoreHash] = useStoreHash();
     useEffect(() => {
         const listener = () => {
-            forceUpdate();
+            // console.log("State updated");
+            updateStoreHash();
         };
-        forceUpdate();
+        updateStoreHash();
         store.addListener(listener);
         return () => store.removeListener(listener);
     }, []);
 
+    // const [groupId] = useState(undefined);
+    const [groupId] = useState("person");
+
     const groupContext: GroupContextObject = {
         store: store,
         test: "app",
-        groupId: "person"
+        groupId: groupId
     };
 
     return (
@@ -38,7 +79,7 @@ const Test = () => {
             <div className="store">
                 <pre>
                     {JSON.stringify(
-                        store,
+                        state.store,
                         // tslint:disable-next-line:no-any
                         (_, value: any) => {
                             if (typeof value !== "function") {
@@ -51,9 +92,7 @@ const Test = () => {
                     )}
                 </pre>
             </div>
-            <pre className="store-result">
-                {JSON.stringify(store.toObject(), null, 4)}
-            </pre>
+            <pre className="store-result">{JSON.stringify(state.storeObject, null, 4)}</pre>
         </>
     );
 };
@@ -77,18 +116,18 @@ class App extends React.Component {
         const { error } = this.state;
         if (error != null) {
             const info = this.state.info!;
-            console.warn(error.message);
-            console.log(info);
             return (
                 <div className="error">
-                    <p className="disclaimer">
-                        Oops! An error has occurred! Here’s what we know…
-                    </p>
-                    <p className="message">{error.message}</p>
-                    <p className="component-stack">
+                    <p className="disclaimer">Oops! An error has occurred! Here’s what we know…</p>
+                    <pre className="message">{error.message}</pre>
+                    <div className="component-stack">
                         Component stack:
                         <pre>{info.componentStack.substr(1)}</pre>
-                    </p>
+                    </div>
+
+                    <div>
+                        <button onClick={() => location.reload()}>Reload page</button>
+                    </div>
                 </div>
             );
         }

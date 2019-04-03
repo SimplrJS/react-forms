@@ -5,13 +5,13 @@ body,
 #root {
     display: flex;
     flex: 1 0 auto;
+    max-width: 100%;
 }
 
 .error {
     background: lighten($color: red, $amount: 45);
     padding: 15px;
     margin: 10px;
-    margin-right: 12px;
     border: 1px solid lighten($color: red, $amount: 25);
     font-family: "Open Sans", sans-serif;
     font-size: 18px;
@@ -27,6 +27,7 @@ body,
     }
 
     .message {
+        white-space: pre-wrap;
         font-weight: bold;
     }
 
@@ -35,6 +36,17 @@ body,
 
         pre {
             padding-top: 3px;
+        }
+    }
+
+    button {
+        $background-color: #ccc;
+        border: none;
+        border: 1px solid black;
+        padding: 10px 20px;
+
+        &:hover {
+            background: lighten($color: $background-color, $amount: 10);
         }
     }
 }

@@ -5,6 +5,8 @@
         "strict": true,
         "esModuleInterop": true,
         "strictNullChecks": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
         "plugins": [
             {
                 "name": "tslint-language-service",

@@ -1,11 +1,12 @@
 import { TinyEmitter, Callback } from "../helpers/emitter";
 import { produce } from "immer";
+import { FieldValues } from "../contracts/field-contracts";
 
 export const SEPARATOR = ".";
 
 interface Status {
-    isFocused: boolean;
-    isTouched: boolean;
+    focused: boolean;
+    touched: boolean;
 }
 
 interface Field {
@@ -17,6 +18,7 @@ interface Field {
     currentValue: string;
 
     status: Status;
+    permanent: boolean;
 }
 
 type Fields = {
@@ -28,11 +30,19 @@ interface GroupState {
     status: Status;
 }
 
-const defaultStatus = (): Status => ({ isFocused: false, isTouched: false });
+const defaultStatus = (): Status => ({ focused: false, touched: false });
+
+const getField = (state: GroupState, fieldId: string): Field => {
+    const field = state.fields[fieldId];
+    if (field == null) {
+        throw new Error(`Field '${fieldId}' does not exist.`);
+    }
+    return field;
+};
 
 const calculateGroupStatus = (state: GroupState): Status => {
-    let isFocused = false;
-    let isTouched = false;
+    let focused = false;
+    let touched = false;
 
     for (const key of Object.keys(state.fields)) {
         const field = state.fields[key];
@@ -40,49 +50,78 @@ const calculateGroupStatus = (state: GroupState): Status => {
             continue;
         }
 
-        if (field.status.isFocused) {
-            isFocused = true;
+        if (field.status.focused) {
+            focused = true;
         }
-        if (field.status.isTouched) {
-            isTouched = true;
+        if (field.status.touched) {
+            touched = true;
         }
 
         // If group is both focused and touched already, nothing is going to change anymore
-        if (isFocused && isTouched) {
+        if (focused && touched) {
             // Thus, break.
             break;
         }
     }
 
     return {
-        isFocused: isFocused,
-        isTouched: isTouched
+        focused: focused,
+        touched: touched
     };
 };
 
+// TODO: Value equality check should be abstracted for particular component and value type
 export class GroupStoreMutable extends TinyEmitter<Callback> {
-    protected state: GroupState = {
+    protected _state: GroupState = {
         fields: {},
         status: defaultStatus()
     };
+
+    protected get state(): GroupState {
+        return this._state;
+    }
+
+    protected set state(newState: GroupState) {
+        // If the reference has not changed
+        if (this.state === newState) {
+            // There is not point in updating it.
+            return;
+        }
+
+        // Else, update the reference
+        this._state = newState;
+
+        // And emit the change
+        this.emit();
+    }
 
     public getField(fieldId: string): Field | undefined {
         return this.state.fields[fieldId];
     }
 
-    public generateFieldId(name: string, groupId: string): string {
+    public generateFieldId(name: string, groupId: string | undefined): string {
+        if (groupId == null) {
+            return name;
+        }
         return `${groupId}${SEPARATOR}${name}`;
     }
 
     public registerField(
         name: string,
-        groupId: string,
+        groupId: string | undefined,
         defaultValue: string,
-        initialValue?: string
+        initialValue?: string,
+        permanent?: boolean
     ): void {
         const id = this.generateFieldId(name, groupId);
+        console.log(`registerField '${id}'`);
 
-        if (this.state.fields[id] != null) {
+        const existingField = this.state.fields[id];
+        if (existingField != null) {
+            // If existing field is permanent, it is registered already.
+            if (existingField.permanent) {
+                return;
+            }
             throw new Error(`Field with an id '${id}' is already registered.`);
         }
 
@@ -96,83 +135,101 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
             defaultValue: defaultValue,
             initialValue: initialValue,
             currentValue: initialValue,
+            permanent: Boolean(permanent),
             status: defaultStatus()
         };
 
         this.state = produce(this.state, state => {
             state.fields[id] = newField;
         });
-        this.emit();
     }
 
     public unregisterField(id: string): void {
-        if (this.state.fields[id] == null) {
+        console.log(`unregisterField '${id}'`);
+        const existingField = this.state.fields[id];
+        if (existingField == null) {
+            return;
+        }
+
+        if (existingField.permanent) {
             return;
         }
 
         this.state = produce(this.state, state => {
             state.fields[id] = undefined;
         });
-        this.emit();
     }
 
     public updateValue(fieldId: string, value: string): void {
-        console.log(`Value updated ${fieldId}`);
-        if (this.state.fields[fieldId] == null) {
-            throw new Error(
-                `Cannot update non-existent field value. (field id '${fieldId}').`
-            );
-        }
         this.state = produce(this.state, state => {
-            const field = state.fields[fieldId];
-            if (field == null) {
-                return;
-            }
+            const field = getField(state, fieldId);
 
-            // Value equality check should be abstracted for particular component and value type
+            // TODO: Value equality check should be abstracted for particular component and value type
             if (field.currentValue !== value) {
-                field.status.isTouched = true;
-            }
-            field.currentValue = value;
-        });
+                field.currentValue = value;
 
-        this.emit();
+                // If current value has changed, the field has been touched.
+                field.status.touched = true;
+                // Recalculate group status, because field status has changed.
+                state.status = calculateGroupStatus(state);
+            }
+        });
+    }
+
+    public updateValues(fieldId: string, values: FieldValues): void {
+        this.state = produce(this.state, state => {
+            const field = getField(state, fieldId);
+
+            if (values.defaultValue != null) {
+                field.defaultValue = values.defaultValue;
+            }
+            if (values.initialValue != null) {
+                field.initialValue = values.initialValue;
+            }
+            if (values.currentValue != null && values.currentValue !== field.currentValue) {
+                field.currentValue = values.currentValue;
+
+                // If current value has changed, the field has been touched.
+                field.status.touched = true;
+                // Recalculate group status, because field status has changed.
+                state.status = calculateGroupStatus(state);
+            }
+        });
     }
 
     public focus(fieldId: string): void {
         console.log(`Focus ${fieldId}`);
         this.setFocused(fieldId, true);
-        this.emit();
     }
 
     public blur(fieldId: string): void {
         console.log(`Blur ${fieldId}`);
         this.setFocused(fieldId, false);
-        this.emit();
     }
 
-    private setFocused(fieldId: string, isFocused: boolean): void {
-        if (this.state.fields[fieldId] == null) {
-            throw new Error(
-                `Cannot update non-existent field value. (field id '${fieldId}').`
-            );
-        }
-
+    private setFocused(fieldId: string, focused: boolean): void {
         this.state = produce(this.state, state => {
-            const field = state.fields[fieldId];
-            if (field == null || field.status.isFocused === isFocused) {
+            const field = getField(state, fieldId);
+            if (field.status.focused === focused) {
                 return;
             }
 
-            field.status.isFocused = isFocused;
+            field.status.focused = focused;
 
             // If the field is not touched yet and got focused, make it touched.
-            if (!field.status.isTouched && isFocused) {
-                field.status.isTouched = true;
+            if (!field.status.touched && focused) {
+                field.status.touched = true;
             }
 
             // Recalculate group status, because field status has changed
             state.status = calculateGroupStatus(state);
+        });
+    }
+
+    public setPermanent(fieldId: string, permanent: boolean): void {
+        this.state = produce(this.state, state => {
+            const field = getField(state, fieldId);
+            field.permanent = permanent;
         });
     }
 
@@ -194,7 +251,6 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
             // Reset group status
             state.status = defaultStatus();
         });
-        this.emit();
     }
 
     public toObject(): unknown {
@@ -204,9 +260,11 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
             if (fields.hasOwnProperty(key)) {
                 const field = fields[key];
                 if (field == null) {
+                    // Will never happen
                     continue;
                 }
-                result[field.name] = field.currentValue;
+
+                result[key] = field.currentValue;
             }
         }
         return result;

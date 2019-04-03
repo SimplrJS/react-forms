@@ -21,6 +21,10 @@ module.exports = new webpackBuilder.Builder(__dirname, {
     }
 })
     .use(typeScript.TypeScriptPlugin)
+    .update(function(config) {
+        config.devtool = "inline-source-map";
+        return config;
+    })
     .use(webpackDevServer)
     .use(htmlPlugin)
     .use(styles.StylesPlugin)
