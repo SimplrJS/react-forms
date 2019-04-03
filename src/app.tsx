@@ -60,8 +60,8 @@ const Test = () => {
         return () => store.removeListener(listener);
     }, []);
 
-    // const [groupId] = useState(undefined);
-    const [groupId] = useState("person");
+    const [groupId] = useState(undefined);
+    // const [groupId] = useState("person");
 
     const groupContext: GroupContextObject = {
         store: store,

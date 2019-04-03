@@ -1,8 +1,7 @@
-import { TinyEmitter, Callback } from "../helpers/emitter";
 import { produce } from "immer";
+import { TinyEmitter, Callback } from "../helpers/emitter";
 import { FieldValues } from "../contracts/field-contracts";
-
-export const SEPARATOR = ".";
+import { SEPARATOR } from "./constants";
 
 interface Status {
     focused: boolean;
@@ -264,7 +263,20 @@ export class GroupStoreMutable extends TinyEmitter<Callback> {
                     continue;
                 }
 
-                result[key] = field.currentValue;
+                const splitKey = key.split(SEPARATOR);
+
+                const paths = splitKey.slice(0, splitKey.length - 1);
+
+                // tslint:disable-next-line no-any
+                let current: any = result;
+                for (const path of paths) {
+                    if (current[path] == null) {
+                        current[path] = {};
+                    }
+                    current = current[path];
+                }
+
+                current[field.name] = field.currentValue;
             }
         }
         return result;

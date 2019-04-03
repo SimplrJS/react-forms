@@ -3,6 +3,7 @@ import { TextField } from "../components/text-field";
 import { ResetButton } from "../components/reset";
 import { Permanent } from "../components/permanent";
 import { GroupContext } from "../contexts/group-context";
+import { Group } from "../components/group";
 
 export const Test1 = () => {
     const [show, setShow] = useState(true);
@@ -37,14 +38,19 @@ export const Test1 = () => {
         <>
             <div>
                 <button onClick={() => setShow(!show)}>{!show ? "Mount" : "Unmount"}</button>
-                <label>
-                    First name
-                    <TextField name={firstNameId} initialValue="John" />
-                </label>
-                {lastName}
-                {/* ---------
-                {lastNameDuplicate} */}
-                {lastNamePermanent}
+                <Group name="person">
+                    <label>
+                        First name
+                        <TextField name={firstNameId} initialValue="John" />
+                    </label>
+                    {lastName}
+                    {lastNamePermanent}
+                </Group>
+                <Group name="meta">
+                    <TextField name="area" initialValue="development" />
+                    <TextField name="priority" initialValue="2" />
+                </Group>
+
                 <div>
                     <ResetButton>Reset</ResetButton>
                 </div>
