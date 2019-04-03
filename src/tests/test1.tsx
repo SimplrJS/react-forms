@@ -49,6 +49,9 @@ export const Test1 = () => {
                 <Group name="meta">
                     <TextField name="area" initialValue="development" />
                     <TextField name="priority" initialValue="2" />
+                    <Group name="status">
+                        <TextField name="amazing" initialValue="true" />
+                    </Group>
                 </Group>
 
                 <div>
