@@ -32,8 +32,4 @@ module.exports = new webpackBuilder.Builder(__dirname, {
     .use(images)
     .use(clean)
     .use(writeFile)
-    // .update(webpack => {
-    //     webpack.plugins.push(new CopyPlugin([{ from: "src/assets/", to: "./assets" }]));
-    //     return webpack;
-    // })
     .toConfig();

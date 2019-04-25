@@ -18,33 +18,33 @@ interface FieldResult {
 }
 
 function useField(props: TextFieldProps): FieldResult {
-    const { store, groupId } = useContext(GroupContext);
+    const { store, groupId, permanent: contextPermanent } = useContext(GroupContext);
 
     // #region Development checks
     // #region Same id check
     const previousAndCurrent = (previous: string | undefined, current: string | undefined) =>
         `Previous value: ${previous}. Current: ${current}`;
-    function useSameId(name: string, groupId?: string) {
+    function useSameId(fieldName: string, fieldGroupId?: string): void {
         const [state] = useState({
-            name: name,
-            groupId: groupId
+            name: fieldName,
+            groupId: fieldGroupId
         });
 
-        if (state.name !== name) {
+        if (state.name !== fieldName) {
             throw new Error(
                 // tslint:disable-next-line:max-line-length
                 `Prop 'name' cannot change during the lifecycle of the component.\nOtherwise, the field will be unregistered and registered again with an initial value.\nThus, you will lose its current value. ${previousAndCurrent(
                     state.name,
-                    name
+                    fieldName
                 )}`
             );
         }
-        if (state.groupId !== groupId) {
+        if (state.groupId !== fieldGroupId) {
             throw new Error(
                 // tslint:disable-next-line:max-line-length
                 `GroupContext 'groupId' cannot change during the lifecycle of the component.\nOtherwise, the field will be unregistered and registered again with an initial value.\nThus, you will lose its current value. ${previousAndCurrent(
                     "test",
-                    groupId
+                    fieldGroupId
                 )}`
             );
         }
@@ -54,7 +54,7 @@ function useField(props: TextFieldProps): FieldResult {
 
     if (props.currentValue != null) {
         throw new Error(
-            `Controlled current value through props is not implemented. Field name: ${props.name}.`
+            `Controlled currentValue through props is not implemented. Field name: ${props.name}.`
         );
     }
 
@@ -68,8 +68,14 @@ function useField(props: TextFieldProps): FieldResult {
 
     const fieldId = store.generateFieldId(props.name, groupId);
 
+    let permanent = props.permanent;
+
+    if (permanent == null) {
+        permanent = contextPermanent;
+    }
+
     useEffect(() => {
-        store.registerField(props.name, groupId, defaultValue, initialValue, props.permanent);
+        store.registerField(props.name, groupId, defaultValue, initialValue);
 
         const storeUpdated = () => {
             const field = store.getField(fieldId);
@@ -80,7 +86,7 @@ function useField(props: TextFieldProps): FieldResult {
             setCurrentValue(field.currentValue);
         };
 
-        // Initial update is skipped, because field is registered during first render and
+        // Initial update is skipped, because field is registered during the first render and
         // store listener is added asynchronously. The change action is emitted in-between.
         // Thus, a manual update is needed.
         storeUpdated();
@@ -108,10 +114,10 @@ function useField(props: TextFieldProps): FieldResult {
     }, [defaultValue, initialValue, props.currentValue]);
 
     useEffect(() => {
-        if (props.permanent != null) {
-            store.setPermanent(fieldId, props.permanent);
+        if (permanent != null) {
+            store.setPermanent(fieldId, permanent);
         }
-    }, [props.permanent]);
+    }, [permanent]);
 
     useEffect(() => {
         return () => {

@@ -4,6 +4,7 @@ import { GroupContext, GroupContextObject } from "../contexts/group-context";
 
 interface Props {
     name: string;
+    permanent?: boolean;
     children: React.ReactNode;
 }
 
@@ -15,9 +16,16 @@ export const Group = (props: Props) => {
         groupId = `${groupContext.groupId}${SEPARATOR}${props.name}`;
     }
 
+    let permanent = props.permanent;
+
+    if (permanent == null) {
+        permanent = groupContext.permanent;
+    }
+
     const groupObject: GroupContextObject = {
         ...groupContext,
-        groupId: groupId
+        groupId,
+        permanent
     };
     return <GroupContext.Provider value={groupObject}>{props.children}</GroupContext.Provider>;
 };

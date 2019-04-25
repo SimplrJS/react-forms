@@ -7,9 +7,12 @@ import { GroupStoreMutable } from "./stores/group-store";
 import { GroupContext, GroupContextObject } from "./contexts/group-context";
 // import { useForceUpdate } from "./force-update";
 import { Test1 } from "./tests/test1";
+import { Test2 } from "./tests/test2";
 
 import "./reset.scss";
 import "./app.scss";
+import { JsonView } from "./pretty-diff";
+import { JsonType } from "./pretty-diff/contracts";
 
 const store = new GroupStoreMutable();
 
@@ -48,13 +51,20 @@ interface TestState {
     hash: string;
 }
 
+let done = false;
 const Test = () => {
     const [state, updateStoreHash] = useStoreHash();
+    if (!done) {
+        console.log("Initial render.");
+        done = true;
+    }
+
     useEffect(() => {
         const listener = () => {
-            // console.log("State updated");
+            console.log("State updated");
             updateStoreHash();
         };
+        console.log("First update...");
         updateStoreHash();
         store.addListener(listener);
         return () => store.removeListener(listener);
@@ -65,7 +75,6 @@ const Test = () => {
 
     const groupContext: GroupContextObject = {
         store: store,
-        test: "app",
         groupId: groupId
     };
 
@@ -73,12 +82,13 @@ const Test = () => {
         <>
             <div className="forms">
                 <GroupContext.Provider value={groupContext}>
-                    <Test1 />
+                    {/* <Test1 /> */}
+                    <Test2 />
                 </GroupContext.Provider>
             </div>
             <div className="store">
                 <pre>
-                    {JSON.stringify(
+                    {/* {JSON.stringify(
                         state.store,
                         // tslint:disable-next-line:no-any
                         (_, value: any) => {
@@ -89,10 +99,14 @@ const Test = () => {
                             return `${value.name}()`;
                         },
                         4
-                    )}
+                    )} */}
+                    <JsonView value={state.store as JsonType} />
                 </pre>
             </div>
-            <pre className="store-result">{JSON.stringify(state.storeObject, null, 4)}</pre>
+            <div className="store-result">
+                <JsonView value={state.storeObject as JsonType} />
+            </div>
+            {/* <pre className="store-result">{JSON.stringify(state.storeObject, null, 4)}</pre> */}
         </>
     );
 };

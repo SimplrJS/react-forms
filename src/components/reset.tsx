@@ -6,7 +6,7 @@ export interface ResetButtonProps {
 }
 
 export const ResetButton = (props: ResetButtonProps) => {
-    const { store, groupId, test } = useContext(GroupContext);
+    const { store, groupId } = useContext(GroupContext);
 
     const onClick: React.MouseEventHandler<HTMLButtonElement> = event => {
         store.reset();

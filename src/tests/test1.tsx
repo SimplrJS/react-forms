@@ -30,7 +30,7 @@ export const Test1 = () => {
         lastNamePermanent = (
             <label>
                 Last name (permanent)
-                <TextField name="lastNamePermanent" initialValue="Smith" permanent={perm} />
+                <TextField name="lastNamePermanent" initialValue="Smith" />
             </label>
         );
     }
@@ -46,7 +46,7 @@ export const Test1 = () => {
                     {lastName}
                     {lastNamePermanent}
                 </Group>
-                <Group name="meta">
+                <Group name="meta" permanent={perm}>
                     <TextField name="area" initialValue="development" />
                     <TextField name="priority" initialValue="2" />
                     <Group name="status">

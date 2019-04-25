@@ -39,3 +39,17 @@ const result = {
 }
 
 ```
+
+
+```ts
+const a = () => {
+    const mapStore: any;
+    const id = "id";
+
+    const exists = mapStore.exists(id); // false
+    const item = mapStore.get(id); // Item<Init>
+    const exists2 = mapStore.exists(id); // true
+
+    const item = useMapStoreItem(id);
+}
+```

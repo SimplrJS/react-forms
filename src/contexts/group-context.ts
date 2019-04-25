@@ -4,7 +4,7 @@ import { createContext } from "react";
 export interface GroupContextObject {
     store: GroupStore;
     groupId?: string;
-    test?: string;
+    permanent?: boolean;
 }
 
 export const GroupContext = createContext<GroupContextObject>({
