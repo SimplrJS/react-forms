@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "jsx": "react",
+        "strict": true,
+        "esModuleInterop": true,
+        "strictNullChecks": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "plugins": [
+            {
+                "name": "tslint-language-service",
+                "alwaysShowRuleFailuresAsWarnings": true,
+                "ignoreDefinitionFiles": true
+            }
+        ]
+    },
+    "exclude": ["tools"]
+}
