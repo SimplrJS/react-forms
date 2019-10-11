@@ -3,6 +3,8 @@ import { Group } from "../components/group";
 import { TextField } from "../components/text-field";
 import { GroupContext } from "../contexts/group-context";
 
+/* eslint-disable */
+
 export const Test2 = () => {
     const { store } = useContext(GroupContext);
     const fieldId = "person.firstName";

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useContext, useEffect, useState } from "react";
 import { FieldContext } from "../contexts/field-context";
 import { GroupContext } from "../contexts/group-context";

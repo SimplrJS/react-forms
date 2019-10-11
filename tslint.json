@@ -1,7 +1,0 @@
-{
-    "extends": "simplr-tslint",
-    "rules": {
-        "no-console": false,
-        "arrow-return-shorthand": false
-    }
-}

@@ -1,7 +1,5 @@
 import { TinyEmitter, Callback } from "../helpers/emitter";
 
-const CHANGE_EVENT = "change";
-
 export class FieldStore extends TinyEmitter<Callback> {
     public initialValue: string;
     public defaultValue: string;

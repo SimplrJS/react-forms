@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useContext } from "react";
 import { TextField } from "../components/text-field";
 import { ResetButton } from "../components/reset";
@@ -47,10 +49,19 @@ export const Test1 = () => {
                     {lastNamePermanent}
                 </Group>
                 <Group name="meta" permanent={perm}>
-                    <TextField name="area" initialValue="development" />
-                    <TextField name="priority" initialValue="2" />
+                    <label>
+                        Area
+                        <TextField name="area" initialValue="development" />
+                    </label>
+                    <label>
+                        Priority
+                        <TextField name="priority" initialValue="2" />
+                    </label>
                     <Group name="status">
-                        <TextField name="amazing" initialValue="true" />
+                        <label>
+                            Status.Amazing
+                            <TextField name="amazing" initialValue="true" />
+                        </label>
                     </Group>
                 </Group>
 
@@ -58,30 +69,13 @@ export const Test1 = () => {
                     <ResetButton>Reset</ResetButton>
                 </div>
                 <div>
-                    <button onClick={() => setPerm(!perm)}>
-                        Toggle permanent (current: {`${perm}`})
-                    </button>
+                    <button onClick={() => setPerm(!perm)}>Toggle permanent (current: {`${perm}`})</button>
 
-                    <button onClick={() => store.updateValue("person.firstName", "test")}>
-                        Update value ("test")
-                    </button>
-                    <button
-                        onClick={() =>
-                            store.updateValue(
-                                "person.firstName",
-                                store.getField("person.firstName")!.currentValue
-                            )
-                        }
-                    >
+                    <button onClick={() => store.updateValue("person.firstName", "test")}>Update value ("test")</button>
+                    <button onClick={() => store.updateValue("person.firstName", store.getField("person.firstName")!.currentValue)}>
                         Update value (current value)
                     </button>
-                    <button
-                        onClick={() =>
-                            firstNameId === "firstName"
-                                ? setFirstNameId("anotherName")
-                                : setFirstNameId("firstName")
-                        }
-                    >
+                    <button onClick={() => (firstNameId === "firstName" ? setFirstNameId("anotherName") : setFirstNameId("firstName"))}>
                         Change firstName id (break)
                     </button>
                 </div>

@@ -11,8 +11,8 @@ import { Test2 } from "./tests/test2";
 
 import "./reset.scss";
 import "./app.scss";
-import { JsonView } from "./pretty-diff";
-import { JsonType } from "./pretty-diff/contracts";
+// import { JsonView } from "./pretty-diff";
+// import { JsonType } from "./pretty-diff/contracts";
 
 const store = new GroupStoreMutable();
 
@@ -51,6 +51,8 @@ interface TestState {
     hash: string;
 }
 
+/* eslint-disable */
+
 let done = false;
 const Test = () => {
     const [state, updateStoreHash] = useStoreHash();
@@ -82,13 +84,13 @@ const Test = () => {
         <>
             <div className="forms">
                 <GroupContext.Provider value={groupContext}>
-                    {/* <Test1 /> */}
-                    <Test2 />
+                    <Test1 />
+                    {/* <Test2 /> */}
                 </GroupContext.Provider>
             </div>
             <div className="store">
                 <pre>
-                    {/* {JSON.stringify(
+                    {JSON.stringify(
                         state.store,
                         // tslint:disable-next-line:no-any
                         (_, value: any) => {
@@ -99,12 +101,13 @@ const Test = () => {
                             return `${value.name}()`;
                         },
                         4
-                    )} */}
-                    <JsonView value={state.store as JsonType} />
+                    )}
+                    {/* <JsonView value={state.store as JsonType} /> */}
                 </pre>
             </div>
             <div className="store-result">
-                <JsonView value={state.storeObject as JsonType} />
+                {/* <JsonView value={state.storeObject as JsonType} /> */}
+                <pre>{JSON.stringify(state.storeObject, null, 4)}</pre>
             </div>
             {/* <pre className="store-result">{JSON.stringify(state.storeObject, null, 4)}</pre> */}
         </>
