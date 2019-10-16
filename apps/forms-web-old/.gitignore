@@ -1,0 +1,15 @@
+node_modules
+dist
+@types
+
+# MacOS
+.DS_Store
+
+# Ignore Rush temporary files
+/common/temp/** 
+
+**/webpack.config.js
+.rpt2_cache
+_src
+coverage
+junit.xml

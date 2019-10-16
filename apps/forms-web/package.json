@@ -1,0 +1,51 @@
+{
+  "name": "@reactway/forms",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "todo-add-keywords"
+  ],
+  "authors": [
+    "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
+    "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
+    "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
+  ],
+  "repository": "github:reactway/forms-web-test",
+  "bugs": "https://github.com/reactway/forms/issues",
+  "license": "AGPLv3",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "build:watch": "tsc -p . -w",
+    "pretest": "tsc -p . --noEmit && tslint -p .",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "files": [
+    "dist",
+    "**/*.md"
+  ],
+  "peerDependencies": {},
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "beta"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "ts-jest",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "collectCoverage": true,
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/__tests__/*",
+      "!src/index.ts"
+    ],
+    "coverageReporters": [
+      "cobertura"
+    ]
+  }
+}

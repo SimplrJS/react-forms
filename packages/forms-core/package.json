@@ -1,0 +1,61 @@
+{
+  "name": "@reactway/forms-core",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "todo-add-keywords"
+  ],
+  "authors": [
+    "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
+    "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
+    "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
+  ],
+  "repository": "github:reactway/forms",
+  "bugs": "https://github.com/reactway/forms/issues",
+  "license": "AGPLv3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "bu4ild": "tsc -p .",
+    "build:watch": "tsc -p . -w",
+    "pretest": "tsc -p . --noEmit && eslint",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "files": [
+    "dist",
+    "**/*.md"
+  ],
+  "peerDependencies": {},
+  "dependencies": {
+    "@reactway/tiny-emitter": "^1.0.2",
+    "immer": "^4.0.1",
+    "jest": "^24.9.0"
+  },
+  "devDependencies": {
+    "@reactway/eslint-config": "^1.0.0-alpha.5",
+    "@types/jest": "^24.0.19",
+    "eslint": "^6.5.1",
+    "jest-junit": "^8.0.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.0-beta"
+  },
+  "jest": {
+    "verbose": true,
+    "preset": "ts-jest",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "collectCoverage": true,
+    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/__tests__/*",
+      "!src/index.ts"
+    ],
+    "coverageReporters": [
+      "cobertura"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "packages\\forms"
+    },
+    {
+      "path": "packages\\forms-core"
+    },
+    {
+      "path": "apps\\forms-web"
+    },
+    {
+      "path": "apps\\forms-web-old"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "forms\\node_modules\\typescript\\lib"
+  }
+}

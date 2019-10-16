@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        // TODO: Choose module system
+        "module": "ES2015",
+        "target": "es5",
+        "outDir": "dist",
+        "rootDir": "src",
+        "jsx": "react",
+        "strict": true,
+        "sourceMap": true,
+        "declaration": true,
+        "noUnusedLocals": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmitHelpers": true,
+        "importHelpers": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "downlevelIteration": true,
+        "lib": ["dom", "es6", "es2015.iterable"]
+    },
+    "exclude": ["**/__tests__", "dist", "_src"]
+}
