@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "outDir": "..",
+        "strict": true,
+        "esModuleInterop": true
+    },
+    "files": [
+        "webpack.config.ts",
+        "types.d.ts"
+    ]
+}

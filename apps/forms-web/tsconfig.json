@@ -18,5 +18,5 @@
         "downlevelIteration": true,
         "lib": ["dom", "es6", "es2015.iterable"]
     },
-    "exclude": ["**/__tests__", "dist", "_src"]
+    "exclude": ["**/__tests__", "tools", "dist", "_src"]
 }

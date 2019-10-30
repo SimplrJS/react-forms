@@ -1,51 +1,69 @@
 {
-  "name": "@reactway/forms",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [
-    "todo-add-keywords"
-  ],
-  "authors": [
-    "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
-    "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
-    "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
-  ],
-  "repository": "github:reactway/forms-web-test",
-  "bugs": "https://github.com/reactway/forms/issues",
-  "license": "AGPLv3",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc -p .",
-    "build:watch": "tsc -p . -w",
-    "pretest": "tsc -p . --noEmit && tslint -p .",
-    "test": "jest",
-    "test:watch": "jest --watch"
-  },
-  "files": [
-    "dist",
-    "**/*.md"
-  ],
-  "peerDependencies": {},
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "beta"
-  },
-  "jest": {
-    "verbose": true,
-    "preset": "ts-jest",
-    "reporters": [
-      "default",
-      "jest-junit"
+    "name": "@reactway/forms",
+    "version": "1.0.0",
+    "description": "",
+    "keywords": [
+        "todo-add-keywords"
     ],
-    "collectCoverage": true,
-    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/__tests__/*",
-      "!src/index.ts"
+    "authors": [
+        "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
+        "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
+        "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
     ],
-    "coverageReporters": [
-      "cobertura"
-    ]
-  }
+    "repository": "github:reactway/forms-web-test",
+    "bugs": "https://github.com/reactway/forms/issues",
+    "license": "AGPLv3",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "npm run build:tools && cross-env NODE_ENV=development webpack-dev-server --host 127.0.0.1",
+        "build": "npm run build:tools && cross-env NODE_ENV=development webpack",
+        "build:tools": "tsc -p ./tools"
+    },
+    "files": [
+        "dist",
+        "**/*.md"
+    ],
+    "peerDependencies": {},
+    "dependencies": {
+        "react": "16.11.0",
+        "react-dom": "16.11.0"
+    },
+    "devDependencies": {
+        "@reactway/eslint-config": "1.0.0-alpha.4",
+        "@reactway/webpack-builder": "2.0.1",
+        "@reactway/webpack-builder-plugin-clean": "2.0.1",
+        "@reactway/webpack-builder-plugin-html": "2.0.1",
+        "@reactway/webpack-builder-plugin-images": "2.0.1",
+        "@reactway/webpack-builder-plugin-styles": "2.0.1",
+        "@reactway/webpack-builder-plugin-typescript": "2.0.1",
+        "@reactway/webpack-builder-plugin-web-dev": "2.0.1",
+        "@reactway/webpack-builder-plugin-write-file": "2.0.1",
+        "@types/react": "16.9.4",
+        "@types/react-dom": "16.9.1",
+        "cross-env": "6.0.2",
+        "eslint": "6.5.1",
+        "node-sass": "4.12.0",
+        "typescript": "rc",
+        "webpack": "4.41.2",
+        "webpack-cli": "3.3.9",
+        "webpack-dev-server": "3.8.2"
+    },
+    "jest": {
+        "verbose": true,
+        "preset": "ts-jest",
+        "reporters": [
+            "default",
+            "jest-junit"
+        ],
+        "collectCoverage": true,
+        "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
+        "collectCoverageFrom": [
+            "src/**/*.{ts,tsx}",
+            "!src/**/__tests__/*",
+            "!src/index.ts"
+        ],
+        "coverageReporters": [
+            "cobertura"
+        ]
+    }
 }
