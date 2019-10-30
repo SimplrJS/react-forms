@@ -1,19 +1,19 @@
-const path = require("path");
+import path from "path";
 // Plugins
-const webpackBuilder = require("@reactway/webpack-builder");
-const typeScript = require("@reactway/webpack-builder-plugin-typescript");
-const webpackDevServer = require("@reactway/webpack-builder-plugin-web-dev");
-const htmlPlugin = require("@reactway/webpack-builder-plugin-html");
-const styles = require("@reactway/webpack-builder-plugin-styles");
-const images = require("@reactway/webpack-builder-plugin-images");
-const clean = require("@reactway/webpack-builder-plugin-clean");
-const writeFile = require("@reactway/webpack-builder-plugin-write-file");
+import { Builder } from "@reactway/webpack-builder";
+import { TypeScriptPlugin } from "@reactway/webpack-builder-plugin-typescript";
+import webpackDevServer from "@reactway/webpack-builder-plugin-web-dev";
+import htmlPlugin from "@reactway/webpack-builder-plugin-html";
+import { StylesPlugin } from "@reactway/webpack-builder-plugin-styles";
+import images from "@reactway/webpack-builder-plugin-images";
+import clean from "@reactway/webpack-builder-plugin-clean";
+import writeFile from "@reactway/webpack-builder-plugin-write-file";
 // Packages not included to plugins.
 // const CopyPlugin = require("copy-webpack-plugin");
 
 const fullOutputPath = path.resolve(__dirname, "dist");
 
-module.exports = new webpackBuilder.Builder(__dirname, {
+module.exports = new Builder(__dirname, {
     entry: "./src/app.tsx",
     mode: "development",
     output: {
@@ -21,14 +21,15 @@ module.exports = new webpackBuilder.Builder(__dirname, {
         filename: "[name].bundle.js"
     }
 })
-    .use(typeScript.TypeScriptPlugin)
+    .use(TypeScriptPlugin)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .update((config: any) => {
         config.devtool = "inline-source-map";
         return config;
     })
     .use(webpackDevServer)
     .use(htmlPlugin)
-    .use(styles.StylesPlugin)
+    .use(StylesPlugin)
     .use(images)
     .use(clean)
     .use(writeFile)

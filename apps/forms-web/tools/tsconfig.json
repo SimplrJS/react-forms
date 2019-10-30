@@ -3,10 +3,12 @@
         "target": "es5",
         "outDir": "..",
         "strict": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "*": ["../node_modules/*"]
+        }
     },
-    "files": [
-        "webpack.config.ts",
-        "types.d.ts"
-    ]
+    "files": ["webpack.config.ts", "types.d.ts"]
 }
