@@ -26,7 +26,8 @@
     "peerDependencies": {},
     "dependencies": {
         "react": "16.11.0",
-        "react-dom": "16.11.0"
+        "react-dom": "16.11.0",
+        "@reactway/forms": "^1.0.0"
     },
     "devDependencies": {
         "@reactway/eslint-config": "1.0.0-alpha.4",
@@ -49,7 +50,7 @@
         "cross-env": "6.0.3",
         "eslint": "6.6.0",
         "node-sass": "4.13.0",
-        "typescript": "rc",
+        "typescript": "3.7.2",
         "webpack": "4.41.2",
         "webpack-cli": "3.3.9",
         "webpack-dev-server": "3.9.0"

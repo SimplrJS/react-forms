@@ -1,51 +1,55 @@
 {
-  "name": "@reactway/forms",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [
-    "todo-add-keywords"
-  ],
-  "authors": [
-    "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
-    "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
-    "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
-  ],
-  "repository": "github:reactway/forms",
-  "bugs": "https://github.com/reactway/forms/issues",
-  "license": "AGPLv3",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc -p .",
-    "watch": "tsc -p . -w",
-    "pretest": "tsc -p . --noEmit && tslint -p .",
-    "test": "jest"
-  },
-  "files": [
-    "dist",
-    "**/*.md"
-  ],
-  "peerDependencies": {},
-  "dependencies": {},
-  "devDependencies": {
-    "typescript": "^3.7.0-beta"
-  },
-  "jest": {
-    "verbose": true,
-    "preset": "ts-jest",
-    "reporters": [
-      "default",
-      "jest-junit"
+    "name": "@reactway/forms",
+    "version": "1.0.0",
+    "description": "",
+    "keywords": [
+        "todo-add-keywords"
     ],
-    "collectCoverage": true,
-    "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/__tests__/*",
-      "!src/index.ts"
+    "authors": [
+        "Dovydas Navickas <dovydas@quatrodev.com> (https://github.com/DovydasNavickas)",
+        "Martynas Žilinskas <martynas@quatrodev.com> (https://github.com/MartynasZilinskas)",
+        "Eimantas Dumšė <eimantas@quatrodev.com> (https://github.com/EimantasDumse)"
     ],
-    "coverageReporters": [
-      "cobertura"
-    ]
-  }
+    "repository": "github:reactway/forms",
+    "bugs": "https://github.com/reactway/forms/issues",
+    "license": "AGPLv3",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc -p .",
+        "watch": "tsc -p . -w",
+        "pretest": "tsc -p . --noEmit && tslint -p .",
+        "test": "jest"
+    },
+    "files": [
+        "dist",
+        "**/*.md"
+    ],
+    "peerDependencies": {
+        "react": "16.11.0"
+    },
+    "dependencies": {
+        "@reactway/forms-core": "^1.0.0"
+    },
+    "devDependencies": {
+        "typescript": "3.7.2"
+    },
+    "jest": {
+        "verbose": true,
+        "preset": "ts-jest",
+        "reporters": [
+            "default",
+            "jest-junit"
+        ],
+        "collectCoverage": true,
+        "testRegex": "/__tests__/.*\\.(test|spec).(ts|tsx)$",
+        "collectCoverageFrom": [
+            "src/**/*.{ts,tsx}",
+            "!src/**/__tests__/*",
+            "!src/index.ts"
+        ],
+        "coverageReporters": [
+            "cobertura"
+        ]
+    }
 }

@@ -37,4 +37,4 @@ export interface FormStoreData {
 
 export interface FormState<TData extends object = FormStoreData> extends FieldState<TData> {}
 
-export type FormStateUpdater<TBase> = (draft: Draft<TBase>) => TBase | void;
+export type FormStateUpdater<TBase> = (draft: Draft<TBase>) => void;

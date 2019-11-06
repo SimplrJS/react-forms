@@ -20,22 +20,14 @@ export class FormStore extends TinyEmitter {
     }
 
     public update(updater: (draft: Draft<FormState>) => void): void {
-        console.info("Updating state...");
-
         const newState = produce(this.state, draft => {
             return updater(draft);
         });
 
-        console.info("Updated...");
-
         if (this.state === newState) {
-            console.info("State hasn't changed.");
-
             return;
         }
         this.state = newState;
-
-        console.info("State has changed. Emitting...");
 
         this.emit();
     }

@@ -36,7 +36,7 @@
         "react-spring": "^8.0.27",
         "simplr-tslint": "1.0.0-alpha.14",
         "tslint-language-service": "0.9.9",
-        "typescript": "3.7.0-beta",
+        "typescript": "3.7.2",
         "webpack": "4.41.1",
         "webpack-cli": "3.3.9",
         "webpack-dev-server": "3.8.2"

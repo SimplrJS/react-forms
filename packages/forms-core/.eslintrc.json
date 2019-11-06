@@ -1,3 +1,7 @@
 {
-    "extends": ["@reactway/eslint-config/react"]
+    "extends": ["@reactway/eslint-config/react"],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/explicit-function-return-type": "warn"
+    }
 }

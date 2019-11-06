@@ -5,6 +5,7 @@
         "build": "lerna run build",
         "test": "lerna run test",
         "bootstrap": "lerna bootstrap",
+        "link": "lerna link",
         "pack": "lerna exec -- npm pack"
     },
     "devDependencies": {

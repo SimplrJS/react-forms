@@ -1,5 +1,16 @@
 import { FormStore } from "../stores/form-store";
 import { FormStateUpdater, FormState } from "../contracts/form-store";
+import {
+    registerField,
+    generateFieldId,
+    // updateField,
+    // updateCurrentValue,
+    getDefaultStatuses,
+    hydrateField,
+    getDefaultFieldData,
+    dehydrateField
+} from "../stores/form-store-helpers";
+import { stringify } from "./test";
 
 describe("form-store", () => {
     let store: FormStore;
@@ -10,7 +21,7 @@ describe("form-store", () => {
     it("update by draft mutation", () => {
         // Arrange
         const oldState = store.getState();
-        
+
         // TODO: Sanity check? Can this be done according to AAA testing?
         expect(oldState.status.disabled).toBe(false);
 
@@ -47,5 +58,35 @@ describe("form-store", () => {
         const updatedState = store.getState();
         expect(updatedState).not.toBe(oldState);
         expect(updatedState.status.disabled).toBe(true);
+    });
+
+    it("test", () => {
+        // Arrange
+        const oldState = store.getState();
+        const name = "firstName";
+        const id = generateFieldId(name, undefined);
+
+        const updater: FormStateUpdater<FormState> = state => {
+            registerField(state, id, {
+                name: name,
+                data: getDefaultFieldData("", ""),
+                status: getDefaultStatuses(),
+                hydrate: hydrateField,
+                dehydrate: dehydrateField
+            });
+
+            // updateField(state, id, fieldState => {
+            //     console.info(stringify(fieldState));
+
+            //     updateCurrentValue(fieldState, "hello-again");
+            // });
+        };
+
+        // Act
+        store.update(updater);
+
+        // Assert
+        console.info(stringify(oldState));
+        console.info(stringify(store.getState()));
     });
 });
