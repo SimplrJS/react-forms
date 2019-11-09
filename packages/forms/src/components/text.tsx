@@ -1,4 +1,4 @@
-import React from "react";
-import {  } from "@reactway/forms-core/dist/contracts";
+// import React from "react";
+import {  } from "@reactway/forms-core";
 
-export const Text = props => {};
+// export const Text = props => {};

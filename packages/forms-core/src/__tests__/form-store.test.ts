@@ -75,6 +75,14 @@ describe("form-store", () => {
                 dehydrate: dehydrateField
             });
 
+            registerField(state, id, {
+                name: name,
+                data: getDefaultFieldData("", ""),
+                status: getDefaultStatuses(),
+                hydrate: hydrateField,
+                dehydrate: dehydrateField
+            });
+
             // updateField(state, id, fieldState => {
             //     console.info(stringify(fieldState));
 

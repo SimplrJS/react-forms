@@ -29,10 +29,7 @@
         "react": "16.11.0"
     },
     "dependencies": {
-        "@reactway/forms-core": "^1.0.0"
-    },
-    "devDependencies": {
-        "typescript": "3.7.2"
+        "@reactway/forms-core": "file:../forms-core"
     },
     "jest": {
         "verbose": true,
