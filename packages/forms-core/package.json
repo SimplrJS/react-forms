@@ -18,7 +18,7 @@
     "scripts": {
         "build": "tsc -b",
         "build:watch": "tsc -b -w",
-        "pretest": "tsc -b --noEmit && eslint --quiet",
+        "pretest": "tsc -b && eslint \"src/**/*.ts*\" -f visualstudio --quiet || exit 0",
         "test": "jest",
         "test:watch": "jest --watch",
         "test-build:watch": "run-p build:watch test:watch"
@@ -28,12 +28,12 @@
         "**/*.md"
     ],
     "dependencies": {
-        "@reactway/eslint-config": "^1.0.0-alpha",
         "@reactway/tiny-emitter": "^1.0.2",
         "@types/jest": "^24.0.22",
         "immer": "^4.0.1"
     },
     "devDependencies": {
+        "@reactway/eslint-config": "^1.0.0-alpha.5",
         "typescript": "3.7.2"
     },
     "jest": {

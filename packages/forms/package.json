@@ -17,9 +17,11 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc -b",
-        "watch": "tsc -b -w",
-        "pretest": "tsc -b && eslint \"src/**/*.ts*\" -f visualstudio",
-        "test": "jest"
+        "build:watch": "tsc -b -w",
+        "pretest": "tsc -b && eslint \"src/**/*.ts*\" -f visualstudio --quiet || exit 0",
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test-build:watch": "run-p build:watch test:watch"
     },
     "files": [
         "dist",
@@ -29,11 +31,11 @@
         "react": "16.11.0"
     },
     "dependencies": {
-        "@reactway/eslint-config": "^1.0.0-alpha.5",
         "@reactway/forms-core": "1.0.0",
         "@types/jest": "24.0.23"
     },
     "devDependencies": {
+        "@reactway/eslint-config": "^1.0.0-alpha.5",
         "eslint": "6.6.0",
         "jest": "24.9.0",
         "jest-junit": "9.0.0",
