@@ -24,7 +24,7 @@
         "source-map-loader": "0.2.4",
         "ts-jest": "24.0.0",
         "tslint": "5.14.0",
-        "typescript": "3.4.0-rc",
+        "typescript": "3.7.2",
         "webpack": "4.29.6",
         "webpack-cli": "3.3.0",
         "webpack-dev-server": "3.2.1"

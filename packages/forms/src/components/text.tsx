@@ -1,4 +1,5 @@
 // import React from "react";
-import {  } from "@reactway/forms-core";
+import { SEPARATOR } from "@reactway/forms-core";
 
+console.log(SEPARATOR);
 // export const Text = props => {};

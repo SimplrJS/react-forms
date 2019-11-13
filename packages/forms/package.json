@@ -16,9 +16,9 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc -p .",
-        "watch": "tsc -p . -w",
-        "pretest": "tsc -p . --noEmit && tslint -p .",
+        "build": "tsc -b",
+        "watch": "tsc -b -w",
+        "pretest": "tsc -b && node_modules\\.bin\\eslint.ps1 \"src/**/*.ts*\" -f visualstudio",
         "test": "jest"
     },
     "files": [
@@ -29,7 +29,16 @@
         "react": "16.11.0"
     },
     "dependencies": {
-        "@reactway/forms-core": "file:../forms-core"
+        "@reactway/eslint-config": "^1.0.0-alpha.5",
+        "@reactway/forms-core": "1.0.0",
+        "@types/jest": "24.0.23"
+    },
+    "devDependencies": {
+        "eslint": "6.6.0",
+        "jest": "24.9.0",
+        "jest-junit": "9.0.0",
+        "ts-jest": "24.1.0",
+        "typescript": "3.7.2"
     },
     "jest": {
         "verbose": true,
