@@ -18,7 +18,7 @@
     "scripts": {
         "build": "tsc -b",
         "watch": "tsc -b -w",
-        "pretest": "tsc -b && node_modules\\.bin\\eslint.ps1 \"src/**/*.ts*\" -f visualstudio",
+        "pretest": "tsc -b && eslint \"src/**/*.ts*\" -f visualstudio",
         "test": "jest"
     },
     "files": [
