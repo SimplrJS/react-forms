@@ -1,5 +1,13 @@
-// import React from "react";
-import { SEPARATOR } from "@reactway/forms-core";
+import React from "react";
+// import { FormStore } from "@reactway/forms-core";
 
-console.log(SEPARATOR);
-// export const Text = props => {};
+// const formStore = new FormStore();
+// console.log(formStore);
+
+interface TextProps {
+    initialValue: string;
+}
+
+export const Text: React.FC<TextProps> = props => {
+    return <input type="text" />;
+};

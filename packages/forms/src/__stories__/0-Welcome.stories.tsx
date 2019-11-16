@@ -10,11 +10,12 @@ const Welcome: React.FC<WelcomeProps> = props => {
     return <div>Welcome</div>;
 };
 
+// eslint-disable-next-line import/no-default-export
 export default {
     title: "Welcome"
 };
 
-export const toStorybook = () => <Welcome showApp={linkTo("Button")} />;
+export const toStorybook = (): JSX.Element => <Welcome showApp={linkTo("Button")} />;
 
 toStorybook.story = {
     name: "to Storybook"

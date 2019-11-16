@@ -3,6 +3,7 @@ import { JsonValue, NestedDictionary } from "../contracts/helpers";
 import { SEPARATOR } from "./constants";
 
 export const dehydrateField = (state: FieldState | FormState): NestedDictionary<JsonValue> => {
+    throw new Error(`Not implemented: hydrate(${JSON.stringify(state)})`);
     const result: NestedDictionary<JsonValue> = {};
 
     for (const fieldId of Object.keys(state.fields)) {
@@ -36,7 +37,7 @@ export function getDefaultStatuses(): FormStatus {
     };
 }
 
-export function registerField<TFieldState extends FieldState>(
+export function registerField<TFieldState extends FieldState<any>>(
     state: FormState,
     id: string,
     initialFieldState: Omit<TFieldState, "id" | "fields">
@@ -45,6 +46,7 @@ export function registerField<TFieldState extends FieldState>(
         throw new Error(`Field '${id}' has been already registered.`);
     }
 
+    // Add field into state
     state.fields[id] = {
         ...initialFieldState,
         id: id,

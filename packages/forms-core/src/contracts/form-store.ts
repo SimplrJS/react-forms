@@ -17,17 +17,17 @@ export interface FormStatus {
 }
 
 // TODO: THydrationValue example with DraftJS: TValue = DraftJsState, THydrationValue = object.
-export interface FieldState<TData extends object = FieldData<unknown, unknown>, THydrationValue extends JsonValue = JsonValue> {
+export interface FieldState<TData extends object, THydrationValue extends JsonValue = JsonValue> {
     id: string;
     name: string;
 
     dehydrate: (state: this) => THydrationValue;
-    hydrate: (value: THydrationValue) => FieldState;
+    hydrate: (value: THydrationValue) => FieldState<TData, THydrationValue>;
 
     status: FormStatus;
     data: TData;
 
-    fields: Dictionary<FieldState>;
+    fields: Dictionary<FieldState<TData, THydrationValue>>;
 }
 
 export interface FormStoreData {
