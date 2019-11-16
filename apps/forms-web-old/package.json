@@ -1,5 +1,5 @@
 {
-    "name": "@reactway/forms",
+    "name": "@reactway/forms-web-old",
     "version": "1.0.0",
     "description": "",
     "main": "dist/index.js",
