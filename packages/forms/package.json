@@ -21,7 +21,9 @@
         "pretest": "tsc -b && eslint \"src/**/*.ts*\" -f visualstudio --quiet || exit 0",
         "test": "jest",
         "test:watch": "jest --watch",
-        "test-build:watch": "run-p build:watch test:watch"
+        "test-build:watch": "run-p build:watch test:watch",
+        "storybook": "start-storybook -p 6006",
+        "build-storybook": "build-storybook"
     },
     "files": [
         "dist",
@@ -30,12 +32,17 @@
     "peerDependencies": {
         "react": "16.11.0"
     },
-    "dependencies": {
-        "@reactway/forms-core": "1.0.0",
-        "@types/jest": "24.0.23"
-    },
+    "dependencies": {},
     "devDependencies": {
+        "@babel/core": "^7.7.2",
         "@reactway/eslint-config": "^1.0.0-alpha.5",
+        "@reactway/forms-core": "1.0.0",
+        "@storybook/addon-actions": "^5.2.6",
+        "@storybook/addon-links": "^5.2.6",
+        "@storybook/addons": "^5.2.6",
+        "@storybook/react": "^5.2.6",
+        "@types/jest": "24.0.23",
+        "babel-loader": "^8.0.6",
         "eslint": "6.6.0",
         "jest": "24.9.0",
         "jest-junit": "9.0.0",
