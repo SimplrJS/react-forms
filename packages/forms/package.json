@@ -32,11 +32,12 @@
     "peerDependencies": {
         "react": "16.11.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "@reactway/forms-core": "1.0.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.7.2",
         "@reactway/eslint-config": "^1.0.0-alpha.5",
-        "@reactway/forms-core": "1.0.0",
         "@storybook/addon-actions": "^5.2.6",
         "@storybook/addon-links": "^5.2.6",
         "@storybook/addons": "^5.2.6",
