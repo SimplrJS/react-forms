@@ -47,6 +47,7 @@
     },
     "dependencies": {
         "@babel/polyfill": "7.6.0",
+        "core-js": "^3.4.1",
         "eslint": "^6.5.1",
         "immer": "4.0.1",
         "react": "16.10.2",

@@ -30,6 +30,7 @@
     "dependencies": {
         "@reactway/tiny-emitter": "^1.0.2",
         "@types/jest": "^24.0.22",
+        "core-js": "^3.4.1",
         "immer": "^4.0.1"
     },
     "devDependencies": {

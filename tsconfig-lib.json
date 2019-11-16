@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         // TODO: Choose module system
-        "module": "ES2015",
-        "target": "es5",
+        "module": "es2015",
+        "target": "es2015",
         "jsx": "react",
         "strict": true,
         "sourceMap": true,

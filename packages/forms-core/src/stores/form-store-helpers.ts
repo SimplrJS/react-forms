@@ -2,7 +2,7 @@ import { FormState, FieldState, FormStatus, FormStateUpdater, FieldData } from "
 import { JsonValue, NestedDictionary } from "../contracts/helpers";
 import { SEPARATOR } from "./constants";
 
-export const dehydrateField = (state: FieldState | FormState): NestedDictionary<JsonValue> => {
+export const dehydrateField = (state: FieldState<any> | FormState): NestedDictionary<JsonValue> => {
     throw new Error(`Not implemented: hydrate(${JSON.stringify(state)})`);
     const result: NestedDictionary<JsonValue> = {};
 
@@ -16,7 +16,7 @@ export const dehydrateField = (state: FieldState | FormState): NestedDictionary<
     return result;
 };
 
-export const hydrateField = (value: JsonValue): FieldState => {
+export const hydrateField = (value: JsonValue): FieldState<any> => {
     throw new Error(`Not implemented: hydrate(${JSON.stringify(value)})`);
 };
 
@@ -74,7 +74,7 @@ export function getDefaultFieldData<TValue, TRenderValue>(
     };
 }
 
-export function updateField(state: FormState, id: string, updater: FormStateUpdater<FieldState>): void {
+export function updateField(state: FormState, id: string, updater: FormStateUpdater<FieldState<any>>): void {
     const field = state.fields[id];
     if (field == null) {
         throw new Error(`Field '${id}' has been already registered.`);
@@ -82,6 +82,6 @@ export function updateField(state: FormState, id: string, updater: FormStateUpda
     updater(field);
 }
 
-export function updateCurrentValue(state: FieldState, value: unknown): void {
+export function updateCurrentValue(state: FieldState<any>, value: unknown): void {
     state.data.currentValue = value;
 }

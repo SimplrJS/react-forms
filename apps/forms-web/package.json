@@ -1,5 +1,6 @@
 {
     "name": "@reactway/forms-web",
+    "private": true,
     "version": "1.0.0",
     "description": "",
     "keywords": [
@@ -23,14 +24,14 @@
         "dist",
         "**/*.md"
     ],
-    "peerDependencies": {},
     "dependencies": {
+        "@reactway/forms": "^1.0.0",
+        "core-js": "^3.4.1",
         "react": "16.11.0",
-        "react-dom": "16.11.0",
-        "@reactway/forms": "^1.0.0"
+        "react-dom": "16.11.0"
     },
     "devDependencies": {
-        "@reactway/eslint-config": "1.0.0-alpha.4",
+        "@reactway/eslint-config": "1.0.0-alpha.5",
         "@reactway/webpack-builder": "2.0.1",
         "@reactway/webpack-builder-plugin-clean": "2.0.1",
         "@reactway/webpack-builder-plugin-html": "2.0.1",

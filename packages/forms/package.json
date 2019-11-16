@@ -34,6 +34,8 @@
     },
     "dependencies": {
         "@reactway/forms-core": "1.0.0",
+        "core-js": "^3.4.1",
+        "ts-loader": "^6.2.1",
         "tslib": "^1.10.0"
     },
     "devDependencies": {

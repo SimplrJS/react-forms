@@ -1,8 +1,8 @@
 import React from "react";
-// import { FormStore } from "@reactway/forms-core";
+import { FormStore } from "@reactway/forms-core";
 
-// const formStore = new FormStore();
-// console.log(formStore);
+const formStore = new FormStore();
+console.log(formStore);
 
 interface TextProps {
     initialValue: string;

@@ -1,8 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Text } from "@reactway/forms";
 
 const App = (): JSX.Element => {
-    return <div>Hello forms!</div>;
+    return <Text initialValue="hello" />;
+    // return <div>Hello</div>;
 };
 
 ReactDOM.render(<App />, document.getElementById("root"));
